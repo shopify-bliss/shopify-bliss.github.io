@@ -1,0 +1,22 @@
+@use "../../../helpers/mixins" as m;
+@use "../../../helpers/variables" as v;
+
+@mixin pages-ai-overview() {
+  .pages {
+    width: 100%;
+    height: 100%;
+    background-color: blue;
+  }
+}
+
+@mixin pages-ai-content() {
+  @include m.flex();
+  width: 100%;
+  height: 100%;
+
+  .pages {
+    width: 100%;
+    height: 100%;
+    background-color: red;
+  }
+}

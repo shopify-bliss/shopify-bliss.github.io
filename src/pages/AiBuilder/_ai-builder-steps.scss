@@ -1,0 +1,123 @@
+@use "../../helpers/mixins" as m;
+@use "../../helpers/variables" as v;
+
+@mixin button(
+  $border-color,
+  $font-color,
+  $bg-color,
+  $bg-color-hover,
+  $border-color-hover: $border-color,
+  $tranform-origin
+) {
+  @include m.flex();
+  padding: 0.8rem 1rem;
+  text-transform: uppercase;
+  border: solid 1px $border-color;
+  color: $font-color;
+  background-color: $bg-color;
+  font-size: 0.85rem;
+  letter-spacing: 0.08rem;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.4s ease-out, border 0.4s ease-out;
+  overflow: hidden;
+  z-index: 2;
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background-color: $bg-color-hover;
+    bottom: 0;
+    left: 0;
+    transform: scale(0);
+    transform-origin: top $tranform-origin;
+    transition: transform 0.4s ease-out, border 0.4s ease-out;
+  }
+
+  &:hover {
+    border: solid 1px $border-color-hover;
+
+    &::after {
+      transform: scale(1);
+    }
+  }
+
+  &:disabled {
+    opacity: 0;
+  }
+}
+
+@mixin steps() {
+  @include m.flex($justify: space-between);
+  grid-area: steps;
+  width: 100%;
+  height: 6rem;
+  padding: 0 v.$px-main;
+  box-shadow: 0.5px 0.5px 10px 0 rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+
+  .step-list {
+    @include m.flex();
+    gap: 1.4rem;
+
+    .line-divider {
+      width: 3.2rem;
+      height: 0.1rem;
+      background-color: adjust-color($color: #000, $lightness: 90%);
+
+      &.active {
+        background-color: #000;
+      }
+    }
+
+    .step {
+      @include m.flex($direction: column);
+      gap: 0.1rem;
+
+      &.active {
+        .step-icon {
+          animation: bounce 1.5s linear;
+          font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+        }
+
+        .step-text {
+          font-weight: 600;
+        }
+      }
+
+      &-icon {
+        font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+        font-size: 1.6rem;
+      }
+
+      &-text {
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .prev-button {
+    @include button(
+      adjust-color($color: #fff, $blackness: 25%),
+      #000,
+      #fff,
+      adjust-color($color: #fff, $blackness: 5%),
+      adjust-color($color: #fff, $blackness: 5%),
+      right
+    );
+  }
+
+  .next-button {
+    @include button(
+      #000,
+      #fff,
+      #000,
+      adjust-color($color: #000, $whiteness: 25%),
+      adjust-color($color: #000, $whiteness: 25%),
+      left
+    );
+  }
+}

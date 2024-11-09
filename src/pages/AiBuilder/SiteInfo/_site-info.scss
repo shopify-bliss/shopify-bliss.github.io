@@ -1,0 +1,132 @@
+@use "../../../helpers/mixins" as m;
+@use "../../../helpers/variables" as v;
+@use "./each-font-funtion";
+
+@mixin site-info-overview() {
+  .site-info {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 120%;
+    background-color: adjust-color($color: #fff, $blackness: 10%);
+    margin-top: -2.3rem;
+
+    .wrapper {
+      @include m.flex();
+      width: 100%;
+      font-size: 9rem;
+
+      .site-info-text,
+      .site-info-text-reverse {
+        white-space: nowrap;
+        opacity: 0.05;
+        line-height: 100%;
+        margin-right: 1.8rem;
+      }
+    }
+  }
+}
+
+@mixin site-info-content() {
+  .site-info {
+    @include m.flex(
+      $direction: column,
+      $justify: flex-start,
+      $align: flex-start
+    );
+    width: 100%;
+    min-height: calc(100vh - 6rem);
+    padding: v.$pt-content v.$px-content v.$pb-content;
+    gap: 2.8rem;
+
+    &-title {
+      font-size: 2.1rem;
+      font-weight: 700;
+      line-height: 120%;
+    }
+
+    .content {
+      @include m.flex($direction: column, $align: flex-start);
+      gap: 0.25rem;
+
+      &-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      &-desc {
+        color: adjust-color($color: #000, $lightness: 40%);
+        margin-bottom: 1.2rem;
+      }
+
+      &-execute {
+        @include m.flex($justify: space-between);
+        width: 100%;
+        height: 3.4rem;
+        background-color: adjust-color($color: #fff, $blackness: 5%);
+        gap: 1.2rem;
+        padding-right: 0.95rem;
+        position: relative;
+        box-shadow: 0 0.05rem 1px adjust-color($color: #000, $lightness: 80%);
+
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 0.05rem;
+          background-color: #000;
+          transform: scaleX(0);
+          transition: transform 0.4s ease-out;
+          transform-origin: left;
+        }
+
+        &:hover,
+        &:active,
+        &:focus {
+          &::after {
+            transform: scaleX(1);
+            transition: transform 0.4s ease-out;
+          }
+        }
+
+        input {
+          background-color: adjust-color($color: #fff, $blackness: 5%);
+          border: 0;
+          outline: 0;
+          font-size: 0.9rem;
+          height: 100%;
+          width: 100%;
+          padding: 0.95rem 0 0.95rem 0.95rem;
+        }
+
+        span {
+          font-size: 0.9rem;
+          color: adjust-color($color: #000, $lightness: 40%);
+        }
+      }
+
+      &-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        width: 100%;
+        gap: 1rem;
+
+        &-item {
+          @include m.flex($justify: flex-start);
+          padding: 1.05rem 0.9rem;
+          border: adjust-color($color: #fff, $blackness: 5%) solid 0.1rem;
+          color: adjust-color($color: #000, $lightness: 40%);
+          text-transform: capitalize;
+          cursor: pointer;
+
+          &.active {
+            border-color: #000;
+            color: #000;
+          }
+        }
+      }
+    }
+  }
+}

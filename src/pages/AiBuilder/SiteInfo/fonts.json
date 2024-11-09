@@ -1,0 +1,52 @@
+[
+  {
+    "name": "friendly",
+    "fontClass": "font-friendly",
+    "fontClassReverse": "font-friendly-reverse"
+  },
+  {
+    "name": "professional",
+    "fontClass": "font-professional",
+    "fontClassReverse": "font-professional-reverse"
+  },
+  {
+    "name": "luxury",
+    "fontClass": "font-luxury",
+    "fontClassReverse": "font-luxury-reverse"
+  },
+  {
+    "name": "innovative",
+    "fontClass": "font-innovative",
+    "fontClassReverse": "font-innovative-reverse"
+  },
+  {
+    "name": "bold",
+    "fontClass": "font-bold",
+    "fontClassReverse": "font-bold-reverse"
+  },
+  {
+    "name": "classic",
+    "fontClass": "font-classic",
+    "fontClassReverse": "font-classic-reverse"
+  },
+  {
+    "name": "edgy",
+    "fontClass": "font-edgy",
+    "fontClassReverse": "font-edgy-reverse"
+  },
+  {
+    "name": "playful",
+    "fontClass": "font-playful",
+    "fontClassReverse": "font-playful-reverse"
+  },
+  {
+    "name": "sophisticated",
+    "fontClass": "font-sophisticated",
+    "fontClassReverse": "font-sophisticated-reverse"
+  },
+  {
+    "name": "quirky",
+    "fontClass": "font-quirky",
+    "fontClassReverse": "font-quirky-reverse"
+  }
+]
