@@ -1,0 +1,63 @@
+@use "../../helpers/mixins" as m;
+@use "../../helpers/variables" as v;
+
+@mixin logo() {
+  .ai-builder-logo {
+    @include m.flex();
+    text-decoration: none;
+    color: #000;
+    gap: 0.2rem;
+    position: absolute;
+    z-index: 2;
+    height: 5rem;
+    left: v.$px-main;
+
+    .icon {
+      font-size: 2rem;
+      transition: all 0.4s ease-out;
+      font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+    }
+
+    .text {
+      margin-top: 0.25rem;
+      font-size: 1.6rem;
+      font-family: v.$unica;
+    }
+
+    &:hover {
+      .icon {
+        transition: all 0.4s ease-out;
+        font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
+      }
+    }
+  }
+}
+
+@mixin quit() {
+  .ai-builder-quit {
+    position: fixed;
+    right: calc(v.$px-main + 8px);
+    z-index: 2;
+    height: 5rem;
+    cursor: pointer;
+    @include m.flex();
+    
+    .material-symbols-outlined {
+      padding: 0.3rem;
+      font-size: 1.7rem;
+      font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+      color: #000;
+      border-radius: 50%;
+      transition: transform 0.4s ease-out, background-color 0.4s ease-out;
+      background-color: #fff;
+    }
+
+    &:hover {
+      .material-symbols-outlined {
+        transform: rotate(90deg);
+        transition: transform 0.4s ease-out, background-color 0.4s ease-out;
+        background-color: adjust-color($color: #fff, $blackness: 5%);
+      }
+    }
+  }
+}

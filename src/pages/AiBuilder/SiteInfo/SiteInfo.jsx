@@ -2,7 +2,10 @@ import React, { useRef, useState, useCallback, useEffect } from "react";
 import { useGSAP } from "@gsap/react";
 import horizontalLoop from "../../../helpers/horizontalLoop";
 import brandPersonalities from "./fonts.json";
-import SmoothScroll from "../../../helpers/SmoothScroll";
+import {
+  Logo,
+  Quit,
+} from "../../../components/AiBuilderSupport/AiBuilderSupport";
 
 const defaultActivePersonality = brandPersonalities[0];
 
@@ -55,13 +58,10 @@ function SiteInfo() {
     setActivePersonality(personality);
   }, []);
 
-  useEffect(() => {
-    console.log("activePersonality", activePersonality);
-  }, [activePersonality]);
-
   return (
     <>
       <div className={`ai-builder-overview ${activePersonality.fontClass}`}>
+        <Logo />
         <div className="site-info">
           {[...Array(4)].map((_, i) => (
             <div
@@ -90,10 +90,11 @@ function SiteInfo() {
               ))}
             </div>
           ))}
+          <div className="site-info-overlay"></div>
         </div>
       </div>
       <div className="ai-builder-content">
-        <SmoothScroll />
+        <Quit />
         <div className="site-info">
           <div className="site-info-title">
             Choose a site title and brand personality

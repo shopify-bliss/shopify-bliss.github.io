@@ -1,0 +1,44 @@
+{
+  "pagesComponent": [
+    {
+      "name": "Navbar",
+      "icon": "explore",
+      "nameClass": "navbar"
+    },
+    {
+      "name": "Home page",
+      "icon": "home",
+      "nameClass": "home"
+    },
+    {
+      "name": "About page",
+      "icon": "help",
+      "nameClass": "about"
+    },
+    {
+      "name": "Service page",
+      "icon": "widgets",
+      "nameClass": "service"
+    },
+    {
+      "name": "Contact page",
+      "icon": "assignment_ind",
+      "nameClass": "contact"
+    },
+    {
+      "name": "Shop page",
+      "icon": "shopping_bag",
+      "nameClass": "shop"
+    },
+    {
+      "name": "Blog page",
+      "icon": "newsmode",
+      "nameClass": "blog"
+    },
+    {
+      "name": "Footer",
+      "icon": "link",
+      "nameClass": "footer"
+    }
+  ]
+}

@@ -1,5 +1,4 @@
 import React, { useState, Fragment } from "react";
-import SmoothScroll from "../../helpers/SmoothScroll";
 import { Link } from "react-router-dom";
 import SiteInfo from "./SiteInfo/SiteInfo";
 import PagesAi from "./PagesAi/PagesAi";
@@ -25,17 +24,7 @@ function AiBuilder() {
 
   return (
     <>
-      <SmoothScroll />
       <div className="ai-builder">
-        <div className="ai-builder-header">
-          <Link to="/" className="logo">
-            <span className="material-symbols-outlined logo-icon">
-              local_mall
-            </span>
-            <span className="logo-text">Shopify Bliss</span>
-          </Link>
-          <span className="material-symbols-outlined quit">close</span>
-        </div>
         {currentStep === 0 && <SiteInfo />}
         {currentStep === 1 && <PagesAi />}
         <div className="ai-builder-steps">
@@ -49,9 +38,7 @@ function AiBuilder() {
           <div className="step-list">
             {steps.map((step, index) => (
               <Fragment key={index}>
-                <div
-                  className={`step ${index <= currentStep ? "active" : ""}`}
-                >
+                <div className={`step ${index <= currentStep ? "active" : ""}`}>
                   <span className="material-symbols-outlined step-icon">
                     {step.icon}
                   </span>
