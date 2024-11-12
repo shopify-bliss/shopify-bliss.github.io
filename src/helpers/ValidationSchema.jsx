@@ -1,11 +1,5 @@
 import * as yup from "yup";
 
-export const validationSchema = yup.object().shape({
-  name: yup.string().required("Name is required"),
-  email: yup
-    .string()
-    .email("Invalid email format")
-    .required("Email is required"),
-  phoneNumber: yup.number().required("Phone Number is required"),
-  address: yup.string().required("Address is required"),
+export const siteTitleSchema = yup.object().shape({
+  title: yup.string().required("Site Title is required").max(60, "Site Title is too long"),
 });

@@ -40,7 +40,8 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 .toast {
-  z-index: 9999;
+  z-index: 9999 !important;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2) !important;
 }
 
 html.lenis,

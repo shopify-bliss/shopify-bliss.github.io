@@ -1,36 +1,57 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import pagesData from "./pages.json";
 import {
   Logo,
   Quit,
 } from "../../../components/AiBuilderSupport/AiBuilderSupport";
 
-function PagesAi() {
-  // Navbar (index 0) dan Footer (index terakhir) selalu aktif
+function PagesAi({ siteTitle }) {
   const [activePages, setActivePages] = useState([
     0,
     pagesData.pagesComponent.length - 1,
   ]);
-  const [currentPageIndex, setCurrentPageIndex] = useState(null);
+  const initialPageIndex = 99;
+  const [currentPageIndex, setCurrentPageIndex] = useState(initialPageIndex);
 
-  const handleActivePage = useCallback((index) => {
-    setActivePages((prevActivePages) => {
-      if (
-        prevActivePages.includes(index) &&
-        index !== 0 &&
-        index !== pagesData.pagesComponent.length - 1
-      ) {
-        return prevActivePages.filter((i) => i !== index);
-      } else {
-        return [...prevActivePages, index];
+  const handleActivePage = useCallback(
+    (index) => {
+      if (index === 0 || index === pagesData.pagesComponent.length - 1) {
+        return;
       }
-    });
 
-    // Set currentPageIndex ke halaman pertama yang dipilih jika belum ada yang aktif
-    if (index !== 0 && index !== pagesData.pagesComponent.length - 1) {
-      setCurrentPageIndex(index);
-    }
-  }, []);
+      setActivePages((prevActivePages) => {
+        let updatedPages;
+
+        if (prevActivePages.includes(index)) {
+          // Hapus index dari activePages saat dinonaktifkan
+          updatedPages = prevActivePages.filter((i) => i !== index);
+
+          if (currentPageIndex === index) {
+            // Tentukan newPageIndex berdasarkan posisi halaman
+            const newPageIndex =
+              updatedPages.find(
+                (i) => i > 0 && i < pagesData.pagesComponent.length - 1
+              ) ?? 99;
+
+            // Memeriksa apakah hanya Navbar dan Footer yang aktif
+            const onlyNavbarAndFooterActive =
+              updatedPages.length === 2 &&
+              updatedPages.includes(0) &&
+              updatedPages.includes(pagesData.pagesComponent.length - 1);
+            setCurrentPageIndex(onlyNavbarAndFooterActive ? 99 : newPageIndex);
+          }
+        } else {
+          // Tambahkan index ke activePages saat diaktifkan
+          updatedPages = [...prevActivePages, index];
+          setCurrentPageIndex(index); // Atur currentPageIndex langsung ke halaman yang dipilih
+        }
+
+        // Urutkan activePages setelah perubahan
+        return updatedPages.sort((a, b) => a - b);
+      });
+    },
+    [currentPageIndex]
+  );
 
   const middlePages = activePages.filter(
     (i) => i !== 0 && i !== pagesData.pagesComponent.length - 1
@@ -39,18 +60,17 @@ function PagesAi() {
   const handleNext = () => {
     if (currentPageIndex !== null) {
       const currentIndex = middlePages.indexOf(currentPageIndex);
-      if (currentIndex < middlePages.length - 1) {
-        setCurrentPageIndex(middlePages[currentIndex + 1]);
-      }
+      const nextIndex = (currentIndex + 1) % middlePages.length; // Loop to start
+      setCurrentPageIndex(middlePages[nextIndex]);
     }
   };
 
   const handlePrev = () => {
     if (currentPageIndex !== null) {
       const currentIndex = middlePages.indexOf(currentPageIndex);
-      if (currentIndex > 0) {
-        setCurrentPageIndex(middlePages[currentIndex - 1]);
-      }
+      const prevIndex =
+        (currentIndex - 1 + middlePages.length) % middlePages.length; // Loop to end
+      setCurrentPageIndex(middlePages[prevIndex]);
     }
   };
 
@@ -60,22 +80,56 @@ function PagesAi() {
         <Logo />
         <div className="pages-ai">
           <div className="pages-ai-core">
-            <div className="prev-button" onClick={handlePrev}>
+            <div
+              className={`prev-button ${currentPageIndex === 99 ? "none" : ""}`}
+              onClick={handlePrev}
+            >
               <span className="material-symbols-outlined">
                 arrow_back_ios_new
               </span>
             </div>
             <div className="display-data">
-              {/* Navbar */}
-              <div className="wrapper navbar">
-                <span className="material-symbols-rounded">
-                  {pagesData.pagesComponent[0].icon}
-                </span>
-                <div className="text">{pagesData.pagesComponent[0].name}</div>
-              </div>
+              {currentPageIndex === 99 && (
+                <div className="wrapper initial">
+                  <span className="material-symbols-rounded">
+                    emoji_objects
+                  </span>
+                  <div className="text">Initial Page</div>
+                </div>
+              )}
 
-              {/* Bagian Tengah */}
-              {currentPageIndex !== null && (
+              {currentPageIndex !== 99 && (
+                <div className="wrapper navbar">
+                  <div className="template">
+                    <span className="material-symbols-rounded">
+                      {pagesData.pagesComponent[0].icon}
+                    </span>
+                    <div className="title">
+                      {siteTitle === "" || siteTitle === null
+                        ? "Title Your Site"
+                        : siteTitle}
+                    </div>
+                  </div>
+                  <div className="list">
+                    {activePages
+                      .filter(
+                        (i) =>
+                          i !== 0 && i !== pagesData.pagesComponent.length - 1
+                      )
+                      .map((index) => {
+                        const pageName = pagesData.pagesComponent[
+                          index
+                        ].name.replace(/ page$/i, ""); // Hilangkan kata "page"
+                        return (
+                          <div className="text" key={index}>
+                            {pageName}
+                          </div>
+                        );
+                      })}
+                  </div>
+                </div>
+              )}
+              {currentPageIndex !== initialPageIndex && (
                 <div className="wrapper page">
                   <span className="material-symbols-rounded">
                     {pagesData.pagesComponent[currentPageIndex].icon}
@@ -85,26 +139,29 @@ function PagesAi() {
                   </div>
                 </div>
               )}
-
-              {/* Footer */}
-              <div className="wrapper footer">
-                <span className="material-symbols-rounded">
-                  {
-                    pagesData.pagesComponent[
-                      pagesData.pagesComponent.length - 1
-                    ].icon
-                  }
-                </span>
-                <div className="text">
-                  {
-                    pagesData.pagesComponent[
-                      pagesData.pagesComponent.length - 1
-                    ].name
-                  }
+              {currentPageIndex !== 99 && (
+                <div className="wrapper footer">
+                  <span className="material-symbols-rounded">
+                    {
+                      pagesData.pagesComponent[
+                        pagesData.pagesComponent.length - 1
+                      ].icon
+                    }
+                  </span>
+                  <div className="text">
+                    {
+                      pagesData.pagesComponent[
+                        pagesData.pagesComponent.length - 1
+                      ].name
+                    }
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
-            <div className="next-button" onClick={handleNext}>
+            <div
+              className={`next-button ${currentPageIndex === 99 ? "none" : ""}`}
+              onClick={handleNext}
+            >
               <span className="material-symbols-outlined">
                 arrow_back_ios_new
               </span>

@@ -91,25 +91,33 @@
     }
   }
 
-  .prev-button {
-    @include button(
-      adjust-color($color: #fff, $blackness: 25%),
-      #000,
-      #fff,
-      adjust-color($color: #fff, $blackness: 5%),
-      adjust-color($color: #fff, $blackness: 5%),
-      right
-    );
+  .step-prev {
+    @include m.flex($justify: flex-start);
+
+    .prev-button {
+      @include button(
+        adjust-color($color: #fff, $blackness: 25%),
+        #000,
+        #fff,
+        adjust-color($color: #fff, $blackness: 5%),
+        adjust-color($color: #fff, $blackness: 5%),
+        right
+      );
+    }
   }
 
-  .next-button {
-    @include button(
-      #000,
-      #fff,
-      #000,
-      adjust-color($color: #000, $whiteness: 25%),
-      adjust-color($color: #000, $whiteness: 25%),
-      left
-    );
+  .step-next {
+    @include m.flex($justify: end);
+
+    .next-button {
+      @include button(
+        #000,
+        #fff,
+        #000,
+        adjust-color($color: #000, $whiteness: 25%),
+        adjust-color($color: #000, $whiteness: 25%),
+        left
+      );
+    }
   }
 }

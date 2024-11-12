@@ -1,7 +1,9 @@
-import React, { useState, Fragment } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, Fragment, useCallback } from "react";
 import SiteInfo from "./SiteInfo/SiteInfo";
 import PagesAi from "./PagesAi/PagesAi";
+import { siteTitleSchema } from "../../helpers/ValidationSchema";
+import { toastMessage } from "../../helpers/AlertMessage";
+import { ToastContainer } from "react-toastify";
 
 const steps = [
   { icon: "info", text: "Site info" },
@@ -13,9 +15,29 @@ const steps = [
 
 function AiBuilder() {
   const [currentStep, setCurrentStep] = useState(0);
+  const [siteTitle, setSiteTitle] = useState("");
+  const maxChars = 60;
+
+  const handleSiteTitleInput = useCallback((e) => {
+    const inputSiteTitle = e.target.value;
+    if (inputSiteTitle.length <= maxChars) {
+      setSiteTitle(inputSiteTitle);
+    }
+  }, []);
 
   const handleNext = () => {
-    setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+    if (currentStep === 4) {
+      siteTitleSchema
+        .validate({ title: siteTitle }, { abortEarly: false })
+        .then(() => {
+          setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+        })
+        .catch((err) => {
+          toastMessage("error", err.errors[0], "top-center");
+        });
+    } else {
+      setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+    }
   };
 
   const handlePrev = () => {
@@ -25,16 +47,24 @@ function AiBuilder() {
   return (
     <>
       <div className="ai-builder">
-        {currentStep === 0 && <SiteInfo />}
-        {currentStep === 1 && <PagesAi />}
+        {currentStep === 0 && (
+          <SiteInfo
+            siteTitle={siteTitle}
+            maxChars={maxChars}
+            handleSiteTitleInput={handleSiteTitleInput}
+          />
+        )}
+        {currentStep === 1 && <PagesAi siteTitle={siteTitle} />}
         <div className="ai-builder-steps">
-          <button
-            onClick={handlePrev}
-            className="prev-button"
-            disabled={currentStep === 0}
-          >
-            back
-          </button>
+          <div className="step-prev">
+            <button
+              onClick={handlePrev}
+              className="prev-button"
+              disabled={currentStep === 0}
+            >
+              back
+            </button>
+          </div>
           <div className="step-list">
             {steps.map((step, index) => (
               <Fragment key={index}>
@@ -54,15 +84,14 @@ function AiBuilder() {
               </Fragment>
             ))}
           </div>
-          <button
-            onClick={handleNext}
-            className="next-button"
-            disabled={currentStep === steps.length - 1}
-          >
-            next
-          </button>
+          <div className="step-next">
+            <button onClick={handleNext} className="next-button">
+              {currentStep === steps.length - 1 ? "finish" : "next"}
+            </button>
+          </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }

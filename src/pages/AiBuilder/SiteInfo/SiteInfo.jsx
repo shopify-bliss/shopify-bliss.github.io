@@ -9,14 +9,12 @@ import {
 
 const defaultActivePersonality = brandPersonalities[0];
 
-function SiteInfo() {
+function SiteInfo({ siteTitle, handleSiteTitleInput, maxChars }) {
   const marqueeRefs = useRef([]);
   const marqueeReverseRefs = useRef([]);
   const [activePersonality, setActivePersonality] = useState(
     defaultActivePersonality
   );
-  const [siteTitle, setSiteTitle] = useState("");
-  const maxChars = 100;
 
   const initializeMarquee = (refs, className, options) => {
     document.fonts.ready.then(() => {
@@ -46,13 +44,6 @@ function SiteInfo() {
     },
     { scope: marqueeReverseRefs }
   );
-
-  const handleInputChange = useCallback((e) => {
-    const inputText = e.target.value;
-    if (inputText.length <= maxChars) {
-      setSiteTitle(inputText);
-    }
-  }, []);
 
   const handlePersonalityClick = useCallback((personality) => {
     setActivePersonality(personality);
@@ -108,7 +99,7 @@ function SiteInfo() {
               <input
                 type="text"
                 value={siteTitle}
-                onChange={handleInputChange}
+                onChange={handleSiteTitleInput}
                 maxLength={maxChars}
               />
               <span>{maxChars - siteTitle.length}</span>
