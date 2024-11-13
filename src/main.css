@@ -1085,7 +1085,7 @@
   overflow-y: auto;
   scrollbar-width: thin;
   display: grid;
-  grid-template-rows: 5.2rem 1fr 5.2rem;
+  grid-template-rows: 3.6rem 1fr 3.6rem;
   grid-template-areas: "navbar" "pages" "footer";
 }
 .ai-builder-overview .pages-ai-core .display-data .wrapper {
@@ -1093,11 +1093,32 @@
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  padding: 1.9rem;
+  padding: 1.1rem;
 }
-.ai-builder-overview .pages-ai-core .display-data .wrapper .material-symbols-rounded {
-  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
-  font-size: 30px;
+.ai-builder-overview .pages-ai-core .display-data .wrapper.initial {
+  grid-area: pages;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.ai-builder-overview .pages-ai-core .display-data .wrapper.initial .material-symbols-rounded {
+  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
+  font-size: 120px;
+  margin-bottom: 0.4rem;
+}
+.ai-builder-overview .pages-ai-core .display-data .wrapper.initial .title {
+  font-size: 1.125rem;
+  font-family: "Raleway", serif;
+  text-align: center;
+  font-weight: 700;
+}
+.ai-builder-overview .pages-ai-core .display-data .wrapper.initial .text {
+  font-size: 1.05rem;
+  font-family: "Raleway", serif;
+  text-align: center;
+  width: 80%;
+  padding-top: 0.4rem;
 }
 .ai-builder-overview .pages-ai-core .display-data .wrapper.navbar {
   display: flex;
@@ -1105,18 +1126,36 @@
   justify-content: space-between;
   flex-direction: row;
   grid-area: navbar;
+  gap: 0.4rem;
 }
 .ai-builder-overview .pages-ai-core .display-data .wrapper.navbar .template {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: row;
+  gap: 0.15rem;
+  width: 100%;
+}
+.ai-builder-overview .pages-ai-core .display-data .wrapper.navbar .template .material-symbols-rounded {
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+  font-size: 21px;
+}
+.ai-builder-overview .pages-ai-core .display-data .wrapper.navbar .template .title {
+  font-size: 0.85rem;
+  line-height: 120%;
+  font-weight: 400;
+  margin-top: -0.15rem;
 }
 .ai-builder-overview .pages-ai-core .display-data .wrapper.navbar .list {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: row;
+  gap: 0.5rem;
+  margin-right: 0.1rem;
+}
+.ai-builder-overview .pages-ai-core .display-data .wrapper.navbar .list .text {
+  font-size: 0.65rem;
 }
 .ai-builder-overview .pages-ai-core .display-data .wrapper.page {
   grid-area: pages;
@@ -1127,7 +1166,13 @@
 }
 .ai-builder-overview .pages-ai-core .display-data .wrapper.page .material-symbols-rounded {
   font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
-  font-size: 60px;
+  font-size: 84px;
+}
+.ai-builder-overview .pages-ai-core .display-data .wrapper.page .text {
+  margin-top: -0.4rem;
+  font-size: 22px;
+  font-family: "Raleway", serif;
+  font-weight: 500;
 }
 .ai-builder-overview .pages-ai-core .display-data .wrapper.footer {
   display: flex;
@@ -1135,6 +1180,31 @@
   justify-content: space-between;
   flex-direction: row-reverse;
   grid-area: footer;
+  gap: 0.4rem;
+}
+.ai-builder-overview .pages-ai-core .display-data .wrapper.footer .template {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row-reverse;
+  gap: 0.35rem;
+}
+.ai-builder-overview .pages-ai-core .display-data .wrapper.footer .template .material-symbols-rounded {
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+  font-size: 16px;
+  margin-top: 0.12rem;
+}
+.ai-builder-overview .pages-ai-core .display-data .wrapper.footer .template .text {
+  font-size: 0.85rem;
+  line-height: 120%;
+  font-weight: 400;
+}
+.ai-builder-overview .pages-ai-core .display-data .wrapper.footer .social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 0.2rem;
 }
 .ai-builder-overview .pages-ai-core .next-button {
   padding: 0.6rem;

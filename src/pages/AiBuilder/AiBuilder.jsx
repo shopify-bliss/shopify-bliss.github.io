@@ -10,7 +10,7 @@ const steps = [
   { icon: "stacks", text: "Pages" },
   { icon: "grid_view", text: "Components" },
   { icon: "colors", text: "Colors" },
-  { icon: "text_fields", text: "Fonts" },
+  { icon: "brand_family", text: "Fonts" },
 ];
 
 function AiBuilder() {

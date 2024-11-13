@@ -4,6 +4,7 @@ import {
   Logo,
   Quit,
 } from "../../../components/AiBuilderSupport/AiBuilderSupport";
+import { SocialIcon } from "react-social-icons";
 
 function PagesAi({ siteTitle }) {
   const [activePages, setActivePages] = useState([
@@ -94,7 +95,14 @@ function PagesAi({ siteTitle }) {
                   <span className="material-symbols-rounded">
                     emoji_objects
                   </span>
-                  <div className="text">Initial Page</div>
+                  <span className="title">
+                    Add components and pages to create your site.
+                  </span>
+                  <span className="text">
+                    Your site will highlight its purpose and the services or
+                    products you offer, along with the additional components and
+                    pages available.
+                  </span>
                 </div>
               )}
 
@@ -141,19 +149,56 @@ function PagesAi({ siteTitle }) {
               )}
               {currentPageIndex !== 99 && (
                 <div className="wrapper footer">
-                  <span className="material-symbols-rounded">
-                    {
-                      pagesData.pagesComponent[
-                        pagesData.pagesComponent.length - 1
-                      ].icon
-                    }
-                  </span>
-                  <div className="text">
-                    {
-                      pagesData.pagesComponent[
-                        pagesData.pagesComponent.length - 1
-                      ].name
-                    }
+                  <div className="template">
+                    <span className="material-symbols-rounded">
+                      {
+                        pagesData.pagesComponent[
+                          pagesData.pagesComponent.length - 1
+                        ].icon
+                      }
+                    </span>
+                    <div className="text">
+                      {
+                        pagesData.pagesComponent[
+                          pagesData.pagesComponent.length - 1
+                        ].name
+                      }
+                    </div>
+                  </div>
+                  <div className="social">
+                    <SocialIcon network="x" style={{ width: 15, height: 15 }} />
+                    <SocialIcon
+                      network="facebook"
+                      style={{ width: 15, height: 15 }}
+                    />
+                    <SocialIcon
+                      network="instagram"
+                      style={{ width: 15, height: 15 }}
+                    />
+                    <SocialIcon
+                      network="tiktok"
+                      style={{ width: 15, height: 15 }}
+                    />
+                    <SocialIcon
+                      network="telegram"
+                      style={{ width: 15, height: 15 }}
+                    />
+                    <SocialIcon
+                      network="youtube"
+                      style={{ width: 15, height: 15 }}
+                    />
+                    <SocialIcon
+                      network="whatsapp"
+                      style={{ width: 15, height: 15 }}
+                    />
+                    <SocialIcon
+                      network="linkedin"
+                      style={{ width: 15, height: 15 }}
+                    />
+                    <SocialIcon
+                      network="google"
+                      style={{ width: 15, height: 15 }}
+                    />
                   </div>
                 </div>
               )}

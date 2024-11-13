@@ -2,35 +2,43 @@
   "pagesComponent": [
     {
       "name": "Navbar",
-      "icon": "brand_family"
+      "icon": "alternate_email",
+      "nameClass": "navbar"
     },
     {
       "name": "Home page",
-      "icon": "home"
+      "icon": "house",
+      "nameClass": "home"
     },
     {
       "name": "About page",
-      "icon": "help"
+      "icon": "help",
+      "nameClass": "about"
     },
     {
       "name": "Service page",
-      "icon": "widgets"
+      "icon": "widgets",
+      "nameClass": "service"
     },
     {
       "name": "Contact page",
-      "icon": "assignment_ind"
+      "icon": "assignment_ind",
+      "nameClass": "contact"
     },
     {
       "name": "Shop page",
-      "icon": "shopping_bag"
+      "icon": "shopping_bag",
+      "nameClass": "shop"
     },
     {
       "name": "Blog page",
-      "icon": "newsmode"
+      "icon": "newsmode",
+      "nameClass": "blog"
     },
     {
       "name": "Footer",
-      "icon": "explore"
+      "icon": "share",
+      "nameClass": "footer"
     }
   ]
 }
