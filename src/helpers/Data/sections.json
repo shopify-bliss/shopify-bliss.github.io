@@ -1,0 +1,10 @@
+[
+  { "id": 1, "name": "Intro section" },
+  { "id": 2, "name": "Products section" },
+  { "id": 3, "name": "Services section" },
+  { "id": 4, "name": "Appointment section" },
+  { "id": 5, "name": "Digital Products section" },
+  { "id": 6, "name": "About section" },
+  { "id": 7, "name": "Social section" },
+  { "id": 8, "name": "Form section" }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Navbar",
+    "icon": "alternate_email",
+    "nameClass": "navbar"
+  },
+  {
+    "id": 2,
+    "name": "Home page",
+    "icon": "house",
+    "nameClass": "home"
+  },
+  {
+    "id": 3,
+    "name": "About page",
+    "icon": "help",
+    "nameClass": "about"
+  },
+  {
+    "id": 4,
+    "name": "Service page",
+    "icon": "widgets",
+    "nameClass": "service"
+  },
+  {
+    "id": 5,
+    "name": "Contact page",
+    "icon": "assignment_ind",
+    "nameClass": "contact"
+  },
+  {
+    "id": 6,
+    "name": "Shop page",
+    "icon": "shopping_bag",
+    "nameClass": "shop"
+  },
+  {
+    "id": 7,
+    "name": "Blog page",
+    "icon": "newsmode",
+    "nameClass": "blog"
+  },
+  {
+    "id": 8,
+    "name": "Footer",
+    "icon": "share",
+    "nameClass": "footer"
+  }
+]

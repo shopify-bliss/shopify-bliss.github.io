@@ -22,7 +22,7 @@
     }
 
     span {
-      color: map-get($map: v.$color, $key: "blue");
+      color: #000;
       @include m.flex();
       cursor: pointer;
     }
@@ -66,20 +66,17 @@
         &:hover {
           span {
             @include m.flex();
-            color: map-get($map: v.$color, $key: "blue");
+            color: #000;
           }
         }
 
         &.active {
-          background-color: rgba(
-            $color: map-get(v.$color, "other-blue"),
-            $alpha: 0.2
-          );
+          background-color: rgba($color: #fff, $alpha: 0.2);
           box-shadow: rgba($color: #000, $alpha: 0.2) 0.5px 0.5px 2px;
 
           .icon,
           .text {
-            color: map-get($map: v.$color, $key: "blue");
+            color: #000;
           }
         }
       }

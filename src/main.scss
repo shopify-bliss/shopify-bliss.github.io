@@ -1,13 +1,8 @@
 @use "./helpers/variables" as v;
 @use "./helpers/mixins" as m;
 
-@use "./components/Modal/modal";
 @use "./components/Layout/layout";
-@use "./components/Pagination/pagination";
 @use "./pages/Error404/error404";
-@use "./pages/Dashboard/dashboard";
-@use "./pages/Schedule/schedule";
-@use "./pages/Settings/settings";
 @use "./pages/AiBuilder/ai-builder";
 
 *,
@@ -42,25 +37,4 @@ input[type="file"]::-webkit-file-upload-button {
 .toast {
   z-index: 9999 !important;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2) !important;
-}
-
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-smooth iframe {
-  pointer-events: none;
 }

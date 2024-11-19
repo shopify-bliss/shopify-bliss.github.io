@@ -107,7 +107,7 @@
   }
 
   .step-next {
-    @include m.flex($justify: end);
+    @include m.flex($justify: flex-end);
 
     .next-button {
       @include button(

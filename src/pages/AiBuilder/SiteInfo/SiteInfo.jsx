@@ -1,7 +1,7 @@
-import React, { useRef, useState, useCallback, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import horizontalLoop from "../../../helpers/horizontalLoop";
-import brandPersonalities from "./fonts.json";
+import brandPersonalities from "../../../helpers/Data/fonts.json";
 import {
   Logo,
   Quit,
@@ -45,9 +45,14 @@ function SiteInfo({ siteTitle, handleSiteTitleInput, maxChars }) {
     { scope: marqueeReverseRefs }
   );
 
-  const handlePersonalityClick = useCallback((personality) => {
-    setActivePersonality(personality);
-  }, []);
+  const handlePersonalityClick = (personalityId) => {
+    const selectedPersonality = brandPersonalities.find(
+      (personality) => personality.id === personalityId
+    );
+    if (selectedPersonality) {
+      setActivePersonality(selectedPersonality);
+    }
+  };
 
   return (
     <>
@@ -66,10 +71,9 @@ function SiteInfo({ siteTitle, handleSiteTitleInput, maxChars }) {
             >
               {[...Array(8)].map((_, j) => (
                 <span
-                  className={`
-                    ${
-                      i % 2 === 0 ? "site-info-text" : "site-info-text-reverse"
-                    } ${
+                  className={`${
+                    i % 2 === 0 ? "site-info-text" : "site-info-text-reverse"
+                  } ${
                     i % 2 === 0
                       ? activePersonality.fontClass
                       : activePersonality.fontClassReverse
@@ -109,18 +113,16 @@ function SiteInfo({ siteTitle, handleSiteTitleInput, maxChars }) {
             <div className="content-title">Brand personality</div>
             <div className="content-desc">
               Every brand personality is characterized by a distinct combination
-              of colors, fonts, and tone for crafting AI-generated content. A
-              well-defined brand personality can strengthen connections with
-              customers.
+              of colors, fonts, and tone for crafting AI-generated content.
             </div>
             <div className="content-list">
-              {brandPersonalities.map((personality, index) => (
+              {brandPersonalities.map((personality) => (
                 <div
-                  key={index}
+                  key={personality.id}
                   className={`content-list-item ${
-                    activePersonality.name === personality.name ? "active" : ""
+                    activePersonality.id === personality.id ? "active" : ""
                   }`}
-                  onClick={() => handlePersonalityClick(personality)}
+                  onClick={() => handlePersonalityClick(personality.id)}
                 >
                   {personality.name}
                 </div>

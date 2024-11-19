@@ -41,7 +41,7 @@
     height: 5rem;
     cursor: pointer;
     @include m.flex();
-    
+
     .material-symbols-outlined {
       padding: 0.3rem;
       font-size: 1.7rem;
@@ -58,6 +58,78 @@
         transition: transform 0.4s ease-out, background-color 0.4s ease-out;
         background-color: adjust-color($color: #fff, $blackness: 5%);
       }
+    }
+  }
+}
+
+@mixin default-navbar() {
+  &-navbar {
+    @include m.flex($justify: space-between);
+    grid-area: navbar;
+    gap: v.$navter-gap;
+    padding: v.$p-navter;
+
+    .template {
+      @include m.flex($justify: flex-start);
+      gap: 0.15rem;
+      width: 100%;
+
+      .material-symbols-rounded {
+        font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+        font-size: v.$navter-icon;
+      }
+
+      .title {
+        font-size: v.$navter-title;
+        line-height: 120%;
+        font-weight: 400;
+        margin-top: -0.15rem;
+      }
+    }
+
+    .list {
+      @include m.flex();
+      gap: 0.5rem;
+      margin-right: 0.1rem;
+
+      .text {
+        font-size: v.$navbar-menu;
+
+        &.active {
+          font-weight: 800;
+        }
+      }
+    }
+  }
+}
+
+@mixin default-footer() {
+  &-footer {
+    @include m.flex($direction: row-reverse, $justify: space-between);
+    grid-area: footer;
+    gap: v.$navter-gap;
+    padding: v.$p-navter;
+
+    .template {
+      @include m.flex($direction: row-reverse);
+      gap: 0.35rem;
+
+      .material-symbols-rounded {
+        font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+        font-size: v.$navter-icon - 5px;
+        margin-top: 0.12rem;
+      }
+
+      .text {
+        font-size: v.$navter-title;
+        line-height: 120%;
+        font-weight: 400;
+      }
+    }
+
+    .social {
+      @include m.flex();
+      gap: 0.2rem;
     }
   }
 }

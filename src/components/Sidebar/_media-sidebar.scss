@@ -8,7 +8,7 @@
     &.show {
       display: block;
       position: absolute;
-      background-color: map-get($map: v.$color, $key: "light-grey");
+      background-color: #ddd;
       height: 100%;
       padding: 0 2.6vw;
       width: 40vw;

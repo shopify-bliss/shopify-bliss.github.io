@@ -5,7 +5,7 @@
   width: 100%;
   padding: 0 v.$px-topbar-content;
   height: v.$h-topbar-sidebar;
-  @include m.flex($justify: space-between);
+  @include m.flex($justify: space-between, $direction: column);
   border-bottom: 0.15vw solid #ddd;
 
   &-search {
