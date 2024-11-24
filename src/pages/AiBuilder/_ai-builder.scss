@@ -54,5 +54,7 @@
     background-color: #fff;
 
     @include steps.steps();
+
+    background: url("../../../assets/images/ai-builder/ai-builder-bg.jpg") no-repeat center center;
   }
 }

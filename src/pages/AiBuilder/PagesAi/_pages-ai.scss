@@ -32,7 +32,7 @@
         background-color: #fff;
         box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.1);
         display: grid;
-        grid-template-rows: 3.6rem 1fr 3.6rem;
+        grid-template-rows: auto 1fr auto;
         grid-template-areas:
           "navbar"
           "pages"

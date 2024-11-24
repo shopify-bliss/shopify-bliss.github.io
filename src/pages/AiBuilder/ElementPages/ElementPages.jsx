@@ -16,12 +16,12 @@ function ElementPages({
   currentPageId,
   setCurrentPageId,
 }) {
-  useEffect(() => {
-    console.log("test" + activeSections);
-    console.log("test pages" + activePages);
+  // useEffect(() => {
+  //   console.log("test" + activeSections);
+  //   console.log("test pages" + activePages);
 
-    console.log("noew" + currentPageId);
-  }, [activeSections, activePages]);
+  //   console.log("noew" + currentPageId);
+  // }, [activeSections, activePages]);
 
   const middlePages = activePages.filter(
     (id) =>

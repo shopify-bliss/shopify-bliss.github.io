@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Search",
+    "icon": "search",
+    "className": "search"
+  },
+  {
+    "id": 2,
+    "name": "Cart",
+    "icon": "shopping_bag",
+    "className": "cart"
+  },
+  {
+    "id": 3,
+    "name": "Login",
+    "icon": "account_circle",
+    "className": "login"
+  }
+]

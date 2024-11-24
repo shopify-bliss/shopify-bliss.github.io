@@ -28,13 +28,13 @@
         overflow-y: auto;
         scrollbar-width: thin;
         display: grid;
-        grid-template-rows: 3.6rem 1fr 3.6rem;
+        grid-template-rows: auto 1fr auto;
         grid-template-areas:
           "navbar"
           "sections"
           "footer";
 
-        @include support.default-navbar();
+        @include support.default-navbar($manipulation: true);
 
         &-section {
           grid-area: sections;

@@ -1,7 +1,7 @@
 [
   { "id": 1, "icon": "info", "text": "Site info" },
   { "id": 2, "icon": "stacks", "text": "Pages" },
-  { "id": 3, "icon": "grid_view", "text": "Elements" },
+  { "id": 3, "icon": "widgets", "text": "Elements" },
   { "id": 4, "icon": "colors", "text": "Colors" },
   { "id": 5, "icon": "brand_family", "text": "Fonts" }
 ]
