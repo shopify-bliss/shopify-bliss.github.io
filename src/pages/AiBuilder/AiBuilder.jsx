@@ -6,7 +6,7 @@ import { siteTitleSchema } from "../../helpers/ValidationSchema";
 import { toastMessage } from "../../helpers/AlertMessage";
 import { ToastContainer } from "react-toastify";
 import urlEndpoint from "../../helpers/urlEndpoint";
-import steps from "../../helpers/Data/steps.json";
+import steps from "../../data/steps.json";
 import axios from "axios";
 
 function AiBuilder() {
@@ -25,6 +25,7 @@ function AiBuilder() {
   const [activeSections, setActiveSections] = useState({});
 
   const [dataPages, setDataPages] = useState([]);
+  const [dataElements, setDataElements] = useState([]);
 
   const handleSiteTitleInput = useCallback((e) => {
     const inputSiteTitle = e.target.value;
@@ -101,6 +102,13 @@ function AiBuilder() {
     [currentPageId]
   );
 
+  useEffect(() => {
+    setActiveSections((prev) => ({
+      ...prev,
+      [currentPageId]: prev[currentPageId] || [],
+    }));
+  }, [currentPageId]);
+
   const fetchDataPages = useCallback(async () => {
     await axios
       .get(urlEndpoint.pagesAi)
@@ -112,12 +120,16 @@ function AiBuilder() {
       });
   }, []);
 
-  useEffect(() => {
-    setActiveSections((prev) => ({
-      ...prev,
-      [currentPageId]: prev[currentPageId] || [],
-    }));
-  }, [currentPageId]);
+  const fetchDataElements = useCallback(async () => {
+    await axios
+      .get(urlEndpoint.elementsAi)
+      .then((res) => {
+        setDataElements(res.data.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   const handleNext = () => {
     if (currentStep === 1) {
@@ -176,6 +188,8 @@ function AiBuilder() {
             dataPages={dataPages}
             currentPageId={currentPageId}
             setCurrentPageId={setCurrentPageId}
+            dataElements={dataElements}
+            fetchDataElements={fetchDataElements}
           />
         )}
         <div className="ai-builder-steps">

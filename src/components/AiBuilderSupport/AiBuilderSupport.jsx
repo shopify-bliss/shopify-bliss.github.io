@@ -1,19 +1,6 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { SocialIcon } from "react-social-icons";
-import {
-  ExpalotNavbarStyles,
-  ExpalotNavbarFeatures,
-  useDisplaySiteTitle,
-  useDisplayLogo,
-  useDisplayActivePages,
-  useHandleActiveNavbar,
-  useHandleActiveFeatures,
-  useDisplayActiveFeatures,
-} from "./NavbarLayoutConfig";
-import navbarFeatures from "../../helpers/Data/navbarFeature.json";
-import navbarOptionLayout from "../../helpers/Data/navbarOptionLayout.json";
-import { toastMessage } from "../../helpers/AlertMessage";
 
 export function Logo() {
   return (
@@ -32,31 +19,47 @@ export function Quit() {
   );
 }
 
-export function DefaultNavbar({
-  dataPages,
-  siteTitle,
+export function ControllingOverviews({
   activePages,
   currentPageId,
+  setCurrentPageId,
 }) {
-  const [isExpandLayout, setIsExpandLayout] = useState(false);
-  const [activeFeatures, setActiveFeatures] = useState([]);
-  const [activeNavbar, setActiveNavbar] = useState(1);
-  const expandLayoutRef = useRef(null);
+  const middlePages = activePages.filter(
+    (id) =>
+      id !== "2bff7888-e861-4341-869b-189af29ad3f8" &&
+      id !== "40229892-a523-4e1f-a936-a3051e9d30bb"
+  );
 
-  const displaySiteTitle = useDisplaySiteTitle({ siteTitle });
-  const displayLogo = useDisplayLogo({ dataPages, displaySiteTitle });
-  const displayActivePages = useDisplayActivePages({
-    activePages,
-    dataPages,
-    currentPageId,
-  });
-  const handleActiveNavbar = useHandleActiveNavbar({ setActiveNavbar });
-  const handleActiveFeatures = useHandleActiveFeatures({ setActiveFeatures });
-  const displayActiveFeatures = useDisplayActiveFeatures({
-    activeFeatures,
-    navbarFeatures,
-  });
+  const handleNext = () => {
+    if (currentPageId !== null) {
+      const currentIndex = middlePages.indexOf(currentPageId);
+      const nextIndex = (currentIndex + 1) % middlePages.length; // Loop kembali ke awal
+      setCurrentPageId(middlePages[nextIndex]);
+    }
+  };
 
+  const handlePrev = () => {
+    if (currentPageId !== null) {
+      const currentIndex = middlePages.indexOf(currentPageId);
+      const prevIndex =
+        (currentIndex - 1 + middlePages.length) % middlePages.length; // Loop ke akhir
+      setCurrentPageId(middlePages[prevIndex]);
+    }
+  };
+
+  return {
+    handleNext,
+    handlePrev,
+  };
+}
+
+export function ChangeLayout({
+  isExpandLayout,
+  setIsExpandLayout,
+  expandLayoutRef,
+  onCollapse,
+  onExpand,
+}) {
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -64,6 +67,7 @@ export function DefaultNavbar({
         !expandLayoutRef.current.contains(e.target)
       ) {
         setIsExpandLayout(false);
+        if (onCollapse) onCollapse();
       }
     };
 
@@ -74,121 +78,61 @@ export function DefaultNavbar({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [onCollapse]);
 
-  const typeNavbarStyles = useMemo(
-    () => navbarOptionLayout.find((option) => option.id === activeNavbar),
-    [activeNavbar]
+  const handleExpand = useCallback(
+    (e) => {
+      e.stopPropagation();
+      setIsExpandLayout(true);
+      if (onExpand) onExpand();
+    },
+    [setIsExpandLayout, onExpand]
   );
 
-  useEffect(() => {
-    if (!typeNavbarStyles) {
-      toastMessage("warn", "Navbar layout not found");
-    }
-  }, [typeNavbarStyles]);
-
   return (
-    <>
-      <div className={`display-data-navbar ${typeNavbarStyles.className}`}>
-        <div className="template-logo">{displayLogo}</div>
-
-        {typeNavbarStyles.id === 3 ? (
-          <div className="template-wrapper">
-            <div
-              className={`template-search ${
-                activeFeatures.includes(1) ? "active" : ""
-              }`}
-            >
-              {displayActiveFeatures("just-1")}
-            </div>
-            <div className="template-links">{displayActivePages}</div>
-          </div>
-        ) : (
-          <div className="template-links">{displayActivePages}</div>
-        )}
-
-        {typeNavbarStyles.features && (
-          <div className="template-features">
-            {displayActiveFeatures(typeNavbarStyles.features)}
-          </div>
-        )}
-
-        <div
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsExpandLayout(true);
-          }}
-          className={`change-layout ${isExpandLayout ? "expand" : ""}`}
-        >
-          <span className="material-symbols-outlined">space_dashboard</span>
-          <div className="text">Change Layout</div>
-        </div>
-      </div>
-      {isExpandLayout && (
-        <div ref={expandLayoutRef} className="expalot-navbar">
-          <div className="expalot-navbar-features">
-            <div className="title">Choose navbar features</div>
-            <div className="wrapper">
-              <ExpalotNavbarFeatures
-                navbarFeatures={navbarFeatures}
-                activeFeatures={activeFeatures}
-                handleActiveFeatures={handleActiveFeatures}
-              />
-            </div>
-          </div>
-          <div div className="expalot-navbar-styles">
-            <div className="title">Choose a layout option</div>
-            <div className="wrapper-left">
-              <ExpalotNavbarStyles
-                layoutIds={[1, 3]}
-                navbarOptionLayout={navbarOptionLayout}
-                activeNavbar={activeNavbar}
-                handleActiveNavbar={handleActiveNavbar}
-                displayLogo={displayLogo}
-                displayActivePages={displayActivePages}
-                displayActiveFeatures={displayActiveFeatures}
-                activeFeatures={activeFeatures}
-              />
-            </div>
-            <div className="wrapper-right">
-              <ExpalotNavbarStyles
-                layoutIds={[2, 4]}
-                navbarOptionLayout={navbarOptionLayout}
-                activeNavbar={activeNavbar}
-                handleActiveNavbar={handleActiveNavbar}
-                displayLogo={displayLogo}
-                displayActivePages={displayActivePages}
-                displayActiveFeatures={displayActiveFeatures}
-                activeFeatures={activeFeatures}
-              />
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+    <div
+      onClick={handleExpand}
+      ref={expandLayoutRef}
+      className={`change-layout ${isExpandLayout ? "expand" : ""}`}
+    >
+      <span className="material-symbols-outlined">space_dashboard</span>
+      <div className="text">Change Layout</div>
+    </div>
   );
 }
 
+export function useHandleActiveEl({ setActiveEl }) {
+  const handleActiveEl = useCallback((elId) => {
+    setActiveEl(elId);
+  }, []);
+
+  return handleActiveEl;
+}
+
 export function DefaultFooter({ dataPages }) {
+  const icon = useMemo(
+    () =>
+      dataPages.find(
+        (page) =>
+          page.type_template_id === "40229892-a523-4e1f-a936-a3051e9d30bb"
+      )?.icon,
+    [dataPages]
+  );
+
+  const name = useMemo(
+    () =>
+      dataPages.find(
+        (page) =>
+          page.type_template_id === "40229892-a523-4e1f-a936-a3051e9d30bb"
+      )?.type,
+    [dataPages]
+  );
+
   return (
     <div className="display-data-footer">
       <div className="template">
-        <span className="material-symbols-outlined">
-          {
-            dataPages.find(
-              (page) =>
-                page.type_template_id === "40229892-a523-4e1f-a936-a3051e9d30bb"
-            )?.icon
-          }
-        </span>
-        <div className="text">
-          {
-            dataPages.find(
-              (page) =>
-                page.type_template_id === "40229892-a523-4e1f-a936-a3051e9d30bb"
-            )?.type
-          }
-        </div>
+        <span className="material-symbols-outlined">{icon}</span>
+        <div className="text">{name}</div>
       </div>
       <div className="social">
         <SocialIcon network="x" style={{ width: 15, height: 15 }} />

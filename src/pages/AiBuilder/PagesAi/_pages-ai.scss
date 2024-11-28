@@ -1,6 +1,7 @@
 @use "../../../helpers/mixins" as m;
 @use "../../../helpers/variables" as v;
 @use "../../../components/AiBuilderSupport/ai-builder-support" as support;
+@use "../../../components/AiBuilderSupport/NavbarLayout/navbar-layout" as navbar;
 
 @mixin text-initial($fs: 1.05rem) {
   font-size: $fs;
@@ -23,7 +24,7 @@
       gap: 0.9rem;
 
       .prev-button {
-        @include m.buttonOverview(left);
+        @include support.buttonOverview(left);
       }
 
       .display-data {
@@ -37,8 +38,9 @@
           "navbar"
           "pages"
           "footer";
+          position: relative;
 
-        @include support.default-navbar();
+        @include navbar.navbar-layout();
 
         &-initial {
           grid-area: pages;
@@ -85,7 +87,7 @@
       }
 
       .next-button {
-        @include m.buttonOverview(right, rotate(180deg));
+        @include support.buttonOverview(right, rotate(180deg));
       }
     }
   }

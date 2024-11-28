@@ -1,10 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Logo,
   Quit,
-  DefaultNavbar,
   DefaultFooter,
 } from "../../../components/AiBuilderSupport/AiBuilderSupport";
+import {
+  ControllingOverviews,
+  useHandleActiveEl,
+} from "../../../components/AiBuilderSupport/AiBuilderSupport";
+import NavbarLayout from "../../../components/AiBuilderSupport/NavbarLayout/NavbarLayout";
 
 function PagesAi({
   siteTitle,
@@ -16,32 +20,21 @@ function PagesAi({
   dataPages,
   fetchDataPages,
 }) {
+  const [activeNavbar, setActiveNavbar] = useState(1);
+
   useEffect(() => {
     fetchDataPages();
-  }, [activePages, fetchDataPages]);
+  }, [fetchDataPages]);
 
-  const middlePages = activePages.filter(
-    (id) =>
-      id !== "2bff7888-e861-4341-869b-189af29ad3f8" &&
-      id !== "40229892-a523-4e1f-a936-a3051e9d30bb"
-  );
+  const { handleNext, handlePrev } = ControllingOverviews({
+    activePages: activePages,
+    currentPageId: currentPageId,
+    setCurrentPageId: setCurrentPageId,
+  });
 
-  const handleNext = () => {
-    if (currentPageId !== null) {
-      const currentIndex = middlePages.indexOf(currentPageId);
-      const nextIndex = (currentIndex + 1) % middlePages.length; // Loop kembali ke awal
-      setCurrentPageId(middlePages[nextIndex]);
-    }
-  };
-
-  const handlePrev = () => {
-    if (currentPageId !== null) {
-      const currentIndex = middlePages.indexOf(currentPageId);
-      const prevIndex =
-        (currentIndex - 1 + middlePages.length) % middlePages.length; // Loop ke akhir
-      setCurrentPageId(middlePages[prevIndex]);
-    }
-  };
+  const handleActiveNavbar = useHandleActiveEl({
+    setActiveEl: setActiveNavbar,
+  });
 
   return (
     <>
@@ -79,10 +72,13 @@ function PagesAi({
 
               {currentPageId !== initialPageId && (
                 <>
-                  <DefaultNavbar
+                  <NavbarLayout
                     activePages={activePages}
                     dataPages={dataPages}
                     siteTitle={siteTitle}
+                    currentPageId={currentPageId}
+                    activeNavbar={activeNavbar}
+                    handleActiveNavbar={handleActiveNavbar}
                   />
                   <div className="display-data-page">
                     <span className="material-symbols-rounded">

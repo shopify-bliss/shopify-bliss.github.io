@@ -13,6 +13,7 @@ createRoot(document.getElementById("root")).render(
       <SearchProvider>
         <Routes>
           <Route path="/" element={<AiBuilder />} />
+          <Route path="/dashboard" element={<AiBuilder />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
       </SearchProvider>

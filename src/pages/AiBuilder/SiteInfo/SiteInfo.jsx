@@ -1,11 +1,14 @@
 import React, { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import horizontalLoop from "../../../helpers/horizontalLoop";
-import brandPersonalities from "../../../helpers/Data/fonts.json";
+import brandPersonalities from "../../../data/fonts.json";
 import {
   Logo,
   Quit,
 } from "../../../components/AiBuilderSupport/AiBuilderSupport";
+
+gsap.registerPlugin(useGSAP);
 
 const defaultActivePersonality = brandPersonalities[0];
 

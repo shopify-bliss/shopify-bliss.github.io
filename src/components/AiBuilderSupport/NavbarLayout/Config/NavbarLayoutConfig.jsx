@@ -53,14 +53,6 @@ export function useDisplayActivePages({
   return displayActivePages;
 }
 
-export function useHandleActiveNavbar({ setActiveNavbar }) {
-  const handleActiveNavbar = useCallback((navbarId) => {
-    setActiveNavbar(navbarId);
-  }, []);
-
-  return handleActiveNavbar;
-}
-
 export function useHandleActiveFeatures({ setActiveFeatures }) {
   const handleActiveFeatures = useCallback((featureId) => {
     setActiveFeatures((prevActiveFeatures) => {
@@ -187,27 +179,27 @@ export function ExpalotNavbarStyles({
         }`}
         onClick={() => handleActiveNavbar(layout.id)}
       >
-        <div className="content template-logo">{displayLogo}</div>
+        <div className="template-logo">{displayLogo}</div>
 
         {layout.id === 3 ? (
           <>
-            <div className="content template-wrapper">
+            <div className="template-wrapper">
               <div
-                className={`content template-search ${
+                className={`template-search ${
                   activeFeatures.includes(1) ? "active" : ""
                 }`}
               >
                 {displayActiveFeatures("just-1")}
               </div>
-              <div className="content template-links">{displayActivePages}</div>
+              <div className="template-links">{displayActivePages}</div>
             </div>
           </>
         ) : (
-          <div className="content template-links">{displayActivePages}</div>
+          <div className="template-links">{displayActivePages}</div>
         )}
 
         {layout.features && (
-          <div className="content template-features">
+          <div className="template-features">
             {displayActiveFeatures(layout.features)}
           </div>
         )}

@@ -1,0 +1,159 @@
+@use "../../../../helpers/mixins" as m;
+@use "../../../../helpers/variables" as v;
+@use "../../../../components/AiBuilderSupport/ai-builder-support" as support;
+@use "./intro-el-config" as config;
+
+$h-image: 14rem;
+$pt-overview: 2.8rem;
+$fs-brand: 3.5rem;
+$fs-desc: 12px;
+$fs-preface: 1.5rem;
+$fs-button: 9px;
+
+@mixin intro-el() {
+  width: 100%;
+  height: auto;
+  min-height: 50vh;
+  border: v.$border-hover;
+  position: relative;
+  padding: $pt-overview v.$p-navter v.$p-navter;
+
+  .change-layout {
+    display: none;
+  }
+
+  &.style-1 {
+    @include config.style-1();
+    @include support.change-layout($dark-theme: true);
+
+    .template-brand {
+      @include config.brand($fs: $fs-brand);
+    }
+
+    .template-desc {
+      @include config.desc(
+        $position: true,
+        $white-theme: true,
+        $w: 35%,
+        $fs: $fs-desc
+      );
+      bottom: 11.5%;
+      left: 6.5%;
+    }
+
+    .template-image {
+      @include config.image(
+        $image: (
+          linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url("assets/images/elements/intro/pexels-heyho-7535030.jpg"),
+        ),
+        $height: $h-image
+      );
+    }
+  }
+
+  &.style-2 {
+    @include config.style-2();
+    @include support.change-layout($dark-theme: true);
+
+    .template-wrapper {
+      @include m.flex($direction: column, $align: flex-start);
+      gap: 0.7rem;
+
+      .template-preface {
+        @include config.preface($w: 60%, $fs: $fs-preface);
+      }
+
+      .template-desc {
+        @include config.desc($w: 100%, $fs: $fs-desc);
+      }
+
+      .template-button {
+        @include config.button(
+          $bg: #000,
+          $color: #fff,
+          $fs: $fs-button,
+          $p: 0.4rem 0.8rem,
+          $m-top: 1rem
+        );
+      }
+    }
+
+    .template-image {
+      @include config.image(
+        $image: (
+          linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url("assets/images/elements/intro/pexels-heyho-7535030.jpg"),
+        )
+      );
+    }
+  }
+
+  &.style-3 {
+      @include support.change-layout($dark-theme: true);
+    @include config.style-3();
+    gap: 0.9rem;
+
+    .template-preface {
+      @include config.preface(
+        $white-theme: true,
+        $align-center: true,
+        $fs: $fs-preface
+      );
+    }
+
+    .template-desc {
+      @include config.desc(
+        $align-center: true,
+        $w: 70%,
+        $white-theme: true,
+        $fs: $fs-desc
+      );
+    }
+
+    .template-button {
+      @include config.button(
+        $fs: $fs-button,
+        $p: 0.4rem 0.8rem,
+        $m-top: 0.8rem
+      );
+    }
+  }
+
+  &.style-4 {
+    @include support.change-layout($dark-theme: true);
+    @include config.style-4();
+    gap: 0.7rem;
+
+    .template-desc {
+      @include config.desc($w: 35%, $white-theme: true, $fs: $fs-desc);
+    }
+
+    .template-button {
+      @include config.button(
+        $bordered: true,
+        $bg: transparent,
+        $color: #fff,
+        $color-border: #fff,
+        $fs: $fs-button,
+        $p: 0.4rem 0.8rem,
+        $m-top: 0.3rem
+      );
+    }
+
+    .template-wrapper {
+      width: 100%;
+      @include m.flex();
+      margin-top: auto;
+      overflow: hidden;
+
+      .template-brand {
+        @include config.brand(
+          $fs: $fs-brand,
+          $white-theme: true,
+          $fs-marquee: $fs-brand
+        );
+      }
+    }
+  }
+}

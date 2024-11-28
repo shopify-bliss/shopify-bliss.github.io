@@ -1,0 +1,124 @@
+@use "../../../helpers/mixins" as m;
+@use "../../../helpers/variables" as v;
+@use "../ai-builder-support" as support;
+@use "./Config/navbar-layout-config" as config;
+
+@mixin navbar-layout($manipulation: false) {
+  &-navbar {
+    grid-area: navbar;
+    width: 100%;
+    height: 100%;
+    padding: (v.$p-navter * 1.35) v.$p-navter 0;
+    border: v.$border-hover;
+    position: absolute;
+    z-index: 10;
+
+    .change-layout {
+      display: none;
+    }
+
+    @if $manipulation {
+      padding-bottom: 3.1rem;
+
+      @include support.change-layout();
+    }
+
+    &.white-color {
+      color: #fff;
+    }
+
+    .template-logo {
+      @include config.logo(
+        $gap: 0.15rem,
+        $fs-icon: v.$navter-icon,
+        $fs-title: v.$navter-title,
+        $line-height: 120%
+      );
+    }
+
+    .template-links {
+      @include config.links(
+        $gap: 0.5rem,
+        $fs-text: v.$navter-text,
+        $m-right: 0.1rem
+      );
+    }
+
+    .template-features {
+      @include config.features(
+        $gap: 0.15rem,
+        $fs-icon: v.$navter-icon,
+        $fs-text: v.$navter-text,
+        $m-top: -0.05rem
+      );
+    }
+
+    .template-search {
+      @include config.search(
+        $gap: 0.15rem,
+        $fs-icon: 12px,
+        $fs-icon-warn: v.$navter-icon,
+        $fs-text: v.$navter-text,
+        $m: auto,
+        $p: 0.35rem 0.4rem,
+        $height: 1.5vh,
+        $width: 13vw
+      );
+    }
+
+    &.style-1 {
+      @include config.style-1();
+    }
+
+    &.style-2 {
+      padding-top: v.$p-navter * 1.45;
+
+      @include config.style-2($row-gap: 0.25rem);
+      .template-logo {
+        @include config.logo(
+          $gap: 0.15rem,
+          $fs-icon: v.$navter-icon,
+          $fs-title: v.$navter-title,
+          $line-height: 120%,
+          $start: false
+        );
+      }
+
+      .template-links {
+        @include config.links(
+          $gap: 0.5rem,
+          $fs-text: v.$navter-text,
+          $m-right: 0.1rem,
+          $end: false
+        );
+      }
+    }
+
+    &.style-3 {
+      padding-top: v.$p-navter * 1.8;
+
+      @include config.style-3($row-gap: 0.5rem);
+      .template-links {
+        @include config.links(
+          $gap: 0.5rem,
+          $fs-text: v.$navter-text,
+          $m-right: 0.1rem,
+          $end: false
+        );
+      }
+    }
+
+    &.style-4 {
+      @include config.style-4();
+
+      .template-links {
+        @include config.links(
+          $gap: 0.5rem,
+          $fs-text: v.$navter-text,
+          $m-right: 0.1rem,
+          $end: false
+        );
+      }
+    }
+  }
+}

@@ -1,11 +1,14 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useEffect, Fragment, useMemo, useState } from "react";
 import {
   Quit,
   Logo,
   DefaultFooter,
-  DefaultNavbar,
+  useHandleActiveEl,
 } from "../../../components/AiBuilderSupport/AiBuilderSupport";
-import sectionsData from "../../../helpers/Data/sections.json";
+import sectionData from "../../../data/sections.json";
+import { ControllingOverviews } from "../../../components/AiBuilderSupport/AiBuilderSupport";
+import IntroEl from "./IntroEl/IntroEl";
+import NavbarLayout from "../../../components/AiBuilderSupport/NavbarLayout/NavbarLayout";
 
 function ElementPages({
   activePages,
@@ -15,36 +18,28 @@ function ElementPages({
   dataPages,
   currentPageId,
   setCurrentPageId,
+  // dataElements,
+  // fetchDataElements,
 }) {
   // useEffect(() => {
-  //   console.log("test" + activeSections);
-  //   console.log("test pages" + activePages);
+  //   fetchDataElements();
+  // }, [fetchDataElements]);
 
-  //   console.log("noew" + currentPageId);
-  // }, [activeSections, activePages]);
+  const [activeIntroEl, setActiveIntroEl] = useState(1);
+  const [activeNavbar, setActiveNavbar] = useState(1);
 
-  const middlePages = activePages.filter(
-    (id) =>
-      id !== "2bff7888-e861-4341-869b-189af29ad3f8" &&
-      id !== "40229892-a523-4e1f-a936-a3051e9d30bb"
-  );
+  const { handleNext, handlePrev } = ControllingOverviews({
+    activePages: activePages,
+    currentPageId: currentPageId,
+    setCurrentPageId: setCurrentPageId,
+  });
 
-  const handleNext = () => {
-    if (currentPageId !== null) {
-      const currentIndex = middlePages.indexOf(currentPageId);
-      const nextIndex = (currentIndex + 1) % middlePages.length; // Loop kembali ke awal
-      setCurrentPageId(middlePages[nextIndex]);
-    }
-  };
-
-  const handlePrev = () => {
-    if (currentPageId !== null) {
-      const currentIndex = middlePages.indexOf(currentPageId);
-      const prevIndex =
-        (currentIndex - 1 + middlePages.length) % middlePages.length; // Loop ke akhir
-      setCurrentPageId(middlePages[prevIndex]);
-    }
-  };
+  const handleActiveNavbar = useHandleActiveEl({
+    setActiveEl: setActiveNavbar,
+  });
+  const handleActiveIntroEl = useHandleActiveEl({
+    setActiveEl: setActiveIntroEl,
+  });
 
   return (
     <>
@@ -59,28 +54,37 @@ function ElementPages({
                 arrow_back_ios_new
               </span>
             </div>
+
             <div className="display-data">
-              <DefaultNavbar
+              <NavbarLayout
                 activePages={activePages}
                 dataPages={dataPages}
                 siteTitle={siteTitle}
                 currentPageId={currentPageId}
+                activeNavbar={activeNavbar}
+                handleActiveNavbar={handleActiveNavbar}
+                activeIntroEl={activeIntroEl}
               />
-
               {currentPageId !== null && (
                 <div className="display-data-section">
-                  {sectionsData
+                  {sectionData
                     .filter((section) =>
                       activeSections[currentPageId]?.includes(section.id)
                     )
                     .map((section) => (
                       <Fragment key={section.id}>
-                        <div className="text">{section.name}</div>
+                        {section.id === 1 ? (
+                          <IntroEl
+                            handleActiveIntroEl={handleActiveIntroEl}
+                            activeIntroEl={activeIntroEl}
+                          />
+                        ) : (
+                          <div className="text">{section.name}</div>
+                        )}
                       </Fragment>
                     ))}
                 </div>
               )}
-
               <DefaultFooter dataPages={dataPages} />
             </div>
             <div
@@ -105,7 +109,7 @@ function ElementPages({
             few sections as needed to achieve your desired structure.
           </div>
           <div className="content">
-            {sectionsData.map((section) => (
+            {sectionData.map((section) => (
               <div
                 className={`content-item ${
                   activeSections[currentPageId]?.includes(section.id)

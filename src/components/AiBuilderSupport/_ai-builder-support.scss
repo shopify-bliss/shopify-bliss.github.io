@@ -1,6 +1,5 @@
 @use "../../helpers/mixins" as m;
 @use "../../helpers/variables" as v;
-@use "./navbar-layout-config" as config;
 
 @mixin logo() {
   .ai-builder-logo {
@@ -63,313 +62,145 @@
   }
 }
 
-@mixin default-navbar($manipulation: false) {
-  &-navbar {
-    grid-area: navbar;
+@mixin buttonOverview($transform-origin, $rotate: 0) {
+  padding: 0.6rem;
+  cursor: pointer;
+  border: 1.5px solid adjust-color($color: #fff, $blackness: 10%);
+  @include m.flex();
+  position: relative;
+  transition: transform 0.4s ease-out;
+  overflow: hidden;
+  z-index: 2;
+  visibility: visible;
+  opacity: 1;
+
+  .material-symbols-outlined {
+    transform: $rotate;
+    font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 100%;
     height: 100%;
-    padding: v.$p-navter;
-    border: transparent solid 1.5px;
-    position: relative;
+    background-color: adjust-color($color: #fff, $blackness: 10%);
+    bottom: 0;
+    left: 0;
+    transform: scale(0);
+    transform-origin: bottom $transform-origin;
+    transition: transform 0.4s ease-out, border 0.4s ease-out;
+  }
+
+  &:hover {
+    &::after {
+      transform: scale(1);
+    }
+  }
+
+  &.none {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+@mixin change-layout($dark-theme: false, $white-theme: false) {
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: #0d6efd;
+    transition: border-color 0.2s ease-out;
 
     .change-layout {
-      display: none;
-    }
+      position: absolute;
+      right: 0.6rem;
+      bottom: 0.6rem;
+      cursor: pointer;
+      @include m.flex();
+      gap: 0.25rem;
+      padding: 0.3rem 0.5rem 0.3rem 0.4rem;
+      border: adjust-color($color: #fff, $blackness: 10%) solid 1px;
+      z-index: 2;
+      border-radius: 0.2rem;
+      overflow: hidden;
 
-    @if $manipulation {
-      padding-bottom: 3.1rem;
+      @if $dark-theme {
+        border-color: adjust-color($color: #fff, $blackness: 90%);
+        color: #fff;
+      }
 
-      &:hover,
-      &:focus,
-      &:active {
-        border-color: #0d6efd;
-        transition: border-color 0.2s ease-out;
+      @if $white-theme {
+        border-color: #fff;
+      }
 
-        .change-layout {
-          position: absolute;
-          right: 0.6rem;
-          bottom: 0.6rem;
-          cursor: pointer;
-          @include m.flex();
-          gap: 0.25rem;
-          padding: 0.4rem 0.65rem 0.4rem 0.6rem;
-          border: adjust-color($color: #fff, $blackness: 10%) solid 1px;
-          z-index: 2;
-          border-radius: 0.2rem;
-          overflow: hidden;
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
+        font-size: v.$navter-icon;
+      }
 
-          .material-symbols-outlined {
-            font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
-            font-size: v.$navter-icon;
-          }
+      .text {
+        font-size: v.$navter-text;
+        text-transform: uppercase;
+        line-height: 100%;
+      }
 
-          .text {
-            font-size: v.$navter-text;
-            text-transform: uppercase;
-            line-height: 100%;
-          }
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: adjust-color($color: #fff, $blackness: 10%);
+        transform: scale(0);
+        transform-origin: top left;
+        transition: transform 0.4s ease-out;
+        z-index: -1;
 
-          &::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: adjust-color($color: #fff, $blackness: 10%);
-            transform: scale(0);
-            transform-origin: top left;
-            transition: transform 0.4s ease-out;
-            z-index: -1;
-          }
+        @if $dark-theme {
+          background-color: adjust-color($color: #fff, $blackness: 90%);
+        }
 
-          &:hover {
-            &::after {
-              transform: scaleX(1);
-              transition: transform 0.4s ease-out;
-            }
-          }
-
-          &.expand {
-            display: none;
-          }
+        @if $white-theme {
+          background-color: #fff;
         }
       }
-    }
 
-    .template-logo {
-      @include config.logo(
-        $gap: 0.15rem,
-        $fs-icon: v.$navter-icon,
-        $fs-title: v.$navter-title,
-        $line-height: 120%
-      );
-    }
-
-    .template-links {
-      @include config.links(
-        $gap: 0.5rem,
-        $fs-text: v.$navter-text,
-        $m-right: 0.1rem
-      );
-    }
-
-    .template-features {
-      @include config.features(
-        $gap: 0.15rem,
-        $fs-icon: v.$navter-icon,
-        $fs-text: v.$navter-text,
-        $m-top: -0.05rem
-      );
-    }
-
-    .template-search {
-      @include config.search(
-        $gap: 0.15rem,
-        $fs-icon: 12px,
-        $fs-icon-warn: v.$navter-icon,
-        $fs-text: v.$navter-text,
-        $m: auto,
-        $p: 0.35rem 0.4rem,
-        $height: 1.5vh,
-        $width: 13vw
-      );
-    }
-
-    &.style-1 {
-      @include config.style-1();
-    }
-
-    &.style-2 {
-      @include config.style-2($row-gap: 0.3rem);
-
-      .template-logo {
-        @include config.logo(
-          $gap: 0.15rem,
-          $fs-icon: v.$navter-icon,
-          $fs-title: v.$navter-title,
-          $line-height: 120%,
-          $start: false
-        );
+      &:hover {
+        &::after {
+          transform: scaleX(1);
+          transition: transform 0.4s ease-out;
+        }
       }
 
-      .template-links {
-        @include config.links(
-          $gap: 0.5rem,
-          $fs-text: v.$navter-text,
-          $m-right: 0.1rem,
-          $end: false
-        );
-      }
-    }
-
-    &.style-3 {
-      @include config.style-3($row-gap: 0.6rem);
-
-      .template-links {
-        @include config.links(
-          $gap: 0.5rem,
-          $fs-text: v.$navter-text,
-          $m-right: 0.1rem,
-          $end: false
-        );
-      }
-    }
-
-    &.style-4 {
-      @include config.style-4();
-
-      .template-links {
-        @include config.links(
-          $gap: 0.5rem,
-          $fs-text: v.$navter-text,
-          $m-right: 0.1rem,
-          $end: false
-        );
+      &.expand {
+        display: none;
       }
     }
   }
 }
 
-.expalot-navbar {
-  position: fixed;
-  top: 22%;
-  left: 13%;
+@mixin title-expalot() {
+  font-family: v.$raleway;
+  @include m.flex();
+  height: fit-content;
+}
+
+@mixin expalot-elements() {
+  position: absolute;
   width: 36vw;
   height: auto;
   background-color: #f7f7f7;
   border-radius: 0.8rem;
   padding: v.$p-navter;
-
-  &-features {
-    @include m.flex($direction: column);
-    margin-bottom: 1.3rem;
-    row-gap: 0.8rem;
-
-    .title {
-      @include config.title-expalot();
-    }
-
-    .wrapper {
-      width: 100%;
-      @include m.flex();
-      gap: 1.4rem;
-
-      .feature {
-        @include m.flex();
-        gap: 0.15rem;
-        cursor: pointer;
-
-        .material-symbols-outlined {
-          font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
-          font-size: 12px;
-
-          &.active {
-            font-variation-settings: "FILL" 1, "wght" 300, "GRAD" 0, "opsz" 24;
-          }
-        }
-
-        .text {
-          font-size: 8px;
-          line-height: 100%;
-
-          &.active {
-            font-weight: 500;
-          }
-        }
-      }
-    }
-  }
-
-  &-styles {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto auto;
-    grid-template-areas:
-      "title title"
-      "wrapper wrapper";
-    gap: 0.8rem 0.7rem;
-
-    .title {
-      grid-area: title;
-      @include config.title-expalot();
-    }
-
-    .wrapper-left {
-      @include m.flex($direction: column, $justify: flex-start);
-      height: 100%;
-      gap: 0.7rem;
-
-      .style-1 {
-        @include config.navbar-style();
-        @include config.style-1();
-      }
-
-      .style-3 {
-        @include config.navbar-style();
-        @include config.style-3($row-gap: 0.3rem);
-
-        .content.template-links {
-          @include config.links(
-            $fs-text: v.$navter-text-layout,
-            $gap: 0.2rem,
-            $m-right: 0,
-            $end: false
-          );
-        }
-      }
-    }
-
-    .wrapper-right {
-      @include m.flex($direction: column, $justify: flex-start);
-      height: 100%;
-      gap: 0.7rem;
-
-      .style-2 {
-        @include config.navbar-style();
-        @include config.style-2();
-
-        .content.template-logo {
-          @include config.logo(
-            $gap: 0.1rem,
-            $fs-icon: v.$navter-icon-layout,
-            $fs-title: v.$navter-title-layout,
-            $line-height: 100%,
-            $start: false
-          );
-        }
-
-        .content.template-links {
-          @include config.links(
-            $fs-text: v.$navter-text-layout,
-            $gap: 0.2rem,
-            $m-right: 0,
-            $end: false
-          );
-        }
-      }
-
-      .style-4 {
-        @include config.navbar-style();
-        @include config.style-4();
-
-        .content.template-links {
-          @include config.links(
-            $fs-text: v.$navter-text-layout,
-            $gap: 0.2rem,
-            $m-right: 0,
-            $end: false
-          );
-        }
-      }
-    }
-  }
+  z-index: 19;
 }
 
 @mixin default-footer() {
   &-footer {
     @include m.flex($direction: row-reverse, $justify: space-between);
     grid-area: footer;
-    gap: v.$navter-gap;
     padding: v.$p-navter;
 
     .template {

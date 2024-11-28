@@ -1,0 +1,323 @@
+@use "../../../../helpers/mixins" as m;
+@use "../../../../helpers/variables" as v;
+@use "../../ai-builder-support" as support;
+
+@mixin logo($gap, $fs-icon, $fs-title, $line-height, $start: true) {
+  width: auto;
+  gap: $gap;
+  pointer-events: none;
+  white-space: nowrap;
+
+  @if $start {
+    @include m.flex($justify: flex-start);
+  } @else {
+    @include m.flex();
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+    font-size: $fs-icon;
+  }
+
+  .title {
+    font-size: $fs-title;
+    line-height: $line-height;
+  }
+}
+
+@mixin links($gap, $fs-text, $m-right, $end: true) {
+  width: 100%;
+  gap: $gap;
+  margin-right: $m-right;
+  pointer-events: none;
+
+  @if $end {
+    @include m.flex($justify: flex-end);
+  } @else {
+    @include m.flex();
+  }
+
+  .text {
+    font-size: $fs-text;
+    line-height: 100%;
+
+    &.active {
+      font-weight: 700;
+    }
+  }
+}
+
+@mixin features($gap, $fs-icon, $fs-text, $m-top, $end: true) {
+  width: auto;
+  gap: $gap;
+  font-size: $fs-text;
+  pointer-events: none;
+  white-space: nowrap;
+
+  @if $end {
+    @include m.flex($justify: flex-end);
+  } @else {
+    @include m.flex();
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+    font-size: $fs-icon;
+
+    &.cart {
+      margin-top: $m-top;
+    }
+
+    &.warn {
+      font-size: $fs-icon;
+      margin-top: -0.025rem;
+    }
+  }
+}
+
+@mixin search(
+  $gap,
+  $fs-icon,
+  $fs-text,
+  $m,
+  $p,
+  $height,
+  $width,
+  $fs-icon-warn: $fs-icon
+) {
+  @include m.flex();
+  font-size: $fs-text;
+  gap: $gap;
+  border-radius: 50vw;
+  padding: $p;
+  margin: $m;
+  width: auto;
+  white-space: nowrap;
+
+  .material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+    font-size: $fs-icon;
+
+    &.warn {
+      font-size: $fs-icon-warn;
+    }
+  }
+
+  input {
+    height: $height;
+    width: $width;
+    font-size: $fs-text;
+    border: 0;
+    outline: none;
+    background-color: transparent;
+  }
+
+  &.active {
+    border: 0.1px solid adjust-color($color: #fff, $blackness: 40%);
+  }
+}
+
+@mixin style-1() {
+  @include m.flex($justify: space-between);
+}
+
+@mixin style-2($row-gap: 0.2rem) {
+  @include m.flex($direction: column);
+  gap: $row-gap;
+}
+
+@mixin style-3($row-gap: 0) {
+  @include m.flex();
+
+  .template-wrapper {
+    width: 100%;
+    @include m.flex($direction: column);
+    row-gap: $row-gap;
+  }
+}
+
+@mixin style-4() {
+  @include m.flex($justify: space-between);
+}
+
+@mixin navbar-style() {
+  background-color: #fff;
+  padding: 0.4rem 0.6rem;
+  text-align: center;
+  border: v.$border-hover;
+  gap: 0.25rem;
+  width: 100%;
+  height: fit-content;
+
+  &:hover {
+    border-color: adjust-color($color: #fff, $blackness: 10%);
+  }
+
+  &.active {
+    border-color: adjust-color($color: #fff, $blackness: 60%);
+  }
+
+  .template-logo {
+    @include logo(
+      $gap: 0.1rem,
+      $fs-icon: v.$navter-icon-layout,
+      $fs-title: v.$navter-title-layout,
+      $line-height: 100%
+    );
+  }
+
+  .template-links {
+    @include links($fs-text: v.$navter-text-layout, $gap: 0.2rem, $m-right: 0);
+  }
+
+  .template-features {
+    @include features(
+      $fs-icon: v.$navter-icon-layout,
+      $fs-text: v.$navter-text-layout,
+      $gap: 0.1rem,
+      $m-top: 0
+    );
+  }
+
+  .template-search {
+    @include search(
+      $gap: 0.065rem,
+      $fs-icon: v.$navter-icon-layout,
+      $fs-text: v.$navter-text-layout,
+      $m: auto,
+      $p: 1px 3px,
+      $height: 1.5vh,
+      $width: 5.1vw
+    );
+  }
+}
+
+.expalot-navbar {
+  top: 13.5%;
+  left: 7%;
+  @include support.expalot-elements();
+
+  &-features {
+    @include m.flex($direction: column);
+    margin-bottom: 1.3rem;
+    row-gap: 0.8rem;
+
+    .title {
+      @include support.title-expalot();
+    }
+
+    .wrapper {
+      width: 100%;
+      @include m.flex();
+      gap: 1.4rem;
+
+      .feature {
+        @include m.flex();
+        gap: 0.15rem;
+        cursor: pointer;
+
+        .material-symbols-outlined {
+          font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+          font-size: 12px;
+
+          &.active {
+            font-variation-settings: "FILL" 1, "wght" 300, "GRAD" 0, "opsz" 24;
+          }
+        }
+
+        .text {
+          font-size: 8px;
+          line-height: 100%;
+
+          &.active {
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+
+  &-styles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "title title"
+      "wrapper wrapper";
+    gap: 0.8rem 0.7rem;
+
+    .title {
+      grid-area: title;
+      @include support.title-expalot();
+    }
+
+    .wrapper-left {
+      @include m.flex($direction: column, $justify: flex-start);
+      height: 100%;
+      gap: 0.7rem;
+
+      .style-1 {
+        @include navbar-style();
+        @include style-1();
+      }
+
+      .style-3 {
+        @include navbar-style();
+        @include style-3($row-gap: 0.3rem);
+
+        .template-links {
+          @include links(
+            $fs-text: v.$navter-text-layout,
+            $gap: 0.2rem,
+            $m-right: 0,
+            $end: false
+          );
+        }
+      }
+    }
+
+    .wrapper-right {
+      @include m.flex($direction: column, $justify: flex-start);
+      height: 100%;
+      gap: 0.7rem;
+
+      .style-2 {
+        @include navbar-style();
+        @include style-2();
+
+        .template-logo {
+          @include logo(
+            $gap: 0.1rem,
+            $fs-icon: v.$navter-icon-layout,
+            $fs-title: v.$navter-title-layout,
+            $line-height: 100%,
+            $start: false
+          );
+        }
+
+        .template-links {
+          @include links(
+            $fs-text: v.$navter-text-layout,
+            $gap: 0.2rem,
+            $m-right: 0,
+            $end: false
+          );
+        }
+      }
+
+      .style-4 {
+        @include navbar-style();
+        @include style-4();
+
+        .template-links {
+          @include links(
+            $fs-text: v.$navter-text-layout,
+            $gap: 0.2rem,
+            $m-right: 0,
+            $end: false
+          );
+        }
+      }
+    }
+  }
+}
