@@ -1,0 +1,211 @@
+@use "../../../../helpers/mixins" as m;
+@use "../../../../helpers/variables" as v;
+@use "../../../../helpers/animation";
+@use "../../../../components/AiBuilderSupport/ai-builder-support" as support;
+@use "./products-el-config" as config;
+
+$fs-title: 1.2rem;
+$fs-title-marquee: 3.1rem;
+$fs-name: 13px;
+$fs-desc: 10px;
+$fs-button: 9px;
+$size-image: 8.2rem;
+
+@mixin products-el() {
+  width: 100%;
+  min-height: 44vh;
+  height: auto;
+  border: v.$border-hover;
+  position: relative;
+
+  .change-layout {
+    display: none;
+  }
+
+  &.style-1 {
+    @include config.style-1($gap: 0.75rem);
+    padding: v.$py-layout-section 0;
+
+    .template-title {
+      @include config.title($fs: $fs-title, $ln-h-100: true);
+    }
+
+    .template-wrapper {
+      pointer-events: none;
+      @include m.flex($justify: space-evenly);
+      width: 100%;
+
+      .container-product {
+        @include config.container-product(
+          $align: center,
+          $size-image: $size-image,
+          $isCircle: true,
+          $object-position: 50% 100%,
+          $fs: $fs-name,
+          $mt-name: 0.5rem,
+          $fs-price: 8px,
+          $gap: 0.1rem
+        );
+      }
+    }
+
+    .template-button {
+      @include config.button(
+        $fs: $fs-button,
+        $bg: #000,
+        $color: #fff,
+        $color-border: #000,
+        $m-top: 0.6rem,
+        $p: 0.5rem 1.3rem
+      );
+    }
+  }
+
+  &.style-2 {
+    @include config.style-2();
+    padding: v.$py-layout-section v.$p-navter;
+
+    .template-wrapper-loan {
+      @include m.flex(
+        $direction: column,
+        $justify: flex-start,
+        $align: flex-start
+      );
+      gap: 0.1rem;
+
+      .template-title {
+        @include config.title($fs: $fs-title);
+      }
+
+      .template-desc {
+        @include config.desc($w: 90%, $fs: $fs-desc);
+      }
+
+      .template-button {
+        @include config.button(
+          $fs: $fs-button,
+          $bg: #000,
+          $color: #fff,
+          $color-border: #000,
+          $m-top: 1.7rem,
+          $p: 0.5rem 1.5rem
+        );
+      }
+    }
+
+    .template-wrapper {
+      pointer-events: none;
+      @include m.flex();
+      gap: 0.7rem;
+
+      .container-product {
+        @include config.container-product(
+          $size-image: $size-image - 0.6rem,
+          $object-position: 50% 100%,
+          $fs: $fs-name,
+          $mt-name: 0.5rem,
+          $fs-price: 8px,
+          $gap: 0.1rem
+        );
+      }
+    }
+  }
+
+  &.style-3 {
+    @include config.style-3($gap: 1.7rem);
+    padding: v.$py-layout-section (v.$p-navter * 1.3);
+
+    .template-wrapper {
+      overflow: clip;
+
+      .template-title {
+        @include config.title(
+          $pos-absolute: true,
+          $marquee: true,
+          $fs: $fs-title-marquee,
+          $distance: 0.9rem
+        );
+        top: 1.9rem;
+      }
+    }
+
+    .container-product {
+      @include config.container-product(
+        $h-default: false,
+        $h-custom: 15rem,
+        $size-image: 100%
+      );
+      z-index: 3;
+      @include m.flex();
+    }
+
+    .template-wrapper-loan {
+      margin-bottom: -6.9rem;
+      @include m.flex($direction: column, $justify: flex-end);
+      gap: 0.6rem;
+
+      .template-desc {
+        @include config.desc($fs: $fs-desc, $isCenter: true, $w: 80%);
+      }
+
+      .template-button {
+        @include config.button(
+          $bg: #000,
+          $color: #fff,
+          $color-border: #000,
+          $fs: $fs-button,
+          $m-top: 1rem,
+          $p: 0.6rem 2.1rem
+        );
+      }
+    }
+  }
+
+  &.style-4 {
+    @include config.style-4($gap: 1.1rem);
+    padding: v.$py-layout-section v.$p-navter;
+
+    .template-wrapper-loan {
+      width: 100%;
+      @include m.flex($justify: space-between);
+
+      .template-title {
+        @include config.title($fs: $fs-title);
+      }
+
+      .template-button {
+        @include config.button(
+          $fs: $fs-button,
+          $p: 0.5rem 1.3rem,
+          $bordered: true
+        );
+      }
+    }
+
+    .template-wrapper {
+      pointer-events: none;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      width: 100%;
+
+      .container-product {
+        @include config.container-product(
+          $size-image: 100%,
+          $h-default: false,
+          $h-custom: 13rem,
+          $fs: $fs-name,
+          $mt-name: 0.5rem,
+          $fs-price: 8px,
+          $gap: 0.1rem
+        );
+      }
+    }
+  }
+
+  @include support.change-layout(
+    $bg-color: adjust-color($color: #fff, $blackness: 10%),
+    $border-color: adjust-color($color: #fff, $blackness: 10%),
+    $color: #000
+  );
+}

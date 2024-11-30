@@ -55,7 +55,15 @@ function NavbarLayout({
     <>
       <div
         className={`display-data-navbar ${typeNavbarStyles.className} ${
-          activeIntroEl === 3 || activeIntroEl === 4 ? "white-color" : ""
+          activeIntroEl === 1
+            ? "intro-el-1"
+            : activeIntroEl === 2
+            ? "intro-el-2"
+            : activeIntroEl === 3
+            ? "intro-el-3"
+            : activeIntroEl === 4
+            ? "intro-el-4"
+            : ""
         }`}
       >
         <div className="template-logo">{displayLogo}</div>
@@ -89,7 +97,6 @@ function NavbarLayout({
           onCollapse={() => setIsExpandLayout(false)}
         />
       </div>
-
       {isExpandLayout && (
         <div ref={expandLayoutRef} className="expalot-navbar">
           <div className="expalot-navbar-features">

@@ -7,8 +7,9 @@ import {
 } from "../../../components/AiBuilderSupport/AiBuilderSupport";
 import sectionData from "../../../data/sections.json";
 import { ControllingOverviews } from "../../../components/AiBuilderSupport/AiBuilderSupport";
-import IntroEl from "./IntroEl/IntroEl";
 import NavbarLayout from "../../../components/AiBuilderSupport/NavbarLayout/NavbarLayout";
+import IntroEl from "./IntroEl/IntroEl";
+import ProductsEl from "./ProductsEl/ProductsEl";
 
 function ElementPages({
   activePages,
@@ -77,7 +78,10 @@ function ElementPages({
                           <IntroEl
                             handleActiveIntroEl={handleActiveIntroEl}
                             activeIntroEl={activeIntroEl}
+                            activeNavbar={activeNavbar}
                           />
+                        ) : section.id === 2 ? (
+                          <ProductsEl />
                         ) : (
                           <div className="text">{section.name}</div>
                         )}

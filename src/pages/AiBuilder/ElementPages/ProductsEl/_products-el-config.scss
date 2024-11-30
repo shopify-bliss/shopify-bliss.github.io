@@ -1,0 +1,350 @@
+@use "../../../../helpers/mixins" as m;
+@use "../../../../helpers/variables" as v;
+@use "../../../../helpers/animation";
+@use "../../../../components/AiBuilderSupport/ai-builder-support" as support;
+
+$fs-title: 7px;
+$fs-text: 4px;
+$fs-title-marquee: 22px;
+$py-layout: 0.45rem;
+
+@mixin title(
+  $fs: $fs-title,
+  $fw: 500,
+  $pos-absolute: false,
+  $isCenter: true,
+  $marquee: false,
+  $distance: 0.5rem,
+  $ln-h-100: false
+) {
+  font-size: $fs;
+  font-weight: $fw;
+  pointer-events: none;
+
+  @if $marquee {
+    display: flex;
+    gap: $distance;
+    width: max-content;
+    padding-left: $distance;
+    animation: marquee-text 10s linear infinite forwards;
+  }
+
+  @if $isCenter {
+    text-align: center;
+  }
+
+  @if $pos-absolute {
+    position: absolute;
+  }
+
+  @if $ln-h-100 {
+    line-height: 100%;
+  }
+}
+
+@mixin desc($fs: $fs-text, $w: 100%, $isCenter: false) {
+  width: $w;
+  font-size: $fs;
+  pointer-events: none;
+
+  @if $isCenter {
+    text-align: center;
+  }
+}
+
+@mixin button(
+  $bordered: false,
+  $fs: $fs-text,
+  $m-top: 0,
+  $p: 0.22rem 0.62rem,
+  $bg: transparent,
+  $color: #000,
+  $color-border: #000
+) {
+  border-radius: 50vw;
+  @include m.flex();
+  width: fit-content;
+  line-height: 100%;
+  cursor: pointer;
+  font-size: $fs;
+  padding: $p;
+  margin-top: $m-top;
+  background-color: $bg;
+  color: $color;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+
+  @if $bordered {
+    box-shadow: 0 0 0 0.3px inset $color-border;
+  }
+}
+
+@mixin container-product(
+  $size-image: 2.6rem,
+  $h-default: true,
+  $h-custom: $size-image * 1.5,
+  $fs: $fs-text,
+  $fs-price: 3px,
+  $direction: column,
+  $justify: flex-start,
+  $align: flex-start,
+  $gap: 2px,
+  $isCircle: false,
+  $mt-name: 0.2rem,
+  $object-position: center
+) {
+  @include m.flex($direction: $direction, $justify: $justify, $align: $align);
+  gap: $gap;
+  pointer-events: none;
+
+  .template-image {
+    object-fit: cover;
+    object-position: $object-position;
+
+    @if $isCircle {
+      @include m.circle($size: $size-image);
+    } @else {
+      width: $size-image;
+
+      @if $h-default {
+        height: $size-image * 1.5;
+      } @else {
+        height: $h-custom;
+      }
+    }
+  }
+
+  .template-name {
+    margin-top: $mt-name;
+    font-size: $fs;
+    text-decoration: underline;
+    font-family: v.$raleway;
+  }
+
+  .template-price {
+    font-family: v.$raleway;
+    font-size: $fs-price;
+  }
+}
+
+@mixin productsel-styles() {
+  width: 100%;
+  border: 1.5px solid #f7f7f7;
+  height: fit-content;
+  background-color: #fff;
+  min-height: 6.5rem;
+  overflow: hidden;
+
+  &:hover {
+    border-color: adjust-color($color: #fff, $blackness: 10%);
+  }
+
+  &.active {
+    border-color: adjust-color($color: #fff, $blackness: 60%);
+  }
+}
+
+@mixin style-1($gap: 0.45rem) {
+  @include m.flex($direction: column);
+  gap: $gap;
+}
+
+@mixin style-2($gap: 0.45rem) {
+  @include m.flex();
+  gap: $gap;
+}
+
+@mixin style-3($gap: 0.45rem) {
+  @include m.flex();
+  gap: $gap;
+  position: relative;
+}
+
+@mixin style-4($gap: 0.5rem) {
+  @include m.flex($direction: column);
+  gap: $gap;
+}
+
+.expalot-products-el {
+  @include support.expalot-elements($vertical: -15.25rem);
+
+  &-styles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "title title"
+      "wrapper wrapper";
+    gap: 0.8rem 0.7rem;
+
+    .title {
+      grid-area: title;
+      @include support.title-expalot();
+    }
+
+    .wrapper-left {
+      @include m.flex($direction: column, $justify: flex-start);
+      overflow: hidden;
+      height: 100%;
+      gap: 0.7rem;
+
+      .style-1 {
+        @include productsel-styles();
+        @include style-1();
+        padding: $py-layout 0.25rem;
+
+        .template-title {
+          @include title();
+        }
+
+        .template-wrapper {
+          pointer-events: none;
+          @include m.flex($justify: space-evenly);
+          width: 100%;
+
+          .container-product {
+            @include container-product(
+              $isCircle: true,
+              $align: center,
+              $object-position: 50% 100%
+            );
+          }
+        }
+
+        .template-button {
+          @include button(
+            $bg: #000,
+            $color: #fff,
+            $color-border: #000,
+            $m-top: 0.1rem
+          );
+        }
+      }
+
+      .style-3 {
+        @include productsel-styles();
+        @include style-3();
+        padding: $py-layout 0.55rem;
+
+        .template-wrapper {
+          overflow: clip;
+
+          .template-title {
+            @include title($pos-absolute: true, $marquee: true, $fs: 1.2rem);
+            top: 0.9rem;
+            z-index: 1;
+          }
+        }
+
+        .container-product {
+          @include container-product(
+            $h-default: false,
+            $h-custom: 5.4rem,
+            $size-image: 4.3rem
+          );
+          z-index: 3;
+        }
+
+        .template-wrapper-loan {
+          pointer-events: none;
+          @include m.flex($direction: column);
+          gap: 0.6rem;
+          margin-top: 1.9rem;
+
+          .template-desc {
+            @include desc($w: 70%, $isCenter: true);
+          }
+
+          .template-button {
+            @include button($bg: #000, $color: #fff, $color-border: #000);
+          }
+        }
+      }
+    }
+
+    .wrapper-right {
+      @include m.flex($direction: column, $justify: flex-start);
+      height: 100%;
+      gap: 0.7rem;
+      overflow: hidden;
+
+      .style-2 {
+        @include productsel-styles();
+        @include style-2();
+        padding: $py-layout 0.55rem;
+
+        .template-wrapper-loan {
+          pointer-events: none;
+          @include m.flex(
+            $direction: column,
+            $justify: flex-start,
+            $align: flex-start
+          );
+          gap: 0.1rem;
+
+          .template-title {
+            @include title();
+          }
+
+          .template-desc {
+            @include desc($w: 85%);
+          }
+
+          .template-button {
+            @include button(
+              $bg: #000,
+              $color: #fff,
+              $color-border: #000,
+              $m-top: 0.8rem
+            );
+          }
+        }
+
+        .template-wrapper {
+          pointer-events: none;
+          @include m.flex();
+          gap: 0.3rem;
+
+          .container-product {
+            @include container-product();
+          }
+        }
+      }
+
+      .style-4 {
+        @include productsel-styles();
+        @include style-4();
+        padding: $py-layout 0.55rem;
+
+        .template-wrapper-loan {
+          pointer-events: none;
+          width: 100%;
+          @include m.flex($justify: space-between);
+
+          .template-title {
+            @include title();
+          }
+
+          .template-button {
+            @include button($bordered: true);
+          }
+        }
+
+        .template-wrapper {
+          pointer-events: none;
+          @include m.flex($justify: space-between);
+          width: 100%;
+
+          .container-product {
+            @include container-product(
+              $size-image: 3.6rem,
+              $object-position: 50% 100%,
+              $h-default: false,
+              $h-custom: 4.4rem
+            );
+          }
+        }
+      }
+    }
+  }
+}

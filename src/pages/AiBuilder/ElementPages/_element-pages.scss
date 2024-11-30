@@ -3,6 +3,7 @@
 @use "../../../components/AiBuilderSupport/ai-builder-support" as support;
 @use "../../../components/AiBuilderSupport/NavbarLayout/navbar-layout" as navbar;
 @use "./IntroEl/intro-el" as intro-el;
+@use "./ProductsEl/products-el" as products-el;
 
 @mixin element-pages-overview() {
   .element-pages {
@@ -25,27 +26,35 @@
       .display-data {
         width: 100%;
         height: 100%;
-        position: relative;
         background-color: #fff;
         box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.1);
-        overflow-y: auto;
-        scrollbar-width: thin;
         display: grid;
         grid-template-rows: auto 1fr auto;
         grid-template-areas:
           "navbar"
-          "sections"
+          "pages"
           "footer";
+        position: relative;
+        scrollbar-width: thin;
+        overflow-y: auto;
 
-        @include navbar.navbar-layout($manipulation: true);
+        &-navbar {
+          grid-area: navbar;
+          @include navbar.navbar-layout($manipulation: true);
+        }
 
         &-section {
-          grid-area: sections;
           @include m.flex($direction: column, $justify: flex-start);
-          position: relative;
+          overflow-x: hidden;
+          overflow-y: visible;
+          height: max-content;
 
           .intro-el {
             @include intro-el.intro-el();
+          }
+
+          .products-el {
+            @include products-el.products-el();
           }
 
           .text {

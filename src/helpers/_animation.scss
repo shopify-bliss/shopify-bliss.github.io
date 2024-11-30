@@ -27,3 +27,9 @@
     transform: translate3d(0, -4px, 0) scaleY(1.02);
   }
 }
+
+@keyframes marquee-text {
+  to {
+    transform: translateX(-50%);
+  }
+}

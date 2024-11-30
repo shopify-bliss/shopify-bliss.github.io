@@ -1,15 +1,6 @@
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-} from "react";
-import {
-  ChangeLayout,
-  useHandleActiveEl,
-} from "../../../../components/AiBuilderSupport/AiBuilderSupport";
-import introElOptionLayout from "../../../../data/introElOptionLayout.json";
+import React, { useRef, useState, useEffect, useMemo } from "react";
+import { ChangeLayout } from "../../../../components/AiBuilderSupport/AiBuilderSupport";
+import sectionsElOptionLayout from "../../../../data/sectionsElOptionLayout.json";
 
 function ExpalotIntroElStyles({
   layoutIds,
@@ -18,7 +9,7 @@ function ExpalotIntroElStyles({
 }) {
   return (
     <>
-      {introElOptionLayout
+      {sectionsElOptionLayout
         .filter((item) => layoutIds.includes(item.id))
         .map((layout) => (
           <div
@@ -72,7 +63,14 @@ function ExpalotIntroElStyles({
                 </div>
                 <div className="template-button">Learn More</div>
                 <div className="template-wrapper">
-                  <div className="template-brand">Your Brand Name</div>
+                  <div className="template-brand">
+                    <p>Your</p>
+                    <p>Brand</p>
+                    <p>Name</p>
+                    <p aria-hidden="true">Your</p>
+                    <p aria-hidden="true">Brand</p>
+                    <p aria-hidden="true">Name</p>
+                  </div>
                 </div>
               </>
             )}
@@ -82,12 +80,12 @@ function ExpalotIntroElStyles({
   );
 }
 
-function IntroEl({ handleActiveIntroEl, activeIntroEl }) {
+function IntroEl({ handleActiveIntroEl, activeIntroEl, activeNavbar }) {
   const [isExpandLayout, setIsExpandLayout] = useState(false);
   const expandLayoutRef = useRef(null);
 
   const typeIntroElStyles = useMemo(
-    () => introElOptionLayout.find((option) => option.id === activeIntroEl),
+    () => sectionsElOptionLayout.find((option) => option.id === activeIntroEl),
     [activeIntroEl]
   );
 
@@ -99,7 +97,11 @@ function IntroEl({ handleActiveIntroEl, activeIntroEl }) {
 
   return (
     <>
-      <div className={`intro-el ${typeIntroElStyles.className}`}>
+      <div
+        className={`intro-el ${typeIntroElStyles.className} ${
+          activeNavbar === 2 ? "navbar-2" : activeNavbar === 3 ? "navbar-3" : ""
+        }`}
+      >
         {typeIntroElStyles.id === 1 && (
           <>
             <div className="template-brand">Your Brand Name</div>
@@ -144,7 +146,14 @@ function IntroEl({ handleActiveIntroEl, activeIntroEl }) {
             </div>
             <div className="template-button">Learn More</div>
             <div className="template-wrapper">
-              <div className="template-brand">Your Brand Name</div>
+              <div className="template-brand">
+                <p>Your</p>
+                <p>Brand</p>
+                <p>Name</p>
+                <p aria-hidden="true">Your</p>
+                <p aria-hidden="true">Brand</p>
+                <p aria-hidden="true">Name</p>
+              </div>
             </div>
           </>
         )}
@@ -157,6 +166,7 @@ function IntroEl({ handleActiveIntroEl, activeIntroEl }) {
           onCollapse={() => setIsExpandLayout(false)}
         />
       </div>
+
       {isExpandLayout && (
         <div ref={expandLayoutRef} className="expalot-intro-el">
           <div div className="expalot-intro-el-styles">

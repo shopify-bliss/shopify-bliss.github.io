@@ -1,5 +1,6 @@
 @use "../../../../helpers/mixins" as m;
 @use "../../../../helpers/variables" as v;
+@use "../../../../helpers/animation";
 @use "../../../../components/AiBuilderSupport/ai-builder-support" as support;
 
 $fs-preface: 10px;
@@ -59,20 +60,25 @@ $bg-other-style: adjust-color(
 
 @mixin brand(
   $fs: $fs-brand,
-  $fs-marquee: 23px,
+  $fs-marquee: $fs,
   $marquee: false,
-  $white-theme: false
+  $white-theme: false,
+  $distance: 0.4rem
 ) {
   font-family: v.$raleway;
   font-weight: 600;
   pointer-events: none;
+  @include m.flex();
+  gap: $distance;
 
   @if $white-theme {
     color: #fff;
   }
 
   @if $marquee {
-    white-space: nowrap;
+    padding-left: $distance;
+    width: max-content;
+    animation: marquee-text 10s linear infinite forwards;
     font-size: $fs-marquee;
   } @else {
     font-size: $fs;
@@ -84,7 +90,7 @@ $bg-other-style: adjust-color(
   $fs: $fs-text,
   $m-top: 0.3rem,
   $p: 0.18rem 0.45rem,
-  $bg: #fff,
+  $bg: transparent,
   $color: #000,
   $color-border: #000
 ) {
@@ -115,12 +121,13 @@ $bg-other-style: adjust-color(
 }
 
 @mixin introel-styles() {
-  border: 1.5px solid #f7f7f7;
   width: 100%;
+  border: 1.5px solid #f7f7f7;
   height: fit-content;
   background-color: #fff;
   position: relative;
   min-height: 6.5rem;
+  overflow: hidden;
 
   &:hover {
     border-color: adjust-color($color: #fff, $blackness: 10%);
@@ -157,13 +164,10 @@ $bg-other-style: adjust-color(
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  overflow: hidden;
 }
 
 .expalot-intro-el {
-  bottom: 5.5%;
-  left: 7%;
-  @include support.expalot-elements();
+  @include support.expalot-elements($vertical: 6.45rem);
 
   &-styles {
     display: grid;
@@ -181,6 +185,7 @@ $bg-other-style: adjust-color(
 
     .wrapper-left {
       @include m.flex($direction: column, $justify: flex-start);
+      overflow: hidden;
       height: 100%;
       gap: 0.7rem;
 
@@ -234,6 +239,7 @@ $bg-other-style: adjust-color(
       @include m.flex($direction: column, $justify: flex-start);
       height: 100%;
       gap: 0.7rem;
+      overflow: hidden;
 
       .style-2 {
         @include introel-styles();
@@ -271,11 +277,13 @@ $bg-other-style: adjust-color(
       .style-4 {
         @include introel-styles();
         @include style-4();
+        max-width: 100%;
         gap: 0.2rem;
-        padding: 0.25rem 0.4rem;
+        padding: 0.25rem 0.4rem 0.25rem 0;
 
         .template-desc {
           @include desc($white-theme: true, $w: 35%);
+          margin-left: 0.4rem;
         }
 
         .template-button {
@@ -286,13 +294,12 @@ $bg-other-style: adjust-color(
             $color-border: #fff,
             $m-top: 0.2rem
           );
+          margin-left: 0.4rem;
         }
 
         .template-wrapper {
-          width: 100%;
-          @include m.flex();
           margin-top: auto;
-          overflow: hidden;
+          overflow: clip;
 
           .template-brand {
             @include brand($white-theme: true, $marquee: true);

@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "image": "pexels-frostroomhead-7897470.jpg",
+    "name": "Product 1",
+    "price": 1000
+  },
+  {
+    "id": 2,
+    "image": "pexels-anna-nekrashevich-8516697.jpg",
+    "name": "Product 2",
+    "price": 2000
+  },
+  {
+    "id": 3,
+    "image": "pexels-njeromin-15352967.jpg",
+    "name": "Product 3",
+    "price": 3000
+  }
+]

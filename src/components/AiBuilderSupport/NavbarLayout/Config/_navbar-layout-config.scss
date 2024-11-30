@@ -2,7 +2,13 @@
 @use "../../../../helpers/variables" as v;
 @use "../../ai-builder-support" as support;
 
-@mixin logo($gap, $fs-icon, $fs-title, $line-height, $start: true) {
+@mixin logo(
+  $gap: 0.1rem,
+  $fs-icon: v.$navter-icon-layout,
+  $fs-title: v.$navter-title-layout,
+  $line-height: 100%,
+  $start: true
+) {
   width: auto;
   gap: $gap;
   pointer-events: none;
@@ -25,7 +31,12 @@
   }
 }
 
-@mixin links($gap, $fs-text, $m-right, $end: true) {
+@mixin links(
+  $gap: 0.2rem,
+  $fs-text: v.$navter-text-layout,
+  $m-right: 0,
+  $end: true
+) {
   width: 100%;
   gap: $gap;
   margin-right: $m-right;
@@ -47,7 +58,13 @@
   }
 }
 
-@mixin features($gap, $fs-icon, $fs-text, $m-top, $end: true) {
+@mixin features(
+  $gap: 0.1rem,
+  $fs-icon: v.$navter-icon-layout,
+  $fs-text: v.$navter-text-layout,
+  $m-top: 0,
+  $end: true
+) {
   width: auto;
   gap: $gap;
   font-size: $fs-text;
@@ -76,13 +93,13 @@
 }
 
 @mixin search(
-  $gap,
-  $fs-icon,
-  $fs-text,
-  $m,
-  $p,
-  $height,
-  $width,
+  $gap: 0.065rem,
+  $fs-icon: v.$navter-icon-layout,
+  $fs-text: v.$navter-text-layout,
+  $m: auto,
+  $p: 1px 3px,
+  $height: 1.5vh,
+  $width: 5.1vw,
   $fs-icon-warn: $fs-icon
 ) {
   @include m.flex();
@@ -156,46 +173,10 @@
   &.active {
     border-color: adjust-color($color: #fff, $blackness: 60%);
   }
-
-  .template-logo {
-    @include logo(
-      $gap: 0.1rem,
-      $fs-icon: v.$navter-icon-layout,
-      $fs-title: v.$navter-title-layout,
-      $line-height: 100%
-    );
-  }
-
-  .template-links {
-    @include links($fs-text: v.$navter-text-layout, $gap: 0.2rem, $m-right: 0);
-  }
-
-  .template-features {
-    @include features(
-      $fs-icon: v.$navter-icon-layout,
-      $fs-text: v.$navter-text-layout,
-      $gap: 0.1rem,
-      $m-top: 0
-    );
-  }
-
-  .template-search {
-    @include search(
-      $gap: 0.065rem,
-      $fs-icon: v.$navter-icon-layout,
-      $fs-text: v.$navter-text-layout,
-      $m: auto,
-      $p: 1px 3px,
-      $height: 1.5vh,
-      $width: 5.1vw
-    );
-  }
 }
 
 .expalot-navbar {
-  top: 13.5%;
-  left: 7%;
-  @include support.expalot-elements();
+  @include support.expalot-elements($isbottom: false, $vertical: 2.85rem);
 
   &-features {
     @include m.flex($direction: column);
@@ -259,19 +240,34 @@
       .style-1 {
         @include navbar-style();
         @include style-1();
+
+        .template-logo {
+          @include logo();
+        }
+
+        .template-links {
+          @include links();
+        }
       }
 
       .style-3 {
         @include navbar-style();
         @include style-3($row-gap: 0.3rem);
 
+        .template-logo {
+          @include logo();
+        }
+
         .template-links {
-          @include links(
-            $fs-text: v.$navter-text-layout,
-            $gap: 0.2rem,
-            $m-right: 0,
-            $end: false
-          );
+          @include links($end: false);
+        }
+
+        .template-features {
+          @include features();
+        }
+
+        .template-search {
+          @include search();
         }
       }
     }
@@ -286,22 +282,11 @@
         @include style-2();
 
         .template-logo {
-          @include logo(
-            $gap: 0.1rem,
-            $fs-icon: v.$navter-icon-layout,
-            $fs-title: v.$navter-title-layout,
-            $line-height: 100%,
-            $start: false
-          );
+          @include logo($start: false);
         }
 
         .template-links {
-          @include links(
-            $fs-text: v.$navter-text-layout,
-            $gap: 0.2rem,
-            $m-right: 0,
-            $end: false
-          );
+          @include links($end: false);
         }
       }
 
@@ -309,13 +294,16 @@
         @include navbar-style();
         @include style-4();
 
+        .template-logo {
+          @include logo();
+        }
+
         .template-links {
-          @include links(
-            $fs-text: v.$navter-text-layout,
-            $gap: 0.2rem,
-            $m-right: 0,
-            $end: false
-          );
+          @include links($end: false);
+        }
+
+        .template-features {
+          @include features();
         }
       }
     }
