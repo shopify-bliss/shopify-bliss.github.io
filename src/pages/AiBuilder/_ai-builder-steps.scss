@@ -96,12 +96,12 @@
 
     .prev-button {
       @include button(
-        adjust-color($color: #fff, $blackness: 25%),
-        #000,
-        #fff,
-        adjust-color($color: #fff, $blackness: 5%),
-        adjust-color($color: #fff, $blackness: 5%),
-        right
+        $border-color: adjust-color($color: #fff, $blackness: 25%),
+        $font-color: #000,
+        $bg-color: #fff,
+        $bg-color-hover: adjust-color($color: #fff, $blackness: 5%),
+        $border-color-hover: adjust-color($color: #fff, $blackness: 5%),
+        $tranform-origin: right
       );
     }
   }
@@ -111,12 +111,12 @@
 
     .next-button {
       @include button(
-        #000,
-        #fff,
-        #000,
-        adjust-color($color: #000, $whiteness: 25%),
-        adjust-color($color: #000, $whiteness: 25%),
-        left
+        $border-color: #000,
+        $font-color: #fff,
+        $bg-color: #000,
+        $bg-color-hover: adjust-color($color: #000, $whiteness: 25%),
+        $border-color-hover: adjust-color($color: #000, $whiteness: 25%),
+        $tranform-origin: left
       );
     }
   }

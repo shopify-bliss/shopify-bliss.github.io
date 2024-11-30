@@ -3,6 +3,7 @@
 
 @use "./pages/Error404/error404";
 @use "./pages/AiBuilder/ai-builder";
+@use "./pages/Login/login";
 
 *,
 *::before,
@@ -10,10 +11,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-html {
-  @include m.withoutScrollBar();
 }
 
 body {

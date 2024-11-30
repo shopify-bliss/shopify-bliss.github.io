@@ -1,0 +1,155 @@
+@use "../../helpers/mixins" as m;
+@use "../../helpers/variables" as v;
+
+@mixin text-default(
+  $letter-spacing,
+  $m-left: 0,
+  $pointer: false,
+  $border-effect: false
+) {
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  letter-spacing: $letter-spacing;
+  margin-left: $m-left;
+  font-weight: 500;
+  position: relative;
+
+  @if $pointer {
+    cursor: pointer;
+  }
+
+  @if $border-effect {
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 0.07rem;
+      background-color: #000;
+      left: 0;
+      top: 1.39rem;
+      transform: scaleX(0);
+      transition: transform 0.6s ease-in;
+      transform-origin: left;
+    }
+
+    &:hover {
+      &::after {
+        transform: scaleX(1);
+        transition: transform 0.6s ease-out;
+      }
+    }
+  }
+}
+
+@mixin header() {
+  @include m.flex($justify: space-between);
+  width: 100%;
+
+  &-back {
+    @include m.flex();
+    cursor: pointer;
+    text-decoration: none;
+    color: #000;
+
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 0;
+      font-size: 2.1rem;
+      position: relative;
+      transition: transform 0.3s ease-in;
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 0.95rem;
+        height: 0.07rem;
+        background-color: #000;
+        left: 0.9rem;
+        top: 1rem;
+        transform: scaleX(0);
+        transition: transform 0.3s ease-in;
+        transform-origin: left;
+      }
+    }
+
+    .text {
+      @include text-default($letter-spacing: 1px, $m-left: -0.25rem);
+    }
+
+    &:hover {
+      .material-symbols-outlined {
+        transform: translateX(-0.6rem);
+        transition: transform 0.3s ease-in;
+
+        &::after {
+          transform: scaleX(1);
+          transition: transform 0.3s ease-in;
+        }
+      }
+    }
+  }
+
+  &-signup {
+    @include text-default(
+      $letter-spacing: 1.5px,
+      $pointer: true,
+      $border-effect: true
+    );
+  }
+}
+
+@mixin button(
+  $bg-color: #000,
+  $color: #fff,
+  $bg-color-hover: #fff,
+  $color-hover: #000,
+  $cursor: pointer,
+  $border-color: $bg-color,
+  $tx-transform: uppercase,
+  $justify: center,
+  $py: 0
+) {
+  width: 100%;
+  padding: 1rem $py;
+  @include m.flex($justify: $justify);
+  border-radius: 0.4rem;
+  background-color: $bg-color;
+  outline: none;
+  border: none;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  font-family: v.$raleway;
+  text-transform: $tx-transform;
+  margin-top: 0.4rem;
+  color: $color;
+  cursor: $cursor;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+  transition: color 0.6s ease-in;
+  border: $border-color solid 1px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: $bg-color-hover;
+    left: 0;
+    bottom: 0;
+    border-radius: 0.4rem;
+    transform: scale(0);
+    transition: transform 0.6s ease-in;
+    transform-origin: left top;
+    z-index: -1;
+  }
+
+  &:hover {
+    color: $color-hover;
+    transition: color 0.6s ease-out;
+
+    &::after {
+      transform: scale(1);
+      transition: transform 0.6s ease-out;
+    }
+  }
+}
