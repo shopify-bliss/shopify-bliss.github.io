@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useCallback, useEffect } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import logo from "../../assets/logo/black_logo_nobg.png";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import axios from "axios";
@@ -23,6 +23,14 @@ function AuthComponents({ typeMain }) {
   const [hidePassword, setHidePassword] = useState(true);
 
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const verifyEmail = searchParams.get("message");
+
+  useEffect(() => {
+    if (verifyEmail) {
+      toastMessage("success", "Yess, Email is ok!!", "top-center");
+    }
+  }, []);
 
   const handleChange = useCallback((e) => {
     setValues((prev) => {
