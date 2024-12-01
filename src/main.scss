@@ -3,7 +3,9 @@
 
 @use "./pages/Error404/error404";
 @use "./pages/AiBuilder/ai-builder";
-@use "./pages/Login/login";
+@use "./pages/Auth/auth";
+// @use "./pages/Login/login";
+// @use "./pages/Signup/signup";
 
 *,
 *::before,
@@ -30,7 +32,20 @@ input[type="file"]::-webkit-file-upload-button {
   cursor: none;
 }
 
-.toast {
-  z-index: 9999 !important;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2) !important;
+.Toastify__toast {
+  z-index: 9999;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 0.8rem;
+}
+
+.Toastify__toast-container {
+  width: 30vw;
+}
+
+.Toastify__toast-icon {
+  margin-right: 1rem;
+}
+
+.Toastify__toast-body {
+  line-height: 127.5%;
 }

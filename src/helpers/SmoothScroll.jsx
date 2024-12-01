@@ -1,5 +1,8 @@
-import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
+import { useLayoutEffect, useEffect } from "react";
 import Lenis from "lenis";
+
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 export default function SmoothScroll() {
   useIsomorphicLayoutEffect(() => {
