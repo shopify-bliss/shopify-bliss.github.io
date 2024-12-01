@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AiBuilder from "./pages/AiBuilder/AiBuilder";
-import Login from "./pages/Login/Login";
+import { Login, Signup } from "./pages/Auth/Auth";
 import Error404 from "./pages/Error404/Error404";
 import { SearchProvider } from "./helpers/SearchContext";
 import "./main.css";
@@ -17,6 +17,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/dashboard" element={<AiBuilder />} />
           <Route path="*" element={<Error404 />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </SearchProvider>
     </BrowserRouter>
