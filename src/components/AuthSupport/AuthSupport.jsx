@@ -2,7 +2,6 @@ import { useCallback } from "react";
 import { Link } from "react-router-dom";
 import google from "../../assets/images/login/google.png";
 import facebook from "../../assets/images/login/facebook.png";
-import email from "../../assets/images/login/email.png";
 import whatsapp from "../../assets/images/login/whatsapp (1).png";
 import axios from "axios";
 import urlEndpoint from "../../helpers/urlEndpoint";

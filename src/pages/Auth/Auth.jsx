@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import logo from "../../assets/logo/black_logo_nobg.png";
 import urlEndpoint from "../../helpers/urlEndpoint";
@@ -21,6 +21,7 @@ function AuthComponents({ typeMain }) {
     password: "",
   });
   const [hidePassword, setHidePassword] = useState(true);
+  const userRole = useRef(null);
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -28,7 +29,8 @@ function AuthComponents({ typeMain }) {
 
   useEffect(() => {
     if (verifyEmail) {
-      toastMessage("success", "Yess, Email is ok!!", "top-center");
+      console.log(verifyEmail);
+      toastMessage("success", verifyEmail, "top-center");
     }
   }, []);
 
@@ -55,7 +57,7 @@ function AuthComponents({ typeMain }) {
         toastPromise(
           signupPromise,
           {
-            pending: "Submitting your signup request...",
+            pending: "Signup in progress, please wait.",
             success: "Signup successful! 🎉",
             error: "Failed to signup, please try again!",
           },
@@ -70,19 +72,50 @@ function AuthComponents({ typeMain }) {
             console.log(res.data);
           })
           .catch((err) => {
-            console.error("Error:", err);
+            console.error(err);
           });
       } else {
-        axios
-          .post(urlEndpoint.loginForm, {
-            email: values.email,
-            password: values.password,
-          })
+        const loginPromise = axios.post(urlEndpoint.loginForm, {
+          email: values.email,
+          password: values.password,
+        });
+
+        toastPromise(
+          loginPromise,
+          {
+            pending: "Login in progress, please wait.",
+            success: "Login successful! 🎉",
+            error: "Failed to login, please try again!",
+          },
+          {
+            position: "top-center",
+          },
+          () => {
+            console.log("userRole in onClose:", userRole.current);
+
+            if (userRole.current === "admin") {
+              navigate("/dashboard");
+            } else if (userRole.current === "customer") {
+              navigate("/profile");
+            }
+          }
+        );
+
+        loginPromise
           .then((res) => {
             console.log(res.data);
+            const role = res.data.data.role;
+
+            console.log(role);
+
+            if (role === "admin" || role === "customer") {
+              userRole.current = role;
+            } else {
+              toastMessage("error", "Access denied. Role not recognized.");
+            }
           })
           .catch((err) => {
-            console.log(err);
+            console.error(err);
           });
       }
     },

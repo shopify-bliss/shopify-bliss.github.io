@@ -4,8 +4,8 @@
 @use "./pages/Error404/error404";
 @use "./pages/AiBuilder/ai-builder";
 @use "./pages/Auth/auth";
-// @use "./pages/Login/login";
-// @use "./pages/Signup/signup";
+@use "./components/LayoutDashboard/layout-dashboard";
+@use "./pages/Dashboard/dashboard";
 
 *,
 *::before,
