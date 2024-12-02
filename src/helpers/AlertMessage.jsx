@@ -14,11 +14,26 @@ export const toastMessage = (type, messages, position = "bottom-right") => {
   });
 };
 
-export const toastPromise = (promise, defaultMessages, options = {}) => {
+export const toastPromise = (
+  promise,
+  defaultMessages,
+  options = {},
+  onCloseCallback = null
+) => {
   const { pending, success, error } = defaultMessages;
 
+  let isSuccessful = false;
+
   return toast.promise(
-    promise,
+    promise
+      .then((res) => {
+        isSuccessful = true;
+        return res; // Lanjutkan ke toast
+      })
+      .catch((err) => {
+        isSuccessful = false;
+        throw err; // Lanjutkan ke toast
+      }),
     {
       pending: pending || "Processing...",
       success: {
@@ -40,6 +55,11 @@ export const toastPromise = (promise, defaultMessages, options = {}) => {
       pauseOnHover: options.pauseOnHover ?? true,
       draggable: options.draggable ?? true,
       theme: options.theme || "light",
+      onClose: () => {
+        if (onCloseCallback) {
+          onCloseCallback(isSuccessful);
+        }
+      },
     }
   );
 };

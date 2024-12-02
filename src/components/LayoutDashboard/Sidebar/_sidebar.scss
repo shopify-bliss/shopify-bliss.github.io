@@ -1,0 +1,6 @@
+@use "../../../helpers/mixins" as m;
+@use "../../../helpers/variables" as v;
+
+@mixin sidebar {
+    color: aqua;
+}

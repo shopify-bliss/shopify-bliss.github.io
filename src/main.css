@@ -4248,6 +4248,37 @@
   transition: transform 0.6s ease-out;
 }
 
+.layout-dashboard {
+  width: 100%;
+  min-height: 100vh;
+  height: auto;
+  display: grid;
+  grid-template-areas: "topbar topbar" "sidebar content";
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
+}
+.layout-dashboard-sidebar {
+  grid-area: sidebar;
+  width: 20vw;
+  background-color: cornsilk;
+  color: aqua;
+}
+.layout-dashboard-topbar {
+  grid-area: topbar;
+  height: 10rem;
+  background-color: ivory;
+  color: brown;
+}
+.layout-dashboard-content {
+  grid-area: content;
+  width: 100%;
+  height: auto;
+}
+
+.dashboard {
+  color: magenta;
+}
+
 *,
 *::before,
 *::after {
