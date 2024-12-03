@@ -16,16 +16,12 @@
 
   &-sidebar {
     grid-area: sidebar;
-    width: 20vw;
-    background-color: cornsilk;
 
     @include sidebar.sidebar();
   }
 
   &-topbar {
     grid-area: topbar;
-    height: 10rem;
-    background-color: ivory;
 
     @include topbar.topbar();
   }
@@ -34,5 +30,8 @@
     grid-area: content;
     width: 100%;
     height: auto;
+    padding: (v.$px-main * 1.3) v.$px-main (v.$px-main * 1.3)
+      (v.$px-main * 1.75);
+
   }
 }

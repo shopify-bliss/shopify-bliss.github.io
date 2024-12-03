@@ -1,16 +1,24 @@
-import React, { useEffect } from "react";
+import React from "react";
 import LayoutDashboard from "../../components/LayoutDashboard/LayoutDashboard";
-import { getToken } from "../../helpers/GetToken";
+import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
+import { decodedToken, getToken } from "../../helpers/DataToken";
+import { Error401 } from "../Error/Error";
+import Analytics from "./Analytics/Analytics";
 
 function Dashboard() {
-  useEffect(() => {
-    console.log(getToken);
-  }, []);
+  const { submenuPage } = useDashboard();
 
   return (
-    <LayoutDashboard>
-      <div className="dashboard">Dashboard</div>
-    </LayoutDashboard>
+    <>
+      {getToken && decodedToken.role === "admin" ? (
+        <LayoutDashboard>
+          {submenuPage === "analytics 1" && <div>Dashboard</div>}
+          {submenuPage === "analytics 2" && <Analytics />}
+        </LayoutDashboard>
+      ) : (
+        <Error401 />
+      )}
+    </>
   );
 }
 

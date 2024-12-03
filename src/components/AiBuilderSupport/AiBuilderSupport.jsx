@@ -1,21 +1,22 @@
-import { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import { useEffect, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { SocialIcon } from "react-social-icons";
+import logo from "../../assets/logo/black-logo.png";
 
 export function Logo() {
   return (
     <Link to="/" className="ai-builder-logo">
-      <span className="material-symbols-outlined icon">local_mall</span>
-      <span className="text">Shopify Bliss</span>
+      <span className="text">shopify bliss</span>
+      <img src={logo} alt="Shopify Bliss Logo" />
     </Link>
   );
 }
 
 export function Quit() {
   return (
-    <div className="ai-builder-quit">
+    <Link to={"/login"} className="ai-builder-quit">
       <span className="material-symbols-outlined">close</span>
-    </div>
+    </Link>
   );
 }
 

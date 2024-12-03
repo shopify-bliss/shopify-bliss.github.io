@@ -33,7 +33,9 @@ export function AuthTitle({ logo, type }) {
       {type === "signup" ? (
         <div className="text">Create Your Account</div>
       ) : (
-        <div className="text">Log into Shopify Bliss</div>
+        <div className="text">
+          Log into <span>shopify bliss</span>
+        </div>
       )}
     </div>
   );
