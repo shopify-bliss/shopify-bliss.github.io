@@ -1,6 +1,71 @@
 @use "../../../helpers/mixins" as m;
 @use "../../../helpers/variables" as v;
 
+$border-color: adjust-color(
+  $color: #fff,
+  $blackness: 7%,
+);
+$inactice-color: adjust-color(
+  $color: #fff,
+  $blackness: 50%,
+);
+
 @mixin sidebar {
-    color: aqua;
+  padding: (v.$px-main * 1.3) v.$px-main;
+  width: 20vw;
+  gap: 1.9rem;
+  @include m.flex($direction: column, $justify: flex-start, $align: flex-start);
+
+  .sidebar-list {
+    width: 100%;
+    cursor: pointer;
+    position: relative;
+    padding-bottom: 0.7rem;
+    text-decoration: none;
+    color: $inactice-color;
+
+    &-item {
+      font-size: 0.92rem;
+      font-family: v.$raleway;
+      text-transform: capitalize;
+    }
+
+    .border-effect {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 0.5px;
+      background-color: $inactice-color;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 0.5px;
+      background-color: $inactice-color;
+      transform: scaleX(0);
+      transition: transform 0.7s ease-out;
+      transform-origin: left;
+      background-color: #000;
+    }
+
+    &:hover {
+      &::after {
+        transform: scaleX(1);
+        transition: transform 0.7s ease-in;
+      }
+    }
+
+    &.active {
+      color: #000;
+
+      .border-effect {
+        background-color: #000;
+      }
+    }
+  }
 }

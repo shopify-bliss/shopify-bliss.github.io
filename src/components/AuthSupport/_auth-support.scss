@@ -15,6 +15,7 @@
   position: relative;
   color: #000;
   text-decoration: none;
+  font-family: v.$raleway;
 
   @if $pointer {
     cursor: pointer;

@@ -1,11 +1,10 @@
 @use "./helpers/variables" as v;
 @use "./helpers/mixins" as m;
 
-@use "./pages/Error404/error404";
+@use "./pages/Error/error";
 @use "./pages/AiBuilder/ai-builder";
 @use "./pages/Auth/auth";
 @use "./components/LayoutDashboard/layout-dashboard";
-@use "./pages/Dashboard/dashboard";
 
 *,
 *::before,

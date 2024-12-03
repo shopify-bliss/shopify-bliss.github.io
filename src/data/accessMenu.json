@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "role": "customer",
+    "accessMenu": 2
+  },
+  {
+    "id": 2,
+    "role": "admin",
+    "accessMenu": 1
+  },
+  {
+    "id": 3,
+    "role": "admin",
+    "accessMenu": 2
+  },
+  {
+    "id": 4,
+    "role": "admin",
+    "accessMenu": 3
+  },
+  {
+    "id": 5,
+    "role": "admin",
+    "accessMenu": 4
+  },
+  {
+    "id": 6,
+    "role": "admin",
+    "accessMenu": 5
+  }
+]

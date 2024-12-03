@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "name": "dashboard",
+    "url": "dashboard"
+  },
+  {
+    "id": 2,
+    "name": "profile",
+    "url": "profile"
+  },
+  {
+    "id": 3,
+    "name": "access management",
+    "url": "access-management"
+  },
+  {
+    "id": 4,
+    "name": "users management",
+    "url": "users-management"
+  },
+  {
+    "id": 5,
+    "name": "templates management",
+    "url": "templates-management"
+  }
+]

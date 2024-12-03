@@ -1,13 +1,16 @@
 import React from "react";
 import LayoutDashboard from "../../components/LayoutDashboard/LayoutDashboard";
+import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
+import Password from "./Password/Password";
 
 function Profile() {
+  const { submenuPage } = useDashboard();
+
   return (
-    <div className="profile">
-      <LayoutDashboard>
-        <div>Profile</div>
-      </LayoutDashboard>
-    </div>
+    <LayoutDashboard>
+      {submenuPage === "bio" && <div>Profile</div>}
+      {submenuPage === "password" && <Password />}
+    </LayoutDashboard>
   );
 }
 

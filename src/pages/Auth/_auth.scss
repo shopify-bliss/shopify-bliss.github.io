@@ -7,7 +7,6 @@
   min-height: 100vh;
   @include m.flex($direction: column, $justify: flex-start);
   padding: 2.1rem (v.$px-main * 1.6) 2.1rem (v.$px-main * 1.2);
-  font-family: v.$raleway;
 
   &-header {
     @include m.flex($justify: space-between);
@@ -78,16 +77,22 @@
     &-title {
       margin-top: 0.5rem;
       @include m.flex($direction: column);
-      gap: 0.6rem;
+      gap: 0.8rem;
 
       .logo {
-        width: 5.7rem;
+        width: 3.9rem;
         height: auto;
         margin-left: -0.3rem;
       }
 
       .text {
+        font-family: v.$comfortaa;
         font-size: 1.6rem;
+        font-weight: 100;
+
+        span {
+          font-weight: 900;
+        }
       }
     }
 
@@ -111,7 +116,7 @@
         &-group {
           width: 100%;
           @include m.flex($direction: column, $align: flex-start);
-          gap: .2rem;
+          gap: 0.2rem;
           position: relative;
 
           label {

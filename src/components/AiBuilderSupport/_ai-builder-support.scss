@@ -1,33 +1,44 @@
 @use "../../helpers/mixins" as m;
 @use "../../helpers/variables" as v;
 
-@mixin logo() {
+@mixin logo(
+  $position: absolute,
+  $left: v.$px-main,
+  $width: null,
+  $p-start: null
+) {
   .ai-builder-logo {
-    @include m.flex();
+    @include m.flex($direction: row-reverse, $justify: flex-end);
     text-decoration: none;
     color: #000;
-    gap: 0.2rem;
-    position: absolute;
+    gap: 0.4rem;
+    position: $position;
     z-index: 2;
     height: 5rem;
-    left: v.$px-main;
-
-    .icon {
-      font-size: 2rem;
-      transition: all 0.4s ease-out;
-      font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
-    }
+    left: $left;
+    width: $width;
+    padding-left: $p-start;
 
     .text {
-      margin-top: 0.25rem;
-      font-size: 1.6rem;
-      font-family: v.$unica;
+      font-size: 1.45rem;
+      font-family: v.$comfortaa;
+      font-weight: 900;
+
+      &:hover ~ img {
+        transform: rotate(180deg);
+        transition: transform 0.6s ease-in-out;
+      }
     }
 
-    &:hover {
-      .icon {
-        transition: all 0.4s ease-out;
-        font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
+    img {
+      width: 1.7rem;
+      height: auto;
+      object-fit: cover;
+      transition: transform 0.6s ease-in-out;
+
+      &:hover {
+        transform: rotate(180deg);
+        transition: transform 0.6s ease-in-out;
       }
     }
   }
@@ -41,6 +52,7 @@
     height: 5rem;
     cursor: pointer;
     @include m.flex();
+    text-decoration: none;
 
     .material-symbols-outlined {
       padding: 0.3rem;

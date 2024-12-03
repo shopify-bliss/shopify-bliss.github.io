@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import logo from "../../assets/logo/black_logo_nobg.png";
+import logo from "../../assets/logo/black-logo.png";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import axios from "axios";
 import {
@@ -11,9 +11,11 @@ import {
 } from "../../components/AuthSupport/AuthSupport";
 import { ToastContainer } from "react-toastify";
 import { toastMessage, toastPromise } from "../../helpers/AlertMessage";
+import Cookies from "universal-cookie";
 
 function AuthComponents({ typeMain }) {
   axios.defaults.withCredentials = true;
+  const cookies = new Cookies(null, { path: "/" });
 
   const [values, setValues] = useState({
     email: "",
@@ -91,8 +93,6 @@ function AuthComponents({ typeMain }) {
             position: "top-center",
           },
           () => {
-            console.log("userRole in onClose:", userRole.current);
-
             if (userRole.current === "admin") {
               navigate("/dashboard");
             } else if (userRole.current === "customer") {
@@ -106,7 +106,7 @@ function AuthComponents({ typeMain }) {
             console.log(res.data);
             const role = res.data.data.role;
 
-            console.log(role);
+            cookies.set("shopify-bliss", res.data.token);
 
             if (role === "admin" || role === "customer") {
               userRole.current = role;
