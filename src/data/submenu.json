@@ -13,13 +13,8 @@
   {
     "id": 3,
     "menu_id": 4,
-    "name": "display data 1",
+    "name": "display data",
     "default": true
-  },
-  {
-    "id": 4,
-    "menu_id": 4,
-    "name": "display data 2"
   },
   {
     "id": 5,

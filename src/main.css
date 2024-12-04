@@ -4309,13 +4309,13 @@
   height: 0.5px;
   background-color: #aaaaaa;
   transform: scaleX(0);
-  transition: transform 0.7s ease-out;
+  transition: transform 1.4s ease-out;
   transform-origin: left;
   background-color: #000;
 }
 .layout-dashboard-sidebar .sidebar-list:hover::after {
   transform: scaleX(1);
-  transition: transform 0.7s ease-in;
+  transition: transform 1.4s ease-in;
 }
 .layout-dashboard-sidebar .sidebar-list.active {
   color: #000;
@@ -4376,14 +4376,11 @@
   transition: transform 0.6s ease-in-out;
 }
 .layout-dashboard-topbar .links {
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-direction: row;
-  margin-left: 3.675rem;
-  font-size: 0.9rem;
-  font-family: "Raleway", serif;
+  margin: 0 3.675rem;
   gap: 2.4rem;
 }
 .layout-dashboard-topbar .links-item {
@@ -4396,6 +4393,8 @@
   flex-direction: row;
   color: #aaaaaa;
   text-transform: capitalize;
+  font-size: 0.9rem;
+  font-family: "Raleway", serif;
 }
 .layout-dashboard-topbar .links-item::after {
   content: "";
@@ -4410,6 +4409,10 @@
   transition: transform 0.7s ease-in;
   z-index: 2;
 }
+.layout-dashboard-topbar .links-item:hover::after {
+  transform: scaleX(1);
+  transition: transform 0.7s ease-out;
+}
 .layout-dashboard-topbar .links-item.active {
   color: #000;
 }
@@ -4417,15 +4420,88 @@
   transform: scaleX(1);
   transition: transform 0.7s ease-out;
 }
-.layout-dashboard-topbar .links-item:hover::after {
-  transform: scaleX(1);
-  transition: transform 0.7s ease-out;
-}
-.layout-dashboard-topbar .others {
+.layout-dashboard-topbar .config {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: row;
+  gap: 2.4rem;
+}
+.layout-dashboard-topbar .config-help {
+  position: relative;
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  color: #aaaaaa;
+  text-transform: capitalize;
+  font-size: 0.9rem;
+  font-family: "Raleway", serif;
+}
+.layout-dashboard-topbar .config-help::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: #000;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s ease-in;
+  z-index: 2;
+}
+.layout-dashboard-topbar .config-help:hover::after {
+  transform: scaleX(1);
+  transition: transform 1s ease-out;
+}
+.layout-dashboard-topbar .config-account {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 0.7rem;
+  height: 100%;
+  cursor: pointer;
+}
+.layout-dashboard-topbar .config-account .text {
+  position: relative;
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  color: #aaaaaa;
+  text-transform: capitalize;
+  font-size: 0.9rem;
+  font-family: "Raleway", serif;
+}
+.layout-dashboard-topbar .config-account .text::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: #000;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1s ease-in;
+  z-index: 2;
+}
+.layout-dashboard-topbar .config-account img {
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.layout-dashboard-topbar .config-account:hover .text::after {
+  transform: scaleX(1);
+  transition: transform 1s ease-out;
 }
 .layout-dashboard-content {
   grid-area: content;
