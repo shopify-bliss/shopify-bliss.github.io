@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import AiBuilder from "./pages/AiBuilder/AiBuilder";
 import { Login, Signup } from "./pages/Auth/Auth";
-import { Error404, Error401 } from "./pages/Error/Error";
+import { Error404, Error401, Error403 } from "./pages/Error/Error";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import TemplatesManagement from "./pages/TemplatesManagement/TemplatesManagement";
 import Profile from "./pages/Profile/Profile";
@@ -31,6 +31,7 @@ createRoot(document.getElementById("root")).render(
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<Error404 />} />
+          <Route path="/403" element={<Error403 />} />
           <Route path="/401" element={<Error401 />} />
 
           <Route element={<DashboardLayout />}>
