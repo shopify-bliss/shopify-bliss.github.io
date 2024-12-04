@@ -1,6 +1,7 @@
 import React from "react";
 import { Logo } from "../../AiBuilderSupport/AiBuilderSupport";
 import { useDashboard } from "../DashboardContext";
+import profileImage from "../../../assets/images/elements/intro/pexels-alancabello-1291515.jpg";
 
 function Topbar() {
   const { submenu, activeMenu, handleSubmenuPage, submenuPage } =
@@ -26,13 +27,11 @@ function Topbar() {
             );
           })}
       </div>
-      <div className="others">
-        <div className="others-icons">
-          <div className="message"></div>
-          <div className="notif"></div>
-        </div>
-        <div className="others-config">
-          <div>Logout</div>
+      <div className="config">
+        <div className="config-help">Help</div>
+        <div className="config-account">
+          <div className="text">Account Setting</div>
+          <img src={profileImage} alt="Profile image's" />
         </div>
       </div>
     </div>
