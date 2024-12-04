@@ -5,15 +5,20 @@ import TempSections from "./TempSections/TempSections";
 import TempColors from "./TempColors/TempColors";
 import TempFonts from "./TempFonts/TempFonts";
 import LayoutDashboard from "../../components/LayoutDashboard/LayoutDashboard";
-import { getToken, decodedToken } from "../../helpers/DataToken";
-import { Error401 } from "../Error/Error";
+import { useDataToken } from "../../helpers/DataToken";
+import { Error401, Error403 } from "../Error/Error";
 
 function TemplatesManagement() {
   const { submenuPage } = useDashboard();
+  const { token, decoded } = useDataToken();
 
   return (
     <>
-      {getToken && decodedToken.role === "admin" ? (
+      {!token ? (
+        <Error401 />
+      ) : decoded?.role !== "admin" ? (
+        <Error403 />
+      ) : (
         <LayoutDashboard>
           {submenuPage === "overview" && <span>test</span>}
           {submenuPage === "pages" && <TempPages />}
@@ -21,8 +26,6 @@ function TemplatesManagement() {
           {submenuPage === "colors" && <TempColors />}
           {submenuPage === "fonts" && <TempFonts />}
         </LayoutDashboard>
-      ) : (
-        <Error401 />
       )}
     </>
   );

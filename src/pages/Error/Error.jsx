@@ -65,6 +65,15 @@ export function Error404() {
   );
 }
 
+export function Error403() {
+  return (
+    <ErrorComponent
+      type={403}
+      message={"You’re not allowed to access this page."}
+    />
+  );
+}
+
 export function Error401() {
   return (
     <ErrorComponent

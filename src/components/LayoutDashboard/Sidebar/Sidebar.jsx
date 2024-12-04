@@ -1,17 +1,18 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useDashboard } from "../DashboardContext";
-import { decodedToken } from "../../../helpers/DataToken";
+import { useDataToken } from "../../../helpers/DataToken";
 
 function Sidebar() {
   const { menu, accessMenu } = useDashboard();
+  const { decoded } = useDataToken();
 
   return (
     <div className="layout-dashboard-sidebar">
       {menu.map((dataMenu) => {
         const accessibleMenus = accessMenu.filter(
           (dataAccess) =>
-            dataAccess.role === decodedToken.role &&
+            dataAccess.role === decoded?.role &&
             dataAccess.accessMenu === dataMenu.id
         );
 
