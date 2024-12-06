@@ -103,7 +103,7 @@ function AuthComponents({ typeMain }) {
 
         loginPromise
           .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             const role = res.data.data.role;
 
             cookies.set("shopify-bliss", res.data.token);

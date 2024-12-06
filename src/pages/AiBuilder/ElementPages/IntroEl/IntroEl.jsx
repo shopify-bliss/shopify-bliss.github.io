@@ -80,7 +80,12 @@ function ExpalotIntroElStyles({
   );
 }
 
-function IntroEl({ handleActiveIntroEl, activeIntroEl, activeNavbar }) {
+function IntroEl({
+  handleActiveIntroEl,
+  activeIntroEl,
+  activeNavbar,
+  toastMessage,
+}) {
   const [isExpandLayout, setIsExpandLayout] = useState(false);
   const expandLayoutRef = useRef(null);
 

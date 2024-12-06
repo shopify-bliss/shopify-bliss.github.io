@@ -4,6 +4,7 @@
 @use "../../../components/AiBuilderSupport/NavbarLayout/navbar-layout" as navbar;
 @use "./IntroEl/intro-el" as intro-el;
 @use "./ProductsEl/products-el" as products-el;
+@use "./ServicesEl/services-el" as services-el;
 
 @mixin element-pages-overview() {
   .element-pages {
@@ -37,6 +38,7 @@
         position: relative;
         scrollbar-width: thin;
         overflow-y: auto;
+        font-family: v.$raleway;
 
         &-navbar {
           grid-area: navbar;
@@ -57,9 +59,12 @@
             @include products-el.products-el();
           }
 
+          .services-el {
+            @include services-el.services-el();
+          }
+
           .text {
             font-size: 22px;
-            font-family: v.$raleway;
             font-weight: 500;
           }
         }

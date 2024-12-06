@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "name": "Basic",
+    "price": 250000,
+    "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
+    "image": "pexels-anna-nekrashevich-8516697.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Intermediate",
+    "price": 500000,
+    "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
+    "image": "pexels-njeromin-15352967.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Advanced",
+    "price": 750000,
+    "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
+    "image": "pexels-frostroomhead-7897470.jpg"
+  }
+]

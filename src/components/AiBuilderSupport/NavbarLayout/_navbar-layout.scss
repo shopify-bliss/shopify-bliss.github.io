@@ -108,6 +108,7 @@
 
   &.style-3 {
     @include config.style-3($row-gap: 0.5rem);
+    padding-top: 1.05rem;
 
     .template-logo {
       @include config.logo(

@@ -1,0 +1,241 @@
+@use "../../../../helpers/mixins" as m;
+@use "../../../../helpers/variables" as v;
+@use "../../../../components/AiBuilderSupport/ai-builder-support" as support;
+@use "./services-el-config" as config;
+
+$fs-title: 1.5rem;
+$fs-desc: 8px;
+$fs-text: 10px;
+$fs-name: 13px;
+$fs-preface: 6px;
+
+@mixin services-el() {
+  width: 100%;
+  //   min-height: 44vh;
+  height: auto;
+  border: v.$border-hover;
+  position: relative;
+
+  .change-layout {
+    display: none;
+  }
+
+  @include support.change-layout(
+    $bg-color-default: adjust-color($color: #fff, $blackness: 90%),
+    $bg-color: #000,
+    $border-color: adjust-color($color: #fff, $blackness: 90%),
+    $color: #fff
+  );
+
+  &.style-1 {
+    @include config.style-1($gap: 1.1rem);
+    padding: v.$py-layout-section v.$p-navter (v.$py-layout-section * 1.6);
+
+    .template-title {
+      @include config.title($fs: $fs-title);
+    }
+
+    .template-wrapper {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+
+      .container-item {
+        @include config.container-item($gap: 0.2rem);
+
+        .template-image {
+          @include config.image($h: 10rem, $mb: 0.9rem);
+        }
+
+        .template-name {
+          @include config.name($t-decor: true, $fs: $fs-name, $fw: 500);
+        }
+
+        .template-price {
+          @include config.price($fs: $fs-text);
+        }
+
+        .template-desc {
+          @include config.desc($fs: $fs-desc, $mt: 0.4rem, $w: 85%);
+        }
+      }
+    }
+  }
+
+  &.style-2 {
+    @include config.style-2($gap: 1rem);
+    padding: v.$py-layout-section v.$p-navter (v.$py-layout-section * 2.1);
+
+    .template-title {
+      @include config.title($fs: $fs-title);
+    }
+
+    .template-wrapper {
+      @include m.flex();
+      gap: 0.4rem;
+
+      .container-item {
+        @include config.container-item();
+
+        .template-name {
+          @include config.name($fs: $fs-name, $fw: 500);
+        }
+
+        .template-desc {
+          @include config.desc($fs: $fs-desc, $mt: 0.6rem);
+        }
+
+        .template-button {
+          @include config.button(
+            $p: 0,
+            $t-decor: underline,
+            $mt: 0.4rem,
+            $fs: $fs-desc
+          );
+        }
+      }
+    }
+  }
+
+  &.style-3 {
+    @include config.style-3($gap: 1.5rem);
+    padding: v.$py-layout-section v.$p-navter (v.$py-layout-section * 2.1);
+
+    .template-title {
+      @include config.title($fs: $fs-title);
+    }
+
+    .template-wrapper {
+      width: 100%;
+      @include m.flex($direction: column);
+
+      .container-item {
+        width: 100%;
+        display: grid;
+        grid-template-areas: "name icon";
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto;
+        border-top: 0.05px solid #000;
+        padding: 0.8rem 0;
+        align-items: center;
+
+        &.active {
+          grid-template-rows: auto 1fr;
+          grid-template-columns: 1fr auto;
+          grid-template-areas:
+            "name icon"
+            "desc icon";
+          align-items: flex-start;
+
+          .template-desc {
+            margin-bottom: 0.5rem;
+          }
+        }
+
+        &:last-child {
+          border-bottom: 0.05px solid #000;
+        }
+
+        .template-name {
+          grid-area: name;
+          @include config.name($fs: $fs-name, $fw: 500);
+        }
+
+        .template-desc {
+          grid-area: desc;
+          @include config.desc($fs: $fs-desc, $mt: 0.3rem, $ln-h: 150%);
+        }
+
+        .material-symbols-outlined {
+          grid-area: icon;
+          font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+          font-size: 1.1rem;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  &.style-4 {
+    @include config.style-4($gap: 1.5rem);
+    padding: v.$py-layout-section v.$p-navter;
+
+    .template-wrapper {
+      @include m.flex(
+        $direction: column,
+        $align: flex-start,
+        $justify: flex-start
+      );
+      padding-bottom: v.$py-layout-section * 1.3;
+
+      .template-title {
+        @include config.title($fs: $fs-title);
+      }
+
+      .template-preface {
+        font-size: $fs-desc;
+        pointer-events: none;
+        margin: 0.5rem 0 2.2rem;
+        line-height: 150%;
+      }
+
+      .container-item {
+        border-bottom: 0.05px #000 solid;
+        display: grid;
+        grid-template-areas: "name icon";
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto;
+        width: 100%;
+        padding: 0.8rem 0;
+        align-items: center;
+
+        &.active {
+          grid-template-rows: auto 1fr;
+          grid-template-areas:
+            "name icon"
+            "desc desc";
+
+          .template-desc {
+            padding-bottom: 0.2rem;
+          }
+        }
+
+        &:nth-child(3) {
+          border-top: 0.05px #000 solid;
+        }
+
+        .template-name {
+          @include config.name($fs: $fs-name, $fw: 500);
+          grid-area: name;
+        }
+
+        .material-symbols-outlined {
+          grid-area: icon;
+          font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+          font-size: 1.1rem;
+          cursor: pointer;
+        }
+
+        .template-desc {
+          padding-left: 0.8rem;
+          @include config.desc($fs: $fs-desc, $mt: 0.3rem, $ln-h: 150%);
+          grid-area: desc;
+        }
+      }
+
+      .template-button {
+        @include config.button(
+          $bg: #000,
+          $color: #fff,
+          $mt: 1.6rem,
+          $p: 0.6rem 1.7rem,
+          $fs: $fs-desc
+        );
+      }
+    }
+
+    .template-image {
+      @include config.image($h: 100%, $mb: 0);
+    }
+  }
+}

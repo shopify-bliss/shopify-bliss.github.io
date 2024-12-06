@@ -10,7 +10,6 @@ import {
 } from "./Config/NavbarLayoutConfig";
 import navbarFeatures from "../../../data/navbarFeature.json";
 import navbarOptionLayout from "../../../data/navbarOptionLayout.json";
-import { toastMessage } from "../../../helpers/AlertMessage";
 import { ChangeLayout } from "../AiBuilderSupport";
 
 function NavbarLayout({
@@ -21,6 +20,7 @@ function NavbarLayout({
   activeIntroEl,
   activeNavbar,
   handleActiveNavbar,
+  toastMessage,
 }) {
   const [activeFeatures, setActiveFeatures] = useState([]);
   const [isExpandLayout, setIsExpandLayout] = useState(false);

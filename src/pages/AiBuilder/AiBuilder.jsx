@@ -190,6 +190,7 @@ function AiBuilder() {
             setCurrentPageId={setCurrentPageId}
             dataElements={dataElements}
             fetchDataElements={fetchDataElements}
+            toastMessage={toastMessage}
           />
         )}
         <div className="ai-builder-steps">

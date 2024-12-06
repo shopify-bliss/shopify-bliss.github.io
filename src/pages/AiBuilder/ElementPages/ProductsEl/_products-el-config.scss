@@ -3,7 +3,7 @@
 @use "../../../../helpers/animation";
 @use "../../../../components/AiBuilderSupport/ai-builder-support" as support;
 
-$fs-title: 7px;
+$fs-title: 7.5px;
 $fs-text: 4px;
 $fs-title-marquee: 22px;
 $py-layout: 0.45rem;
@@ -127,23 +127,6 @@ $py-layout: 0.45rem;
   }
 }
 
-@mixin productsel-styles() {
-  width: 100%;
-  border: 1.5px solid #f7f7f7;
-  height: fit-content;
-  background-color: #fff;
-  min-height: 6.5rem;
-  overflow: hidden;
-
-  &:hover {
-    border-color: adjust-color($color: #fff, $blackness: 10%);
-  }
-
-  &.active {
-    border-color: adjust-color($color: #fff, $blackness: 60%);
-  }
-}
-
 @mixin style-1($gap: 0.45rem) {
   @include m.flex($direction: column);
   gap: $gap;
@@ -157,7 +140,6 @@ $py-layout: 0.45rem;
 @mixin style-3($gap: 0.45rem) {
   @include m.flex();
   gap: $gap;
-  position: relative;
 }
 
 @mixin style-4($gap: 0.5rem) {
@@ -183,13 +165,13 @@ $py-layout: 0.45rem;
     }
 
     .wrapper-left {
-      @include m.flex($direction: column, $justify: flex-start);
+      @include m.flex($direction: column, $justify: flex-start, $align: flex-start);
       overflow: hidden;
       height: 100%;
       gap: 0.7rem;
 
       .style-1 {
-        @include productsel-styles();
+        @include support.layout-styles();
         @include style-1();
         padding: $py-layout 0.25rem;
 
@@ -222,7 +204,7 @@ $py-layout: 0.45rem;
       }
 
       .style-3 {
-        @include productsel-styles();
+        @include support.layout-styles();
         @include style-3();
         padding: $py-layout 0.55rem;
 
@@ -263,13 +245,13 @@ $py-layout: 0.45rem;
     }
 
     .wrapper-right {
-      @include m.flex($direction: column, $justify: flex-start);
+      @include m.flex($direction: column, $justify: flex-start, $align: flex-start);
       height: 100%;
       gap: 0.7rem;
       overflow: hidden;
 
       .style-2 {
-        @include productsel-styles();
+        @include support.layout-styles();
         @include style-2();
         padding: $py-layout 0.55rem;
 
@@ -312,7 +294,7 @@ $py-layout: 0.45rem;
       }
 
       .style-4 {
-        @include productsel-styles();
+        @include support.layout-styles();
         @include style-4();
         padding: $py-layout 0.55rem;
 
