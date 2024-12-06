@@ -149,7 +149,7 @@ function ExpalotProductsElStyles({
   );
 }
 
-function ProductsEl() {
+function ProductsEl({ toastMessage }) {
   const [isExpandLayout, setIsExpandLayout] = useState(false);
   const [activeProductsEl, setActiveProductsEl] = useState(1);
   const expandLayoutRef = useRef(null);

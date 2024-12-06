@@ -117,7 +117,12 @@
   }
 }
 
-@mixin change-layout($bg-color, $color, $border-color) {
+@mixin change-layout(
+  $bg-color,
+  $color,
+  $border-color,
+  $bg-color-default: transparent
+) {
   &:hover,
   &:focus,
   &:active {
@@ -136,7 +141,7 @@
       z-index: 2;
       border-radius: 0.2rem;
       overflow: hidden;
-      background-color: transparent;
+      background-color: $bg-color-default;
       color: $color;
 
       // border-color: adjust-color($color: #fff, $blackness: 90%);
@@ -201,6 +206,28 @@
     bottom: $vertical + v.$p-navter;
   } @else {
     top: $vertical;
+  }
+}
+
+@mixin layout-styles($section: true, $p: 0.55rem 0.45rem) {
+  width: 100%;
+  border: v.$border-hover;
+  height: fit-content;
+  background-color: #fff;
+  position: relative;
+  overflow: hidden;
+  padding: 0.6rem 0.55rem;
+
+  @if $section {
+    min-height: 6.5rem;
+  }
+
+  &:hover {
+    border-color: adjust-color($color: #fff, $blackness: 10%);
+  }
+
+  &.active {
+    border-color: adjust-color($color: #fff, $blackness: 60%);
   }
 }
 

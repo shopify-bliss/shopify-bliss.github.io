@@ -157,24 +157,6 @@
   @include m.flex($justify: space-between);
 }
 
-@mixin navbar-style() {
-  background-color: #fff;
-  padding: 0.4rem 0.6rem;
-  text-align: center;
-  border: v.$border-hover;
-  gap: 0.25rem;
-  width: 100%;
-  height: fit-content;
-
-  &:hover {
-    border-color: adjust-color($color: #fff, $blackness: 10%);
-  }
-
-  &.active {
-    border-color: adjust-color($color: #fff, $blackness: 60%);
-  }
-}
-
 .expalot-navbar {
   @include support.expalot-elements($isbottom: false, $vertical: 2.85rem);
 
@@ -226,6 +208,7 @@
       "title title"
       "wrapper wrapper";
     gap: 0.8rem 0.7rem;
+    align-items: flex-start;
 
     .title {
       grid-area: title;
@@ -233,12 +216,16 @@
     }
 
     .wrapper-left {
-      @include m.flex($direction: column, $justify: flex-start);
+      @include m.flex(
+        $direction: column,
+        $justify: flex-start,
+        $align: flex-start
+      );
       height: 100%;
       gap: 0.7rem;
 
       .style-1 {
-        @include navbar-style();
+        @include support.layout-styles($section: false);
         @include style-1();
 
         .template-logo {
@@ -251,7 +238,7 @@
       }
 
       .style-3 {
-        @include navbar-style();
+        @include support.layout-styles($section: false);
         @include style-3($row-gap: 0.3rem);
 
         .template-logo {
@@ -273,12 +260,16 @@
     }
 
     .wrapper-right {
-      @include m.flex($direction: column, $justify: flex-start);
+      @include m.flex(
+        $direction: column,
+        $justify: flex-start,
+        $align: flex-start
+      );
       height: 100%;
       gap: 0.7rem;
 
       .style-2 {
-        @include navbar-style();
+        @include support.layout-styles($section: false);
         @include style-2();
 
         .template-logo {
@@ -291,7 +282,7 @@
       }
 
       .style-4 {
-        @include navbar-style();
+        @include support.layout-styles($section: false);
         @include style-4();
 
         .template-logo {

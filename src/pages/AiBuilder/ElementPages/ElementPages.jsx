@@ -10,6 +10,7 @@ import { ControllingOverviews } from "../../../components/AiBuilderSupport/AiBui
 import NavbarLayout from "../../../components/AiBuilderSupport/NavbarLayout/NavbarLayout";
 import IntroEl from "./IntroEl/IntroEl";
 import ProductsEl from "./ProductsEl/ProductsEl";
+import ServicesEl from "./ServicesEl/ServicesEl";
 
 function ElementPages({
   activePages,
@@ -19,6 +20,7 @@ function ElementPages({
   dataPages,
   currentPageId,
   setCurrentPageId,
+  toastMessage,
   // dataElements,
   // fetchDataElements,
 }) {
@@ -65,6 +67,7 @@ function ElementPages({
                 activeNavbar={activeNavbar}
                 handleActiveNavbar={handleActiveNavbar}
                 activeIntroEl={activeIntroEl}
+                toastMessage={toastMessage}
               />
               {currentPageId !== null && (
                 <div className="display-data-section">
@@ -79,9 +82,12 @@ function ElementPages({
                             handleActiveIntroEl={handleActiveIntroEl}
                             activeIntroEl={activeIntroEl}
                             activeNavbar={activeNavbar}
+                            toastMessage={toastMessage}
                           />
                         ) : section.id === 2 ? (
-                          <ProductsEl />
+                          <ProductsEl toastMessage={toastMessage} />
+                        ) : section.id === 3 ? (
+                          <ServicesEl toastMessage={toastMessage} />
                         ) : (
                           <div className="text">{section.name}</div>
                         )}
