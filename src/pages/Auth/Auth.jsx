@@ -80,9 +80,9 @@ function AuthComponents({ typeMain }) {
       window.history.replaceState({}, document.title, newUrl);
 
       if (getRoleParams === "admin") {
-        navigate("/dashboard");
+        navigate("/dashboard", { messageLoginGoogle: "Login successfully!" });
       } else if (getRoleParams === "customer") {
-        navigate("/profile");
+        navigate("/profile", { messageLoginGoogle: "Login successfully!" });
       }
     }
   }, [getTokenParams, getRoleParams, cookies, navigate]);
@@ -132,7 +132,7 @@ function AuthComponents({ typeMain }) {
             toastPromise(
               signupPromise,
               {
-                pending: "Signup in progress, please wait.",
+                pending: "Signup in progress, please wait..",
                 success: "Signup successful! 🎉",
                 error: "Failed to signup, please try again!",
               },
