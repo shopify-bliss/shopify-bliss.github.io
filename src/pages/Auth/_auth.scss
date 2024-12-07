@@ -175,6 +175,55 @@
           }
         }
 
+        .validation-password {
+          margin-top: -0.5rem;
+          font-family: v.$raleway;
+          @include m.flex($direction: column, $align: flex-start);
+          gap: 0.5rem;
+          pointer-events: none;
+
+          .item {
+            @include m.flex($justify: flex-start);
+            gap: 0.4rem;
+
+            .material-symbols-rounded {
+              transition: all 0.5s ease-in;
+              font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+              font-size: 1.1rem;
+            }
+
+            &-text {
+              font-size: 0.7rem;
+              color: transparent;
+              background-image: linear-gradient(
+                90deg,
+                #000 50%,
+                adjust-color($color: #fff, $blackness: 70%) 50%
+              );
+              background-position: 100%;
+              background-size: 200% 100%;
+              background-clip: text;
+              -webkit-background-clip: text;
+
+              transition: background-position 0.5s ease-in;
+            }
+
+            &.done {
+              .material-symbols-rounded {
+                transition: all 0.5s ease-out;
+                font-variation-settings: "FILL" 1, "wght" 300, "GRAD" 0,
+                  "opsz" 24;
+                color: #07bc0c;
+              }
+
+              .item-text {
+                background-position: 0;
+                transition: background-position 0.5s ease-out;
+              }
+            }
+          }
+        }
+
         &-submit {
           @include support.auth-button(
             $bg-color: #000,

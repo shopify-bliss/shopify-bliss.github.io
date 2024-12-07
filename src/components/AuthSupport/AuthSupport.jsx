@@ -1,9 +1,7 @@
-import { useCallback } from "react";
 import { Link } from "react-router-dom";
 import google from "../../assets/images/login/google.png";
 import facebook from "../../assets/images/login/facebook.png";
 import whatsapp from "../../assets/images/login/whatsapp (1).png";
-import axios from "axios";
 import urlEndpoint from "../../helpers/urlEndpoint";
 
 export function AuthHeader({ type }) {
@@ -47,6 +45,7 @@ export function AuthForm({
   values,
   hidePassword,
   setHidePassword,
+  validationPassword,
   type,
 }) {
   return (
@@ -95,11 +94,43 @@ export function AuthForm({
             className="material-symbols-outlined"
             onClick={() => setHidePassword(!hidePassword)}
           >
-            {hidePassword ? "visibility" : "visibility_off"}
+            {hidePassword ? "visibility_off" : "visibility"}
           </span>
         }
         <div className="input-border"></div>
       </div>
+      {type === "signup" && (
+        <div className="validation-password">
+          <div className={`item ${validationPassword.length ? "done" : ""}`}>
+            <span className="material-symbols-rounded">check_circle</span>
+            <div className="item-text">Password should be 8 chars minimum.</div>
+          </div>
+          <div className={`item ${validationPassword.lowercase ? "done" : ""}`}>
+            <span className="material-symbols-rounded">check_circle</span>
+            <div className="item-text">
+              Password must contain at least one lowercase letter.
+            </div>
+          </div>
+          <div className={`item ${validationPassword.uppercase ? "done" : ""}`}>
+            <span className="material-symbols-rounded">check_circle</span>
+            <div className="item-text">
+              Password must contain at least one uppercase letter.
+            </div>
+          </div>
+          <div className={`item ${validationPassword.number ? "done" : ""}`}>
+            <span className="material-symbols-rounded">check_circle</span>
+            <div className="item-text">
+              Password must contain at least one number.
+            </div>
+          </div>
+          <div className={`item ${validationPassword.special ? "done" : ""}`}>
+            <span className="material-symbols-rounded">check_circle</span>
+            <div className="item-text">
+              Password must contain at least one special character.
+            </div>
+          </div>
+        </div>
+      )}
       <button
         type="submit"
         className="form-submit"
@@ -115,47 +146,26 @@ export function AuthForm({
   );
 }
 
-export function AuthIntegration({ toastMessage }) {
-  axios.defaults.withCredentials = true;
-
-  const handleLoginGoogle = useCallback(() => {
-    axios
-      .get(urlEndpoint.loginGoogle, { withCredentials: true })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [urlEndpoint.loginGoogle]);
-
+export function AuthIntegration({ toastDevelop }) {
   return (
     <div className="integration">
       <button
         className="integration-item"
         onClick={() => {
-          toastMessage(
-            "info",
-            "The Continue with WhatsApp feature is currently under development.",
-            "top-center"
-          );
+          toastDevelop("continue with WhatsApp");
         }}
       >
         <img className="icon" src={whatsapp} alt="WhatsApp's Logo" />
         <span className="text">Continue with WhatsApp</span>
       </button>
-      <button className="integration-item" onClick={handleLoginGoogle}>
+      <Link className="integration-item" to={urlEndpoint.loginGoogle}>
         <img className="icon" src={google} alt="Google's Logo" />
         <span className="text">Continue with Google</span>
-      </button>
+      </Link>
       <button
         className="integration-item"
         onClick={() => {
-          toastMessage(
-            "info",
-            "The Continue with Facebook feature is currently under development.",
-            "top-center"
-          );
+          toastDevelop("continue with Facebook");
         }}
       >
         <img className="icon" src={facebook} alt="Facebook's Logo" />

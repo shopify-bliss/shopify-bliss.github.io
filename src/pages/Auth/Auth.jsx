@@ -1,8 +1,14 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useSearchParams,
+  useLocation,
+} from "react-router-dom";
 import logo from "../../assets/logo/black-logo.png";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import axios from "axios";
+import { signupSchema } from "../../helpers/ValidationSchema";
 import {
   AuthHeader,
   AuthTitle,
@@ -10,7 +16,11 @@ import {
   AuthForm,
 } from "../../components/AuthSupport/AuthSupport";
 import { ToastContainer } from "react-toastify";
-import { toastMessage, toastPromise } from "../../helpers/AlertMessage";
+import {
+  toastMessage,
+  toastPromise,
+  toastDevelop,
+} from "../../helpers/AlertMessage";
 import Cookies from "universal-cookie";
 
 function AuthComponents({ typeMain }) {
@@ -23,26 +33,48 @@ function AuthComponents({ typeMain }) {
     password: "",
   });
   const [hidePassword, setHidePassword] = useState(true);
+  const [validationPassword, setValidationPassword] = useState({
+    length: false,
+    uppercase: false,
+    lowercase: false,
+    number: false,
+    special: false,
+  });
+
   const userRole = useRef(null);
 
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchParams] = useSearchParams();
   const verifyEmail = searchParams.get("message");
 
   useEffect(() => {
     if (verifyEmail) {
-      console.log(verifyEmail);
-      toastMessage("success", verifyEmail, "top-center");
+      toastMessage("success", verifyEmail, {
+        position: "top-center",
+      });
     }
   }, []);
 
   const handleChange = useCallback((e) => {
+    const { name, value } = e.target;
+
     setValues((prev) => {
       return {
         ...prev,
-        [e.target.name]: e.target.value,
+        [name]: value,
       };
     });
+
+    if (name === "password") {
+      setValidationPassword({
+        length: value.length >= 8,
+        uppercase: /[A-Z]/.test(value),
+        lowercase: /[a-z]/.test(value),
+        number: /[0-9]/.test(value),
+        special: /[@$!%*?&#^()_\-+=]/.test(value),
+      });
+    }
   }, []);
 
   const handleFormSubmit = useCallback(
@@ -50,31 +82,53 @@ function AuthComponents({ typeMain }) {
       e.preventDefault();
 
       if (typeMain === "signup") {
-        const signupPromise = axios.post(urlEndpoint.signupForm, {
-          email: values.email,
-          username: values.username,
-          password: values.password,
-        });
+        signupSchema
+          .validate(
+            {
+              email: values.email,
+              username: values.username,
+              password: values.password,
+            },
+            { abortEarly: false }
+          )
+          .then(() => {
+            const signupPromise = axios.post(urlEndpoint.signupForm, {
+              email: values.email,
+              username: values.username,
+              password: values.password,
+            });
 
-        toastPromise(
-          signupPromise,
-          {
-            pending: "Signup in progress, please wait.",
-            success: "Signup successful! 🎉",
-            error: "Failed to signup, please try again!",
-          },
-          {
-            autoClose: 5000,
-            position: "top-center",
-          }
-        );
+            toastPromise(
+              signupPromise,
+              {
+                pending: "Signup in progress, please wait.",
+                success: "Signup successful! 🎉",
+                error: "Failed to signup, please try again!",
+              },
+              {
+                autoClose: 5000,
+                position: "top-center",
+              }
+            );
 
-        signupPromise
-          .then((res) => {
-            console.log(res.data);
+            signupPromise
+              .then((res) => {
+                console.log(res.data);
+              })
+              .catch((err) => {
+                console.error(err);
+                toastMessage("error", err, {
+                  position: "top-center",
+                });
+              });
           })
-          .catch((err) => {
-            console.error(err);
+          .catch((errors) => {
+            errors.inner.forEach((error) => {
+              toastMessage("error", error.message, {
+                position: "top-center",
+                autoClose: 3500,
+              });
+            });
           });
       } else {
         const loginPromise = axios.post(urlEndpoint.loginForm, {
@@ -122,6 +176,16 @@ function AuthComponents({ typeMain }) {
     [values, typeMain]
   );
 
+  useEffect(() => {
+    if (location.state?.messageLogout) {
+      toastMessage("success", location.state.messageLogout);
+      navigate(location.pathname, {
+        state: { ...location.state, messageLogout: undefined },
+        replace: true,
+      });
+    }
+  }, [location.state, navigate, toastMessage, location.pathname]);
+
   return (
     <>
       <div className="auth">
@@ -139,6 +203,7 @@ function AuthComponents({ typeMain }) {
               values={values}
               hidePassword={hidePassword}
               setHidePassword={setHidePassword}
+              validationPassword={validationPassword}
               handleChange={handleChange}
               handleForm={handleFormSubmit}
               type={typeMain}
@@ -147,7 +212,7 @@ function AuthComponents({ typeMain }) {
             {typeMain !== "signup" && (
               <>
                 <div className="divider"></div>
-                <AuthIntegration type={typeMain} toastMessage={toastMessage} />
+                <AuthIntegration type={typeMain} toastDevelop={toastDevelop} />
               </>
             )}
           </div>
