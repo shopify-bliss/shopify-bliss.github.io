@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LayoutDashboard from "../../components/LayoutDashboard/LayoutDashboard";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
 import Password from "./Password/Password";
