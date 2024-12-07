@@ -90,6 +90,7 @@ $main-gap: 2.4rem;
   .config {
     @include m.flex();
     gap: $main-gap;
+    position: relative;
 
     &-help {
       @include text-topbar();
@@ -121,6 +122,48 @@ $main-gap: 2.4rem;
         .text::after {
           transform: scaleX(1);
           transition: transform 1s ease-out;
+        }
+      }
+    }
+
+    .account-modal {
+      $p-right: 3.6rem;
+
+      position: absolute;
+      z-index: 3;
+      top: 85%;
+      right: 0;
+      width: auto;
+      height: auto;
+      background-color: #fff;
+      border-radius: 0.2rem;
+      box-shadow: 0 0 4px rgba($color: #000, $alpha: 0.15);
+      font-family: v.$raleway;
+      letter-spacing: 0.5px;
+
+      &-profile {
+        padding: 1.1rem $p-right 0.85rem 1.3rem;
+
+        .username {
+          font-weight: 700;
+        }
+
+        .email {
+          margin-top: 0.25rem;
+          font-weight: 300;
+          font-size: 0.825rem;
+        }
+      }
+
+      &-item {
+        padding: 1.1rem $p-right 1.1rem 1.3rem;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 0.85rem;
+
+        &:hover {
+          background-color: $border-color;
         }
       }
     }

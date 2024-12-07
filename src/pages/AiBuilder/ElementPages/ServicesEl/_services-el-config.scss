@@ -61,7 +61,6 @@ $px-layout: 0.5rem;
   background-color: $bg;
   color: $color;
   text-decoration: $t-decor;
-  pointer-events: none;
 }
 
 @mixin image($mb: 0.4rem, $h: 4rem) {

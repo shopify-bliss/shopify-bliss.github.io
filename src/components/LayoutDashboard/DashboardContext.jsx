@@ -9,6 +9,8 @@ import menu from "../../data/menu.json";
 import submenu from "../../data/submenu.json";
 import accessMenu from "../../data/accessMenu.json";
 import { useLocation } from "react-router-dom";
+import { toastMessage, toastDevelop } from "../../helpers/AlertMessage";
+import { ToastContainer } from "react-toastify";
 
 const DashboardContext = createContext({
   activeMenu: null,
@@ -18,6 +20,8 @@ const DashboardContext = createContext({
   submenuPage: "",
   handleSubmenuPage: () => {},
   accessMenu: [],
+  toastMessage: null,
+  toastDevelop: null,
 });
 
 export const useDashboard = () => useContext(DashboardContext);
@@ -67,9 +71,12 @@ export const DashboardProvider = ({ children }) => {
         submenuPage,
         handleSubmenuPage,
         accessMenu,
+        toastMessage,
+        toastDevelop,
       }}
     >
       {children}
+      <ToastContainer />
     </DashboardContext.Provider>
   );
 };
