@@ -53,8 +53,16 @@ function AuthComponents({ typeMain }) {
       toastMessage("success", verifyEmail, {
         position: "top-center",
       });
+
+      const params = new URLSearchParams(window.location.search);
+      params.delete("message");
+      window.history.replaceState(
+        {},
+        document.title,
+        `${window.location.pathname}?${params.toString()}`
+      );
     }
-  }, []);
+  }, [verifyEmail]);
 
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;
