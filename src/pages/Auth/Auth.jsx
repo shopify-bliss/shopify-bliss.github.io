@@ -22,6 +22,7 @@ import {
   toastDevelop,
 } from "../../helpers/AlertMessage";
 import Cookies from "universal-cookie";
+import { jwtDecode } from "jwt-decode";
 
 function AuthComponents({ typeMain }) {
   axios.defaults.withCredentials = true;
@@ -166,12 +167,13 @@ function AuthComponents({ typeMain }) {
         loginPromise
           .then((res) => {
             // console.log(res.data);
-            const role = res.data.data.role;
+            const token = res.data.token;
 
-            cookies.set("shopify-bliss", res.data.token);
+            cookies.set("shopify-bliss", token);
+            const decoded = jwtDecode(token);
 
-            if (role === "admin" || role === "customer") {
-              userRole.current = role;
+            if (decoded.role === "admin" || decoded.role === "customer") {
+              userRole.current = decoded.role;
             } else {
               toastMessage("error", "Access denied. Role not recognized.");
             }
