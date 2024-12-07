@@ -48,6 +48,8 @@ function AuthComponents({ typeMain }) {
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const verifyEmail = searchParams.get("message");
+  const getTokenParams = searchParams.get("shopify-bliss");
+  const getRoleParams = searchParams.get("role");
 
   useEffect(() => {
     if (verifyEmail) {
@@ -57,13 +59,33 @@ function AuthComponents({ typeMain }) {
 
       const params = new URLSearchParams(window.location.search);
       params.delete("message");
-      window.history.replaceState(
-        {},
-        document.title,
-        `${window.location.pathname}?${params.toString()}`
-      );
+      const newUrl = params.toString()
+        ? `${window.location.pathname}?${params.toString()}`
+        : window.location.pathname;
+
+      window.history.replaceState({}, document.title, newUrl);
     }
   }, [verifyEmail]);
+
+  useEffect(() => {
+    if (getTokenParams && getRoleParams) {
+      cookies.set("shopify-bliss", getTokenParams);
+
+      const params = new URLSearchParams(window.location.search);
+      params.delete("shopify-bliss");
+      params.delete("role");
+      const newUrl = params.toString()
+        ? `${window.location.pathname}?${params.toString()}`
+        : window.location.pathname;
+      window.history.replaceState({}, document.title, newUrl);
+
+      if (getRoleParams === "admin") {
+        navigate("/dashboard");
+      } else if (getRoleParams === "customer") {
+        navigate("/profile");
+      }
+    }
+  }, [getTokenParams, getRoleParams, cookies, navigate]);
 
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;
