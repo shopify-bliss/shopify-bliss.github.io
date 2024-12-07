@@ -80,9 +80,13 @@ function AuthComponents({ typeMain }) {
       window.history.replaceState({}, document.title, newUrl);
 
       if (getRoleParams === "admin") {
-        navigate("/dashboard", { messageLoginGoogle: "Login successfully!" });
+        navigate("/dashboard", {
+          state: { messageLoginGoogle: "Login successfully!" },
+        });
       } else if (getRoleParams === "customer") {
-        navigate("/profile", { messageLoginGoogle: "Login successfully!" });
+        navigate("/profile", {
+          state: { messageLoginGoogle: "Login successfully!" },
+        });
       }
     }
   }, [getTokenParams, getRoleParams, cookies, navigate]);
