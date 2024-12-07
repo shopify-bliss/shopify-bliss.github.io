@@ -29,25 +29,6 @@ function AiBuilder() {
   const [dataPages, setDataPages] = useState([]);
   const [dataElements, setDataElements] = useState([]);
 
-  const cookies = new Cookies(null, { path: "/" });
-  const [searchParams] = useSearchParams();
-
-  const getTokenParams = searchParams.get("shopify-bliss");
-
-  useEffect(() => {
-    if (getTokenParams) {
-      cookies.set("shopify-bliss", getTokenParams);
-
-      const params = new URLSearchParams(window.location.search);
-      params.delete("shopify-bliss");
-      window.history.replaceState(
-        {},
-        document.title,
-        `${window.location.pathname}?${params.toString()}`
-      );
-    }
-  }, [getTokenParams, cookies]);
-
   const handleSiteTitleInput = useCallback((e) => {
     const inputSiteTitle = e.target.value;
     if (inputSiteTitle.length <= maxChars) {
