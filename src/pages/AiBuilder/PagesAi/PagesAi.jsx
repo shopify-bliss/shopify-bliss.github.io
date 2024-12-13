@@ -18,13 +18,8 @@ function PagesAi({
   initialPageId,
   handleActivePage,
   dataPages,
-  fetchDataPages,
 }) {
   const [activeNavbar, setActiveNavbar] = useState(1);
-
-  useEffect(() => {
-    fetchDataPages();
-  }, [fetchDataPages]);
 
   const { handleNext, handlePrev } = ControllingOverviews({
     activePages: activePages,

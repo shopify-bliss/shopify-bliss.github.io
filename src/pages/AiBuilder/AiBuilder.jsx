@@ -5,11 +5,10 @@ import ElementPages from "./ElementPages/ElementPages";
 import { siteTitleSchema } from "../../helpers/ValidationSchema";
 import { toastMessage } from "../../helpers/AlertMessage";
 import { ToastContainer } from "react-toastify";
+import LoaderProgress from "../../components/LoaderProgress/LoaderProgress";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import steps from "../../data/steps.json";
 import axios from "axios";
-import Cookies from "universal-cookie";
-import { useSearchParams } from "react-router-dom";
 
 function AiBuilder() {
   axios.defaults.withCredentials = true;
@@ -28,6 +27,8 @@ function AiBuilder() {
 
   const [dataPages, setDataPages] = useState([]);
   const [dataElements, setDataElements] = useState([]);
+  const [isLoadingPagesAi, setIsLoadingPagesAi] = useState(false);
+  const [isLoadingElementPages, setIsLoadingElementPages] = useState(false);
 
   const handleSiteTitleInput = useCallback((e) => {
     const inputSiteTitle = e.target.value;
@@ -105,38 +106,52 @@ function AiBuilder() {
   );
 
   useEffect(() => {
-    setActiveSections((prev) => ({
-      ...prev,
-      [currentPageId]: prev[currentPageId] || [],
-    }));
-  }, [currentPageId]);
+    if (currentPageId !== initialPageId) {
+      setActiveSections((prev) => ({
+        ...prev,
+        [currentPageId]: prev[currentPageId] || [],
+      }));
+    }
+  }, [currentPageId, initialPageId]);
 
   const fetchDataPages = useCallback(async () => {
-    await axios
-      .get(urlEndpoint.pagesAi)
-      .then((res) => {
-        setDataPages(res.data.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    setIsLoadingPagesAi(true);
+    try {
+      const res = await axios.get(urlEndpoint.pagesAi);
+      setDataPages(res.data.data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoadingPagesAi(false);
+    }
   }, []);
 
   const fetchDataElements = useCallback(async () => {
-    await axios
-      .get(urlEndpoint.elementsAi)
-      .then((res) => {
-        setDataElements(res.data.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    setIsLoadingElementPages(true);
+    try {
+      const res = await axios.get(urlEndpoint.elementsAi);
+      setDataElements(res.data.data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoadingElementPages(false);
+    }
   }, []);
+
+  useEffect(() => {
+    if (currentStep === 1) {
+      fetchDataPages();
+    } else if (currentStep === 2) {
+      fetchDataElements();
+    }
+  }, [currentStep, fetchDataPages, fetchDataElements]);
 
   const handleNext = () => {
     if (currentStep === 1) {
       if (activePages.length < 3) {
-        toastMessage("error", "Please select at least 1 page", "top-center");
+        toastMessage("error", "Please select at least 1 page", {
+          position: "top-center",
+        });
         return;
       }
     }
@@ -148,7 +163,9 @@ function AiBuilder() {
           setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
         })
         .catch((err) => {
-          toastMessage("error", err.errors[0], "top-center");
+          toastMessage("error", err.errors[0], {
+            position: "top-center",
+          });
         });
     } else {
       setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
@@ -170,30 +187,40 @@ function AiBuilder() {
           />
         )}
         {currentStep === 1 && (
-          <PagesAi
-            siteTitle={siteTitle}
-            initialPageId={initialPageId}
-            activePages={activePages}
-            currentPageId={currentPageId}
-            setCurrentPageId={setCurrentPageId}
-            handleActivePage={handleActivePage}
-            dataPages={dataPages}
-            fetchDataPages={fetchDataPages}
-          />
+          <>
+            {isLoadingPagesAi ? (
+              <LoaderProgress />
+            ) : (
+              <PagesAi
+                siteTitle={siteTitle}
+                initialPageId={initialPageId}
+                activePages={activePages}
+                currentPageId={currentPageId}
+                setCurrentPageId={setCurrentPageId}
+                handleActivePage={handleActivePage}
+                dataPages={dataPages}
+              />
+            )}
+          </>
         )}
         {currentStep === 2 && (
-          <ElementPages
-            activePages={activePages}
-            activeSections={activeSections}
-            handleActiveSection={handleActiveSection}
-            siteTitle={siteTitle}
-            dataPages={dataPages}
-            currentPageId={currentPageId}
-            setCurrentPageId={setCurrentPageId}
-            dataElements={dataElements}
-            fetchDataElements={fetchDataElements}
-            toastMessage={toastMessage}
-          />
+          <>
+            {isLoadingElementPages ? (
+              <LoaderProgress />
+            ) : (
+              <ElementPages
+                activePages={activePages}
+                activeSections={activeSections}
+                handleActiveSection={handleActiveSection}
+                siteTitle={siteTitle}
+                dataPages={dataPages}
+                currentPageId={currentPageId}
+                setCurrentPageId={setCurrentPageId}
+                dataElements={dataElements}
+                toastMessage={toastMessage}
+              />
+            )}
+          </>
         )}
         <div className="ai-builder-steps">
           <div className="step-prev">

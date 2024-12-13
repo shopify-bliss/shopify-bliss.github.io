@@ -5,6 +5,7 @@
 @use "./pages/AiBuilder/ai-builder";
 @use "./pages/Auth/auth";
 @use "./components/LayoutDashboard/layout-dashboard";
+@use "./components/LoaderProgress/loader-progress";
 
 *,
 *::before,
@@ -15,7 +16,7 @@
 }
 
 body {
-  font-family: v.$open-sans;
+  font-family: v.$nunito;
   overflow: hidden auto;
   width: 100%;
   height: auto;
@@ -47,4 +48,35 @@ input[type="file"]::-webkit-file-upload-button {
 
 .Toastify__toast-body {
   line-height: 127.5%;
+}
+
+/* From Uiverse.io by Shoh2008 */
+.loader-pages {
+  width: 100%;
+  min-height: 100vh;
+  @include m.flex();
+  background-color: #000;
+
+  &-item {
+    width: 45px;
+    height: 40px;
+    background: linear-gradient(
+        #0000 calc(1 * 100% / 6),
+        #fff 0 calc(3 * 100% / 6),
+        #0000 0
+      ),
+      linear-gradient(
+        #0000 calc(2 * 100% / 6),
+        #fff 0 calc(4 * 100% / 6),
+        #0000 0
+      ),
+      linear-gradient(
+        #0000 calc(3 * 100% / 6),
+        #fff 0 calc(5 * 100% / 6),
+        #0000 0
+      );
+    background-size: 10px 400%;
+    background-repeat: no-repeat;
+    animation: matrix 1s infinite linear;
+  }
 }

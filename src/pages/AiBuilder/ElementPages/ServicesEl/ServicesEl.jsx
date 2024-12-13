@@ -93,7 +93,9 @@ function ExpalotServicesElStyles({
                         </span>
                         <div className="template-name">{data.name}</div>
                         {activeDescIds3.includes(data.id) && (
-                          <div className="template-desc">{data.desc}</div>
+                          <div className="template-desc" key={data.id}>
+                            {data.desc}
+                          </div>
                         )}
                       </div>
                     ))}
@@ -126,7 +128,9 @@ function ExpalotServicesElStyles({
                             </span>
                             <div className="template-name">{data.name}</div>
                             {activeDescIds4.includes(data.id) && (
-                              <div className="template-desc">{data.desc}</div>
+                              <div className="template-desc" key={data.id}>
+                                {data.desc}
+                              </div>
                             )}
                           </div>
                         </>
@@ -144,16 +148,15 @@ function ExpalotServicesElStyles({
   );
 }
 
-function ServicesEl({ toastMessage }) {
+function ServicesEl({
+  handleActiveServicesEl,
+  activeServicesEl,
+  toastMessage,
+}) {
   const [isExpandLayout, setIsExpandLayout] = useState(false);
-  const [activeServicesEl, setActiveServicesEl] = useState(1);
   const expandLayoutRef = useRef(null);
   const [activeDescIds3, setActiveDescIds3] = useState([1]);
   const [activeDescIds4, setActiveDescIds4] = useState([1]);
-
-  const handleActiveServicesEl = useHandleActiveEl({
-    setActiveEl: setActiveServicesEl,
-  });
 
   const typeServicesElStyles = useMemo(
     () =>
@@ -238,7 +241,9 @@ function ServicesEl({ toastMessage }) {
                   </span>
                   <div className="template-name">{data.name}</div>
                   {activeDescIds3.includes(data.id) && (
-                    <div className="template-desc">{data.desc}</div>
+                    <div className="template-desc" key={data.id}>
+                      {data.desc}
+                    </div>
                   )}
                 </div>
               ))}
@@ -269,7 +274,9 @@ function ServicesEl({ toastMessage }) {
                       </span>
                       <div className="template-name">{data.name}</div>
                       {activeDescIds4.includes(data.id) && (
-                        <div className="template-desc">{data.desc}</div>
+                        <div className="template-desc" key={data.id}>
+                          {data.desc}
+                        </div>
                       )}
                     </div>
                   </>

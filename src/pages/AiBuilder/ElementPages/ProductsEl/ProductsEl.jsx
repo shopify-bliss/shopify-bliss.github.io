@@ -149,14 +149,13 @@ function ExpalotProductsElStyles({
   );
 }
 
-function ProductsEl({ toastMessage }) {
+function ProductsEl({
+  handleActiveProductsEl,
+  activeProductsEl,
+  toastMessage,
+}) {
   const [isExpandLayout, setIsExpandLayout] = useState(false);
-  const [activeProductsEl, setActiveProductsEl] = useState(1);
   const expandLayoutRef = useRef(null);
-
-  const handleActiveProductsEl = useHandleActiveEl({
-    setActiveEl: setActiveProductsEl,
-  });
 
   const typeProductsElStyles = useMemo(
     () =>

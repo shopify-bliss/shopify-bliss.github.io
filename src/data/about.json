@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "More about our brand",
+    "desc_1": "Share with others who you are, where you come from, your journey, or what drives your creativity. You've got this! How you share your story online is what sets you apart.",
+    "desc_2": null,
+    "image_1": "pexels-frostroomhead-7897470.jpg",
+    "image_2": "pexels-anna-nekrashevich-8516697.jpg",
+    "button": "learn more"
+  },
+  {
+    "id": 2,
+    "title": "More about our brand",
+    "desc_1": "Share with others who you are, where you come from, your journey, or what drives your creativity. You've got this! How you share your story online is what sets you apart.",
+    "desc_2": "Don't worry about expressing yourself—just be yourself. Among over 1.5 billion websites, your unique story will make this one stand out.",
+    "image_1": "pexels-njeromin-15352967.jpg",
+    "image_2": null,
+    "button": null
+  },
+  {
+    "id": 3,
+    "title": "About our brand",
+    "desc_1": "Share with others who you are, where you come from, your journey, or what drives your creativity. You've got this! How you share your story online is what sets you apart.",
+    "desc_2": "Don't worry about expressing yourself—just be yourself.",
+    "image_1": "pexels-n-voitkevich-8100405.jpg",
+    "image_2": null,
+    "button": "learn more"
+  },
+  {
+    "id": 4,
+    "title": "About our brand",
+    "desc_1": "Share with others who you are, where you come from, your journey, or what drives your creativity. You've got this! How you share your story online is what sets you apart.",
+    "desc_2": "Don't worry about expressing yourself—just be yourself. Among over 1.5 billion websites, your unique story will make this one stand out.",
+    "image_1": "pexels-mikhail-nilov-7828070.jpg",
+    "image_2": null,
+    "button": "learn more"
+  }
+]

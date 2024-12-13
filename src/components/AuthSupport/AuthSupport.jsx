@@ -64,19 +64,34 @@ export function AuthForm({
         <div className="input-border"></div>
       </div>
       {type === "signup" && (
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            autoComplete="name"
-            placeholder="example is me"
-            onChange={handleChange}
-            value={values.username}
-          />
-          <div className="input-border"></div>
-        </div>
+        <>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              autoComplete="name"
+              placeholder="example is me"
+              onChange={handleChange}
+              value={values.username}
+            />
+            <div className="input-border"></div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="phone">Phone Number</label>
+            <input
+              type="number"
+              id="phone"
+              name="phone"
+              autoComplete="tel"
+              placeholder="81234567890"
+              onChange={handleChange}
+              value={values.phone}
+            />
+            <div className="input-border"></div>
+          </div>
+        </>
       )}
       <div className="form-group">
         <label htmlFor="password">Password</label>

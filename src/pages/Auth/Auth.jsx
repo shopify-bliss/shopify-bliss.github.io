@@ -23,14 +23,16 @@ import {
 } from "../../helpers/AlertMessage";
 import Cookies from "universal-cookie";
 import { jwtDecode } from "jwt-decode";
+import SmoothScroll from "../../helpers/SmoothScroll";
 
-function AuthComponents({ typeMain }) {
+function Auth({ typeMain }) {
   axios.defaults.withCredentials = true;
   const cookies = new Cookies(null, { path: "/" });
 
   const [values, setValues] = useState({
     email: "",
     username: "",
+    phone: 0,
     password: "",
   });
   const [hidePassword, setHidePassword] = useState(true);
@@ -91,26 +93,29 @@ function AuthComponents({ typeMain }) {
     }
   }, [getTokenParams, getRoleParams, cookies, navigate]);
 
-  const handleChange = useCallback((e) => {
-    const { name, value } = e.target;
+  const handleChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
 
-    setValues((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-
-    if (name === "password") {
-      setValidationPassword({
-        length: value.length >= 8,
-        uppercase: /[A-Z]/.test(value),
-        lowercase: /[a-z]/.test(value),
-        number: /[0-9]/.test(value),
-        special: /[@$!%*?&#^()_\-+=]/.test(value),
+      setValues((prev) => {
+        return {
+          ...prev,
+          [name]: value,
+        };
       });
-    }
-  }, []);
+
+      if (name === "password") {
+        setValidationPassword({
+          length: value.length >= 8,
+          uppercase: /[A-Z]/.test(value),
+          lowercase: /[a-z]/.test(value),
+          number: /[0-9]/.test(value),
+          special: /[@$!%*?&#^()_\-+=]/.test(value),
+        });
+      }
+    },
+    []
+  );
 
   const handleFormSubmit = useCallback(
     (e) => {
@@ -122,6 +127,7 @@ function AuthComponents({ typeMain }) {
             {
               email: values.email,
               username: values.username,
+              phone: values.phone,
               password: values.password,
             },
             { abortEarly: false }
@@ -149,6 +155,7 @@ function AuthComponents({ typeMain }) {
             signupPromise
               .then((res) => {
                 console.log(res.data);
+                setValues("");
               })
               .catch((err) => {
                 console.error(err);
@@ -224,6 +231,7 @@ function AuthComponents({ typeMain }) {
 
   return (
     <>
+      <SmoothScroll />
       <div className="auth">
         <div className="auth-header">
           <AuthHeader type={typeMain} />
@@ -266,10 +274,4 @@ function AuthComponents({ typeMain }) {
   );
 }
 
-export function Login() {
-  return <AuthComponents typeMain={"login"} />;
-}
-
-export function Signup() {
-  return <AuthComponents typeMain={"signup"} />;
-}
+export default Auth;
