@@ -16,6 +16,7 @@ import IntroEl from "./IntroEl/IntroEl";
 import ProductsEl from "./ProductsEl/ProductsEl";
 import ServicesEl from "./ServicesEl/ServicesEl";
 import AboutEl from "./AboutEl/AboutEl";
+import FormEl from "./FormEl/FormEl";
 
 function ElementPages({
   activePages,
@@ -33,11 +34,8 @@ function ElementPages({
   const [activeProductsEl, setActiveProductsEl] = useState(1);
   const [activeServicesEl, setActiveServicesEl] = useState(1);
   const [activeAboutEl, setActiveAboutEl] = useState(1);
+  const [activeFormEl, setActiveFormEl] = useState(1);
   const [activeStyles, setActiveStyles] = useState({});
-
-  useEffect(() => {
-    console.log(activeStyles);
-  }, [activeStyles]);
 
   useEffect(() => {
     if (!currentPageId) return;
@@ -53,6 +51,8 @@ function ElementPages({
         styles[sectionId] = activeServicesEl;
       } else if (sectionId === "1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed") {
         styles[sectionId] = activeAboutEl;
+      } else if (sectionId === "2089ce88-93a7-4555-8d0d-7f88f1dc3a7e") {
+        styles[sectionId] = activeFormEl;
       }
       return styles;
     }, {});
@@ -73,6 +73,7 @@ function ElementPages({
     activeProductsEl,
     activeServicesEl,
     activeAboutEl,
+    activeFormEl,
     activeNavbar,
     activeSections,
     activePages,
@@ -153,6 +154,21 @@ function ElementPages({
     [currentPageId]
   );
 
+  const handleActiveFormEl = useCallback(
+    (formElId) => {
+      setActiveFormEl(formElId);
+
+      setActiveStyles((prevStyles) => ({
+        ...prevStyles,
+        [currentPageId]: {
+          ...prevStyles[currentPageId],
+          ["2089ce88-93a7-4555-8d0d-7f88f1dc3a7e"]: formElId,
+        },
+      }));
+    },
+    [currentPageId]
+  );
+
   const { handleNext, handlePrev } = ControllingOverviews({
     activePages: activePages,
     currentPageId: currentPageId,
@@ -221,6 +237,13 @@ function ElementPages({
                           <AboutEl
                             handleActiveAboutEl={handleActiveAboutEl}
                             activeAboutEl={activeAboutEl}
+                            toastMessage={toastMessage}
+                          />
+                        ) : section.section_id ===
+                          "2089ce88-93a7-4555-8d0d-7f88f1dc3a7e" ? (
+                          <FormEl
+                            handleActiveFormEl={handleActiveFormEl}
+                            activeFormEl={activeFormEl}
                             toastMessage={toastMessage}
                           />
                         ) : (

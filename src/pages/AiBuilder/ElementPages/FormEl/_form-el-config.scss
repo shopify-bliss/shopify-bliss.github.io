@@ -5,6 +5,9 @@
 $fs-title: 7.5px;
 $fs-desc: 3px;
 $fs-text: 4px;
+$fs-name: 5px;
+$py-layout: 0.45rem;
+$px-layout: 0.5rem;
 
 @mixin title($fs: $fs-title, $fw: 600, $w: 100%, $t-align: left) {
   width: $w;
@@ -81,8 +84,8 @@ $fs-text: 4px;
   gap: $gap;
 }
 
-.expalot-about-el {
-  @include support.expalot-elements($vertical: -53.25rem);
+.expalot-form-el {
+  @include support.expalot-elements($vertical: -76.4rem);
 
   &-styles {
     display: grid;
@@ -110,58 +113,10 @@ $fs-text: 4px;
 
       .style-1 {
         @include support.layout-styles();
-        @include style-1();
-
-        .template-wrapper {
-          @include m.flex(
-            $direction: column,
-            $justify: flex-start,
-            $align: flex-start
-          );
-
-          .template-title {
-            @include title($w: 50%);
-          }
-
-          .template-desc {
-            @include desc($w: 70%);
-          }
-
-          .template-button {
-            @include button($m: 0.75rem 0, $bg: #000, $color: #fff);
-          }
-
-          .template-image-1 {
-            @include image($h: 3rem, $mb: 0, $obj-pos: center 85%);
-          }
-        }
-
-        .template-image-2 {
-          @include image($w: 80%, $h: 5rem, $mb: 0);
-        }
       }
 
       .style-3 {
         @include support.layout-styles();
-        @include style-3();
-
-        .template-wrapper {
-          background-color: #fff;
-          padding: 0.9rem;
-          @include m.flex($direction: column, $justify: flex-start);
-
-          .template-title {
-            @include title($t-align: center);
-          }
-
-          .template-desc {
-            @include desc($t-align: center);
-          }
-
-          .template-button {
-            @include button($m: 0.6rem 0 0.25rem, $bg: #000, $color: #fff);
-          }
-        }
       }
     }
 
@@ -176,58 +131,11 @@ $fs-text: 4px;
       overflow: hidden;
 
       .style-2 {
-        @include support.layout-styles($p: 0);
-        @include style-2();
-
-        .template-wrapper {
-          padding: 0.6rem 0.55rem 0 0.55rem;
-          @include m.flex();
-          gap: 0.4rem;
-
-          .template-title {
-            @include title($w: 80%);
-          }
-
-          .template-desc {
-            @include desc();
-          }
-        }
-
-        .template-image {
-          height: 100%;
-          width: 100%;
-        }
+        @include support.layout-styles();
       }
 
       .style-4 {
         @include support.layout-styles();
-        @include style-4();
-
-        .template-image {
-          @include image($h: 5.6rem, $mb: 0);
-        }
-
-        .template-wrapper {
-          @include m.flex($direction: column, $align: flex-start);
-          gap: 0.05rem;
-
-          .template-title {
-            @include title();
-          }
-
-          .template-loan {
-            @include m.flex($align: flex-start);
-            gap: 0.2rem;
-
-            .template-desc {
-              @include desc();
-            }
-          }
-
-          .template-button {
-            @include button($bg: #000, $color: #fff, $m: 0.65rem 0 0);
-          }
-        }
       }
     }
   }

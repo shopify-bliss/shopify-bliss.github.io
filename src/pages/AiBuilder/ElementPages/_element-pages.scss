@@ -6,6 +6,7 @@
 @use "./ProductsEl/products-el" as products-el;
 @use "./ServicesEl/services-el" as services-el;
 @use "./AboutEl/about-el" as about-el;
+@use "./FormEl/form-el" as form-el;
 
 @mixin element-pages-overview() {
   .element-pages {
@@ -66,6 +67,10 @@
 
           .about-el {
             @include about-el.about-el();
+          }
+
+          .form-el {
+            @include form-el.form-el();
           }
 
           .text {

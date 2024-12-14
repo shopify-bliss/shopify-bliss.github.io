@@ -1,8 +1,16 @@
+import React, {
+  useState,
+  Fragment,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react";
 import { Link } from "react-router-dom";
 import google from "../../assets/images/login/google.png";
 import facebook from "../../assets/images/login/facebook.png";
 import whatsapp from "../../assets/images/login/whatsapp (1).png";
 import urlEndpoint from "../../helpers/urlEndpoint";
+import { useSearch } from "../../helpers/SearchContext";
 
 export function AuthHeader({ type }) {
   return (
@@ -47,12 +55,50 @@ export function AuthForm({
   setHidePassword,
   validationPassword,
   type,
+  phoneCodes,
+  selectedCode,
+  setSelectedCode,
 }) {
+  const [openPhoneCodes, setOpenPhoneCodes] = useState(false);
+  const phoneCodeModalRef = useRef(null);
+  const { search, setSearch } = useSearch();
+
+  const handleClickOutside = useCallback(
+    (e) => {
+      if (phoneCodeModalRef && !phoneCodeModalRef.current.contains(e.target)) {
+        setOpenPhoneCodes(false);
+      }
+    },
+    [phoneCodeModalRef]
+  );
+
+  useEffect(() => {
+    if (openPhoneCodes) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openPhoneCodes]);
+
+  const handleCodeSelect = useCallback((code) => {
+    setSelectedCode(code);
+    setOpenPhoneCodes(false);
+  }, []);
+
+  const handleSearchCountry = useCallback((e) => {
+    setSearch(e.target.value);
+  }, []);
+
   return (
     <form className="form" onSubmit={handleForm}>
       <div className="form-group">
         <label htmlFor="email">Email Address</label>
         <input
+          className="form-group-input"
           type="text"
           id="email"
           name="email"
@@ -68,6 +114,7 @@ export function AuthForm({
           <div className="form-group">
             <label htmlFor="username">Username</label>
             <input
+              className="form-group-input"
               type="text"
               id="username"
               name="username"
@@ -80,15 +127,91 @@ export function AuthForm({
           </div>
           <div className="form-group">
             <label htmlFor="phone">Phone Number</label>
-            <input
-              type="number"
-              id="phone"
-              name="phone"
-              autoComplete="tel"
-              placeholder="81234567890"
-              onChange={handleChange}
-              value={values.phone}
-            />
+            <div className="phone-wrapper-loan">
+              <div className="phone-code">
+                <div
+                  className="phone-code-default"
+                  onClick={() => setOpenPhoneCodes(true)}
+                >
+                  {phoneCodes
+                    .filter((item) => item.valueCodes === selectedCode)
+                    .map((data, index) => {
+                      const flag = data.flag;
+
+                      return (
+                        <Fragment key={index}>
+                          <div className="image">
+                            <img src={flag} alt={data.name} />
+                          </div>
+                          <div className="code">{data.codes}</div>
+                          <span className="material-symbols-rounded">
+                            arrow_drop_down
+                          </span>
+                        </Fragment>
+                      );
+                    })}
+                </div>
+                {openPhoneCodes ? (
+                  <>
+                    <div className="phone-code-list" ref={phoneCodeModalRef}>
+                      <div className="phone-code-list-search">
+                        <div className="search-country">
+                          <span className="material-symbols-rounded">
+                            search
+                          </span>
+                          <input
+                            className="search-country-input"
+                            type="text"
+                            onChange={handleSearchCountry}
+                            placeholder="Search country"
+                          />
+                        </div>
+                      </div>
+                      {phoneCodes
+                        .filter((item) => {
+                          const searchLower = search.toLowerCase();
+
+                          return (
+                            item.name.toLowerCase().includes(searchLower) ||
+                            item.codes.includes(searchLower)
+                          );
+                        })
+                        .map((data, index) => {
+                          const flag = data.flag;
+
+                          return (
+                            <div
+                              className="phone-code-list-item"
+                              key={index}
+                              onClick={() => handleCodeSelect(data.valueCodes)}
+                            >
+                              <div className="image">
+                                <img src={flag} alt={data.name} />
+                              </div>
+                              <div className="desc">
+                                <div className="desc-name">{data.name}</div>
+                                <div className="desc-code">({data.codes})</div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
+              </div>
+              <input
+                className="form-group-input"
+                type="number"
+                id="phone"
+                name="phone"
+                autoComplete="tel"
+                placeholder="81234567890"
+                onChange={handleChange}
+                value={values.phone}
+              />
+            </div>
             <div className="input-border"></div>
           </div>
         </>
@@ -96,6 +219,7 @@ export function AuthForm({
       <div className="form-group">
         <label htmlFor="password">Password</label>
         <input
+          className="form-group-input"
           type={hidePassword ? "password" : "text"}
           id="password"
           name="password"

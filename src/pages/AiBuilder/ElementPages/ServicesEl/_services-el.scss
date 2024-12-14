@@ -5,7 +5,7 @@
 
 $fs-title: 1.5rem;
 $fs-desc: 8px;
-$fs-text: 10px;
+$fs-price: 10px;
 $fs-name: 13px;
 $fs-preface: 6px;
 
@@ -52,7 +52,7 @@ $fs-preface: 6px;
         }
 
         .template-price {
-          @include config.price($fs: $fs-text);
+          @include config.price($fs: $fs-price);
         }
 
         .template-desc {

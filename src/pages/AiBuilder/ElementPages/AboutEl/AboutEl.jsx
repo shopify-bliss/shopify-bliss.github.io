@@ -1,14 +1,5 @@
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  useMemo,
-  useCallback,
-} from "react";
-import {
-  ChangeLayout,
-  useHandleActiveEl,
-} from "../../../../components/AiBuilderSupport/AiBuilderSupport";
+import React, { useRef, useState, useEffect, useMemo, Fragment } from "react";
+import { ChangeLayout } from "../../../../components/AiBuilderSupport/AiBuilderSupport";
 import sectionsElOptionLayout from "../../../../data/sectionsElOptionLayout.json";
 import about from "../../../../data/about.json";
 
@@ -16,8 +7,8 @@ function ExpalotAboutElStyles({
   layoutIds,
   activeAboutEl,
   handleActiveAboutEl,
-  imageStyle3 = null,
-  imageStyle2 = null,
+  imageStyle2,
+  imageStyle3,
 }) {
   return (
     <>
@@ -44,12 +35,12 @@ function ExpalotAboutElStyles({
                 <>
                   {about
                     .filter((item) => item.id === 1)
-                    .map((data) => {
+                    .map((data, index) => {
                       const image_1 = `products/${data.image_1}`;
-                      const image2 = `products/${data.image_2}`;
+                      const image_2 = `products/${data.image_2}`;
 
                       return (
-                        <>
+                        <Fragment key={index}>
                           <div className="template-wrapper">
                             <div className="template-title">{data.title}</div>
                             <div className="template-desc">{data.desc_1}</div>
@@ -62,10 +53,10 @@ function ExpalotAboutElStyles({
                           </div>
                           <img
                             className="template-image-2"
-                            src={image2}
+                            src={image_2}
                             alt="about section's image"
                           />
-                        </>
+                        </Fragment>
                       );
                     })}
                 </>
@@ -75,22 +66,21 @@ function ExpalotAboutElStyles({
                 <>
                   {about
                     .filter((item) => item.id === 2)
-                    .map((data) => {
+                    .map((data, index) => {
                       return (
-                        <>
+                        <Fragment key={index}>
                           <div className="template-wrapper">
                             <div className="template-title">{data.title}</div>
                             <div className="template-desc">{data.desc_1}</div>
-                            <div className="template-desc">{data.desc_1}</div>
+                            <div className="template-desc">{data.desc_2}</div>
                           </div>
                           <div
                             className="template-image"
                             style={{
-                              background: `url(${imageStyle2}) no-repeat
-                              cover`,
+                              background: `url(${imageStyle2}) no-repeat center 40% / cover`,
                             }}
                           ></div>
-                        </>
+                        </Fragment>
                       );
                     })}
                 </>
@@ -100,10 +90,10 @@ function ExpalotAboutElStyles({
                 <>
                   {about
                     .filter((item) => item.id === 3)
-                    .map((data) => {
+                    .map((data, index) => {
                       return (
                         <>
-                          <div className="template-wrapper">
+                          <div className="template-wrapper" key={index}>
                             <div className="template-title">{data.title}</div>
                             <div className="template-desc">
                               {data.desc_1 + data.desc_2}
@@ -120,11 +110,11 @@ function ExpalotAboutElStyles({
                 <>
                   {about
                     .filter((item) => item.id === 4)
-                    .map((data) => {
+                    .map((data, index) => {
                       const image_1 = `products/${data.image_1}`;
 
                       return (
-                        <>
+                        <Fragment key={index}>
                           <img
                             className="template-image"
                             src={image_1}
@@ -138,7 +128,7 @@ function ExpalotAboutElStyles({
                             </div>
                             <div className="template-button">{data.button}</div>
                           </div>
-                        </>
+                        </Fragment>
                       );
                     })}
                 </>
@@ -150,41 +140,11 @@ function ExpalotAboutElStyles({
   );
 }
 
-function AboutEl({ toastMessage }) {
+function AboutEl({ toastMessage, handleActiveAboutEl, activeAboutEl }) {
   const [isExpandLayout, setIsExpandLayout] = useState(false);
-  const [activeAboutEl, setActiveAboutEl] = useState(1);
   const expandLayoutRef = useRef(null);
   const [imageStyle2, setImageStyle2] = useState(null);
   const [imageStyle3, setImageStyle3] = useState(null);
-
-  useEffect(() => {
-    const getId2 = about.filter((option) => option.id === 2);
-    const getId3 = about.filter((option) => option.id === 3);
-
-    setImageStyle2(
-      getId2.map((item) => {
-        return {
-          image_1: `products/${item.image_1}`,
-        };
-      })[0].image_1
-    );
-
-    setImageStyle3(
-      getId3.map((item) => {
-        return {
-          image_1: `products/${item.image_1}`,
-        };
-      })[0].image_1
-    );
-  }, [about]);
-
-  useEffect(() => {
-    console.log(imageStyle2);
-  }, [imageStyle2]);
-
-  const handleActiveAboutEl = useHandleActiveEl({
-    setActiveEl: setActiveAboutEl,
-  });
 
   const typeAboutElStyles = useMemo(
     () => sectionsElOptionLayout.find((option) => option.id === activeAboutEl),
@@ -197,9 +157,130 @@ function AboutEl({ toastMessage }) {
     }
   }, [typeAboutElStyles]);
 
+  useEffect(() => {
+    const getId2 = about.filter((option) => option.id === 2);
+    const getId3 = about.filter((option) => option.id === 3);
+
+    setImageStyle2(getId2.length > 0 ? `products/${getId2[0].image_1}` : null);
+    setImageStyle3(getId3.length > 0 ? `products/${getId3[0].image_1}` : null);
+  }, [about]);
+
   return (
     <>
-      <div className={`about-el ${typeAboutElStyles.className}`}>
+      <div
+        className={`about-el ${typeAboutElStyles.className}`}
+        style={
+          typeAboutElStyles.id === 3
+            ? {
+                background: `url(${imageStyle3}) no-repeat center / cover`,
+              }
+            : {}
+        }
+      >
+        {typeAboutElStyles.id === 1 && (
+          <>
+            {about
+              .filter((item) => item.id === 1)
+              .map((data, index) => {
+                const image_1 = `products/${data.image_1}`;
+                const image_2 = `products/${data.image_2}`;
+
+                return (
+                  <Fragment key={index}>
+                    <div className="template-wrapper">
+                      <div className="template-title">{data.title}</div>
+                      <div className="template-desc">{data.desc_1}</div>
+                      <div className="template-button">{data.button}</div>
+                      <img
+                        className="template-image-1"
+                        src={image_1}
+                        alt="about section's image"
+                      />
+                    </div>
+                    <img
+                      className="template-image-2"
+                      src={image_2}
+                      alt="about section's image"
+                    />
+                  </Fragment>
+                );
+              })}
+          </>
+        )}
+
+        {typeAboutElStyles.id === 2 && (
+          <>
+            {about
+              .filter((item) => item.id === 2)
+              .map((data, index) => {
+                return (
+                  <Fragment key={index}>
+                    <div className="template-wrapper">
+                      <div className="template-title">{data.title}</div>
+                      <div className="template-desc">{data.desc_1}</div>
+                      <div className="template-desc">{data.desc_2}</div>
+                    </div>
+                    <div
+                      className="template-image"
+                      style={{
+                        background: `url(${imageStyle2}) no-repeat center / cover`,
+                        minHeight: "35vh",
+                      }}
+                    ></div>
+                  </Fragment>
+                );
+              })}
+          </>
+        )}
+
+        {typeAboutElStyles.id === 3 && (
+          <>
+            {about
+              .filter((item) => item.id === 3)
+              .map((data, index) => {
+                return (
+                  <>
+                    <div className="template-wrapper" key={index}>
+                      <div className="template-title">{data.title}</div>
+                      <div className="template-desc">
+                        {data.desc_1 + data.desc_2}
+                      </div>
+                      <div className="template-button">{data.button}</div>
+                    </div>
+                  </>
+                );
+              })}
+          </>
+        )}
+
+        {typeAboutElStyles.id === 4 && (
+          <>
+            {about
+              .filter((item) => item.id === 4)
+              .map((data, index) => {
+                const image_1 = `products/${data.image_1}`;
+
+                return (
+                  <Fragment key={index}>
+                    <img
+                      className="template-image"
+                      src={image_1}
+                      alt="about section's image"
+                    />
+                    <div className="template-wrapper">
+                      <div className="template-title">{data.title}</div>
+                      <div className="template-loan">
+                        <div className="template-desc">{data.desc_1}</div>
+                        <div className="template-desc">{data.desc_2}</div>
+                      </div>
+                      <div className="template-button">{data.button}</div>
+                    </div>
+                  </Fragment>
+                );
+              })}
+          </>
+        )}
+
         <ChangeLayout
           expandLayoutRef={expandLayoutRef}
           isExpandLayout={isExpandLayout}
@@ -218,6 +299,7 @@ function AboutEl({ toastMessage }) {
                 layoutIds={[1, 3]}
                 activeAboutEl={activeAboutEl}
                 handleActiveAboutEl={handleActiveAboutEl}
+                imageStyle2={imageStyle2}
                 imageStyle3={imageStyle3}
               />
             </div>
@@ -227,6 +309,7 @@ function AboutEl({ toastMessage }) {
                 activeAboutEl={activeAboutEl}
                 handleActiveAboutEl={handleActiveAboutEl}
                 imageStyle2={imageStyle2}
+                imageStyle3={imageStyle3}
               />
             </div>
           </div>

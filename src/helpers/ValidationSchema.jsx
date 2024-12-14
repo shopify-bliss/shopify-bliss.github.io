@@ -10,6 +10,7 @@ export const siteTitleSchema = yup.object().shape({
 export const signupSchema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
   username: yup.string().required("Username is required"),
+  phone: yup.number().required("Phone number is required"),
   password: yup
     .string()
     .required("Password is required")

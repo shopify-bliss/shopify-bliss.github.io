@@ -1,0 +1,29 @@
+@use "../../../../helpers/mixins" as m;
+@use "../../../../helpers/variables" as v;
+@use "../../../../components/AiBuilderSupport/ai-builder-support" as support;
+@use "./form-el-config" as config;
+
+$fs-title: 1.5rem;
+$fs-desc: 8px;
+$fs-text: 10px;
+$fs-name: 13px;
+$fs-preface: 6px;
+
+@mixin form-el() {
+  width: 100%;
+  min-height: 44vh;
+  height: auto;
+  border: v.$border-hover;
+  position: relative;
+
+  .change-layout {
+    display: none;
+  }
+
+  @include support.change-layout(
+    $bg-color-default: adjust-color($color: #fff, $blackness: 90%),
+    $bg-color: #000,
+    $border-color: adjust-color($color: #fff, $blackness: 90%),
+    $color: #fff
+  );
+}

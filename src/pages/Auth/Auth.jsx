@@ -32,9 +32,10 @@ function Auth({ typeMain }) {
   const [values, setValues] = useState({
     email: "",
     username: "",
-    phone: 0,
+    phone: "",
     password: "",
   });
+  const [phoneCodes, setPhoneCodes] = useState([]);
   const [hidePassword, setHidePassword] = useState(true);
   const [validationPassword, setValidationPassword] = useState({
     length: false,
@@ -43,6 +44,7 @@ function Auth({ typeMain }) {
     number: false,
     special: false,
   });
+  const [selectedCode, setSelectedCode] = useState(62);
 
   const userRole = useRef(null);
 
@@ -93,29 +95,65 @@ function Auth({ typeMain }) {
     }
   }, [getTokenParams, getRoleParams, cookies, navigate]);
 
-  const handleChange = useCallback(
-    (e) => {
-      const { name, value } = e.target;
+  useEffect(() => {
+    axios
+      .get("https://restcountries.com/v3.1/all")
+      .then((res) => {
+        const data = res.data;
 
-      setValues((prev) => {
-        return {
-          ...prev,
-          [name]: value,
-        };
+        console.log(data);
+        
+
+        const getCodes = data
+          .filter((item) => item.idd && item.idd.root)
+          .map((item) => {
+            const flag = item.flags.png;
+            const name = item.name.common;
+            const root = item.idd.root.replace("+", "");
+            const suffixes = item.idd.suffixes;
+
+            const codes = `+${root}${suffixes[0]}`;
+            const valueCodes = parseInt(`${root}${suffixes[0]}`);
+
+            return {
+              flag,
+              name,
+              codes,
+              valueCodes,
+            };
+          });
+
+        const sortedCodes = getCodes.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+
+        setPhoneCodes(sortedCodes);
+      })
+      .catch((err) => {
+        console.error(err);
       });
+  }, []);
 
-      if (name === "password") {
-        setValidationPassword({
-          length: value.length >= 8,
-          uppercase: /[A-Z]/.test(value),
-          lowercase: /[a-z]/.test(value),
-          number: /[0-9]/.test(value),
-          special: /[@$!%*?&#^()_\-+=]/.test(value),
-        });
-      }
-    },
-    []
-  );
+  const handleChange = useCallback((e) => {
+    const { name, value } = e.target;
+
+    setValues((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+
+    if (name === "password") {
+      setValidationPassword({
+        length: value.length >= 8,
+        uppercase: /[A-Z]/.test(value),
+        lowercase: /[a-z]/.test(value),
+        number: /[0-9]/.test(value),
+        special: /[@$!%*?&#^()_\-+=]/.test(value),
+      });
+    }
+  }, []);
 
   const handleFormSubmit = useCallback(
     (e) => {
@@ -136,6 +174,7 @@ function Auth({ typeMain }) {
             const signupPromise = axios.post(urlEndpoint.signupForm, {
               email: values.email,
               username: values.username,
+              phone: selectedCode + values.phone,
               password: values.password,
             });
 
@@ -231,7 +270,6 @@ function Auth({ typeMain }) {
 
   return (
     <>
-      <SmoothScroll />
       <div className="auth">
         <div className="auth-header">
           <AuthHeader type={typeMain} />
@@ -251,6 +289,9 @@ function Auth({ typeMain }) {
               handleChange={handleChange}
               handleForm={handleFormSubmit}
               type={typeMain}
+              phoneCodes={phoneCodes}
+              selectedCode={selectedCode}
+              setSelectedCode={setSelectedCode}
             />
 
             {typeMain !== "signup" && (
