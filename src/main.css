@@ -6420,7 +6420,7 @@
   border-radius: 0.25rem;
   margin-top: 0.3rem;
   width: 16rem;
-  height: 10rem;
+  height: 11rem;
   left: 0;
   position: absolute;
   border: 1px solid #9f9f9f;
@@ -6431,6 +6431,8 @@
 .auth-content-core .form-group .phone-wrapper-loan .phone-code-list-search {
   background-color: whitesmoke;
   padding: 0.3rem 0.9rem 0.5rem;
+  position: sticky;
+  top: 0;
 }
 .auth-content-core .form-group .phone-wrapper-loan .phone-code-list-search .search-country {
   display: flex;
@@ -6918,7 +6920,7 @@
   transform: scaleX(1);
   transition: transform 0.8s ease-out;
 }
-.overlay-modal-dashboard .modal-dashboard .material-symbols-outlined {
+.overlay-modal-dashboard .modal-dashboard-close {
   margin: auto 0 auto auto;
   width: -moz-fit-content;
   width: fit-content;
@@ -6931,7 +6933,7 @@
   transition: transform 0.4s ease-out, background-color 0.4s ease-out;
   background-color: #fff;
 }
-.overlay-modal-dashboard .modal-dashboard .material-symbols-outlined:hover {
+.overlay-modal-dashboard .modal-dashboard-close:hover {
   transform: rotate(90deg);
   transition: transform 0.4s ease-out, background-color 0.4s ease-out;
   background-color: #f3f3f3;
@@ -6953,8 +6955,10 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: 0.35rem;
+  position: relative;
 }
-.overlay-modal-dashboard .modal-dashboard-form-group label {
+.overlay-modal-dashboard .modal-dashboard-form-group label,
+.overlay-modal-dashboard .modal-dashboard-form-group .label {
   width: 100%;
   font-size: 0.95rem;
   font-family: "Raleway", serif;
@@ -6963,7 +6967,8 @@
   height: fit-content;
   outline: none;
 }
-.overlay-modal-dashboard .modal-dashboard-form-group label span {
+.overlay-modal-dashboard .modal-dashboard-form-group label span,
+.overlay-modal-dashboard .modal-dashboard-form-group .label span {
   font-size: 0.8rem;
   color: #aaaaaa;
 }
@@ -6974,8 +6979,80 @@
   padding: 0 0.9rem;
   height: 3rem;
   outline: none;
+  border: 0.05rem solid rgba(0, 0, 0, 0.5);
+}
+.overlay-modal-dashboard .modal-dashboard-form-group .select-default {
+  width: 100%;
+  font-size: 0.95rem;
+  font-family: "Raleway", serif;
+  padding: 0 0.9rem;
+  height: 3rem;
   outline: none;
   border: 0.05rem solid rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  gap: 1.7rem;
+  cursor: pointer;
+}
+.overlay-modal-dashboard .modal-dashboard-form-group .select-default .text {
+  text-transform: capitalize;
+}
+.overlay-modal-dashboard .modal-dashboard-form-group .select-default .material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+  font-size: 1.3rem;
+  transition: transform 0.6s ease;
+}
+.overlay-modal-dashboard .modal-dashboard-form-group .select-default .material-symbols-outlined.default-closed {
+  transform: rotate(180deg);
+  transition: transform 0.6s ease;
+}
+.overlay-modal-dashboard .modal-dashboard-form-group .select-list {
+  position: absolute;
+  width: 100%;
+  height: 9rem;
+  top: 110%;
+  z-index: 24;
+  background-color: #e8e8e8;
+  overflow-y: auto;
+}
+.overlay-modal-dashboard .modal-dashboard-form-group .select-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  width: 100%;
+  font-size: 0.95rem;
+  font-family: "Raleway", serif;
+  padding: 0 0.9rem;
+  height: 3rem;
+  outline: none;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+.overlay-modal-dashboard .modal-dashboard-form-group .select-list-item:not(:last-child) {
+  border-bottom: #fff solid 0.1rem;
+}
+.overlay-modal-dashboard .modal-dashboard-form-group .select-list-item:hover {
+  background-color: #000;
+  color: #fff;
+}
+.overlay-modal-dashboard .modal-dashboard-form-group .check-default {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 0.3rem;
+  cursor: pointer;
+}
+.overlay-modal-dashboard .modal-dashboard-form-group .check-default .material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+}
+.overlay-modal-dashboard .modal-dashboard-form-group .check-default .text {
+  font-family: "Raleway", serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
 }
 .overlay-modal-dashboard .modal-dashboard-form button {
   width: 100%;
@@ -7224,7 +7301,7 @@
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-  padding: 0.8rem 1.25rem 1.25rem;
+  padding: 0.8rem 1.25rem 1.5rem;
   gap: 0.1rem;
   transition: all 0.3s ease-in;
 }
@@ -7256,17 +7333,17 @@
   justify-content: center;
   flex-direction: row;
   padding: 0.22rem;
-  cursor: pointer;
   transition: all 0.3s ease-in;
-  border: #f1c40f solid 1px;
-  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
   background-color: transparent;
   color: #f1c40f;
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+  border: #f1c40f solid 1px;
+  cursor: pointer;
 }
 .temp-pages-grid .item-action-edit:hover {
   background-color: #f1c40f;
-  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
 .temp-pages-grid .item-action-delete {
@@ -7276,17 +7353,17 @@
   justify-content: center;
   flex-direction: row;
   padding: 0.22rem;
-  cursor: pointer;
   transition: all 0.3s ease-in;
-  border: hsl(6, 78%, 57%) solid 1px;
-  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
   background-color: transparent;
   color: hsl(6, 78%, 57%);
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+  border: hsl(6, 78%, 57%) solid 1px;
+  cursor: pointer;
 }
 .temp-pages-grid .item-action-delete:hover {
   background-color: hsl(6, 78%, 57%);
-  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
 .temp-pages-grid .item:hover {
@@ -7309,7 +7386,7 @@
 }
 .temp-pages-list .head {
   display: grid;
-  grid-template-columns: auto 1fr 2fr 2fr 1fr;
+  grid-template-columns: auto 1.2fr 2fr 1.8fr 1fr;
 }
 .temp-pages-list .head-col {
   padding: 1.1rem 1rem;
@@ -7340,7 +7417,7 @@
 }
 .temp-pages-list .body {
   display: grid;
-  grid-template-columns: auto 1fr 2fr 2fr 1fr;
+  grid-template-columns: auto 1.2fr 2fr 1.8fr 1fr;
 }
 .temp-pages-list .body-col {
   padding: 1.75rem 0.9rem 0;
@@ -7378,17 +7455,17 @@
   justify-content: center;
   flex-direction: row;
   padding: 0.22rem;
-  cursor: pointer;
   transition: all 0.3s ease-in;
-  border: #f1c40f solid 1px;
-  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
   background-color: transparent;
   color: #f1c40f;
+  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
+  border: #f1c40f solid 1px;
+  cursor: pointer;
 }
 .temp-pages-list .body-col:last-child .edit:hover {
   background-color: #f1c40f;
-  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
   color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
 .temp-pages-list .body-col:last-child .delete {
@@ -7398,17 +7475,17 @@
   justify-content: center;
   flex-direction: row;
   padding: 0.22rem;
-  cursor: pointer;
   transition: all 0.3s ease-in;
-  border: hsl(6, 78%, 57%) solid 1px;
-  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
   background-color: transparent;
   color: hsl(6, 78%, 57%);
+  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
+  border: hsl(6, 78%, 57%) solid 1px;
+  cursor: pointer;
 }
 .temp-pages-list .body-col:last-child .delete:hover {
   background-color: hsl(6, 78%, 57%);
-  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
   color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
 
@@ -7548,7 +7625,7 @@
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-  padding: 1.4rem 1.25rem 1.25rem;
+  padding: 1.4rem 1.25rem 1.5rem;
   gap: 0.1rem;
   transition: all 0.3s ease-in;
 }
@@ -7573,17 +7650,17 @@
   justify-content: center;
   flex-direction: row;
   padding: 0.22rem;
-  cursor: pointer;
   transition: all 0.3s ease-in;
-  border: #f1c40f solid 1px;
-  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
   background-color: transparent;
   color: #f1c40f;
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+  border: #f1c40f solid 1px;
+  cursor: pointer;
 }
 .temp-sections-grid .item-action-edit:hover {
   background-color: #f1c40f;
-  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
 .temp-sections-grid .item-action-delete {
@@ -7593,17 +7670,17 @@
   justify-content: center;
   flex-direction: row;
   padding: 0.22rem;
-  cursor: pointer;
   transition: all 0.3s ease-in;
-  border: hsl(6, 78%, 57%) solid 1px;
-  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
   background-color: transparent;
   color: hsl(6, 78%, 57%);
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+  border: hsl(6, 78%, 57%) solid 1px;
+  cursor: pointer;
 }
 .temp-sections-grid .item-action-delete:hover {
   background-color: hsl(6, 78%, 57%);
-  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
 .temp-sections-grid .item:hover {
@@ -7676,17 +7753,17 @@
   justify-content: center;
   flex-direction: row;
   padding: 0.22rem;
-  cursor: pointer;
   transition: all 0.3s ease-in;
-  border: #f1c40f solid 1px;
-  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
   background-color: transparent;
   color: #f1c40f;
+  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
+  border: #f1c40f solid 1px;
+  cursor: pointer;
 }
 .temp-sections-list .body-col:last-child .edit:hover {
   background-color: #f1c40f;
-  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
   color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
 .temp-sections-list .body-col:last-child .delete {
@@ -7696,17 +7773,17 @@
   justify-content: center;
   flex-direction: row;
   padding: 0.22rem;
-  cursor: pointer;
   transition: all 0.3s ease-in;
-  border: hsl(6, 78%, 57%) solid 1px;
-  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
   background-color: transparent;
   color: hsl(6, 78%, 57%);
+  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
+  border: hsl(6, 78%, 57%) solid 1px;
+  cursor: pointer;
 }
 .temp-sections-list .body-col:last-child .delete:hover {
   background-color: hsl(6, 78%, 57%);
-  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
   color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
 
@@ -7846,7 +7923,7 @@
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-  padding: 1.4rem 1.25rem 1.25rem;
+  padding: 1.4rem 1.25rem 1.5rem;
   gap: 0.1rem;
   transition: all 0.3s ease-in;
 }
@@ -7884,17 +7961,17 @@
   justify-content: center;
   flex-direction: row;
   padding: 0.22rem;
-  cursor: pointer;
   transition: all 0.3s ease-in;
-  border: #f1c40f solid 1px;
-  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
   background-color: transparent;
   color: #f1c40f;
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+  border: #f1c40f solid 1px;
+  cursor: pointer;
 }
 .menu-man-grid .item-action-edit:hover {
   background-color: #f1c40f;
-  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
 .menu-man-grid .item-action-delete {
@@ -7904,17 +7981,17 @@
   justify-content: center;
   flex-direction: row;
   padding: 0.22rem;
-  cursor: pointer;
   transition: all 0.3s ease-in;
-  border: hsl(6, 78%, 57%) solid 1px;
-  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
   background-color: transparent;
   color: hsl(6, 78%, 57%);
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+  border: hsl(6, 78%, 57%) solid 1px;
+  cursor: pointer;
 }
 .menu-man-grid .item-action-delete:hover {
   background-color: hsl(6, 78%, 57%);
-  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
 .menu-man-grid .item:hover {
@@ -7996,17 +8073,17 @@
   justify-content: center;
   flex-direction: row;
   padding: 0.22rem;
-  cursor: pointer;
   transition: all 0.3s ease-in;
-  border: #f1c40f solid 1px;
-  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
   background-color: transparent;
   color: #f1c40f;
+  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
+  border: #f1c40f solid 1px;
+  cursor: pointer;
 }
 .menu-man-list .body-col:last-child .edit:hover {
   background-color: #f1c40f;
-  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
   color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
 .menu-man-list .body-col:last-child .delete {
@@ -8016,17 +8093,17 @@
   justify-content: center;
   flex-direction: row;
   padding: 0.22rem;
-  cursor: pointer;
   transition: all 0.3s ease-in;
-  border: hsl(6, 78%, 57%) solid 1px;
-  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
   background-color: transparent;
   color: hsl(6, 78%, 57%);
+  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
+  border: hsl(6, 78%, 57%) solid 1px;
+  cursor: pointer;
 }
 .menu-man-list .body-col:last-child .delete:hover {
   background-color: hsl(6, 78%, 57%);
-  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
   color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
 
@@ -8166,7 +8243,7 @@
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-  padding: 1.4rem 1.25rem 1.25rem;
+  padding: 1.4rem 1.25rem 1.5rem;
   gap: 0.1rem;
   transition: all 0.3s ease-in;
 }
@@ -8185,6 +8262,48 @@
   flex-direction: row;
   gap: 0.25rem;
 }
+.submenu-man-grid .item-action-default {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  border: #3498db solid 1px;
+  transition: all 0.3s ease-in;
+  cursor: default;
+}
+.submenu-man-grid .item-action-default-icon {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  padding: 0.22rem;
+  transition: all 0.3s ease-in;
+  background-color: transparent;
+  color: #3498db;
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+}
+.submenu-man-grid .item-action-default-text {
+  margin-left: -0.1rem;
+  font-size: 0.8rem;
+  font-family: "Raleway", serif;
+  transition: all 0.3s ease-in;
+  padding-right: 0.33rem;
+  color: #3498db;
+}
+.submenu-man-grid .item-action-default:hover {
+  background-color: #3498db;
+  transition: all 0.3s ease-out;
+}
+.submenu-man-grid .item-action-default:hover .item-action-default-icon {
+  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
+  transition: all 0.3s ease-out;
+}
+.submenu-man-grid .item-action-default:hover .item-action-default-text,
+.submenu-man-grid .item-action-default:hover .item-action-default-icon {
+  color: #fff;
+  transition: all 0.3s ease-out;
+}
 .submenu-man-grid .item-action-edit {
   font-size: 1rem;
   display: flex;
@@ -8192,17 +8311,17 @@
   justify-content: center;
   flex-direction: row;
   padding: 0.22rem;
-  cursor: pointer;
   transition: all 0.3s ease-in;
-  border: #f1c40f solid 1px;
-  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
   background-color: transparent;
   color: #f1c40f;
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+  border: #f1c40f solid 1px;
+  cursor: pointer;
 }
 .submenu-man-grid .item-action-edit:hover {
   background-color: #f1c40f;
-  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
 .submenu-man-grid .item-action-delete {
@@ -8212,17 +8331,17 @@
   justify-content: center;
   flex-direction: row;
   padding: 0.22rem;
-  cursor: pointer;
   transition: all 0.3s ease-in;
-  border: hsl(6, 78%, 57%) solid 1px;
-  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
   background-color: transparent;
   color: hsl(6, 78%, 57%);
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+  border: hsl(6, 78%, 57%) solid 1px;
+  cursor: pointer;
 }
 .submenu-man-grid .item-action-delete:hover {
   background-color: hsl(6, 78%, 57%);
-  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
 .submenu-man-grid .item:hover {
@@ -8242,7 +8361,7 @@
 }
 .submenu-man-list .head {
   display: grid;
-  grid-template-columns: auto 1fr 1fr 0.6fr 0.8fr;
+  grid-template-columns: auto 1fr 1.2fr 0.6fr 0.8fr;
 }
 .submenu-man-list .head-col {
   padding: 1.1rem 1rem;
@@ -8273,7 +8392,7 @@
 }
 .submenu-man-list .body {
   display: grid;
-  grid-template-columns: auto 1fr 1fr 0.6fr 0.8fr;
+  grid-template-columns: auto 1fr 1.2fr 0.6fr 0.8fr;
 }
 .submenu-man-list .body-col {
   padding: 1.75rem 0.9rem 0;
@@ -8298,6 +8417,28 @@
   justify-content: center;
   flex-direction: row;
 }
+.submenu-man-list .body-col:nth-child(4) .default {
+  padding: 0.4rem 0;
+  font-size: 0.73rem;
+  font-weight: 500;
+  text-align: center;
+  width: 4.6rem;
+  background-color: #3498db;
+  color: #fff;
+  pointer-events: none;
+  border-radius: 50vw;
+}
+.submenu-man-list .body-col:nth-child(4) .nope {
+  padding: 0.4rem 0;
+  font-size: 0.73rem;
+  font-weight: 500;
+  text-align: center;
+  width: 4.6rem;
+  background-color: #e8e8e8;
+  color: #000;
+  pointer-events: none;
+  border-radius: 50vw;
+}
 .submenu-man-list .body-col:last-child {
   display: flex;
   align-items: center;
@@ -8312,17 +8453,17 @@
   justify-content: center;
   flex-direction: row;
   padding: 0.22rem;
-  cursor: pointer;
   transition: all 0.3s ease-in;
-  border: #f1c40f solid 1px;
-  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
   background-color: transparent;
   color: #f1c40f;
+  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
+  border: #f1c40f solid 1px;
+  cursor: pointer;
 }
 .submenu-man-list .body-col:last-child .edit:hover {
   background-color: #f1c40f;
-  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
   color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
 .submenu-man-list .body-col:last-child .delete {
@@ -8332,17 +8473,17 @@
   justify-content: center;
   flex-direction: row;
   padding: 0.22rem;
-  cursor: pointer;
   transition: all 0.3s ease-in;
-  border: hsl(6, 78%, 57%) solid 1px;
-  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
   background-color: transparent;
   color: hsl(6, 78%, 57%);
+  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
+  border: hsl(6, 78%, 57%) solid 1px;
+  cursor: pointer;
 }
 .submenu-man-list .body-col:last-child .delete:hover {
   background-color: hsl(6, 78%, 57%);
-  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
   color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
 

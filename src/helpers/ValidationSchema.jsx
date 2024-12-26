@@ -41,6 +41,6 @@ export const MenuManSchema = yup.object().shape({
 
 export const SubmenuManSchema = yup.object().shape({
   name: yup.string().required("Submenu name is required"),
-  menuID: yup.string().required("Submenu menu id is required"),
-  default: yup.bool().required("Submenu default is required"),
+  menuID: yup.string().required("Menu Parent id is required"),
+  defaults: yup.bool().required("Default setting is required"),
 });

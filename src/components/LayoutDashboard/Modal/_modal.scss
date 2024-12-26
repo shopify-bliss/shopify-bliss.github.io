@@ -45,7 +45,7 @@
       @include support.text-hover(0.12rem);
     }
 
-    .material-symbols-outlined {
+    &-close {
       margin: auto 0 auto auto;
       width: fit-content;
       cursor: pointer;
@@ -72,21 +72,27 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
 
-      @mixin container($p: 0 0.9rem, $h: 3rem) {
+      @mixin container($p: 0 0.9rem, $h: 3rem, $input: false) {
         width: 100%;
         font-size: 0.95rem;
         font-family: v.$raleway;
         padding: $p;
         height: $h;
         outline: none;
+
+        @if $input {
+          border: 0.05rem solid rgba($color: #000, $alpha: 0.5);
+        }
       }
 
       &-group {
         width: 100%;
         @include m.flex($direction: column, $start: true);
         gap: 0.35rem;
+        position: relative;
 
-        label {
+        label,
+        .label {
           @include container($h: fit-content, $p: 0);
 
           span {
@@ -96,9 +102,71 @@
         }
 
         input {
-          @include container();
-          outline: none;
-          border: 0.05rem solid rgba($color: #000, $alpha: 0.5);
+          @include container($input: true);
+        }
+
+        .select-default {
+          @include container($input: true);
+          @include m.flex($justify: space-between);
+          gap: 1.7rem;
+          cursor: pointer;
+
+          .text {
+            text-transform: capitalize;
+          }
+
+          .material-symbols-outlined {
+            font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+            font-size: 1.3rem;
+            transition: transform 0.6s ease;
+
+            &.default-closed {
+              transform: rotate(180deg);
+              transition: transform 0.6s ease;
+            }
+          }
+        }
+
+        .select-list {
+          position: absolute;
+          width: 100%;
+          height: 9rem;
+          top: 110%;
+          z-index: 24;
+          background-color: adjust-color($color: #fff, $blackness: 10%);
+          overflow-y: auto;
+
+          &-item {
+            @include m.flex($justify: flex-start);
+            @include container();
+            text-transform: capitalize;
+            cursor: pointer;
+
+            &:not(:last-child) {
+              border-bottom: #fff solid 0.1rem;
+            }
+
+            &:hover {
+              background-color: #000;
+              color: #fff;
+            }
+          }
+        }
+
+        .check-default {
+          @include m.flex();
+          gap: 0.3rem;
+          cursor: pointer;
+
+          .material-symbols-outlined {
+            font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+          }
+
+          .text {
+            font-family: v.$raleway;
+            font-size: 0.9rem;
+            letter-spacing: 0.05rem;
+          }
         }
       }
 

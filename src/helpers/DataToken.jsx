@@ -6,25 +6,14 @@ export function useDataToken() {
   const [token, setToken] = useState(null);
   const [decoded, setDecoded] = useState(null);
 
-  const cookies = new Cookies(null, { path: "/" });
-
   useEffect(() => {
-    const updateToken = () => {
-      const getToken = cookies.get("shopify-bliss") || null;
-      const decodedToken = getToken ? jwtDecode(getToken) : null;
+    const cookies = new Cookies(null, { path: "/" });
 
-      setToken(getToken);
-      setDecoded(decodedToken);
-    };
+    const getToken = cookies.get("shopify-bliss") || null;
+    const decodedToken = getToken ? jwtDecode(getToken) : null;
 
-    // Initial fetch of token
-    updateToken();
-
-    // Set interval to monitor changes (optional)
-    const interval = setInterval(updateToken, 1000);
-
-    // Cleanup interval on unmount
-    return () => clearInterval(interval);
+    setToken(getToken);
+    setDecoded(decodedToken);
   }, []);
 
   return { token, decoded };

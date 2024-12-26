@@ -205,7 +205,7 @@
                 border-radius: 0.25rem;
                 margin-top: 0.3rem;
                 width: 16rem;
-                height: 10rem;
+                height: 11rem;
                 left: 0;
                 position: absolute;
                 border: 1px solid adjust-color($color: #fff, $blackness: 60%);
@@ -216,6 +216,8 @@
                 &-search {
                   background-color: adjust-color($color: #fff, $blackness: 4%);
                   padding: 0.3rem 0.9rem 0.5rem;
+                  position: sticky;
+                  top: 0;
 
                   .search-country {
                     @include m.flex($justify: flex-start);

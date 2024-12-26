@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 import { useDataToken } from "../../../helpers/DataToken";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
@@ -9,22 +9,42 @@ import Modal from "../../../components/LayoutDashboard/Modal/Modal";
 function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
   axios.defaults.withCredentials = true;
 
-  const [data, setData] = useState({
-    menuID: "",
-    name: "",
-    default: false,
-  });
+  const [openMenu, setOpenMenu] = useState(false);
+  const [defaultMenu, setDefaultMenu] = useState("");
+  const [defaultValue, setDefaultValue] = useState(false);
+  const [submenuName, setSubmenuName] = useState("");
 
-  const { toastMessage, toastPromise } = useDashboard();
+  const listMenuRef = useRef(null);
+
+  const { toastMessage, toastPromise, menu } = useDashboard();
   const { token } = useDataToken();
+
+  const handleClickOutside = useCallback(
+    (e) => {
+      if (listMenuRef.current && !listMenuRef.current.contains(e.target)) {
+        setOpenMenu(false);
+      }
+    },
+    [listMenuRef]
+  );
+
+  useEffect(() => {
+    if (openMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openMenu]);
 
   useEffect(() => {
     if (onOpen && type === "create") {
-      setData({
-        menuID: "",
-        name: "",
-        default: false,
-      });
+      setSubmenuName("");
+      setDefaultMenu("");
+      setDefaultValue(false);
     } else if (onOpen && type === "update") {
       axios
         .get(`${urlEndpoint.submenusId}?id=${submenuId}`, {
@@ -33,28 +53,25 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
           },
         })
         .then((res) => {
-          console.log(res.data.data[0]);
-
-          setData(res.data.data[0]);
+          setSubmenuName(res.data.data.name);
+          setDefaultMenu(res.data.data.menu_id);
+          setDefaultValue(res.data.data.default);
         })
         .catch((error) => {
           console.error("Error fetching submenu data:", error);
         });
     }
-  }, [onOpen, type, submenuId, token, urlEndpoint]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setData({
-      ...data,
-      [name]: value,
-    });
-  };
+  }, [onOpen, type, submenuId, token, urlEndpoint.submenusId]);
 
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
+
+      const data = {
+        menuID: defaultMenu,
+        name: submenuName,
+        defaults: defaultValue,
+      };
 
       if (type === "create") {
         SubmenuManSchema.validate(data, { abortEarly: false })
@@ -64,7 +81,6 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
                 Authorization: `Bearer ${token}`,
               },
             });
-
             toastPromise(
               elementsAiPromise,
               {
@@ -81,7 +97,6 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
                 refreshData();
               }
             );
-
             elementsAiPromise.catch((error) => {
               console.error("Error adding submenu data:", error);
             });
@@ -134,14 +149,16 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
     },
     [
       SubmenuManSchema,
-      data,
+      submenuName,
+      defaultMenu,
+      defaultValue,
       onClose,
       refreshData,
       toastMessage,
       toastPromise,
-      submenuId,
       token,
-      urlEndpoint,
+      submenuId,
+      urlEndpoint.submenus,
     ]
   );
 
@@ -179,7 +196,7 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
         console.error("Error deleting submenu data:", error);
       });
     },
-    [submenuId, token, onClose, refreshData]
+    [token, submenuId, onClose, refreshData, urlEndpoint.submenus, toastPromise]
   );
 
   return (
@@ -213,17 +230,72 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
         >
           <form className="modal-dashboard-form" onSubmit={handleSubmit}>
             <div className="modal-dashboard-form-group">
+              <div className="label">
+                Menu Parent <span>(Required)</span>
+              </div>
+              <div className="select-default" onClick={() => setOpenMenu(true)}>
+                <div className="text">
+                  {defaultMenu === ""
+                    ? "Select Menu Parent"
+                    : menu
+                        .filter((item) => item.menu_id === defaultMenu)
+                        .map((data) => data.name)}
+                </div>
+                <span
+                  className={`material-symbols-outlined ${
+                    openMenu ? "default-closed" : ""
+                  }`}
+                >
+                  south_east
+                </span>
+              </div>
+              {openMenu && (
+                <div className="select-list" ref={listMenuRef}>
+                  {menu
+                    .filter((item) => item.menu_id !== defaultMenu)
+                    .map((data) => {
+                      return (
+                        <div
+                          className="select-list-item"
+                          key={data.menu_id}
+                          onClick={() => {
+                            setDefaultMenu(data.menu_id);
+                            setOpenMenu(false);
+                          }}
+                        >
+                          <div className="name">{data.name}</div>
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
+            </div>
+            <div className="modal-dashboard-form-group">
               <label htmlFor="name">
-                Submenu name <span>(Required)</span>
+                Submenu Name <span>(Required)</span>
               </label>
               <input
                 type="text"
                 id="name"
                 name="name"
-                placeholder="Access Management"
-                value={data.name}
-                onChange={handleChange}
+                placeholder="Analytics XX"
+                value={submenuName}
+                onChange={(e) => setSubmenuName(e.target.value)}
               />
+            </div>
+            <div className="modal-dashboard-form-group">
+              <div className="label">
+                Setting Default <span>(Required)</span>
+              </div>
+              <div
+                className="check-default"
+                onClick={() => setDefaultValue(!defaultValue)}
+              >
+                <span class="material-symbols-outlined">
+                  {defaultValue ? "task_alt" : "circle"}
+                </span>
+                <div className="text">{defaultValue ? "True" : "Null"}</div>
+              </div>
             </div>
             <button type="submit">Submit</button>
           </form>

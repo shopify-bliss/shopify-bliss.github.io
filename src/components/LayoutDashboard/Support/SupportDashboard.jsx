@@ -20,7 +20,7 @@ export function Header({
           }`}
           onClick={() => handleDisplayChange("list")}
         >
-          format_list_bulleted
+          lists
         </span>
         <span
           className={`material-symbols-outlined ${

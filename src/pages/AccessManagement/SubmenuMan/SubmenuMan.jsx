@@ -25,7 +25,18 @@ function DisplayView({
           {submenus.map((data) => (
             <div className="item" key={data.sub_menu_id}>
               <div className="item-name">{data.name}</div>
+
               <div className="item-action">
+                {data.default === true ? (
+                  <>
+                    <div className="item-action-default">
+                      <span className="material-symbols-outlined item-action-default-icon">
+                        settings
+                      </span>
+                      <span className="item-action-default-text">Default</span>
+                    </div>
+                  </>
+                ) : null}
                 <span
                   className="material-symbols-rounded item-action-edit"
                   onClick={() => {
@@ -64,9 +75,9 @@ function DisplayView({
               <div className="body-col">{data.menus.name}</div>
               <div className="body-col">
                 {data.default === true ? (
-                  <span>Default</span>
+                  <span className="default">Default</span>
                 ) : (
-                  <span>null</span>
+                  <span className="nope">Nope</span>
                 )}
               </div>
               <div className="body-col">
@@ -123,8 +134,6 @@ function SubmenuMan() {
         },
       });
 
-      console.log(response.data.data);
-
       setSubmenus(response.data.data);
       setIsLoadingSubmenuMan(false);
     } catch (error) {
@@ -133,7 +142,7 @@ function SubmenuMan() {
     } finally {
       setIsLoadingSubmenuMan(false);
     }
-  }, [urlEndpoint, token]);
+  }, [token, urlEndpoint.submenus]);
 
   useEffect(() => {
     fetchSubmenuMan();
