@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import { useDashboard } from "../DashboardContext";
 import { useDataToken } from "../../../helpers/DataToken";
@@ -13,19 +13,23 @@ function Sidebar() {
         const accessibleMenus = accessMenu.filter(
           (dataAccess) =>
             dataAccess.role === decoded?.role &&
-            dataAccess.accessMenu === dataMenu.id
+            dataAccess.menu_id === dataMenu.menu_id
         );
 
-        return accessibleMenus.map((access) => (
-          <NavLink
-            to={`/${dataMenu.url}`}
-            className="sidebar-list"
-            key={access.id}
-          >
-            <div className="sidebar-list-item">{dataMenu.name}</div>
-            <div className="border-effect"></div>
-          </NavLink>
-        ));
+        return (
+          <Fragment key={dataMenu.menu_id}>
+            {accessibleMenus.map((access) => (
+              <NavLink
+                to={`/${dataMenu.url}`}
+                className="sidebar-list"
+                key={access.access_id}
+              >
+                <div className="sidebar-list-item">{dataMenu.name}</div>
+                <div className="border-effect"></div>
+              </NavLink>
+            ))}
+          </Fragment>
+        );
       })}
     </div>
   );

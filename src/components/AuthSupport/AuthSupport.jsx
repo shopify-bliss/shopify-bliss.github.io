@@ -23,9 +23,13 @@ export function AuthHeader({ type }) {
         <Link className="auth-header-link" to={"/login"}>
           Log in
         </Link>
-      ) : (
+      ) : type === "login" ? (
         <Link className="auth-header-link" to={"/signup"}>
           Create Account
+        </Link>
+      ) : (
+        <Link className="auth-header-link" to={"/login"}>
+          Verify Code
         </Link>
       )}
     </>
@@ -34,14 +38,24 @@ export function AuthHeader({ type }) {
 
 export function AuthTitle({ logo, type }) {
   return (
-    <div className="auth-content-title">
+    <div className={`auth-content-title ${type === "verify" ? "verify" : ""}`}>
       <img className="logo" src={logo} alt="Shopify Bliss Logo" />
       {type === "signup" ? (
         <div className="text">Create Your Account</div>
-      ) : (
+      ) : type === "login" ? (
         <div className="text">
           Log into <span>shopify bliss</span>
         </div>
+      ) : (
+        <>
+          <div className="text verify">Check Your Email !</div>
+          <div className="desc">
+            Please check your email inbox for a 6-digit verification code we
+            have sent to your registered email address. Enter the code in the
+            field below to confirm your email and complete the verification
+            process.
+          </div>
+        </>
       )}
     </div>
   );
@@ -105,7 +119,7 @@ export function AuthForm({
           autoComplete="email"
           placeholder="example@gmail.com"
           onChange={handleChange}
-          value={values.email}
+          value={values.email || ""}
         />
         <div className="input-border"></div>
       </div>
@@ -121,12 +135,12 @@ export function AuthForm({
               autoComplete="name"
               placeholder="example is me"
               onChange={handleChange}
-              value={values.username}
+              value={values.username || ""}
             />
             <div className="input-border"></div>
           </div>
           <div className="form-group">
-            <label htmlFor="phone">Phone Number</label>
+            <label htmlFor="phoneNumber">Phone Number</label>
             <div className="phone-wrapper-loan">
               <div className="phone-code">
                 <div
@@ -204,12 +218,12 @@ export function AuthForm({
               <input
                 className="form-group-input"
                 type="number"
-                id="phone"
-                name="phone"
+                id="phoneNumber"
+                name="phoneNumber"
                 autoComplete="tel"
                 placeholder="81234567890"
                 onChange={handleChange}
-                value={values.phone}
+                value={values.phoneNumber || ""}
               />
             </div>
             <div className="input-border"></div>
@@ -226,7 +240,7 @@ export function AuthForm({
           autoComplete="current-password"
           placeholder="password"
           onChange={handleChange}
-          value={values.password}
+          value={values.password || ""}
         />
         {
           <span

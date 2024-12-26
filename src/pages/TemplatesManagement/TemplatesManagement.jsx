@@ -6,17 +6,15 @@ import TempColors from "./TempColors/TempColors";
 import TempFonts from "./TempFonts/TempFonts";
 import LayoutDashboard from "../../components/LayoutDashboard/LayoutDashboard";
 import { useDataToken } from "../../helpers/DataToken";
-import { Error401, Error403 } from "../Error/Error";
+import { Error403 } from "../Error/Error";
 
 function TemplatesManagement() {
   const { submenuPage } = useDashboard();
-  const { token, decoded } = useDataToken();
+  const { decoded } = useDataToken();
 
   return (
     <>
-      {!token ? (
-        <Error401 />
-      ) : decoded?.role !== "admin" ? (
+      {decoded?.role !== "admin" ? (
         <Error403 />
       ) : (
         <LayoutDashboard>

@@ -55,9 +55,10 @@
   $justify: center,
   $px: 0,
   $py: 1rem,
-  $tx-align: start
+  $tx-align: start,
+  $w: 100%
 ) {
-  width: 100%;
+  width: $w;
   padding: $py $px;
   @include m.flex($justify: $justify);
   border-radius: 0.4rem;
@@ -115,7 +116,7 @@
 
   @if $list {
     display: grid;
-    grid-template-columns:2.8rem auto;
+    grid-template-columns: 2.8rem auto;
     background-color: adjust-color($color: #fff, $blackness: 4%);
 
     &:hover {
