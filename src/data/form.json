@@ -2,41 +2,93 @@
   {
     "id": 1,
     "title": "Contact Us",
-    "desc": "We'd love to hear from you! Send us a message using the form below.",
-    "email": true,
-    "phone": true,
-    "message": true,
-    "button": "send message",
+    "desc": "Want to collaborate? Share your info, and we'll be in touch soon. We're excited to connect!",
+    "username": {
+      "required": false,
+      "placeholder": "Name"
+    },
+    "email": {
+      "required": true,
+      "placeholder": "Email address"
+    },
+    "phone": {
+      "required": true,
+      "placeholder": "Phone number"
+    },
+    "message": {
+      "required": true,
+      "placeholder": "Enter your message"
+    },
+    "button": "send",
     "image": null
   },
   {
     "id": 2,
     "title": "Contact Us",
-    "desc": "We'd love to hear from you! Send us a message using the form below.",
-    "email": true,
-    "phone": true,
-    "message": true,
+    "desc": "Want to collaborate? Share your info, and we'll be in touch soon. We're excited to connect!",
+    "username": {
+      "required": false,
+      "placeholder": "Name"
+    },
+    "email": {
+      "required": true,
+      "placeholder": "Email address"
+    },
+    "phone": {
+      "required": true,
+      "placeholder": "Phone number"
+    },
+    "message": {
+      "required": true,
+      "placeholder": "Enter your message"
+    },
     "button": "send message",
     "image": null
   },
   {
     "id": 3,
     "title": "Subcribe",
-    "desc": "We'd love to hear from you! Send us a message using the form below.",
-    "email": true,
-    "phone": true,
-    "message": true,
+    "desc": "Want to collaborate? Share your info, and we'll be in touch soon. We're excited to connect!",
+    "username": {
+      "required": true,
+      "placeholder": "Name"
+    },
+    "email": {
+      "required": true,
+      "placeholder": "Email address"
+    },
+    "phone": {
+      "required": true,
+      "placeholder": "Phone number"
+    },
+    "message": {
+      "required": false,
+      "placeholder": "Enter your message"
+    },
     "button": "subcribe",
-    "image": "pexels-anna-nekrashevich-8516697.jpg"
+    "image": "pexels-mikhail-nilov-7828070.jpg"
   },
   {
     "id": 4,
     "title": "Subcribe",
-    "desc": "We'd love to hear from you! Send us a message using the form below.",
-    "email": true,
-    "phone": false,
-    "message": false,
+    "desc": "Want to collaborate? Share your info, and we'll be in touch soon. We're excited to connect!",
+    "username": {
+      "required": false,
+      "placeholder": "Name"
+    },
+    "email": {
+      "required": true,
+      "placeholder": "Email address"
+    },
+    "phone": {
+      "required": false,
+      "placeholder": "Phone number"
+    },
+    "message": {
+      "required": false,
+      "placeholder": "Enter your message"
+    },
     "button": "subcribe",
-    "image": "pexels-mikhail-nilov-7828070.jpg"
+    "image": "pexels-anna-nekrashevich-8516697.jpg"
   }
 ]

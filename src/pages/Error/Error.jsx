@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
-function ErrorComponent({ type, message }) {
+function ErrorParent({ typeMain }) {
   const visualRef = useRef(null);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ function ErrorComponent({ type, message }) {
 
   return (
     <div className="error-page">
-      <Link to="/">
+      <Link to={`${typeMain === "404" ? "/" : "/login"}`}>
         <svg
           height="0.8em"
           width="0.8em"
@@ -44,41 +44,42 @@ function ErrorComponent({ type, message }) {
             points="0.9,0.1 0.1,0.5 0.9,0.9"
           />
         </svg>{" "}
-        Home
+        {typeMain === "404" ? "Back to Home" : "Back to Login"}
       </Link>
       <div className="background-wrapper">
         <h1 id="visual" ref={visualRef}>
-          {type}
+          {typeMain === "404"
+            ? 404
+            : typeMain === "403"
+            ? 403
+            : typeMain === "401"
+            ? 401
+            : "An error has occurred."}
         </h1>
       </div>
-      <p>{message}</p>
+      <p>
+        {typeMain === "404"
+          ? "Oops! The page you are looking for doesn't exist."
+          : typeMain === "403"
+          ? "You're not allowed to access this page."
+          : typeMain === "401"
+          ? "Access Denied. You don't have permission to view this page."
+          : "An error has occurred."}
+      </p>
     </div>
   );
 }
 
+export default ErrorParent;
+
 export function Error404() {
-  return (
-    <ErrorComponent
-      type={404}
-      message={"Oops! The page you are looking for doesn't exist."}
-    />
-  );
+  return <ErrorParent typeMain={"404"} />;
 }
 
 export function Error403() {
-  return (
-    <ErrorComponent
-      type={403}
-      message={"You’re not allowed to access this page."}
-    />
-  );
+  return <ErrorParent typeMain={"403"} />;
 }
 
 export function Error401() {
-  return (
-    <ErrorComponent
-      type={401}
-      message={"Access Denied. You don't have permission to view this page."}
-    />
-  );
+  return <ErrorParent typeMain={"401"} />;
 }

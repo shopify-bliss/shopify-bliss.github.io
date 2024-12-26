@@ -23,7 +23,6 @@ import {
 } from "../../helpers/AlertMessage";
 import Cookies from "universal-cookie";
 import { jwtDecode } from "jwt-decode";
-import SmoothScroll from "../../helpers/SmoothScroll";
 
 function Auth({ typeMain }) {
   axios.defaults.withCredentials = true;
@@ -32,7 +31,7 @@ function Auth({ typeMain }) {
   const [values, setValues] = useState({
     email: "",
     username: "",
-    phone: "",
+    phoneNumber: "",
     password: "",
   });
   const [phoneCodes, setPhoneCodes] = useState([]);
@@ -45,42 +44,43 @@ function Auth({ typeMain }) {
     special: false,
   });
   const [selectedCode, setSelectedCode] = useState(62);
+  const [code, setCode] = useState(new Array(6).fill(""));
 
   const userRole = useRef(null);
+  const statusSignup = useRef(null);
+  const statusVerify = useRef(null);
 
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
-  const verifyEmail = searchParams.get("message");
-  const getTokenParams = searchParams.get("shopify-bliss");
-  const getRoleParams = searchParams.get("role");
 
   useEffect(() => {
+    const verifyEmail = searchParams.get("message");
+    const getTokenParams = searchParams.get("shopify-bliss");
+    const getRoleParams = searchParams.get("role");
+
+    const params = new URLSearchParams(window.location.search);
+
     if (verifyEmail) {
       toastMessage("success", verifyEmail, {
         position: "top-center",
       });
 
-      const params = new URLSearchParams(window.location.search);
       params.delete("message");
       const newUrl = params.toString()
         ? `${window.location.pathname}?${params.toString()}`
         : window.location.pathname;
 
       window.history.replaceState({}, document.title, newUrl);
-    }
-  }, [verifyEmail]);
-
-  useEffect(() => {
-    if (getTokenParams && getRoleParams) {
+    } else if (getTokenParams && getRoleParams) {
       cookies.set("shopify-bliss", getTokenParams);
 
-      const params = new URLSearchParams(window.location.search);
       params.delete("shopify-bliss");
       params.delete("role");
       const newUrl = params.toString()
         ? `${window.location.pathname}?${params.toString()}`
         : window.location.pathname;
+
       window.history.replaceState({}, document.title, newUrl);
 
       if (getRoleParams === "admin") {
@@ -93,16 +93,13 @@ function Auth({ typeMain }) {
         });
       }
     }
-  }, [getTokenParams, getRoleParams, cookies, navigate]);
+  }, [cookies, navigate]);
 
   useEffect(() => {
     axios
       .get("https://restcountries.com/v3.1/all")
       .then((res) => {
         const data = res.data;
-
-        console.log(data);
-        
 
         const getCodes = data
           .filter((item) => item.idd && item.idd.root)
@@ -134,26 +131,60 @@ function Auth({ typeMain }) {
       });
   }, []);
 
-  const handleChange = useCallback((e) => {
-    const { name, value } = e.target;
+  const handleChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
 
-    setValues((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      };
-    });
-
-    if (name === "password") {
-      setValidationPassword({
-        length: value.length >= 8,
-        uppercase: /[A-Z]/.test(value),
-        lowercase: /[a-z]/.test(value),
-        number: /[0-9]/.test(value),
-        special: /[@$!%*?&#^()_\-+=]/.test(value),
+      setValues((prev) => {
+        return {
+          ...prev,
+          [name]: value,
+        };
       });
+
+      if (name === "password") {
+        setValidationPassword({
+          length: value.length >= 8,
+          uppercase: /[A-Z]/.test(value),
+          lowercase: /[a-z]/.test(value),
+          number: /[0-9]/.test(value),
+          special: /[@$!%*?&#^()_\-+=]/.test(value),
+        });
+      }
+    },
+    [setValues, setValidationPassword]
+  );
+
+  const handleVerifyChange = useCallback(
+    (e, index) => {
+      const value = e.target.value.replace(/[^0-9]/g, ""); // Only allow numbers
+      if (value.length <= 1) {
+        const newCode = [...code];
+        newCode[index] = value;
+        setCode(newCode);
+
+        // Automatically focus on the next input
+        if (value && index < 5) {
+          document.getElementById(`code-input-${index + 1}`).focus();
+        }
+      }
+    },
+    [code]
+  );
+
+  const handleVerifyPaste = (e) => {
+    e.preventDefault();
+    const pasteData = e.clipboardData.getData("text").trim();
+    if (/^\d{6}$/.test(pasteData)) {
+      const newCode = pasteData.split("");
+      setCode(newCode);
+
+      // Focus on the last input to indicate completion
+      document.getElementById("code-input-5").focus();
+    } else {
+      toastMessage("error", "Invalid code format. Please paste 6 digits.");
     }
-  }, []);
+  };
 
   const handleFormSubmit = useCallback(
     (e) => {
@@ -165,7 +196,7 @@ function Auth({ typeMain }) {
             {
               email: values.email,
               username: values.username,
-              phone: values.phone,
+              phoneNumber: values.phoneNumber,
               password: values.password,
             },
             { abortEarly: false }
@@ -174,7 +205,7 @@ function Auth({ typeMain }) {
             const signupPromise = axios.post(urlEndpoint.signupForm, {
               email: values.email,
               username: values.username,
-              phone: selectedCode + values.phone,
+              phoneNumber: selectedCode + values.phoneNumber,
               password: values.password,
             });
 
@@ -186,15 +217,33 @@ function Auth({ typeMain }) {
                 error: "Failed to signup, please try again!",
               },
               {
-                autoClose: 5000,
+                autoClose: 3500,
                 position: "top-center",
+              },
+              () => {
+                if (statusSignup.current === true) {
+                  navigate("/verify-code", {
+                    state: {
+                      email: values.email,
+                    },
+                  });
+                }
               }
             );
 
             signupPromise
               .then((res) => {
-                console.log(res.data);
+                // console.log(res);
+                statusSignup.current = res.data.success;
+
                 setValues("");
+                setValidationPassword({
+                  length: false,
+                  uppercase: false,
+                  lowercase: false,
+                  number: false,
+                  special: false,
+                });
               })
               .catch((err) => {
                 console.error(err);
@@ -211,7 +260,7 @@ function Auth({ typeMain }) {
               });
             });
           });
-      } else {
+      } else if (typeMain === "login") {
         const loginPromise = axios.post(urlEndpoint.loginForm, {
           email: values.email,
           password: values.password,
@@ -249,14 +298,64 @@ function Auth({ typeMain }) {
             } else {
               toastMessage("error", "Access denied. Role not recognized.");
             }
+
+            setValues("");
           })
           .catch((err) => {
             console.error(err);
           });
+      } else {
+        const codeValue = code.join("");
+
+        if (codeValue.length === 6) {
+          const verifyPromise = axios.post(urlEndpoint.verifyEmail, {
+            code: codeValue,
+            email: location.state.email,
+          });
+          toastPromise(
+            verifyPromise,
+            {
+              pending: "Verification in progress, please wait..",
+              success: "Email verified successfully! 🎉",
+              error: "Failed to verify email, please try again!",
+            },
+            {
+              position: "top-center",
+            },
+            () => {
+              if (statusVerify.current === true) {
+                navigate("/login");
+              }
+            }
+          );
+
+          verifyPromise
+            .then((res) => {
+              // console.log(res.data);
+
+              statusVerify.current = res.data.success;
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        } else {
+          toastMessage("error", "Please enter all 6 digits.");
+        }
       }
     },
-    [values, typeMain]
+    [values, typeMain, code]
   );
+
+  useEffect(() => {
+    if (typeMain === "verify" && !location.state) {
+      navigate("/login", {
+        state: {
+          messageNoEmail:
+            "Email is missing. Please go back to the previous step (registration) and ensure your email is entered correctly!",
+        },
+      });
+    }
+  }, [typeMain, navigate, location.state]);
 
   useEffect(() => {
     if (location.state?.messageLogout) {
@@ -265,8 +364,19 @@ function Auth({ typeMain }) {
         state: { ...location.state, messageLogout: undefined },
         replace: true,
       });
+    } else if (location.state?.messageNoEmail) {
+      toastMessage("warn", location.state.messageNoEmail, {
+        position: "top-center",
+        autoClose: 5000,
+      });
+      navigate(location.pathname, {
+        state: { ...location.state, messageNoEmail: undefined },
+        replace: true,
+      });
     }
   }, [location.state, navigate, toastMessage, location.pathname]);
+
+  const AuthContentElement = typeMain === "verify" ? "form" : "div";
 
   return (
     <>
@@ -276,37 +386,83 @@ function Auth({ typeMain }) {
         </div>
         <div className="auth-content">
           <AuthTitle logo={logo} type={typeMain} />
-          <div
+          <AuthContentElement
             className={`auth-content-core ${
-              typeMain === "signup" ? "signup" : ""
+              typeMain === "signup"
+                ? "signup"
+                : typeMain === "verify"
+                ? "verify"
+                : ""
             }`}
+            onSubmit={typeMain === "verify" ? handleFormSubmit : null}
           >
-            <AuthForm
-              values={values}
-              hidePassword={hidePassword}
-              setHidePassword={setHidePassword}
-              validationPassword={validationPassword}
-              handleChange={handleChange}
-              handleForm={handleFormSubmit}
-              type={typeMain}
-              phoneCodes={phoneCodes}
-              selectedCode={selectedCode}
-              setSelectedCode={setSelectedCode}
-            />
-
-            {typeMain !== "signup" && (
+            {typeMain !== "verify" && (
               <>
-                <div className="divider"></div>
-                <AuthIntegration type={typeMain} toastDevelop={toastDevelop} />
+                <AuthForm
+                  values={values}
+                  hidePassword={hidePassword}
+                  setHidePassword={setHidePassword}
+                  validationPassword={validationPassword}
+                  handleChange={handleChange}
+                  handleForm={handleFormSubmit}
+                  type={typeMain}
+                  phoneCodes={phoneCodes}
+                  selectedCode={selectedCode}
+                  setSelectedCode={setSelectedCode}
+                />
+
+                {typeMain !== "signup" && (
+                  <>
+                    <div className="divider"></div>
+                    <AuthIntegration
+                      type={typeMain}
+                      toastDevelop={toastDevelop}
+                    />
+                  </>
+                )}
               </>
             )}
-          </div>
-          {typeMain === "signup" ? (
-            ""
-          ) : (
-            <Link className="auth-content-problems" to={"/404"}>
+
+            {typeMain === "verify" && (
+              <>
+                <div className="verify-wrapper">
+                  {code.map((value, index) => (
+                    <input
+                      key={index}
+                      id={`code-input-${index}`}
+                      className="code-number"
+                      type="text"
+                      maxLength="1"
+                      value={value}
+                      onChange={(e) => handleVerifyChange(e, index)}
+                      onKeyDown={(e) => {
+                        if (
+                          e.key === "Backspace" &&
+                          !code[index] &&
+                          index > 0
+                        ) {
+                          document
+                            .getElementById(`code-input-${index - 1}`)
+                            .focus();
+                        }
+                      }}
+                      onPaste={handleVerifyPaste}
+                    />
+                  ))}
+                </div>
+                <button className="code-button">Submit Code</button>
+              </>
+            )}
+          </AuthContentElement>
+          {typeMain === "login" ? (
+            <span
+              className="auth-content-problems"
+              onClick={() => toastDevelop("can't log in")}
+            >
               Can't Log In
-            </Link>
+            </span>
+          ) : (
+            ""
           )}
         </div>
       </div>

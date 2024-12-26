@@ -5,17 +5,14 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import {
-  toastMessage,
-  toastDevelop,
-  toastPromise,
-} from "../../helpers/AlertMessage";
+import { useLocation } from "react-router-dom";
+import { toastMessage, toastDevelop } from "../../helpers/AlertMessage";
 import { ToastContainer } from "react-toastify";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import { useDataToken } from "../../helpers/DataToken";
-import { Error401 } from "../../pages/Error/Error";
 
 const DashboardContext = createContext({
   activeMenu: null,
@@ -27,7 +24,6 @@ const DashboardContext = createContext({
   accessMenu: [],
   toastMessage: null,
   toastDevelop: null,
-  toastPromise: null,
 });
 
 export const useDashboard = () => useContext(DashboardContext);
@@ -44,17 +40,18 @@ export const DashboardProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
-  const navigate = useNavigate();
   const { token } = useDataToken();
 
   useEffect(() => {
-    let waitingToken;
-
     const fetchDashboardData = async () => {
       const currentPath = location.pathname.replace("/", "");
 
       try {
         setIsLoading(true);
+
+        if (!token) {
+          return;
+        }
 
         const [menuResponse, submenuResponse, accessMenuResponse] =
           await Promise.all([
@@ -88,6 +85,10 @@ export const DashboardProvider = ({ children }) => {
           const defaultSubmenu = filteredSubmenu.find((data) => data.default);
 
           setSubmenuPage(defaultSubmenu ? defaultSubmenu.name : null);
+        } else {
+          setActiveMenu(null);
+          setActiveSubmenu([]);
+          setSubmenuPage(null);
         }
 
         setMenu(menuData);
@@ -95,23 +96,29 @@ export const DashboardProvider = ({ children }) => {
         setAccessMenu(accessMenuData);
       } catch (err) {
         console.error("Error fetching dashboard data:", err);
+        toastMessage("error", err.message || "Failed to fetch data.");
       } finally {
         setIsLoading(false);
       }
     };
 
+    const timeoutId = setTimeout(() => {
+      if (!token) {
+        setIsLoading(false);
+      }
+    }, 1500);
+
     if (token) {
       fetchDashboardData();
+      clearTimeout(timeoutId);
     } else {
-      waitingToken = setTimeout(() => {
-        if (!token) {
-          navigate("/401");
-        }
-      }, 3000);
+      setIsLoading(true);
     }
 
-    return () => clearTimeout(waitingToken);
-  }, [token, location.pathname, navigate, urlEndpoint]);
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [token, location.pathname, urlEndpoint]);
 
   const handleSubmenuPage = useCallback((submenuName) => {
     setSubmenuPage(submenuName);
@@ -129,12 +136,13 @@ export const DashboardProvider = ({ children }) => {
         accessMenu,
         toastMessage,
         toastDevelop,
-        toastPromise,
       }}
     >
       {isLoading ? (
-        <div className="loader-pages">
-          <div className="loader-pages-item"></div>
+        <div style={{ padding: "20px" }}>
+          <Skeleton height={30} width="80%" style={{ marginBottom: "10px" }} />
+          <Skeleton height={30} width="60%" style={{ marginBottom: "10px" }} />
+          <Skeleton height={30} width="70%" />
         </div>
       ) : (
         children

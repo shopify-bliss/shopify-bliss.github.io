@@ -2,31 +2,31 @@
   {
     "id": 1,
     "role": "customer",
-    "accessMenu": 2
+    "accessMenu": "6556df8f-7cd6-4848-b39f-1e6ab4973311"
   },
   {
     "id": 2,
     "role": "admin",
-    "accessMenu": 1
+    "accessMenu": "702fe74b-5891-4207-89d1-76d6d91766eb"
   },
   {
     "id": 3,
     "role": "admin",
-    "accessMenu": 2
+    "accessMenu": "6556df8f-7cd6-4848-b39f-1e6ab4973311"
   },
   {
     "id": 4,
     "role": "admin",
-    "accessMenu": 3
+    "accessMenu": "b37d4e96-87b0-4480-805e-562ccd798338"
   },
   {
     "id": 5,
     "role": "admin",
-    "accessMenu": 4
+    "accessMenu": "3e1f3895-691f-4962-af43-225d73cfcf91"
   },
   {
     "id": 6,
     "role": "admin",
-    "accessMenu": 5
+    "accessMenu": "e0c2b209-08c0-4c8b-ae0d-77f86b088879"
   }
 ]

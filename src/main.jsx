@@ -5,14 +5,9 @@ import { SearchProvider } from "./helpers/SearchContext";
 import { DashboardProvider } from "./components/LayoutDashboard/DashboardContext";
 import Loadable from "./helpers/Loadable";
 
-// Lazy-loaded components with Loadable
-const LoaderProgress = Loadable(
-  lazy(() => import("./components/LoaderProgress/LoaderProgress"))
-);
 const Auth = Loadable(lazy(() => import("./pages/Auth/Auth")));
-const Error404 = Loadable(lazy(() => import("./pages/Error/Error")));
-const Error401 = Loadable(lazy(() => import("./pages/Error/Error")));
-const Error403 = Loadable(lazy(() => import("./pages/Error/Error")));
+const ErrorParent = Loadable(lazy(() => import("./pages/Error/Error")));
+
 const Dashboard = Loadable(lazy(() => import("./pages/Dashboard/Dashboard")));
 const Profile = Loadable(lazy(() => import("./pages/Profile/Profile")));
 const UsersManagement = Loadable(
@@ -43,17 +38,13 @@ createRoot(document.getElementById("root")).render(
       <SearchProvider>
         <Routes>
           <Route path="/" element={<AiBuilder />} />
-          <Route
-            path="/login"
-            element={<Auth typeMain={"login"} />}
-          />
-          <Route
-            path="/signup"
-            element={<Auth typeMain={"signup"} />}
-          />
-          <Route path="*" element={<Error404 />} />
-          <Route path="/403" element={<Error403 />} />
-          <Route path="/401" element={<Error401 />} />
+          <Route path="/login" element={<Auth typeMain={"login"} />} />
+          <Route path="/signup" element={<Auth typeMain={"signup"} />} />
+          <Route path="/verify-code" element={<Auth typeMain={"verify"} />} />
+          <Route path="*" element={<ErrorParent typeMain={"404"} />} />
+          <Route path="/401" element={<ErrorParent typeMain={"401"} />} />
+          <Route path="/403" element={<ErrorParent typeMain={"403"} />} />
+          <Route path="/404" element={<ErrorParent typeMain={"404"} />} />
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />

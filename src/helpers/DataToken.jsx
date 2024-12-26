@@ -6,7 +6,7 @@ export function useDataToken() {
   const [token, setToken] = useState(null);
   const [decoded, setDecoded] = useState(null);
 
-  const cookies = new Cookies();
+  const cookies = new Cookies(null, { path: "/" });
 
   useEffect(() => {
     const updateToken = () => {

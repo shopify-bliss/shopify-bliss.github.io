@@ -2,34 +2,41 @@ import React, { useState, useCallback, useEffect } from "react";
 import { Header } from "../../../components/LayoutDashboard/Support/SupportDashboard";
 import axios from "axios";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import TempPagesModal from "./TempSectionsModal";
+import MenuManModal from "./MenuManModal";
+import { Link } from "react-router-dom";
 
 function DisplayView({
-  isLoadingTempSections,
-  sections,
-  setSectionId,
+  isLoadingMenuMan,
+  menus,
+  setMenuId,
   setIsUpdateModalOpen,
   setIsDeleteModalOpen,
   type,
 }) {
   return (
     <>
-      {isLoadingTempSections && (
+      {isLoadingMenuMan && (
         <div className="loader-pages">
           <div className="loader-pages-item"></div>
         </div>
       )}
       {type === "grid" ? (
-        <div className="temp-sections-grid">
-          {sections.map((data) => (
-            <div className="item" key={data.section_id}>
+        <div className="menu-man-grid">
+          {menus.map((data) => (
+            <div className="item" key={data.menu_id}>
               <div className="item-name">{data.name}</div>
+              <div className="item-url">
+                Link:{" "}
+                <Link to={`/${data.url}`} className="item-url-link">
+                  {data.url}
+                </Link>
+              </div>
               <div className="item-action">
                 <span
                   className="material-symbols-rounded item-action-edit"
                   onClick={() => {
                     setIsUpdateModalOpen(true);
-                    setSectionId(data.section_id);
+                    setMenuId(data.menu_id);
                   }}
                 >
                   edit_square
@@ -38,7 +45,7 @@ function DisplayView({
                   className="material-symbols-rounded item-action-delete"
                   onClick={() => {
                     setIsDeleteModalOpen(true);
-                    setSectionId(data.section_id);
+                    setMenuId(data.menu_id);
                   }}
                 >
                   delete
@@ -48,22 +55,26 @@ function DisplayView({
           ))}
         </div>
       ) : (
-        <div className="temp-sections-list">
+        <div className="menu-man-list">
           <div className="head">
             <div className="head-col">No</div>
             <div className="head-col">Name</div>
+            <div className="head-col">Url</div>
             <div className="head-col">Action</div>
           </div>
-          {sections.map((data, index) => (
-            <div className="body" key={data.section_id}>
+          {menus.map((data, index) => (
+            <div className="body" key={data.menu_id}>
               <dic className="body-col">{index + 1}</dic>
               <div className="body-col">{data.name}</div>
+              <Link to={`/${data.url}`} className="body-col">
+                {data.url}
+              </Link>
               <div className="body-col">
                 <span
                   className="material-symbols-rounded edit"
                   onClick={() => {
                     setIsUpdateModalOpen(true);
-                    setSectionId(data.section_id);
+                    setMenuId(data.menu_id);
                   }}
                 >
                   edit_square
@@ -72,7 +83,7 @@ function DisplayView({
                   className="material-symbols-rounded delete"
                   onClick={() => {
                     setIsDeleteModalOpen(true);
-                    setSectionId(data.section_id);
+                    setMenuId(data.menu_id);
                   }}
                 >
                   delete
@@ -86,92 +97,92 @@ function DisplayView({
   );
 }
 
-function TempSections() {
+function MenuMan() {
   axios.defaults.withCredentials = true;
-  const [sections, setSections] = useState([]);
-  const [isLoadingTempSections, setIsLoadingTempSections] = useState(false);
+  const [menus, setMenus] = useState([]);
+  const [isLoadingMenuMan, setIsLoadingMenuMan] = useState(false);
   const [activeDisplay, setActiveDisplay] = useState("grid");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [sectionId, setSectionId] = useState(null);
+  const [menuId, setMenuId] = useState(null);
 
   const handleDisplayChange = useCallback((display) => {
     setActiveDisplay(display);
   }, []);
 
-  const fetchSections = useCallback(async () => {
-    setIsLoadingTempSections(true);
+  const fetchMenuMan = useCallback(async () => {
+    setIsLoadingMenuMan(true);
 
     try {
-      const response = await axios.get(urlEndpoint.elementsAi);
+      const response = await axios.get(urlEndpoint.menus);
 
-      setSections(response.data.data);
-      setIsLoadingTempSections(false);
+      setMenus(response.data.data);
+      setIsLoadingMenuMan(false);
     } catch (error) {
       console.error(error);
-      setIsLoadingTempSections(false);
+      setIsLoadingMenuMan(false);
     } finally {
-      setIsLoadingTempSections(false);
+      setIsLoadingMenuMan(false);
     }
   }, [urlEndpoint]);
 
   useEffect(() => {
-    fetchSections();
+    fetchMenuMan();
   }, []);
 
   return (
     <>
-      <div className="temp-sections">
+      <div className="menu-man">
         <Header
-          className="temp-sections"
-          title="Template Management — Sections"
+          className="menu-man"
+          title="Menu Management — Menus"
           activeDisplay={activeDisplay}
           handleDisplayChange={handleDisplayChange}
           setIsCreateModalOpen={setIsCreateModalOpen}
         />
         {activeDisplay === "grid" ? (
           <DisplayView
-            isLoadingTempSections={isLoadingTempSections}
-            sections={sections}
-            setSectionId={setSectionId}
+            isLoadingMenuMan={isLoadingMenuMan}
+            menus={menus}
+            setMenuId={setMenuId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}
             setIsDeleteModalOpen={setIsDeleteModalOpen}
             type="grid"
           />
         ) : (
           <DisplayView
-            isLoadingTempSections={isLoadingTempSections}
-            sections={sections}
-            setSectionId={setSectionId}
+            isLoadingMenuMan={isLoadingMenuMan}
+            menus={menus}
+            setMenuId={setMenuId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}
             setIsDeleteModalOpen={setIsDeleteModalOpen}
             type="list"
           />
         )}
-        <TempPagesModal
+        <MenuManModal
           type="create"
           onOpen={isCreateModalOpen}
           onClose={() => setIsCreateModalOpen(false)}
-          refreshData={fetchSections}
+          refreshData={fetchMenuMan}
         />
-        <TempPagesModal
+        <MenuManModal
           type="update"
           onOpen={isUpdateModalOpen}
           onClose={() => setIsUpdateModalOpen(false)}
-          refreshData={fetchSections}
-          sectionId={sectionId}
+          refreshData={fetchMenuMan}
+          menuId={menuId}
         />
-        <TempPagesModal
+        <MenuManModal
           type="delete"
           onOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
-          refreshData={fetchSections}
-          sectionId={sectionId}
+          refreshData={fetchMenuMan}
+          menuId={menuId}
         />
       </div>
     </>
   );
 }
 
-export default TempSections;
+export default MenuMan;

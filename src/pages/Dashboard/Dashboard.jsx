@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import LayoutDashboard from "../../components/LayoutDashboard/LayoutDashboard";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
 import { useDataToken } from "../../helpers/DataToken";
-import { Error401, Error403 } from "../Error/Error";
+import { Error403 } from "../Error/Error";
 import Analytics from "./Analytics/Analytics";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const { submenuPage, toastMessage } = useDashboard();
-  const { token, decoded } = useDataToken();
+  const { decoded } = useDataToken();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,9 +25,7 @@ function Dashboard() {
 
   return (
     <>
-      {!token ? (
-        <Error401 />
-      ) : decoded?.role !== "admin" ? (
+      {decoded?.role !== "admin" ? (
         <Error403 />
       ) : (
         <LayoutDashboard>

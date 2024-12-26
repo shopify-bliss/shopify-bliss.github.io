@@ -10,7 +10,7 @@ export const siteTitleSchema = yup.object().shape({
 export const signupSchema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
   username: yup.string().required("Username is required"),
-  phone: yup.number().required("Phone number is required"),
+  phoneNumber: yup.number().required("Phone number is required"),
   password: yup
     .string()
     .required("Password is required")
@@ -22,4 +22,25 @@ export const signupSchema = yup.object().shape({
       /[@$!%*?&#^()_\-+=]/,
       "Password must contain at least one special character."
     ),
+});
+
+export const tempPagesSchema = yup.object().shape({
+  type: yup.string().required("Page name is required"),
+  icon: yup.string().required("Page icon is required"),
+  name_class: yup.string().required("Page class is required"),
+});
+
+export const TempSectionsSchema = yup.object().shape({
+  name: yup.string().required("Section name is required"),
+});
+
+export const MenuManSchema = yup.object().shape({
+  name: yup.string().required("Menu name is required"),
+  url: yup.string().required("Menu url is required"),
+});
+
+export const SubmenuManSchema = yup.object().shape({
+  name: yup.string().required("Submenu name is required"),
+  menuID: yup.string().required("Submenu menu id is required"),
+  default: yup.bool().required("Submenu default is required"),
 });

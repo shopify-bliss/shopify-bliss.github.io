@@ -2,6 +2,11 @@
 @use "../../helpers/variables" as v;
 @use "./Sidebar/sidebar" as sidebar;
 @use "./Topbar/topbar" as topbar;
+@use "./Modal/modal";
+@use "../../pages/TemplatesManagement/TempPages/temp-pages";
+@use "../../pages/TemplatesManagement/TempSections/temp-sections";
+@use "../../pages/AccessManagement/MenuMan/menu-man";
+@use "../../pages/AccessManagement/SubmenuMan/submenu-man";
 
 .layout-dashboard {
   width: 100%;
@@ -32,6 +37,5 @@
     height: auto;
     padding: (v.$px-main * 1.3) v.$px-main (v.$px-main * 1.3)
       (v.$px-main * 1.75);
-
   }
 }
