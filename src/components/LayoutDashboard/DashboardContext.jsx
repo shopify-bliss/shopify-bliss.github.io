@@ -19,15 +19,17 @@ import { Error401 } from "../../pages/Error/Error";
 
 const DashboardContext = createContext({
   activeMenu: null,
-  menu: [],
+  menus: [],
   activeSubmenu: [],
-  submenu: [],
+  submenus: [],
   submenuPage: "",
   handleSubmenuPage: () => {},
-  accessMenu: [],
+  accessMenus: [],
   toastMessage: null,
   toastDevelop: null,
   toastPromise: null,
+  fetchDashboardData: () => {},
+  isLoading: false,
 });
 
 export const useDashboard = () => useContext(DashboardContext);
@@ -38,67 +40,67 @@ export const DashboardProvider = ({ children }) => {
   const [activeMenu, setActiveMenu] = useState(null);
   const [activeSubmenu, setActiveSubmenu] = useState([]);
   const [submenuPage, setSubmenuPage] = useState(null);
-  const [menu, setMenu] = useState([]);
-  const [submenu, setSubmenu] = useState([]);
-  const [accessMenu, setAccessMenu] = useState([]);
+  const [menus, setMenus] = useState([]);
+  const [submenus, setSubmenus] = useState([]);
+  const [accessMenus, setAccessMenus] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
   const { token } = useDataToken();
 
+  const fetchDashboardData = useCallback(async () => {
+    const currentPath = location.pathname.replace("/", "");
+
+    try {
+      setIsLoading(true);
+
+      const [menuResponse, submenuResponse, accessMenuResponse] =
+        await Promise.all([
+          axios.get(urlEndpoint.menus),
+          axios.get(urlEndpoint.submenus, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+          axios.get(urlEndpoint.accessManagement, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+        ]);
+
+      const menuData = menuResponse.data.data;
+      const submenuData = submenuResponse.data.data;
+      const accessMenuData = accessMenuResponse.data.data;
+
+      setMenus(menuData);
+      setSubmenus(submenuData);
+      setAccessMenus(accessMenuData);
+
+      const currentMenu = menuData.find((data) => data.url === currentPath);
+
+      if (currentMenu) {
+        const filteredSubmenu = submenuData.filter(
+          (submenuItem) => submenuItem.menu_id === currentMenu.menu_id
+        );
+
+        setActiveMenu(currentMenu.menu_id);
+        setActiveSubmenu(filteredSubmenu);
+
+        const defaultSubmenu = filteredSubmenu.find((data) => data.default);
+
+        setSubmenuPage(defaultSubmenu ? defaultSubmenu.name : null);
+      }
+    } catch (err) {
+      console.error("Error fetching dashboard data:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [token, location.pathname]);
+
   useEffect(() => {
     let waitingToken;
-
-    const fetchDashboardData = async () => {
-      const currentPath = location.pathname.replace("/", "");
-
-      try {
-        setIsLoading(true);
-
-        const [menuResponse, submenuResponse, accessMenuResponse] =
-          await Promise.all([
-            axios.get(urlEndpoint.menus),
-            axios.get(urlEndpoint.submenus, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }),
-            axios.get(urlEndpoint.accessManagement, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }),
-          ]);
-
-        const menuData = menuResponse.data.data;
-        const submenuData = submenuResponse.data.data;
-        const accessMenuData = accessMenuResponse.data.data;
-
-        const currentMenu = menuData.find((data) => data.url === currentPath);
-
-        if (currentMenu) {
-          const filteredSubmenu = submenuData.filter(
-            (submenuItem) => submenuItem.menu_id === currentMenu.menu_id
-          );
-
-          setActiveMenu(currentMenu.menu_id);
-          setActiveSubmenu(filteredSubmenu);
-
-          const defaultSubmenu = filteredSubmenu.find((data) => data.default);
-
-          setSubmenuPage(defaultSubmenu ? defaultSubmenu.name : null);
-        }
-
-        setMenu(menuData);
-        setSubmenu(submenuData);
-        setAccessMenu(accessMenuData);
-      } catch (err) {
-        console.error("Error fetching dashboard data:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
 
     if (token) {
       fetchDashboardData();
@@ -111,7 +113,11 @@ export const DashboardProvider = ({ children }) => {
     }
 
     return () => clearTimeout(waitingToken);
-  }, [token, location.pathname, navigate, urlEndpoint]);
+  }, [token, location.pathname, navigate]);
+
+  // useEffect(() => {
+  //   console.log("token", token);
+  // }, [token]);
 
   const handleSubmenuPage = useCallback((submenuName) => {
     setSubmenuPage(submenuName);
@@ -121,15 +127,17 @@ export const DashboardProvider = ({ children }) => {
     <DashboardContext.Provider
       value={{
         activeMenu,
-        menu,
+        menus,
         activeSubmenu,
-        submenu,
+        submenus,
         submenuPage,
         handleSubmenuPage,
-        accessMenu,
+        accessMenus,
         toastMessage,
         toastDevelop,
         toastPromise,
+        fetchDashboardData,
+        isLoading,
       }}
     >
       {isLoading ? (

@@ -16,7 +16,7 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
 
   const listMenuRef = useRef(null);
 
-  const { toastMessage, toastPromise, menu } = useDashboard();
+  const { toastMessage, toastPromise, menus } = useDashboard();
   const { token } = useDataToken();
 
   const handleClickOutside = useCallback(
@@ -237,7 +237,7 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
                 <div className="text">
                   {defaultMenu === ""
                     ? "Select Menu Parent"
-                    : menu
+                    : menus
                         .filter((item) => item.menu_id === defaultMenu)
                         .map((data) => data.name)}
                 </div>
@@ -251,7 +251,7 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
               </div>
               {openMenu && (
                 <div className="select-list" ref={listMenuRef}>
-                  {menu
+                  {menus
                     .filter((item) => item.menu_id !== defaultMenu)
                     .map((data) => {
                       return (

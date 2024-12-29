@@ -3,10 +3,13 @@
 @use "./Sidebar/sidebar" as sidebar;
 @use "./Topbar/topbar" as topbar;
 @use "./Modal/modal";
+@use "../../pages/Profile/profile";
+@use "../../pages/UsersManagement/DisplayUsers/display-users";
 @use "../../pages/TemplatesManagement/TempPages/temp-pages";
 @use "../../pages/TemplatesManagement/TempSections/temp-sections";
 @use "../../pages/AccessManagement/MenuMan/menu-man";
 @use "../../pages/AccessManagement/SubmenuMan/submenu-man";
+@use "../../pages/AccessManagement/AccessMan/access_man";
 
 .layout-dashboard {
   width: 100%;

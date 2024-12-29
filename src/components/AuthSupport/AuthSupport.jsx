@@ -61,6 +61,41 @@ export function AuthTitle({ logo, type }) {
   );
 }
 
+export function AuthValidationPassword({ validationPassword }) {
+  return (
+    <div className="validation-password">
+      <div className={`item ${validationPassword.length ? "done" : ""}`}>
+        <span className="material-symbols-rounded">check_circle</span>
+        <div className="item-text">Password should be 8 chars minimum.</div>
+      </div>
+      <div className={`item ${validationPassword.lowercase ? "done" : ""}`}>
+        <span className="material-symbols-rounded">check_circle</span>
+        <div className="item-text">
+          Password must contain at least one lowercase letter.
+        </div>
+      </div>
+      <div className={`item ${validationPassword.uppercase ? "done" : ""}`}>
+        <span className="material-symbols-rounded">check_circle</span>
+        <div className="item-text">
+          Password must contain at least one uppercase letter.
+        </div>
+      </div>
+      <div className={`item ${validationPassword.number ? "done" : ""}`}>
+        <span className="material-symbols-rounded">check_circle</span>
+        <div className="item-text">
+          Password must contain at least one number.
+        </div>
+      </div>
+      <div className={`item ${validationPassword.special ? "done" : ""}`}>
+        <span className="material-symbols-rounded">check_circle</span>
+        <div className="item-text">
+          Password must contain at least one special character.
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function AuthForm({
   handleForm,
   handleChange,
@@ -242,47 +277,16 @@ export function AuthForm({
           onChange={handleChange}
           value={values.password || ""}
         />
-        {
-          <span
-            className="material-symbols-outlined"
-            onClick={() => setHidePassword(!hidePassword)}
-          >
-            {hidePassword ? "visibility_off" : "visibility"}
-          </span>
-        }
+        <span
+          className="material-symbols-outlined"
+          onClick={() => setHidePassword(!hidePassword)}
+        >
+          {hidePassword ? "visibility_off" : "visibility"}
+        </span>
         <div className="input-border"></div>
       </div>
       {type === "signup" && (
-        <div className="validation-password">
-          <div className={`item ${validationPassword.length ? "done" : ""}`}>
-            <span className="material-symbols-rounded">check_circle</span>
-            <div className="item-text">Password should be 8 chars minimum.</div>
-          </div>
-          <div className={`item ${validationPassword.lowercase ? "done" : ""}`}>
-            <span className="material-symbols-rounded">check_circle</span>
-            <div className="item-text">
-              Password must contain at least one lowercase letter.
-            </div>
-          </div>
-          <div className={`item ${validationPassword.uppercase ? "done" : ""}`}>
-            <span className="material-symbols-rounded">check_circle</span>
-            <div className="item-text">
-              Password must contain at least one uppercase letter.
-            </div>
-          </div>
-          <div className={`item ${validationPassword.number ? "done" : ""}`}>
-            <span className="material-symbols-rounded">check_circle</span>
-            <div className="item-text">
-              Password must contain at least one number.
-            </div>
-          </div>
-          <div className={`item ${validationPassword.special ? "done" : ""}`}>
-            <span className="material-symbols-rounded">check_circle</span>
-            <div className="item-text">
-              Password must contain at least one special character.
-            </div>
-          </div>
-        </div>
+        <AuthValidationPassword validationPassword={validationPassword} />
       )}
       <button
         type="submit"

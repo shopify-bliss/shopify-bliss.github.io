@@ -114,7 +114,7 @@ function TempSections() {
     } finally {
       setIsLoadingTempSections(false);
     }
-  }, [urlEndpoint]);
+  }, [urlEndpoint.elementsAi]);
 
   useEffect(() => {
     fetchSections();

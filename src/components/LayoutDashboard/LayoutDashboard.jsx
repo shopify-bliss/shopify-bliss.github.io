@@ -6,7 +6,6 @@ import SmoothScroll from "../../helpers/SmoothScroll";
 function LayoutDashboard({ children }) {
   return (
     <>
-      <SmoothScroll />
       <div className="layout-dashboard">
         <Sidebar />
         <Topbar />

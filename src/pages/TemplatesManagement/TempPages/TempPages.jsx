@@ -123,7 +123,7 @@ function TempPages() {
     } finally {
       setIsLoadingTempPages(false);
     }
-  }, [urlEndpoint]);
+  }, [urlEndpoint.pagesAi]);
 
   useEffect(() => {
     fetchPages();

@@ -8,18 +8,17 @@
   $end: false
 ) {
   display: flex;
-  align-items: $align;
-  justify-content: $justify;
   flex-direction: $direction;
 
   @if $start {
     align-items: flex-start;
     justify-content: flex-start;
-  }
-
-  @if $end {
+  } @else if $end {
     align-items: flex-end;
     justify-content: flex-end;
+  } @else {
+    align-items: $align;
+    justify-content: $justify;
   }
 }
 

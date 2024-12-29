@@ -1,6 +1,256 @@
 @use "../../helpers/mixins" as m;
 @use "../../helpers/variables" as v;
+@use "../../components/LayoutDashboard/Support/support-dashboard" as support;
+@use "../../components/AuthSupport/auth-support" as auth;
 
-.profile {
-    
+$py: 2.4rem;
+$px: 3.1rem;
+$border-color: adjust-color(
+  $color: #fff,
+  $blackness: 25%,
+);
+
+.overlay-modal-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($color: #000, $alpha: 0.5);
+  z-index: 31;
+
+  @mixin title($fs: 1.9rem, $pb: 0) {
+    font-size: $fs;
+    text-align: center;
+    line-height: 125%;
+    font-family: v.$bebas-neue;
+    letter-spacing: 0.1rem;
+    width: fit-content;
+    font-weight: 100;
+    padding-bottom: $pb;
+
+    @include support.text-hover(0.12rem);
+  }
+
+  @mixin text($fs: 0.95rem, $ls: 0.02rem, $h: 0.7px) {
+    font-family: v.$raleway;
+    font-size: $fs;
+    letter-spacing: $ls;
+    padding-bottom: 0.35rem;
+    cursor: pointer;
+    transition: all 0.3s ease-in;
+    text-transform: uppercase;
+    line-height: 100%;
+
+    @include support.text-hover($h);
+  }
+
+  .modal-menu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    background-color: #fff;
+    z-index: 32;
+    max-width: 55vw;
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+    // height: 80vh;
+    height: auto;
+    max-height: 80vh;
+
+    &-nav {
+      background-color: adjust-color($color: #fff, $blackness: 5%);
+      padding: $py 1.9rem $py $px;
+      height: auto;
+      @include m.flex($direction: column, $start: true);
+      position: relative;
+      gap: 0.4rem;
+      overflow-y: auto;
+
+      &-title {
+        @include title(1.4rem, $pb: 0.2rem);
+        margin-bottom: 0.6rem;
+      }
+
+      &-item {
+        font-family: v.$raleway;
+        text-transform: capitalize;
+        padding-bottom: 0.4rem;
+        margin-bottom: 0.3rem;
+        width: fit-content;
+        cursor: pointer;
+        @include support.text-hover(0.7px);
+
+        &.active {
+          &::after {
+            transform: scaleX(1);
+          }
+        }
+      }
+    }
+
+    &-content {
+      padding: $py $px $py 2.7rem;
+      max-height: 80vh;
+      overflow-y: auto;
+
+      .header {
+        width: 100%;
+        @include m.flex($justify: space-between);
+
+        &-title {
+          @include title($fs: 2.3rem);
+        }
+
+        &-close {
+          margin: auto 0 auto auto;
+          width: fit-content;
+          cursor: pointer;
+          padding: 0.3rem;
+          font-size: 1.5rem;
+          font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+          color: #000;
+          border-radius: 50%;
+          transition: transform 0.4s ease-out, background-color 0.4s ease-out;
+          background-color: #fff;
+          margin-right: -0.5rem;
+
+          &:hover {
+            transform: rotate(90deg);
+            transition: transform 0.4s ease-out, background-color 0.4s ease-out;
+            background-color: adjust-color($color: #fff, $blackness: 5%);
+          }
+        }
+      }
+
+      .core {
+        margin-top: 1.2rem;
+        @include m.flex($direction: column, $justify: start);
+        gap: 0.9rem;
+        font-family: v.$raleway;
+        overflow-y: auto;
+
+        &-avatar {
+          width: 100%;
+          border: $border-color 1px solid;
+          padding: 1.7rem 1.4rem 1.4rem;
+
+          &-selected {
+            @include m.flex($direction: column);
+            gap: 0.7rem;
+
+            img {
+              width: 9rem;
+              height: auto;
+              object-fit: cover;
+            }
+
+            span {
+              @include text();
+            }
+          }
+
+          &-list {
+            width: 100%;
+            @include m.flex();
+            flex-wrap: wrap;
+            gap: 1.1rem;
+            margin-top: 1.3rem;
+
+            img {
+              width: 3rem;
+              height: auto;
+              object-fit: cover;
+              cursor: pointer;
+            }
+          }
+        }
+
+        &-input {
+          width: 100%;
+          @include m.flex($direction: column, $start: true);
+          gap: 1.2rem;
+
+          &-group {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 0.6fr 1fr;
+            padding: 0 0 0.8rem;
+            position: relative;
+
+            label {
+              font-size: 0.85rem;
+              font-weight: 600;
+            }
+
+            input {
+              width: 100%;
+              outline: none;
+              border: none;
+              font-family: v.$raleway;
+              font-size: 0.85rem;
+              letter-spacing: 1px;
+
+              &:focus ~ .input-border::after {
+                transform: translateX(0);
+                background-color: #000;
+              }
+
+              &:not(:focus) ~ .input-border::after {
+                transform: translateX(-100%);
+              }
+            }
+
+            &.core-input-pw {
+              input {
+                padding-right: 2.9rem;
+              }
+
+              .material-symbols-outlined {
+                font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0,
+                  "opsz" 24;
+                position: absolute;
+                bottom: 28%;
+                right: 2%;
+                font-size: 21px;
+                cursor: pointer;
+              }
+            }
+
+            .input-border {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 100%;
+              height: 0.6px;
+              overflow: hidden;
+              background-color: $border-color;
+
+              &::after {
+                content: "";
+                display: block;
+                width: 100%;
+                height: 100%;
+                transform-origin: left;
+                transition: transform 0.6s ease, background-color 0.6s ease;
+              }
+            }
+          }
+
+          @include auth.validation-password($mt: .1rem);
+        }
+
+        &-button {
+          margin: 1.2rem 0 0 auto;
+          outline: none;
+          border: none;
+          background-color: transparent;
+          font-weight: 600;
+          @include text(0.82rem, 0.1rem, 1.2px);
+        }
+      }
+    }
+  }
 }

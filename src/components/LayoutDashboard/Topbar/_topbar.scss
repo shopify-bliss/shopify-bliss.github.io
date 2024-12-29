@@ -128,7 +128,6 @@ $main-gap: 2.4rem;
 
     .account-modal {
       $p-right: 3.6rem;
-
       position: absolute;
       z-index: 3;
       top: 85%;
@@ -140,6 +139,7 @@ $main-gap: 2.4rem;
       box-shadow: 0 0 4px rgba($color: #000, $alpha: 0.15);
       font-family: v.$raleway;
       letter-spacing: 0.5px;
+      @include m.flex($direction: column, $start: true);
 
       &-profile {
         padding: 1.1rem $p-right 0.85rem 1.3rem;
@@ -161,6 +161,9 @@ $main-gap: 2.4rem;
         text-transform: uppercase;
         font-weight: 600;
         font-size: 0.85rem;
+        color: #000;
+        width: 100%;
+        text-decoration: none;
 
         &:hover {
           background-color: $border-color;

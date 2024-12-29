@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
-import axios from "axios";
 import { useDataToken } from "../../../helpers/DataToken";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import { tempPagesSchema } from "../../../helpers/ValidationSchema";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
+import axios from "axios";
 
 function TempPagesModal({ type, onOpen, onClose, refreshData, pageId }) {
   axios.defaults.withCredentials = true;

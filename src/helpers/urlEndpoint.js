@@ -14,6 +14,8 @@ const urlEndpoint = {
   submenus: `${baseUrl}/api/sub-menu`,
   submenusId: `${baseUrl}/api/sub-menu-id`,
   accessManagement: `${baseUrl}/api/access-management`,
+  allusers: `${baseUrl}/api/all-user`,
+  userId: `${baseUrl}/api/user`,
 };
 
 export default urlEndpoint;

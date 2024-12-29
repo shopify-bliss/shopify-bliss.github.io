@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Header } from "../../../components/LayoutDashboard/Support/SupportDashboard";
 import axios from "axios";
-import urlEndpoint from "../../../helpers/urlEndpoint";
 import SubmenuManModal from "./SubmenuManModal";
-import { useDataToken } from "../../../helpers/DataToken";
+import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
+import { Link } from "react-router-dom";
 
 function DisplayView({
   isLoadingSubmenuMan,
@@ -25,7 +25,9 @@ function DisplayView({
           {submenus.map((data) => (
             <div className="item" key={data.sub_menu_id}>
               <div className="item-name">{data.name}</div>
-
+              <Link className="item-menu" to={`/${data.menus.url}`}>
+                {data.menus.url}
+              </Link>
               <div className="item-action">
                 {data.default === true ? (
                   <>
@@ -77,7 +79,7 @@ function DisplayView({
                 {data.default === true ? (
                   <span className="default">Default</span>
                 ) : (
-                  <span className="nope">Nope</span>
+                  <span className="nope">-</span>
                 )}
               </div>
               <div className="body-col">
@@ -110,42 +112,16 @@ function DisplayView({
 
 function SubmenuMan() {
   axios.defaults.withCredentials = true;
-  const [submenus, setSubmenus] = useState([]);
-  const [isLoadingSubmenuMan, setIsLoadingSubmenuMan] = useState(false);
   const [activeDisplay, setActiveDisplay] = useState("grid");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [submenuId, setSubmenuId] = useState(null);
 
-  const { token } = useDataToken();
+  const { submenus, fetchDashboardData, isLoading } = useDashboard();
 
   const handleDisplayChange = useCallback((display) => {
     setActiveDisplay(display);
-  }, []);
-
-  const fetchSubmenuMan = useCallback(async () => {
-    setIsLoadingSubmenuMan(true);
-
-    try {
-      const response = await axios.get(urlEndpoint.submenus, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      setSubmenus(response.data.data);
-      setIsLoadingSubmenuMan(false);
-    } catch (error) {
-      console.error(error);
-      setIsLoadingSubmenuMan(false);
-    } finally {
-      setIsLoadingSubmenuMan(false);
-    }
-  }, [token, urlEndpoint.submenus]);
-
-  useEffect(() => {
-    fetchSubmenuMan();
   }, []);
 
   return (
@@ -160,7 +136,7 @@ function SubmenuMan() {
         />
         {activeDisplay === "grid" ? (
           <DisplayView
-            isLoadingSubmenuMan={isLoadingSubmenuMan}
+            isLoadingSubmenuMan={isLoading}
             submenus={submenus}
             setSubmenuId={setSubmenuId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}
@@ -169,7 +145,7 @@ function SubmenuMan() {
           />
         ) : (
           <DisplayView
-            isLoadingSubmenuMan={isLoadingSubmenuMan}
+            isLoadingSubmenuMan={isLoading}
             submenus={submenus}
             setSubmenuId={setSubmenuId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}
@@ -181,20 +157,20 @@ function SubmenuMan() {
           type="create"
           onOpen={isCreateModalOpen}
           onClose={() => setIsCreateModalOpen(false)}
-          refreshData={fetchSubmenuMan}
+          refreshData={fetchDashboardData}
         />
         <SubmenuManModal
           type="update"
           onOpen={isUpdateModalOpen}
           onClose={() => setIsUpdateModalOpen(false)}
-          refreshData={fetchSubmenuMan}
+          refreshData={fetchDashboardData}
           submenuId={submenuId}
         />
         <SubmenuManModal
           type="delete"
           onOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
-          refreshData={fetchSubmenuMan}
+          refreshData={fetchDashboardData}
           submenuId={submenuId}
         />
       </div>

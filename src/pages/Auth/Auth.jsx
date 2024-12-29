@@ -26,7 +26,7 @@ import { jwtDecode } from "jwt-decode";
 
 function Auth({ typeMain }) {
   axios.defaults.withCredentials = true;
-  const cookies = new Cookies(null, { path: "/" });
+  const cookies = new Cookies();
 
   const [values, setValues] = useState({
     email: "",

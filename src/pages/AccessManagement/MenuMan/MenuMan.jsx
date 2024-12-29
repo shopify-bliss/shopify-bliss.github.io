@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Header } from "../../../components/LayoutDashboard/Support/SupportDashboard";
 import axios from "axios";
-import urlEndpoint from "../../../helpers/urlEndpoint";
 import MenuManModal from "./MenuManModal";
 import { Link } from "react-router-dom";
+import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 
 function DisplayView({
   isLoadingMenuMan,
@@ -25,12 +25,9 @@ function DisplayView({
           {menus.map((data) => (
             <div className="item" key={data.menu_id}>
               <div className="item-name">{data.name}</div>
-              <div className="item-url">
-                Link:{" "}
-                <Link to={`/${data.url}`} className="item-url-link">
-                  {data.url}
-                </Link>
-              </div>
+              <Link to={`/${data.url}`} className="item-url">
+                {data.url}
+              </Link>
               <div className="item-action">
                 <span
                   className="material-symbols-rounded item-action-edit"
@@ -99,36 +96,16 @@ function DisplayView({
 
 function MenuMan() {
   axios.defaults.withCredentials = true;
-  const [menus, setMenus] = useState([]);
-  const [isLoadingMenuMan, setIsLoadingMenuMan] = useState(false);
   const [activeDisplay, setActiveDisplay] = useState("grid");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [menuId, setMenuId] = useState(null);
 
+  const { menus, fetchDashboardData, isLoading } = useDashboard();
+
   const handleDisplayChange = useCallback((display) => {
     setActiveDisplay(display);
-  }, []);
-
-  const fetchMenuMan = useCallback(async () => {
-    setIsLoadingMenuMan(true);
-
-    try {
-      const response = await axios.get(urlEndpoint.menus);
-
-      setMenus(response.data.data);
-      setIsLoadingMenuMan(false);
-    } catch (error) {
-      console.error(error);
-      setIsLoadingMenuMan(false);
-    } finally {
-      setIsLoadingMenuMan(false);
-    }
-  }, [urlEndpoint]);
-
-  useEffect(() => {
-    fetchMenuMan();
   }, []);
 
   return (
@@ -143,7 +120,7 @@ function MenuMan() {
         />
         {activeDisplay === "grid" ? (
           <DisplayView
-            isLoadingMenuMan={isLoadingMenuMan}
+            isLoadingMenuMan={isLoading}
             menus={menus}
             setMenuId={setMenuId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}
@@ -152,7 +129,7 @@ function MenuMan() {
           />
         ) : (
           <DisplayView
-            isLoadingMenuMan={isLoadingMenuMan}
+            isLoadingMenuMan={isLoading}
             menus={menus}
             setMenuId={setMenuId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}
@@ -164,20 +141,20 @@ function MenuMan() {
           type="create"
           onOpen={isCreateModalOpen}
           onClose={() => setIsCreateModalOpen(false)}
-          refreshData={fetchMenuMan}
+          refreshData={fetchDashboardData}
         />
         <MenuManModal
           type="update"
           onOpen={isUpdateModalOpen}
           onClose={() => setIsUpdateModalOpen(false)}
-          refreshData={fetchMenuMan}
+          refreshData={fetchDashboardData}
           menuId={menuId}
         />
         <MenuManModal
           type="delete"
           onOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
-          refreshData={fetchMenuMan}
+          refreshData={fetchDashboardData}
           menuId={menuId}
         />
       </div>

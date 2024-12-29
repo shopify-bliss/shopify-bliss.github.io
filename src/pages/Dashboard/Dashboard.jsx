@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import LayoutDashboard from "../../components/LayoutDashboard/LayoutDashboard";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
 import { useDataToken } from "../../helpers/DataToken";
-import { Error403 } from "../Error/Error";
+import { Error403, Error401 } from "../Error/Error";
 import Analytics from "./Analytics/Analytics";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function Dashboard() {
-  const { submenuPage, toastMessage } = useDashboard();
-  const { decoded } = useDataToken();
+  const [validation, setValidation] = useState(false);
+
+  const { submenuPage, toastMessage, accessMenus } = useDashboard();
+  const { decoded, token } = useDataToken();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -23,15 +25,37 @@ function Dashboard() {
     }
   }, [location.state, navigate, toastMessage, location.pathname]);
 
+  useEffect(() => {
+    const toValidate = accessMenus.filter(
+      (data) =>
+        data.role === decoded?.role &&
+        data.menu_id === "702fe74b-5891-4207-89d1-76d6d91766eb"
+    );
+
+    if (toValidate.length > 0) {
+      setValidation(true);
+    } else {
+      setValidation(false);
+    }
+  }, [accessMenus, decoded]);
+
+  if (!token) return <Error401 />;
+
   return (
     <>
-      {decoded?.role !== "admin" ? (
-        <Error403 />
-      ) : (
+      {validation ? (
         <LayoutDashboard>
-          {submenuPage === "analytics 1" && <div>Dashboard</div>}
+          {submenuPage === "analytics 1" && decoded?.role === "admin" ? (
+            <div>Dashboard Admin</div>
+          ) : decoded?.role === "customer" ? (
+            <div>Dashboard Customer</div>
+          ) : (
+            <div>Dashboard Who</div>
+          )}
           {submenuPage === "analytics 2" && <Analytics />}
         </LayoutDashboard>
+      ) : (
+        <Error403 />
       )}
     </>
   );
