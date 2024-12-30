@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import urlEndpoint from "../../helpers/urlEndpoint";
-import { useDataToken } from "../../helpers/DataToken";
+import { useAuth } from "../../helpers/AuthContext";
 import { AuthValidationPassword } from "../../components/AuthSupport/AuthSupport";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Password() {
   axios.defaults.withCredentials = true;
@@ -18,7 +19,10 @@ function Password() {
     special: false,
   });
 
-  const { token, decoded } = useDataToken();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { token } = useAuth();
 
   const handleChange = useCallback(
     (e) => {
@@ -37,69 +41,48 @@ function Password() {
     [setValidationPassword]
   );
 
-  // useEffect(() => {
-  //   axios
-  //     .get(urlEndpoint.userId, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       setUser(res.data.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-
-  useEffect(() => {
-    console.log(decoded);
-  }, [decoded]);
-
   return (
-    <>
-      <form className="core">
-        <div className="core-input">
-          <div className="core-input-group core-input-pw">
-            <label htmlFor="currentPassword">Current Password</label>
-            <input
-              type={`${hideCurrPassword ? "password" : "text"}`}
-              id="currentPassword"
-              name="currentPassword"
-              autoComplete="off"
-            />
-            <span
-              className="material-symbols-outlined"
-              onClick={() => setHideCurrPassword(!hideCurrPassword)}
-            >
-              {hideCurrPassword ? "visibility_off" : "visibility"}
-            </span>
-            <div className="input-border"></div>
-          </div>
-          <div className="core-input-group core-input-pw">
-            <label htmlFor="setPassword">Set New Password</label>
-            <input
-              type={`${hideSetPassword ? "password" : "text"}`}
-              id="setPassword"
-              name="setPassword"
-              autoComplete="off"
-              onChange={handleChange}
-            />
-            <span
-              className="material-symbols-outlined"
-              onClick={() => setHideSetPassword(!hideSetPassword)}
-            >
-              {hideSetPassword ? "visibility_off" : "visibility"}
-            </span>
-            <div className="input-border"></div>
-          </div>
-          <AuthValidationPassword validationPassword={validationPassword} />
+    <form className="core">
+      <div className="core-input">
+        <div className="core-input-group core-input-pw">
+          <label htmlFor="currentPassword">Current Password</label>
+          <input
+            type={`${hideCurrPassword ? "password" : "text"}`}
+            id="currentPassword"
+            name="currentPassword"
+            autoComplete="off"
+          />
+          <span
+            className="material-symbols-outlined"
+            onClick={() => setHideCurrPassword(!hideCurrPassword)}
+          >
+            {hideCurrPassword ? "visibility_off" : "visibility"}
+          </span>
+          <div className="input-border"></div>
         </div>
-        <button className="core-button" type="submit">
-          Save
-        </button>
-      </form>
-    </>
+        <div className="core-input-group core-input-pw">
+          <label htmlFor="setPassword">Set New Password</label>
+          <input
+            type={`${hideSetPassword ? "password" : "text"}`}
+            id="setPassword"
+            name="setPassword"
+            autoComplete="off"
+            onChange={handleChange}
+          />
+          <span
+            className="material-symbols-outlined"
+            onClick={() => setHideSetPassword(!hideSetPassword)}
+          >
+            {hideSetPassword ? "visibility_off" : "visibility"}
+          </span>
+          <div className="input-border"></div>
+        </div>
+        <AuthValidationPassword validationPassword={validationPassword} />
+      </div>
+      <button className="core-button" type="submit">
+        Save
+      </button>
+    </form>
   );
 }
 

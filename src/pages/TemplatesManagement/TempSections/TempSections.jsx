@@ -56,7 +56,7 @@ function DisplayView({
           </div>
           {sections.map((data, index) => (
             <div className="body" key={data.section_id}>
-              <dic className="body-col">{index + 1}</dic>
+              <div className="body-col">{index + 1}</div>
               <div className="body-col">{data.name}</div>
               <div className="body-col">
                 <span

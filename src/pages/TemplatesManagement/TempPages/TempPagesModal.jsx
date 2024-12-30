@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useDataToken } from "../../../helpers/DataToken";
+import { useAuth } from "../../../helpers/AuthContext";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import { tempPagesSchema } from "../../../helpers/ValidationSchema";
@@ -16,7 +16,7 @@ function TempPagesModal({ type, onOpen, onClose, refreshData, pageId }) {
   });
 
   const { toastMessage, toastPromise } = useDashboard();
-  const { token } = useDataToken();
+  const { token } = useAuth();
 
   useEffect(() => {
     if (onOpen && type === "create") {

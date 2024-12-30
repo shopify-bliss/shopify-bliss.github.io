@@ -61,7 +61,7 @@ function DisplayView({
           </div>
           {menus.map((data, index) => (
             <div className="body" key={data.menu_id}>
-              <dic className="body-col">{index + 1}</dic>
+              <div className="body-col">{index + 1}</div>
               <div className="body-col">{data.name}</div>
               <Link to={`/${data.url}`} className="body-col">
                 {data.url}

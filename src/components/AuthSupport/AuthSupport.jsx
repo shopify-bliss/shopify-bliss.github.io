@@ -12,33 +12,31 @@ import whatsapp from "../../assets/images/login/whatsapp (1).png";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import { useSearch } from "../../helpers/SearchContext";
 
-export function AuthHeader({ type }) {
+export function AuthHeader({ type, classDiff = "auth" }) {
   return (
     <>
-      <Link to={"/"} className="auth-header-back">
+      <Link to={"/"} className={`${classDiff}-header-back`}>
         <span className="material-symbols-outlined">chevron_backward</span>
         <div className="text">Back</div>
       </Link>
       {type === "signup" ? (
-        <Link className="auth-header-link" to={"/login"}>
+        <Link className={`${classDiff}-header-link`} to={"/login"}>
           Log in
         </Link>
       ) : type === "login" ? (
-        <Link className="auth-header-link" to={"/signup"}>
+        <Link className={`${classDiff}-header-link`} to={"/signup"}>
           Create Account
         </Link>
       ) : (
-        <Link className="auth-header-link" to={"/login"}>
-          Verify Code
-        </Link>
+        <div className={`${classDiff}-header-link`}>Verify Code</div>
       )}
     </>
   );
 }
 
-export function AuthTitle({ logo, type }) {
+export function AuthTitle({ logo, type, classDiff = "auth" }) {
   return (
-    <div className={`auth-content-title ${type === "verify" ? "verify" : ""}`}>
+    <div className={`${classDiff}-content-title`}>
       <img className="logo" src={logo} alt="Shopify Bliss Logo" />
       {type === "signup" ? (
         <div className="text">Create Your Account</div>
@@ -46,14 +44,23 @@ export function AuthTitle({ logo, type }) {
         <div className="text">
           Log into <span>shopify bliss</span>
         </div>
-      ) : (
+      ) : type === "verify" ? (
         <>
-          <div className="text verify">Check Your Email !</div>
+          <div className="text">Verification Email!</div>
           <div className="desc">
             Please check your email inbox for a 6-digit verification code we
             have sent to your registered email address. Enter the code in the
             field below to confirm your email and complete the verification
             process.
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="text">Reset Password!</div>
+          <div className="desc">
+            Please check your email inbox for a 6-digit verification code we
+            have sent to your email address. Enter the code in the field below
+            to confirm your email and complete the reset password process.
           </div>
         </>
       )}

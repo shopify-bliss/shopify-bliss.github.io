@@ -59,6 +59,7 @@ $border-color: adjust-color(
     // height: 80vh;
     height: auto;
     max-height: 80vh;
+    overflow: hidden;
 
     &-nav {
       background-color: adjust-color($color: #fff, $blackness: 5%);
@@ -88,20 +89,26 @@ $border-color: adjust-color(
             transform: scaleX(1);
           }
         }
+
+        &.hidden {
+          display: none;
+        }
       }
     }
 
     &-content {
       padding: $py $px $py 2.7rem;
       max-height: 80vh;
+      overflow-x: hidden;
       overflow-y: auto;
+      min-height: 65vh;
 
       .header {
         width: 100%;
         @include m.flex($justify: space-between);
 
         &-title {
-          @include title($fs: 2.3rem);
+          @include title();
         }
 
         &-close {
@@ -131,6 +138,8 @@ $border-color: adjust-color(
         gap: 0.9rem;
         font-family: v.$raleway;
         overflow-y: auto;
+        overflow-x: hidden;
+        height: auto;
 
         &-avatar {
           width: 100%;
@@ -239,7 +248,7 @@ $border-color: adjust-color(
             }
           }
 
-          @include auth.validation-password($mt: .1rem);
+          @include auth.validation-password($mt: 0.1rem);
         }
 
         &-button {
@@ -249,6 +258,63 @@ $border-color: adjust-color(
           background-color: transparent;
           font-weight: 600;
           @include text(0.82rem, 0.1rem, 1.2px);
+        }
+      }
+
+      .recovery-dashboard {
+        width: 100%;
+        gap: 1.2rem;
+        @include m.flex($direction: column);
+
+        &-text {
+          margin-top: 0.9rem;
+          font-size: 0.9rem;
+          line-height: 133%;
+          font-family: v.$raleway;
+        }
+
+        &-wrapper {
+          width: 100%;
+          display: grid;
+          grid-template-columns: repeat(6, 1fr);
+          gap: 1.5rem;
+          place-items: center;
+
+          .code-number {
+            width: 100%;
+            height: 2.7rem;
+            text-align: center;
+            font-size: 1.15rem;
+            margin: 5px;
+            border: none;
+            outline: none;
+            border-bottom: 1px solid adjust-color($color: #fff, $blackness: 45%);
+            font-family: v.$raleway;
+            color: #000;
+
+            &:focus {
+              outline: none;
+              border-color: #000;
+              transform: scale(1.02);
+              transition: transform 0.2s ease-out;
+            }
+          }
+        }
+
+        &-button {
+          margin-left: auto;
+          margin-top: 1.9rem;
+          font-family: v.$raleway;
+          padding: 0.875rem 1.1rem;
+          background-color: #000;
+          color: #fff;
+          outline: none;
+          border: none;
+          text-transform: uppercase;
+          letter-spacing: 1.2px;
+          font-size: 0.725rem;
+
+          @include support.button-hover($origin: top left);
         }
       }
     }

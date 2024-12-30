@@ -1,37 +1,92 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
-import { useDataToken } from "../../../helpers/DataToken";
+import { useAuth } from "../../../helpers/AuthContext";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { TempSectionsSchema } from "../../../helpers/ValidationSchema";
+import {
+  userSchema,
+  updateUserRoleSchema,
+} from "../../../helpers/ValidationSchema";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
 
-function DisplayUsersModal({ type, onOpen, onClose, refreshData, sectionId }) {
+function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
   axios.defaults.withCredentials = true;
 
+  const [roles, setRoles] = useState([]);
   const [data, setData] = useState({
-    name: "",
+    avatar: "",
+    username: "",
+    phoneNumber: "",
   });
+  const [updateData, setUpdateData] = useState({
+    userID: "",
+    role: "",
+  });
+  const [openRole, setOpenRole] = useState(false);
+
+  const listRoleRef = useRef(null);
 
   const { toastMessage, toastPromise } = useDashboard();
-  const { token } = useDataToken();
+  const { token } = useAuth();
 
   useEffect(() => {
-    if (onOpen && type === "create") {
-      setData({
-        name: "",
+    axios
+      .get(urlEndpoint.role, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setRoles(res.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching roles:", error);
       });
-    } else if (onOpen && type === "update") {
+  }, [urlEndpoint.role, token]);
+
+  const clickOutside = useCallback(
+    (e) => {
+      if (listRoleRef.current && !listRoleRef.current.contains(e.target)) {
+        setOpenRole(false);
+      }
+    },
+    [listRoleRef]
+  );
+
+  useEffect(() => {
+    if (openRole) {
+      document.addEventListener("mousedown", clickOutside);
+    } else {
+      document.removeEventListener("mousedown", clickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", clickOutside);
+    };
+  }, [openRole]);
+
+  useEffect(() => {
+    console.log(userId);
+
+    if (onOpen && type === "update") {
       axios
-        .get(`${urlEndpoint.elementsAiId}?id=${sectionId}`)
+        .get(`${urlEndpoint.userId}?userID=${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((res) => {
-          setData(res.data.data[0]);
+          console.log(res.data.data);
+          setUpdateData({
+            userID: res.data.data.user_id,
+            role: res.data.data.role_id,
+          });
         })
         .catch((error) => {
-          console.error("Error fetching section data:", error);
+          console.error("Error fetching user data:", error);
         });
     }
-  }, [onOpen, type, sectionId, urlEndpoint]);
+  }, [onOpen, type, urlEndpoint.userId, userId, token]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,18 +102,19 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, sectionId }) {
       e.preventDefault();
 
       if (type === "create") {
-        TempSectionsSchema.validate(data, { abortEarly: false })
+        userSchema
+          .validate(data, { abortEarly: false })
           .then(() => {
-            const elementsAiPromise = axios.post(urlEndpoint.elementsAi, data, {
+            const userPromise = axios.post(urlEndpoint.allusers, data, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
             });
 
             toastPromise(
-              elementsAiPromise,
+              userPromise,
               {
-                pending: "Adding section data on progress, please wait..!",
+                pending: "Adding user data on progress, please wait..!",
                 success: "Data has been successfully added!",
                 error: "Failed to add data!",
               },
@@ -72,8 +128,8 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, sectionId }) {
               }
             );
 
-            elementsAiPromise.catch((error) => {
-              console.error("Error adding section data:", error);
+            userPromise.catch((error) => {
+              console.error("Error adding user data:", error);
             });
           })
           .catch((errors) => {
@@ -82,11 +138,14 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, sectionId }) {
             });
           });
       } else {
-        TempSectionsSchema.validate(data, { abortEarly: false })
+        console.log(updateData);
+
+        updateUserRoleSchema
+          .validate(updateData, { abortEarly: false })
           .then(() => {
-            const elementsAiPromise = axios.put(
-              `${urlEndpoint.elementsAi}?id=${sectionId}`,
-              data,
+            const userPromise = axios.put(
+              urlEndpoint.updateUserRole,
+              updateData,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -95,9 +154,9 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, sectionId }) {
             );
 
             toastPromise(
-              elementsAiPromise,
+              userPromise,
               {
-                pending: "Updating section data on progress, please wait..!",
+                pending: "Updating user role data on progress, please wait..!",
                 success: "Data has been successfully updated!",
                 error: "Failed to update data!",
               },
@@ -111,8 +170,8 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, sectionId }) {
               }
             );
 
-            elementsAiPromise.catch((error) => {
-              console.error("Error updating section data:", error);
+            userPromise.catch((error) => {
+              console.error("Error updating user role data:", error);
             });
           })
           .catch((errors) => {
@@ -123,13 +182,14 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, sectionId }) {
       }
     },
     [
-      TempSectionsSchema,
+      userSchema,
       data,
+      updateData,
       onClose,
       refreshData,
       toastMessage,
       toastPromise,
-      sectionId,
+      userId,
       token,
       urlEndpoint,
     ]
@@ -140,7 +200,7 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, sectionId }) {
       e.preventDefault();
 
       const deletePromise = axios.delete(
-        `${urlEndpoint.elementsAi}?id=${sectionId}`,
+        `${urlEndpoint.allusers}?id=${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -151,7 +211,7 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, sectionId }) {
       toastPromise(
         deletePromise,
         {
-          pending: "deleting section data on progress, please wait..!",
+          pending: "deleting user data on progress, please wait..!",
           success: "Data has been successfully deleted!",
           error: "Failed to delete data!",
         },
@@ -166,10 +226,10 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, sectionId }) {
       );
 
       deletePromise.catch((error) => {
-        console.error("Error deleting section data:", error);
+        console.error("Error deleting user data:", error);
       });
     },
-    [sectionId, token, onClose, refreshData]
+    [userId, token, onClose, refreshData]
   );
 
   return (
@@ -201,22 +261,50 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, sectionId }) {
           onOpen={onOpen}
           onClose={onClose}
         >
-          <form
-            className="modal-dashboard-form"
-            onSubmit={handleSubmit}
-          >
+          <form className="modal-dashboard-form" onSubmit={handleSubmit}>
             <div className="modal-dashboard-form-group">
-              <label htmlFor="name">
-                Section name <span>(Required)</span>
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Intro Section"
-                value={data.name}
-                onChange={handleChange}
-              />
+              <div className="label">
+                Role <span>(Required)</span>
+              </div>
+              <div className="select-default" onClick={() => setOpenRole(true)}>
+                <div className="text">
+                  {updateData.role === ""
+                    ? "Choose Role"
+                    : roles
+                        .filter((item) => item.role_id === updateData.role)
+                        .map((data) => data.role_name)}
+                </div>
+                <span
+                  className={`material-symbols-outlined ${
+                    openRole ? "default-closed" : ""
+                  }`}
+                >
+                  south_east
+                </span>
+              </div>
+              {openRole && (
+                <div className="select-list no-more" ref={listRoleRef}>
+                  {roles
+                    .filter((item) => item.role_id !== updateData.role)
+                    .map((data) => {
+                      return (
+                        <div
+                          className="select-list-item"
+                          key={data.role_id}
+                          onClick={() => {
+                            setUpdateData({
+                              ...updateData,
+                              role: data.role_id,
+                            });
+                            setOpenRole(false);
+                          }}
+                        >
+                          <div className="name">{data.role_name}</div>
+                        </div>
+                      );
+                    })}
+                </div>
+              )}
             </div>
             <button type="submit">Submit</button>
           </form>

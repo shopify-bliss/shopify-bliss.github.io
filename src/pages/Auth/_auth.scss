@@ -79,10 +79,6 @@
       @include m.flex($direction: column);
       gap: 0.8rem;
 
-      &.verify {
-        margin-top: 2.1rem;
-      }
-
       .logo {
         width: 3.9rem;
         height: auto;
@@ -96,11 +92,6 @@
 
         span {
           font-weight: 900;
-        }
-
-        &.verify {
-          font-weight: 400;
-          font-size: 2.6rem;
         }
       }
 
@@ -378,52 +369,6 @@
           .text {
             width: 70%;
           }
-        }
-      }
-
-      &.verify {
-        width: 50%;
-        @include m.flex($direction: column);
-
-        .verify-wrapper {
-          width: 100%;
-          display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          gap: 2.3rem;
-          place-items: center;
-
-          .code-number {
-            width: 100%;
-            height: 4.3rem;
-            text-align: center;
-            border-radius: 5px;
-            font-size: 1.4rem;
-            margin: 5px;
-            border: none;
-            outline: none;
-            border: 1.5px solid adjust-color($color: #fff, $blackness: 45%);
-            font-family: v.$raleway;
-            color: #000;
-            // color: adjust-color($color: #fff, $blackness: 45%);
-
-            &:focus {
-              outline: none;
-              border-color: #000;
-              transform: scale(1.02);
-              transition: transform 0.2s ease-out;
-            }
-          }
-        }
-
-        .code-button {
-          @include support.auth-button(
-            $bg-color: #000,
-            $color: #fff,
-            $bg-color-hover: adjust-color($color: #000, $whiteness: 25%),
-            $color-hover: #fff,
-            $py: 1.2rem,
-            $w: 50%
-          );
         }
       }
     }

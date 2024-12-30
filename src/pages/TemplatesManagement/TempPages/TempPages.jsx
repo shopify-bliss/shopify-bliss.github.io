@@ -61,7 +61,7 @@ function DisplayView({
           </div>
           {pages.map((data, index) => (
             <div className="body" key={data.type_template_id}>
-              <dic className="body-col">{index + 1}</dic>
+              <div className="body-col">{index + 1}</div>
               <span className="material-symbols-rounded body-col">
                 {data.icon}
               </span>
@@ -127,7 +127,7 @@ function TempPages() {
 
   useEffect(() => {
     fetchPages();
-  }, []);
+  }, [fetchPages]);
 
   return (
     <>

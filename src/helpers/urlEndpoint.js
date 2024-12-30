@@ -16,6 +16,10 @@ const urlEndpoint = {
   accessManagement: `${baseUrl}/api/access-management`,
   allusers: `${baseUrl}/api/all-user`,
   userId: `${baseUrl}/api/user`,
+  role: `${baseUrl}/auth/role`,
+  roleId: `${baseUrl}/auth/role-id`,
+  updateUserRole: `${baseUrl}/api/role-update`,
+  otpPassword: `${baseUrl}/auth/otp-password`,
 };
 
 export default urlEndpoint;

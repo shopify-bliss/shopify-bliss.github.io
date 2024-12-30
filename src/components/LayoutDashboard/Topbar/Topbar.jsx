@@ -3,10 +3,9 @@ import { Logo } from "../../AiBuilderSupport/AiBuilderSupport";
 import { useDashboard } from "../DashboardContext";
 import profileImage from "../../../assets/images/elements/intro/pexels-alancabello-1291515.jpg";
 import Cookies from "universal-cookie";
-import { useDataToken } from "../../../helpers/DataToken";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useAuth } from "../../../helpers/AuthContext";
+import { useNavigate, Link } from "react-router-dom";
 import Profile from "../../../pages/Profile/Profile";
-import Bio from "../../../pages/Profile/Bio";
 
 function Topbar() {
   const [isAccountModal, setIsAccountModal] = useState(false);
@@ -21,10 +20,10 @@ function Topbar() {
     submenuPage,
     toastDevelop,
     menus,
+    user,
   } = useDashboard();
-  const { token, decoded } = useDataToken();
+  const { token } = useAuth();
 
-  const location = useLocation();
   const navigate = useNavigate();
 
   const handleOutsideModal = useCallback(
@@ -50,7 +49,7 @@ function Topbar() {
 
   const handleLogout = useCallback(() => {
     if (token) {
-      const cookies = new Cookies();
+      const cookies = new Cookies(null, { path: "/" });
 
       cookies.remove("shopify-bliss");
       navigate("/login", { state: { messageLogout: "Logout successfully!" } });
@@ -97,8 +96,8 @@ function Topbar() {
           {isAccountModal ? (
             <div className="account-modal" ref={modalRef}>
               <div className="account-modal-profile">
-                <div className="username">{decoded.username}</div>
-                <div className="email">{decoded.email}</div>
+                <div className="username">{user.username}</div>
+                <div className="email">{user.email}</div>
               </div>
               {menus
                 .filter(

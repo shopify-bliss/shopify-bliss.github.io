@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import { useDataToken } from "../../../helpers/DataToken";
+import { useAuth } from "../../../helpers/AuthContext";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import { TempSectionsSchema } from "../../../helpers/ValidationSchema";
@@ -14,7 +14,7 @@ function TempSectionsModal({ type, onOpen, onClose, refreshData, sectionId }) {
   });
 
   const { toastMessage, toastPromise } = useDashboard();
-  const { token } = useDataToken();
+  const { token } = useAuth();
 
   useEffect(() => {
     if (onOpen && type === "create") {
@@ -201,10 +201,7 @@ function TempSectionsModal({ type, onOpen, onClose, refreshData, sectionId }) {
           onOpen={onOpen}
           onClose={onClose}
         >
-          <form
-            className="modal-dashboard-form"
-            onSubmit={handleSubmit}
-          >
+          <form className="modal-dashboard-form" onSubmit={handleSubmit}>
             <div className="modal-dashboard-form-group">
               <label htmlFor="name">
                 Section name <span>(Required)</span>

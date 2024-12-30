@@ -2,8 +2,9 @@ import React, { useState, useCallback, useEffect } from "react";
 import { Header } from "../../../components/LayoutDashboard/Support/SupportDashboard";
 import axios from "axios";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
-import roles from "../../../data/roles.json";
 import AccessManModal from "./AccessManModal";
+import urlEndpoint from "../../../helpers/urlEndpoint";
+import { useAuth } from "../../../helpers/AuthContext";
 
 function DisplayView({
   isLoadingAccessMan,
@@ -14,6 +15,7 @@ function DisplayView({
   menus,
   activeRole,
   handleActiveRole,
+  roles,
 }) {
   return (
     <>
@@ -26,11 +28,11 @@ function DisplayView({
         <div className="access-man-roles">
           {roles.map((role) => (
             <div
-              className={`role ${activeRole === role.role ? "active" : ""}`}
+              className={`role ${activeRole === role.role_id ? "active" : ""}`}
               key={role.role_id}
-              onClick={() => handleActiveRole(role.role)}
+              onClick={() => handleActiveRole(role.role_id)}
             >
-              {role.role}
+              {role.role_name}
             </div>
           ))}
         </div>
@@ -39,7 +41,8 @@ function DisplayView({
             {menus.map((menu) => {
               const matchedAccess = accessMenus.find(
                 (access) =>
-                  access.menu_id === menu.menu_id && access.role === activeRole
+                  access.menu_id === menu.menu_id &&
+                  access.role_id === activeRole
               );
 
               const hasAccess = !!matchedAccess;
@@ -78,7 +81,8 @@ function DisplayView({
             {menus.map((menu, index) => {
               const matchedAccess = accessMenus.find(
                 (access) =>
-                  access.menu_id === menu.menu_id && access.role === activeRole
+                  access.menu_id === menu.menu_id &&
+                  access.role_id === activeRole
               );
 
               const hasAccess = !!matchedAccess;
@@ -116,13 +120,18 @@ function DisplayView({
 function AccessMan() {
   axios.defaults.withCredentials = true;
 
+  const [isLoadingAccessMan, setIsLoadingAccessMan] = useState(true);
   const [activeDisplay, setActiveDisplay] = useState("list");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [accessId, setAccessId] = useState(null);
-  const [activeRole, setActiveRole] = useState("admin");
+  const [activeRole, setActiveRole] = useState(
+    "3de65f44-6341-4b4d-8d9f-c8ca3ea80b80"
+  );
+  const [roles, setRoles] = useState([]);
 
-  const { accessMenus, fetchDashboardData, isLoading, menus } = useDashboard();
+  const { token } = useAuth();
+  const { accessMenus, fetchDashboardData, menus } = useDashboard();
 
   const handleDisplayChange = useCallback((display) => {
     setActiveDisplay(display);
@@ -131,6 +140,32 @@ function AccessMan() {
   const handleActiveRole = useCallback((role) => {
     setActiveRole(role);
   }, []);
+
+  const fetchRoles = useCallback(async () => {
+    setIsLoadingAccessMan(true);
+
+    try {
+      const response = await axios.get(urlEndpoint.role, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = response.data.data;
+
+      setRoles(data);
+      setIsLoadingAccessMan(false);
+    } catch (error) {
+      console.error(error);
+      setIsLoadingAccessMan(false);
+    } finally {
+      setIsLoadingAccessMan(false);
+    }
+  }, [token, urlEndpoint.role]);
+
+  useEffect(() => {
+    fetchDashboardData();
+    fetchRoles();
+  }, [fetchRoles, fetchDashboardData]);
 
   return (
     <>
@@ -144,7 +179,8 @@ function AccessMan() {
         />
         {activeDisplay === "grid" ? (
           <DisplayView
-            isLoadingAccessMan={isLoading}
+            roles={roles}
+            isLoadingAccessMan={isLoadingAccessMan}
             accessMenus={accessMenus}
             setAccessId={setAccessId}
             setIsDeleteModalOpen={setIsDeleteModalOpen}
@@ -155,7 +191,8 @@ function AccessMan() {
           />
         ) : (
           <DisplayView
-            isLoadingAccessMan={isLoading}
+            roles={roles}
+            isLoadingAccessMan={isLoadingAccessMan}
             accessMenus={accessMenus}
             setAccessId={setAccessId}
             setIsDeleteModalOpen={setIsDeleteModalOpen}
@@ -170,6 +207,7 @@ function AccessMan() {
           onOpen={isCreateModalOpen}
           onClose={() => setIsCreateModalOpen(false)}
           refreshData={fetchDashboardData}
+          roles={roles}
         />
         <AccessManModal
           type="delete"
@@ -177,6 +215,7 @@ function AccessMan() {
           onClose={() => setIsDeleteModalOpen(false)}
           refreshData={fetchDashboardData}
           accessId={accessId}
+          roles={roles}
         />
       </div>
     </>

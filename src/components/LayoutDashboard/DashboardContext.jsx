@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   toastMessage,
   toastDevelop,
@@ -14,8 +14,8 @@ import {
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import urlEndpoint from "../../helpers/urlEndpoint";
-import { useDataToken } from "../../helpers/DataToken";
-import { Error401 } from "../../pages/Error/Error";
+import { useAuth } from "../../helpers/AuthContext";
+import { jwtDecode } from "jwt-decode";
 
 const DashboardContext = createContext({
   activeMenu: null,
@@ -29,10 +29,8 @@ const DashboardContext = createContext({
   toastDevelop: null,
   toastPromise: null,
   fetchDashboardData: () => {},
-  isLoading: false,
+  user: null,
 });
-
-export const useDashboard = () => useContext(DashboardContext);
 
 export const DashboardProvider = ({ children }) => {
   axios.defaults.withCredentials = true;
@@ -43,19 +41,17 @@ export const DashboardProvider = ({ children }) => {
   const [menus, setMenus] = useState([]);
   const [submenus, setSubmenus] = useState([]);
   const [accessMenus, setAccessMenus] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState(null);
 
   const location = useLocation();
-  const navigate = useNavigate();
-  const { token } = useDataToken();
+  const { token } = useAuth();
 
   const fetchDashboardData = useCallback(async () => {
     const currentPath = location.pathname.replace("/", "");
+    const decoded = jwtDecode(token);
 
     try {
-      setIsLoading(true);
-
-      const [menuResponse, submenuResponse, accessMenuResponse] =
+      const [menuResponse, submenuResponse, accessMenuResponse, userResponse] =
         await Promise.all([
           axios.get(urlEndpoint.menus),
           axios.get(urlEndpoint.submenus, {
@@ -68,20 +64,24 @@ export const DashboardProvider = ({ children }) => {
               Authorization: `Bearer ${token}`,
             },
           }),
+          axios.get(`${urlEndpoint.userId}?id=${decoded.user_id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
         ]);
 
-      const menuData = menuResponse.data.data;
-      const submenuData = submenuResponse.data.data;
-      const accessMenuData = accessMenuResponse.data.data;
+      setMenus(menuResponse.data.data);
+      setSubmenus(submenuResponse.data.data);
+      setAccessMenus(accessMenuResponse.data.data);
+      setUser(userResponse.data.data);
 
-      setMenus(menuData);
-      setSubmenus(submenuData);
-      setAccessMenus(accessMenuData);
-
-      const currentMenu = menuData.find((data) => data.url === currentPath);
+      const currentMenu = menuResponse.data.data.find(
+        (data) => data.url === currentPath
+      );
 
       if (currentMenu) {
-        const filteredSubmenu = submenuData.filter(
+        const filteredSubmenu = submenuResponse.data.data.filter(
           (submenuItem) => submenuItem.menu_id === currentMenu.menu_id
         );
 
@@ -89,35 +89,18 @@ export const DashboardProvider = ({ children }) => {
         setActiveSubmenu(filteredSubmenu);
 
         const defaultSubmenu = filteredSubmenu.find((data) => data.default);
-
         setSubmenuPage(defaultSubmenu ? defaultSubmenu.name : null);
       }
     } catch (err) {
       console.error("Error fetching dashboard data:", err);
-    } finally {
-      setIsLoading(false);
     }
-  }, [token, location.pathname]);
+  }, [token, location.pathname, urlEndpoint]);
 
   useEffect(() => {
-    let waitingToken;
-
     if (token) {
       fetchDashboardData();
-    } else {
-      waitingToken = setTimeout(() => {
-        if (!token) {
-          navigate("/401");
-        }
-      }, 3000);
     }
-
-    return () => clearTimeout(waitingToken);
-  }, [token, location.pathname, navigate]);
-
-  // useEffect(() => {
-  //   console.log("token", token);
-  // }, [token]);
+  }, [token, fetchDashboardData]);
 
   const handleSubmenuPage = useCallback((submenuName) => {
     setSubmenuPage(submenuName);
@@ -137,17 +120,13 @@ export const DashboardProvider = ({ children }) => {
         toastDevelop,
         toastPromise,
         fetchDashboardData,
-        isLoading,
+        user,
       }}
     >
-      {isLoading ? (
-        <div className="loader-pages">
-          <div className="loader-pages-item"></div>
-        </div>
-      ) : (
-        children
-      )}
+      {children}
       <ToastContainer />
     </DashboardContext.Provider>
   );
 };
+
+export const useDashboard = () => useContext(DashboardContext);

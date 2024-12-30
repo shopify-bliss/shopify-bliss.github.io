@@ -24,6 +24,18 @@ export const signupSchema = yup.object().shape({
     ),
 });
 
+export const userSchema = yup.object().shape({
+  avatar: yup.string().required("Avatar is required"),
+  username: yup.string().required("Username is required"),
+  phoneNumber: yup.number().required("Phone number is required"),
+});
+
+export const updateProfileSchema = yup.object().shape({
+  avatar: yup.string().required("Avatar is required"),
+  username: yup.string().required("Username is required"),
+  phoneNumber: yup.number().required("Phone number is required"),
+});
+
 export const tempPagesSchema = yup.object().shape({
   type: yup.string().required("Page name is required"),
   icon: yup.string().required("Page icon is required"),
@@ -47,5 +59,14 @@ export const SubmenuManSchema = yup.object().shape({
 
 export const AccessManSchema = yup.object().shape({
   menuID: yup.string().required("Menu id is required"),
+  roleID: yup.string().required("Role is required"),
+});
+
+export const RoleManSchema = yup.object().shape({
+  roleName: yup.string().required("Role name is required"),
+});
+
+export const updateUserRoleSchema = yup.object().shape({
+  userID: yup.string().required("User Id is required"),
   role: yup.string().required("Role is required"),
 });

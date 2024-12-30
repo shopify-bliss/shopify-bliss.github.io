@@ -1,13 +1,19 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
-import { useDataToken } from "../../../helpers/DataToken";
+import { useAuth } from "../../../helpers/AuthContext";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import { AccessManSchema } from "../../../helpers/ValidationSchema";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
-import roles from "../../../data/roles.json";
 
-function AccessManModal({ type, onOpen, onClose, refreshData, accessId }) {
+function AccessManModal({
+  type,
+  onOpen,
+  onClose,
+  refreshData,
+  accessId,
+  roles,
+}) {
   axios.defaults.withCredentials = true;
 
   const [openMenu, setOpenMenu] = useState(false);
@@ -19,7 +25,7 @@ function AccessManModal({ type, onOpen, onClose, refreshData, accessId }) {
   const listRoleRef = useRef(null);
 
   const { toastMessage, toastPromise, menus } = useDashboard();
-  const { token } = useDataToken();
+  const { token } = useAuth();
 
   const handleClickOutside = useCallback(
     (e) => {
@@ -60,8 +66,10 @@ function AccessManModal({ type, onOpen, onClose, refreshData, accessId }) {
 
       const data = {
         menuID: valueMenu,
-        role: valueRole,
+        roleID: valueRole,
       };
+
+      console.log(data);
 
       AccessManSchema.validate(data, { abortEarly: false })
         .then(() => {
@@ -195,8 +203,8 @@ function AccessManModal({ type, onOpen, onClose, refreshData, accessId }) {
                   {valueRole === ""
                     ? "Choose Role"
                     : roles
-                        .filter((item) => item.role === valueRole)
-                        .map((data) => data.role)}
+                        .filter((item) => item.role_id === valueRole)
+                        .map((data) => data.role_name)}
                 </div>
                 <span
                   className={`material-symbols-outlined ${
@@ -209,18 +217,18 @@ function AccessManModal({ type, onOpen, onClose, refreshData, accessId }) {
               {openRole && (
                 <div className="select-list no-more" ref={listRoleRef}>
                   {roles
-                    .filter((item) => item.role !== valueRole)
+                    .filter((item) => item.role_id !== valueRole)
                     .map((data) => {
                       return (
                         <div
                           className="select-list-item"
                           key={data.role_id}
                           onClick={() => {
-                            setValueRole(data.role);
+                            setValueRole(data.role_id);
                             setOpenRole(false);
                           }}
                         >
-                          <div className="name">{data.role}</div>
+                          <div className="name">{data.role_name}</div>
                         </div>
                       );
                     })}

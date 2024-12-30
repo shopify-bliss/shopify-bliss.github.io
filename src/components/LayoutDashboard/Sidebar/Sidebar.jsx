@@ -1,18 +1,16 @@
 import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import { useDashboard } from "../DashboardContext";
-import { useDataToken } from "../../../helpers/DataToken";
 
 function Sidebar() {
-  const { menus, accessMenus } = useDashboard();
-  const { decoded } = useDataToken();
+  const { menus, accessMenus, user } = useDashboard();
 
   return (
     <div className="layout-dashboard-sidebar">
       {menus.map((data) => {
         const accessibleMenus = accessMenus.filter(
           (dataAccess) =>
-            dataAccess.role === decoded?.role &&
+            dataAccess.role_id === user?.role_id &&
             dataAccess.menu_id === data.menu_id &&
             data.menu_id !== "6556df8f-7cd6-4848-b39f-1e6ab4973311"
         );

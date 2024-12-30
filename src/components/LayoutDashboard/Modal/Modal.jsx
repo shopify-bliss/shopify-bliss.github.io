@@ -5,8 +5,8 @@ function Modal({
   titleModal,
   descModal,
   children,
-  onClose,
-  onOpen,
+  onClose = null,
+  onOpen = null,
 }) {
   if (!onOpen) return null;
 
@@ -21,7 +21,10 @@ function Modal({
             }}
           >
             <span className="modal-dashboard-title">{titleModal}</span>
-            <span className="material-symbols-outlined modal-dashboard-close" onClick={onClose}>
+            <span
+              className="material-symbols-outlined modal-dashboard-close"
+              onClick={onClose}
+            >
               close
             </span>
             {children}

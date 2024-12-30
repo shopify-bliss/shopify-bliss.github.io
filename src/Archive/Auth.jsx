@@ -44,9 +44,11 @@ function Auth({ typeMain }) {
     special: false,
   });
   const [selectedCode, setSelectedCode] = useState(62);
+  const [code, setCode] = useState(new Array(6).fill(""));
 
   const statusSignup = useRef(null);
   const statusLogin = useRef(null);
+  const statusVerify = useRef(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -81,11 +83,17 @@ function Auth({ typeMain }) {
 
       window.history.replaceState({}, document.title, newUrl);
 
-      navigate("/dashboard", {
-        state: { messageLoginGoogle: "Login successfully!" },
-      });
+      if (getRoleParams === "admin") {
+        navigate("/dashboard", {
+          state: { messageLoginGoogle: "Login successfully!" },
+        });
+      } else if (getRoleParams === "customer") {
+        navigate("/profile", {
+          state: { messageLoginGoogle: "Login successfully!" },
+        });
+      }
     }
-  }, [searchParams, cookies, navigate]);
+  }, [cookies, navigate]);
 
   useEffect(() => {
     axios
@@ -146,6 +154,37 @@ function Auth({ typeMain }) {
     },
     [setValues, setValidationPassword]
   );
+
+  const handleVerifyChange = useCallback(
+    (e, index) => {
+      const value = e.target.value.replace(/[^0-9]/g, ""); // Only allow numbers
+      if (value.length <= 1) {
+        const newCode = [...code];
+        newCode[index] = value;
+        setCode(newCode);
+
+        // Automatically focus on the next input
+        if (value && index < 5) {
+          document.getElementById(`code-input-${index + 1}`).focus();
+        }
+      }
+    },
+    [code]
+  );
+
+  const handleVerifyPaste = (e) => {
+    e.preventDefault();
+    const pasteData = e.clipboardData.getData("text").trim();
+    if (/^\d{6}$/.test(pasteData)) {
+      const newCode = pasteData.split("");
+      setCode(newCode);
+
+      // Focus on the last input to indicate completion
+      document.getElementById("code-input-5").focus();
+    } else {
+      toastMessage("error", "Invalid code format. Please paste 6 digits.");
+    }
+  };
 
   const handleFormSubmit = useCallback(
     (e) => {
@@ -221,7 +260,7 @@ function Auth({ typeMain }) {
               });
             });
           });
-      } else {
+      } else if (typeMain === "login") {
         const loginPromise = axios.post(urlEndpoint.loginForm, {
           email: values.email,
           password: values.password,
@@ -230,7 +269,7 @@ function Auth({ typeMain }) {
         toastPromise(
           loginPromise,
           {
-            pending: "Login in progress, please wait.",
+            pending: "Log in progress, please wait.",
             success: "Login successful! 🎉",
             error: "Failed to login, please try again!",
           },
@@ -263,10 +302,58 @@ function Auth({ typeMain }) {
           .catch((err) => {
             console.error(err);
           });
+      } else {
+        const codeValue = code.join("");
+
+        if (codeValue.length === 6) {
+          const verifyPromise = axios.post(urlEndpoint.verifyEmail, {
+            code: codeValue,
+            email: location.state.email,
+          });
+          toastPromise(
+            verifyPromise,
+            {
+              pending: "Verification in progress, please wait..",
+              success: "Email verified successfully! 🎉",
+              error: "Failed to verify email, please try again!",
+            },
+            {
+              position: "top-center",
+            },
+            () => {
+              if (statusVerify.current === true) {
+                navigate("/login");
+              }
+            }
+          );
+
+          verifyPromise
+            .then((res) => {
+              // console.log(res.data);
+
+              statusVerify.current = res.data.success;
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        } else {
+          toastMessage("error", "Please enter all 6 digits.");
+        }
       }
     },
-    [values, typeMain]
+    [values, typeMain, code]
   );
+
+  useEffect(() => {
+    if (typeMain === "verify" && !location.state) {
+      navigate("/login", {
+        state: {
+          messageNoEmail:
+            "Email is missing. Please go back to the previous step and ensure your email is entered correctly!",
+        },
+      });
+    }
+  }, [typeMain, navigate, location.state]);
 
   useEffect(() => {
     if (location.state?.messageLogout) {
@@ -287,6 +374,8 @@ function Auth({ typeMain }) {
     }
   }, [location.state, navigate, toastMessage, location.pathname]);
 
+  const AuthContentElement = typeMain === "verify" ? "form" : "div";
+
   return (
     <>
       <div className="auth">
@@ -295,31 +384,74 @@ function Auth({ typeMain }) {
         </div>
         <div className="auth-content">
           <AuthTitle logo={logo} type={typeMain} />
-          <div
+          <AuthContentElement
             className={`auth-content-core ${
-              typeMain === "signup" ? "signup" : ""
+              typeMain === "signup"
+                ? "signup"
+                : typeMain === "verify"
+                ? "verify"
+                : ""
             }`}
+            onSubmit={typeMain === "verify" ? handleFormSubmit : null}
           >
-            <AuthForm
-              values={values}
-              hidePassword={hidePassword}
-              setHidePassword={setHidePassword}
-              validationPassword={validationPassword}
-              handleChange={handleChange}
-              handleForm={handleFormSubmit}
-              type={typeMain}
-              phoneCodes={phoneCodes}
-              selectedCode={selectedCode}
-              setSelectedCode={setSelectedCode}
-            />
-
-            {typeMain === "login" && (
+            {typeMain !== "verify" && (
               <>
-                <div className="divider"></div>
-                <AuthIntegration type={typeMain} toastDevelop={toastDevelop} />
+                <AuthForm
+                  values={values}
+                  hidePassword={hidePassword}
+                  setHidePassword={setHidePassword}
+                  validationPassword={validationPassword}
+                  handleChange={handleChange}
+                  handleForm={handleFormSubmit}
+                  type={typeMain}
+                  phoneCodes={phoneCodes}
+                  selectedCode={selectedCode}
+                  setSelectedCode={setSelectedCode}
+                />
+
+                {typeMain !== "signup" && (
+                  <>
+                    <div className="divider"></div>
+                    <AuthIntegration
+                      type={typeMain}
+                      toastDevelop={toastDevelop}
+                    />
+                  </>
+                )}
               </>
             )}
-          </div>
+
+            {typeMain === "verify" && (
+              <>
+                <div className="verify-wrapper">
+                  {code.map((value, index) => (
+                    <input
+                      key={index}
+                      id={`code-input-${index}`}
+                      className="code-number"
+                      type="text"
+                      maxLength="1"
+                      value={value}
+                      onChange={(e) => handleVerifyChange(e, index)}
+                      onKeyDown={(e) => {
+                        if (
+                          e.key === "Backspace" &&
+                          !code[index] &&
+                          index > 0
+                        ) {
+                          document
+                            .getElementById(`code-input-${index - 1}`)
+                            .focus();
+                        }
+                      }}
+                      onPaste={handleVerifyPaste}
+                    />
+                  ))}
+                </div>
+                <button className="code-button">Submit Code</button>
+              </>
+            )}
+          </AuthContentElement>
           {typeMain === "login" ? (
             <span
               className="auth-content-problems"

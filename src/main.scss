@@ -4,6 +4,7 @@
 @use "./pages/Error/error";
 @use "./pages/AiBuilder/ai-builder";
 @use "./pages/Auth/auth";
+@use "./pages/Verify/verify";
 @use "./components/LayoutDashboard/layout-dashboard";
 @use "./components/LoaderProgress/loader-progress";
 
@@ -52,10 +53,14 @@ input[type="file"]::-webkit-file-upload-button {
 
 /* From Uiverse.io by Shoh2008 */
 .loader-pages {
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
   @include m.flex();
   background-color: #000;
+  position: fixed;
+  z-index: 101;
+  left: 0;
+  top: 0;
 
   &-item {
     width: 45px;

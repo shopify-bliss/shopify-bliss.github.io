@@ -48,6 +48,11 @@
         text-transform: capitalize;
         cursor: pointer;
 
+        &:not(:last-child) {
+          border-bottom: 0.1rem solid
+            adjust-color($color: #fff, $blackness: 15%);
+        }
+
         &.active {
           background-color: #000;
           color: #fff;

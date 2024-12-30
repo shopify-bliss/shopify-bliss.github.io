@@ -2,6 +2,7 @@
 @use "../../helpers/variables" as v;
 @use "./Sidebar/sidebar" as sidebar;
 @use "./Topbar/topbar" as topbar;
+@use "../Pagination/pagination";
 @use "./Modal/modal";
 @use "../../pages/Profile/profile";
 @use "../../pages/UsersManagement/DisplayUsers/display-users";
@@ -9,7 +10,8 @@
 @use "../../pages/TemplatesManagement/TempSections/temp-sections";
 @use "../../pages/AccessManagement/MenuMan/menu-man";
 @use "../../pages/AccessManagement/SubmenuMan/submenu-man";
-@use "../../pages/AccessManagement/AccessMan/access_man";
+@use "../../pages/AccessManagement/AccessMan/access-man";
+@use "../../pages/AccessManagement/RoleMan/role-man";
 
 .layout-dashboard {
   width: 100%;

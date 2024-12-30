@@ -3,15 +3,14 @@ import axios from "axios";
 import { useAuth } from "../../../helpers/AuthContext";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { MenuManSchema } from "../../../helpers/ValidationSchema";
+import { RoleManSchema } from "../../../helpers/ValidationSchema";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
 
-function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
+function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
   axios.defaults.withCredentials = true;
 
   const [data, setData] = useState({
-    name: "",
-    url: "",
+    roleName: "",
   });
 
   const { toastMessage, toastPromise } = useDashboard();
@@ -20,20 +19,27 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
   useEffect(() => {
     if (onOpen && type === "create") {
       setData({
-        name: "",
-        url: "",
+        roleName: "",
       });
     } else if (onOpen && type === "update") {
       axios
-        .get(`${urlEndpoint.menusId}?id=${menuId}`)
+        .get(`${urlEndpoint.roleId}?id=${roleId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((res) => {
-          setData(res.data.data[0]);
+          console.log(res.data.data);
+
+          setData({
+            roleName: res.data.data.role_name,
+          });
         })
         .catch((error) => {
-          console.error("Error fetching menu data:", error);
+          console.error("Error fetching role data:", error);
         });
     }
-  }, [onOpen, type, menuId, urlEndpoint]);
+  }, [onOpen, type, roleId, token, urlEndpoint]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,9 +55,9 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
       e.preventDefault();
 
       if (type === "create") {
-        MenuManSchema.validate(data, { abortEarly: false })
+        RoleManSchema.validate(data, { abortEarly: false })
           .then(() => {
-            const elementsAiPromise = axios.post(urlEndpoint.menus, data, {
+            const elementsAiPromise = axios.post(urlEndpoint.role, data, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -60,7 +66,7 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
             toastPromise(
               elementsAiPromise,
               {
-                pending: "Adding menu data on progress, please wait..!",
+                pending: "Adding role data on progress, please wait..!",
                 success: "Data has been successfully added!",
                 error: "Failed to add data!",
               },
@@ -75,7 +81,7 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
             );
 
             elementsAiPromise.catch((error) => {
-              console.error("Error adding menu data:", error);
+              console.error("Error adding role data:", error);
             });
           })
           .catch((errors) => {
@@ -84,10 +90,10 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
             });
           });
       } else {
-        MenuManSchema.validate(data, { abortEarly: false })
+        RoleManSchema.validate(data, { abortEarly: false })
           .then(() => {
             const elementsAiPromise = axios.put(
-              `${urlEndpoint.menus}?id=${menuId}`,
+              `${urlEndpoint.role}?id=${roleId}`,
               data,
               {
                 headers: {
@@ -99,7 +105,7 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
             toastPromise(
               elementsAiPromise,
               {
-                pending: "Updating menu data on progress, please wait..!",
+                pending: "Updating role data on progress, please wait..!",
                 success: "Data has been successfully updated!",
                 error: "Failed to update data!",
               },
@@ -114,7 +120,7 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
             );
 
             elementsAiPromise.catch((error) => {
-              console.error("Error updating menu data:", error);
+              console.error("Error updating role data:", error);
             });
           })
           .catch((errors) => {
@@ -125,14 +131,14 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
       }
     },
     [
-      MenuManSchema,
+      RoleManSchema,
       data,
+      token,
       onClose,
       refreshData,
       toastMessage,
       toastPromise,
-      menuId,
-      token,
+      roleId,
       urlEndpoint,
     ]
   );
@@ -141,7 +147,7 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
     (e) => {
       e.preventDefault();
 
-      const deletePromise = axios.delete(`${urlEndpoint.menus}?id=${menuId}`, {
+      const deletePromise = axios.delete(`${urlEndpoint.role}?id=${roleId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -150,7 +156,7 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
       toastPromise(
         deletePromise,
         {
-          pending: "deleting menu data on progress, please wait..!",
+          pending: "deleting role data on progress, please wait..!",
           success: "Data has been successfully deleted!",
           error: "Failed to delete data!",
         },
@@ -165,10 +171,10 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
       );
 
       deletePromise.catch((error) => {
-        console.error("Error deleting menu data:", error);
+        console.error("Error deleting role data:", error);
       });
     },
-    [menuId, token, onClose, refreshData]
+    [roleId, token, onClose, refreshData, toastPromise, urlEndpoint]
   );
 
   return (
@@ -195,35 +201,22 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
       ) : (
         <Modal
           titleModal={
-            type === "create" ? "Insert Menu Data" : "Update Menu Data"
+            type === "create" ? "Insert Role Data" : "Update Role Data"
           }
           onOpen={onOpen}
           onClose={onClose}
         >
           <form className="modal-dashboard-form" onSubmit={handleSubmit}>
             <div className="modal-dashboard-form-group">
-              <label htmlFor="name">
-                Menu name <span>(Required)</span>
+              <label htmlFor="roleName">
+                Role name <span>(Required)</span>
               </label>
               <input
                 type="text"
-                id="name"
-                name="name"
-                placeholder="Access Management"
-                value={data.name}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="modal-dashboard-form-group">
-              <label htmlFor="url">
-                Menu url <span>(Required)</span>
-              </label>
-              <input
-                type="text"
-                id="url"
-                name="url"
-                placeholder="access-management"
-                value={data.url}
+                id="roleName"
+                name="roleName"
+                placeholder="Admin"
+                value={data.roleName}
                 onChange={handleChange}
               />
             </div>
@@ -235,4 +228,4 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
   );
 }
 
-export default MenuManModal;
+export default RoleManModal;
