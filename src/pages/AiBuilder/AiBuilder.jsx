@@ -9,6 +9,7 @@ import SiteInfo from "./SiteInfo/SiteInfo";
 import PagesAi from "./PagesAi/PagesAi";
 import ElementPages from "./ElementPages/ElementPages";
 import Colors from "./Colors/Colors";
+import Fonts from "./Fonts/Fonts";
 import { siteTitleSchema } from "../../helpers/ValidationSchema";
 import { toastMessage } from "../../helpers/AlertMessage";
 import { ToastContainer } from "react-toastify";
@@ -37,7 +38,6 @@ function AiBuilder() {
   const [isLoadingPagesAi, setIsLoadingPagesAi] = useState(false);
   const [isLoadingElementPages, setIsLoadingElementPages] = useState(false);
 
-  const [activeColor, setActiveColor] = useState(1);
   const [activeStyles, setActiveStyles] = useState({
     navbar: 1,
     intro: 1,
@@ -46,6 +46,8 @@ function AiBuilder() {
     about: 1,
     form: 1,
   });
+  const [activeColor, setActiveColor] = useState(1);
+  const [activeFont, setActiveFont] = useState(7);
 
   const handleSiteTitleInput = useCallback((e) => {
     const inputSiteTitle = e.target.value;
@@ -239,6 +241,13 @@ function AiBuilder() {
     [setActiveColor]
   );
 
+  const handleActiveFont = useCallback(
+    (font) => {
+      setActiveFont(font);
+    },
+    [setActiveFont]
+  );
+
   const handleNext = () => {
     if (currentStep === 1) {
       if (activePages.length < 3) {
@@ -324,6 +333,7 @@ function AiBuilder() {
                 activeForm={activeStyles.form}
                 handleActiveForm={handleActiveForm}
                 activeColor={activeColor}
+                activeFont={activeFont}
               />
             )}
           </>
@@ -332,21 +342,43 @@ function AiBuilder() {
           <Colors
             activePages={activePages}
             activeSections={activeSections}
-            handleActiveSection={handleActiveSection}
             siteTitle={siteTitle}
             dataPages={dataPages}
             currentPageId={currentPageId}
             setCurrentPageId={setCurrentPageId}
             dataElements={dataElements}
             toastMessage={toastMessage}
-            activeColor={activeColor}
-            handleActiveColor={handleActiveColor}
             activeNavbar={activeStyles.navbar}
             activeIntro={activeStyles.intro}
             activeProducts={activeStyles.products}
             activeServices={activeStyles.services}
             activeAbout={activeStyles.about}
             activeForm={activeStyles.form}
+            activeColor={activeColor}
+            handleActiveColor={handleActiveColor}
+            activeFont={activeFont}
+          />
+        )}
+
+        {currentStep === 4 && (
+          <Fonts
+            activePages={activePages}
+            activeSections={activeSections}
+            siteTitle={siteTitle}
+            dataPages={dataPages}
+            currentPageId={currentPageId}
+            setCurrentPageId={setCurrentPageId}
+            dataElements={dataElements}
+            toastMessage={toastMessage}
+            activeNavbar={activeStyles.navbar}
+            activeIntro={activeStyles.intro}
+            activeProducts={activeStyles.products}
+            activeServices={activeStyles.services}
+            activeAbout={activeStyles.about}
+            activeForm={activeStyles.form}
+            activeColor={activeColor}
+            activeFont={activeFont}
+            handleActiveFont={handleActiveFont}
           />
         )}
         <div className="ai-builder-steps">

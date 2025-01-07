@@ -5,6 +5,8 @@ function IntroConfig({
   activeIntro,
   handleActiveIntro,
   sectionsElOptionLayout,
+  activeColor,
+  activeFont,
 }) {
   return (
     <>

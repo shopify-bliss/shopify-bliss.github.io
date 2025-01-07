@@ -41,6 +41,7 @@ function ElementPages({
   activeForm,
   handleActiveForm,
   activeColor,
+  activeFont,
 }) {
   const { handleNext, handlePrev } = ControllingOverviews({
     activePages: activePages,
@@ -92,6 +93,7 @@ function ElementPages({
                             activeNavbar={activeNavbar}
                             toastMessage={toastMessage}
                             activeColor={activeColor}
+                            activeFont={activeFont}
                             typeMain="element"
                           />
                         ) : section.section_id ===
@@ -101,6 +103,7 @@ function ElementPages({
                             activeProducts={activeProducts}
                             toastMessage={toastMessage}
                             activeColor={activeColor}
+                            activeFont={activeFont}
                             typeMain="element"
                           />
                         ) : section.section_id ===
@@ -110,6 +113,7 @@ function ElementPages({
                             activeServices={activeServices}
                             toastMessage={toastMessage}
                             activeColor={activeColor}
+                            activeFont={activeFont}
                             typeMain="element"
                           />
                         ) : section.section_id ===
@@ -119,6 +123,7 @@ function ElementPages({
                             activeAbout={activeAbout}
                             toastMessage={toastMessage}
                             activeColor={activeColor}
+                            activeFont={activeFont}
                             typeMain="element"
                           />
                         ) : section.section_id ===
@@ -128,6 +133,7 @@ function ElementPages({
                             activeForm={activeForm}
                             toastMessage={toastMessage}
                             activeColor={activeColor}
+                            activeFont={activeFont}
                             typeMain="element"
                           />
                         ) : (

@@ -60,7 +60,6 @@ $fs-brand: 22px;
   $white-theme: false,
   $distance: 0.4rem
 ) {
-  font-family: v.$raleway;
   font-weight: 600;
   pointer-events: none;
   @include m.flex();

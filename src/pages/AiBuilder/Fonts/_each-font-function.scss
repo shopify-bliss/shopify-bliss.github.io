@@ -1,0 +1,39 @@
+@use "../../../helpers/variables" as v;
+
+$font-families-classes: (
+  merriweather: v.$merriweather,
+  roboto: v.$roboto,
+  work-sans: v.$work-sans,
+  libre-baskerville: v.$libre-baskerville,
+
+  poppins: v.$poppins,
+  patrick-hand: v.$patrick-hand,
+  quicksand: v.$quicksand,
+  caveat: v.$caveat,
+
+  playfair-display: v.$playfair-display,
+  lora: v.$lora,
+  cormorant-garamond: v.$cormorant-garamond,
+  dm-sans: v.$dm-sans,
+
+  montserrat: v.$montserrat,
+  raleway: v.$raleway,
+  exo-2: v.$exo-2,
+  bebas-neue: v.$bebas-neue,
+
+  eb-garamond: v.$eb-garamond,
+  open-sans: v.$open-sans,
+  crimson-text: v.$crimson-text,
+  josefin-sans: v.$josefin-sans,
+
+  amatic-sc: v.$amatic-sc,
+  chewy: v.$chewy,
+  gloria-hallelujah: v.$gloria-hallelujah,
+  fredoka: v.$fredoka,
+);
+
+@each $class-font, $font in $font-families-classes {
+  .#{$class-font} {
+    font-family: #{$font};
+  }
+}

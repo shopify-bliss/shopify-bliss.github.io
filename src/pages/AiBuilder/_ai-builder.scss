@@ -7,7 +7,7 @@
 @use "./PagesAi/pages-ai" as pages-ai;
 @use "./ElementPages/element-pages" as element-pages;
 @use "./Colors/colors" as colors;
-@use "./Colors/each-color-function";
+@use "./Fonts/fonts" as fonts;
 
 .ai-builder {
   width: 100%;
@@ -32,6 +32,7 @@
     @include pages-ai.pages-ai-overview();
     @include element-pages.element-pages-overview();
     @include colors.colors-overview();
+    @include fonts.fonts-overview();
   }
 
   &-content {
@@ -45,6 +46,7 @@
     @include pages-ai.pages-ai-content();
     @include element-pages.element-pages-content();
     @include colors.colors-content();
+    @include fonts.fonts-content();
   }
 
   &-steps {

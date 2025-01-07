@@ -137,9 +137,12 @@ export const DashboardProvider = ({ children }) => {
     }
   }, [token, fetchDashboardData]);
 
-  const handleSubmenuPage = useCallback((submenuName) => {
-    setSubmenuPage(submenuName);
-  }, []);
+  const handleSubmenuPage = useCallback(
+    (submenuName) => {
+      setSubmenuPage(submenuName);
+    },
+    [setSubmenuPage]
+  );
 
   const contextValue = useMemo(
     () => ({

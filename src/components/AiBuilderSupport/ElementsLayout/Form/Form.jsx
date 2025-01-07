@@ -15,6 +15,7 @@ function Form({
   activeForm,
   handleActiveForm,
   activeColor,
+  activeFont,
   typeMain = null,
 }) {
   const [isExpandLayout, setIsExpandLayout] = useState(false);

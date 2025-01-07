@@ -9,10 +9,10 @@
   services;
 @use "../../../components/AiBuilderSupport/ElementsLayout/About/about" as about;
 @use "../../../components/AiBuilderSupport/ElementsLayout/Form/form" as form;
-@use "./each-color-function";
+@use "./each-font-function";
 
-@mixin colors-overview() {
-  .colors {
+@mixin fonts-overview() {
+  .fonts {
     width: 100%;
     height: 100%;
     background-color: adjust-color($color: #fff, $blackness: 5%);
@@ -50,7 +50,7 @@
           @include navbar.navbar-layout($manipulation: true);
         }
 
-        &-color {
+        &-font {
           @include m.flex($direction: column, $justify: flex-start);
           overflow-x: hidden;
           overflow-y: visible;
@@ -92,8 +92,8 @@
   }
 }
 
-@mixin colors-content() {
-  .colors {
+@mixin fonts-content() {
+  .fonts {
     @include m.flex(
       $direction: column,
       $justify: flex-start,
@@ -136,14 +136,16 @@
         &-list {
           @include m.flex($justify: flex-start);
           gap: 1.1rem;
+          width: 100%;
 
-          &-color {
-            @include m.flex();
-            border: #eaeaea 1.4px solid;
-            border-radius: 50vw;
+          &-font {
             cursor: pointer;
-            height: 2.1rem;
-            padding: 0.15rem;
+            width: 100%;
+            height: 8rem;
+            border: #eaeaea 1px solid;
+            @include m.flex($direction: column);
+            gap: 0.32rem;
+            padding: 0 0.4rem;
 
             &:hover {
               border-color: #000;
@@ -151,21 +153,22 @@
 
             &.active {
               border-color: #000;
-              border-width: 2.5px;
             }
 
             span {
-              width: 2.1rem;
-              height: 100%;
+              text-transform: capitalize;
+              font-size: 0.9rem;
+              text-align: center;
 
+              
               &:first-child {
-                border-top-left-radius: 50vw;
-                border-bottom-left-radius: 50vw;
-              }
+                line-height: 115%;
+                font-size: 1.2rem;
 
-              &:last-child {
-                border-top-right-radius: 50vw;
-                border-bottom-right-radius: 50vw;
+                &.cormorant-garamond {
+                  line-height: 95%;
+                  margin-bottom: .05rem;
+                }
               }
             }
           }

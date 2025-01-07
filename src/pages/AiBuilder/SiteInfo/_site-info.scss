@@ -1,6 +1,6 @@
 @use "../../../helpers/mixins" as m;
 @use "../../../helpers/variables" as v;
-@use "./each-font-funtion";
+@use "./each-brand-funtion";
 
 @mixin site-info-overlay() {
   .site-info-overlay {

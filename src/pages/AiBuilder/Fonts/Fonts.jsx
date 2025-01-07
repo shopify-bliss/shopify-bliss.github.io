@@ -16,10 +16,14 @@ import Products from "../../../components/AiBuilderSupport/ElementsLayout/Produc
 import Services from "../../../components/AiBuilderSupport/ElementsLayout/Services/Services";
 import About from "../../../components/AiBuilderSupport/ElementsLayout/About/About";
 import Form from "../../../components/AiBuilderSupport/ElementsLayout/Form/Form";
-import colors from "../../../data/colors.json";
+import fonts from "../../../data/fonts.json";
 import brands from "../../../data/brands.json";
+import {
+  AllFontType1,
+  AllFontType2,
+} from "../../../components/AiBuilderSupport/FontsSupport";
 
-function Colors({
+function Fonts({
   activePages,
   activeSections,
   siteTitle,
@@ -35,8 +39,8 @@ function Colors({
   activeAbout,
   activeForm,
   activeColor,
-  handleActiveColor,
   activeFont,
+  handleActiveFont,
 }) {
   const { handleNext, handlePrev } = ControllingOverviews({
     activePages: activePages,
@@ -48,8 +52,8 @@ function Colors({
     <>
       <div className="ai-builder-overview">
         <Logo />
-        <div className="colors">
-          <div className="colors-core">
+        <div className="fonts">
+          <div className="fonts-core">
             <div
               className={`prev-button ${activePages.length < 4 ? "none" : ""}`}
             >
@@ -68,9 +72,10 @@ function Colors({
                 activeIntro={activeIntro}
                 toastMessage={toastMessage}
                 activeColor={activeColor}
+                activeFont={activeFont}
               />
               {currentPageId !== null && (
-                <div className="display-data-color">
+                <div className="display-data-font">
                   {dataElements
                     .filter((section) =>
                       activeSections[currentPageId]?.includes(
@@ -143,11 +148,11 @@ function Colors({
       </div>
       <div className="ai-builder-content">
         <Quit />
-        <div className="colors">
-          <div className="colors-title">Select a set of colors</div>
-          <div className="colors-desc">
+        <div className="fonts">
+          <div className="fonts-title">Select a set of fonts</div>
+          <div className="fonts-desc">
             Our designers have crafted these custom palettes, and you can adjust
-            the colors anytime.
+            the fonts anytime.
           </div>
           <div className="content">
             {brands.map((brand) => {
@@ -155,24 +160,37 @@ function Colors({
                 <div className={`content-item`} key={brand.id}>
                   <div className="content-item-title">{brand.name}</div>
                   <div className="content-item-list">
-                    {colors
-                      .filter((color) => color.brand === brand.name)
-                      .map((color) => {
+                    {fonts
+                      .filter((font) => font.brand === brand.name)
+                      .map((font) => {
+                        const getBrand = font.brand;
+                        const getGroup = font.group;
+
+                        console.log(getBrand, getGroup);
+
+                        const allType1 = AllFontType1({
+                          brand: getBrand,
+                          group: getGroup,
+                        });
+                        const allType2 = AllFontType2({
+                          brand: getBrand,
+                          group: getGroup,
+                        });
+
                         return (
                           <div
-                            className={`content-item-list-color ${
-                              activeColor === color.id ? "active" : ""
+                            className={`content-item-list-font ${
+                              activeFont === font.id ? "active" : ""
                             }`}
-                            key={color.id}
-                            onClick={() => handleActiveColor(color.id)}
+                            key={font.id}
+                            onClick={() => handleActiveFont(font.id)}
                           >
-                            <span
-                              className={`color-special-${color.color1}`}
-                            ></span>
-                            <span
-                              className={`color-other-${color.color2}`}
-                            ></span>
-                            <span className={`color-bg-${color.color3}`}></span>
+                            <span className={`${allType1}`}>
+                              {font.fontType1}
+                            </span>
+                            <span className={`${allType2}`}>
+                              {font.fontType2}
+                            </span>
                           </div>
                         );
                       })}
@@ -187,4 +205,4 @@ function Colors({
   );
 }
 
-export default Colors;
+export default Fonts;

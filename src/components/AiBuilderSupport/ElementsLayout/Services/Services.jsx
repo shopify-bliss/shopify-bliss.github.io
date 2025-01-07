@@ -18,6 +18,7 @@ function Services({
   activeServices,
   toastMessage,
   activeColor,
+  activeFont,
   typeMain = null,
 }) {
   const [isExpandLayout, setIsExpandLayout] = useState(false);

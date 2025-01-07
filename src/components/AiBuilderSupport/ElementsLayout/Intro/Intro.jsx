@@ -3,6 +3,7 @@ import { ChangeLayout } from "../../AiBuilderSupport";
 import sectionsElOptionLayout from "../../../../data/sectionsElOptionLayout.json";
 import IntroConfig from "./Config/IntroConfig";
 import { OtherColors } from "../../ColorsSupport";
+import { FontType1, FontType2 } from "../../FontsSupport";
 
 function Intro({
   handleActiveIntro = null,
@@ -10,12 +11,15 @@ function Intro({
   activeNavbar,
   toastMessage,
   activeColor,
+  activeFont,
   typeMain = null,
 }) {
   const [isExpandLayout, setIsExpandLayout] = useState(false);
   const expandLayoutRef = useRef(null);
 
   const others = OtherColors({ activeColor });
+  const type1 = FontType1({ activeFont });
+  const type2 = FontType2({ activeFont });
 
   const typeIntroStyles = useMemo(
     () => sectionsElOptionLayout.find((option) => option.id === activeIntro),
@@ -37,8 +41,8 @@ function Intro({
       >
         {typeIntroStyles.id === 1 && (
           <>
-            <div className="template-brand">Your Brand Name</div>
-            <div className="template-desc">
+            <div className={`template-brand ${type2}`}>Your Brand Name</div>
+            <div className={`template-desc ${type1}`}>
               Greet visitors to your site with a brief, engaging introduction
               that reflects your personality.
             </div>
@@ -49,8 +53,10 @@ function Intro({
         {typeIntroStyles.id === 2 && (
           <>
             <div className="template-wrapper">
-              <div className="template-preface">Introduce your brand</div>
-              <div className="template-desc">
+              <div className={`template-preface ${type2}`}>
+                Introduce your brand
+              </div>
+              <div className={`template-desc ${type1}`}>
                 Greet visitors to your site with a brief, engaging introduction
                 that reflects your personality.
               </div>
@@ -62,8 +68,10 @@ function Intro({
 
         {typeIntroStyles.id === 3 && (
           <>
-            <div className="template-preface">Introduce your brand</div>
-            <div className="template-desc">
+            <div className={`template-preface ${type2}`}>
+              Introduce your brand
+            </div>
+            <div className={`template-desc ${type1}`}>
               Greet visitors to your site with a brief, engaging introduction
               that reflects your personality.
             </div>
@@ -73,13 +81,13 @@ function Intro({
 
         {typeIntroStyles.id === 4 && (
           <>
-            <div className="template-desc">
+            <div className={`template-desc ${type1}`}>
               Greet visitors to your site with a brief, engaging introduction
               that reflects your personality.
             </div>
             <div className="template-button">Learn More</div>
             <div className="template-wrapper">
-              <div className="template-brand">
+              <div className={`template-brand ${type2}`}>
                 <p>Your</p>
                 <p>Brand</p>
                 <p>Name</p>
@@ -112,6 +120,8 @@ function Intro({
                 activeIntro={activeIntro}
                 handleActiveIntro={handleActiveIntro}
                 sectionsElOptionLayout={sectionsElOptionLayout}
+                activeColor={activeColor}
+                activeFont={activeFont}
               />
             </div>
             <div className="wrapper-right">
@@ -120,6 +130,8 @@ function Intro({
                 activeIntro={activeIntro}
                 handleActiveIntro={handleActiveIntro}
                 sectionsElOptionLayout={sectionsElOptionLayout}
+                activeColor={activeColor}
+                activeFont={activeFont}
               />
             </div>
           </div>

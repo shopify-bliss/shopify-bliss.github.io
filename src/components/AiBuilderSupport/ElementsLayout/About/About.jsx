@@ -10,6 +10,7 @@ function About({
   handleActiveAbout,
   activeAbout,
   activeColor,
+  activeFont,
   typeMain = null,
 }) {
   const [isExpandLayout, setIsExpandLayout] = useState(false);

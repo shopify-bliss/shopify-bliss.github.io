@@ -22,7 +22,8 @@ function NavbarLayout({
   handleActiveNavbar = null,
   toastMessage,
   typeMain = null,
-  activeColor,
+  activeColor = null,
+  activeFont = null,
 }) {
   const [activeFeatures, setActiveFeatures] = useState([]);
   const [isExpandLayout, setIsExpandLayout] = useState(false);
