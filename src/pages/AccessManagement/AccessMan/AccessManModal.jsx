@@ -24,7 +24,8 @@ function AccessManModal({
   const listMenuRef = useRef(null);
   const listRoleRef = useRef(null);
 
-  const { toastMessage, toastPromise, menus, token } = useDashboard();
+  const { toastMessage, toastPromise, menus, token, fetchDashboardData } =
+    useDashboard();
 
   const handleClickOutside = useCallback(
     (e) => {
@@ -68,8 +69,6 @@ function AccessManModal({
         roleID: valueRole,
       };
 
-      console.log(data);
-
       AccessManSchema.validate(data, { abortEarly: false })
         .then(() => {
           const elementsAiPromise = axios.post(
@@ -94,6 +93,7 @@ function AccessManModal({
             },
             () => {
               onClose();
+              fetchDashboardData();
             }
           );
           elementsAiPromise.catch((error) => {
@@ -111,11 +111,11 @@ function AccessManModal({
       valueRole,
       valueMenu,
       onClose,
+      fetchDashboardData,
       token,
       accessId,
       toastMessage,
       toastPromise,
-      urlEndpoint.accessManagement,
     ]
   );
 
@@ -145,6 +145,7 @@ function AccessManModal({
         },
         () => {
           onClose();
+          fetchDashboardData();
         }
       );
 
@@ -152,7 +153,7 @@ function AccessManModal({
         console.error("Error deleting access data:", error);
       });
     },
-    [token, toastPromise, accessId, onClose, urlEndpoint.accessManagement]
+    [token, toastPromise, accessId, onClose, fetchDashboardData]
   );
 
   return (

@@ -25,15 +25,19 @@ function DisplayView({
       )}
       <div className="access-man-wrapper">
         <div className="access-man-roles">
-          {roles.map((role) => (
-            <div
-              className={`role ${activeRole === role.role_id ? "active" : ""}`}
-              key={role.role_id}
-              onClick={() => handleActiveRole(role.role_id)}
-            >
-              {role.role_name}
-            </div>
-          ))}
+          {roles.length > 0
+            ? roles.map((role) => (
+                <div
+                  className={`role ${
+                    activeRole === role.role_id ? "active" : ""
+                  }`}
+                  key={role.role_id}
+                  onClick={() => handleActiveRole(role.role_id)}
+                >
+                  {role.role_name}
+                </div>
+              ))
+            : null}
         </div>
         {type === "grid" ? (
           <div className="access-man-grid">
@@ -127,7 +131,6 @@ function AccessMan() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [accessId, setAccessId] = useState(null);
-  const [isFetched, setIsFetched] = useState(false);
 
   const { accessMenus, menus, token, isLoadingDashboard, setDashboardLoader } =
     useDashboard();
@@ -141,8 +144,6 @@ function AccessMan() {
   }, []);
 
   const fetchRoles = useCallback(async () => {
-    if (isFetched) return; // Cegah fetch ulang
-
     setDashboardLoader(true);
 
     try {
@@ -151,21 +152,19 @@ function AccessMan() {
           Authorization: `Bearer ${token}`,
         },
       });
-
       console.log(response.data.data);
 
       setRoles(response.data.data);
-      setIsFetched(true); // Tandai fetch selesai
     } catch (error) {
       console.error(error);
     } finally {
       setDashboardLoader(false);
     }
-  }, [isFetched]); // Tambahkan dependensi yang diperlukan
+  }, [token, setDashboardLoader]);
 
   useEffect(() => {
     fetchRoles();
-  }, [fetchRoles]); // Tambahkan dependensi yang diperlukan
+  }, [fetchRoles]);
 
   return (
     <>

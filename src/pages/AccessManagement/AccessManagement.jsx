@@ -19,8 +19,6 @@ function AccessManagement() {
           data.menu_id === "b37d4e96-87b0-4480-805e-562ccd798338"
       );
 
-      console.log(hasAccess);
-
       if (hasAccess === false) {
         navigate("/403", { replace: true });
       }

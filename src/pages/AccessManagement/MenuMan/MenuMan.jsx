@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 
 function DisplayView({
-  isLoadingMenuMan,
+  isLoadingDashboard,
   menus,
   setMenuId,
   setIsUpdateModalOpen,
@@ -15,7 +15,7 @@ function DisplayView({
 }) {
   return (
     <>
-      {isLoadingMenuMan && (
+      {isLoadingDashboard && (
         <div className="loader-pages">
           <div className="loader-pages-item"></div>
         </div>
@@ -102,7 +102,7 @@ function MenuMan() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [menuId, setMenuId] = useState(null);
 
-  const { menus, fetchDashboardData, isLoading } = useDashboard();
+  const { menus, fetchDashboardData, isLoadingDashboard } = useDashboard();
 
   const handleDisplayChange = useCallback((display) => {
     setActiveDisplay(display);
@@ -120,7 +120,7 @@ function MenuMan() {
         />
         {activeDisplay === "grid" ? (
           <DisplayView
-            isLoadingMenuMan={isLoading}
+            isLoadingDashboard={isLoadingDashboard}
             menus={menus}
             setMenuId={setMenuId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}
@@ -129,7 +129,7 @@ function MenuMan() {
           />
         ) : (
           <DisplayView
-            isLoadingMenuMan={isLoading}
+            isLoadingDashboard={isLoadingDashboard}
             menus={menus}
             setMenuId={setMenuId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}

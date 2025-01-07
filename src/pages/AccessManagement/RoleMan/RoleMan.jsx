@@ -7,7 +7,7 @@ import { useDashboard } from "../../../components/LayoutDashboard/DashboardConte
 import urlEndpoint from "../../../helpers/urlEndpoint";
 
 function DisplayView({
-  isLoadingRoleMan,
+  isLoadingDashboard,
   roles,
   setRoleId,
   setIsUpdateModalOpen,
@@ -16,7 +16,7 @@ function DisplayView({
 }) {
   return (
     <>
-      {isLoadingRoleMan && (
+      {isLoadingDashboard && (
         <div className="loader-pages">
           <div className="loader-pages-item"></div>
         </div>
@@ -91,21 +91,21 @@ function DisplayView({
 function RoleMan() {
   axios.defaults.withCredentials = true;
   const [roles, setRoles] = useState([]);
-  const [isLoadingRolesMan, setIsLoadingRolesMan] = useState(true);
   const [activeDisplay, setActiveDisplay] = useState("grid");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [roleId, setRoleId] = useState(null);
 
-  const { fetchDashboardData, token } = useDashboard();
+  const { fetchDashboardData, token, isLoadingDashboard, setDashboardLoader } =
+    useDashboard();
 
   const handleDisplayChange = useCallback((display) => {
     setActiveDisplay(display);
   }, []);
 
   const fetchRoles = useCallback(async () => {
-    setIsLoadingRolesMan(true);
+    setDashboardLoader(true);
 
     try {
       const response = await axios.get(urlEndpoint.role, {
@@ -118,7 +118,7 @@ function RoleMan() {
     } catch (error) {
       console.error("Error fetching roles:", error);
     } finally {
-      setIsLoadingRolesMan(false);
+      setDashboardLoader(false);
     }
   }, [token, urlEndpoint]);
 
@@ -138,7 +138,7 @@ function RoleMan() {
         />
         {activeDisplay === "grid" ? (
           <DisplayView
-            isLoadingRoleMan={isLoadingRolesMan}
+            isLoadingDashboard={isLoadingDashboard}
             roles={roles}
             setRoleId={setRoleId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}
@@ -147,7 +147,7 @@ function RoleMan() {
           />
         ) : (
           <DisplayView
-            isLoadingRoleMan={isLoadingRolesMan}
+            isLoadingDashboard={isLoadingDashboard}
             roles={roles}
             setRoleId={setRoleId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}

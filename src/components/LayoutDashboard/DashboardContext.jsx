@@ -4,6 +4,7 @@ import React, {
   useState,
   useEffect,
   useCallback,
+  useMemo,
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -51,12 +52,14 @@ export const DashboardProvider = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const setDashboardLoader = useCallback(
-    (loading) => {
-      setIsLoadingDashboard(loading);
-    },
-    [setIsLoadingDashboard]
-  );
+  const setDashboardLoader = useCallback((loading) => {
+    setIsLoadingDashboard((prev) => {
+      if (prev !== loading) {
+        return loading;
+      }
+      return prev;
+    });
+  }, []);
 
   useEffect(() => {
     const tokenFromCookies = Cookies.get("shopify-bliss");
@@ -138,34 +141,49 @@ export const DashboardProvider = ({ children }) => {
     setSubmenuPage(submenuName);
   }, []);
 
-  if (isLoadingDashboard) {
-    return (
-      <div className="loader-pages">
-        <div className="loader-pages-item"></div>
-      </div>
-    );
-  }
+  const contextValue = useMemo(
+    () => ({
+      activeMenu,
+      menus,
+      activeSubmenu,
+      submenus,
+      submenuPage,
+      handleSubmenuPage,
+      accessMenus,
+      toastMessage,
+      toastDevelop,
+      toastPromise,
+      fetchDashboardData,
+      user,
+      token,
+      isLoadingDashboard,
+      setDashboardLoader,
+    }),
+    [
+      activeMenu,
+      menus,
+      activeSubmenu,
+      submenus,
+      submenuPage,
+      handleSubmenuPage,
+      accessMenus,
+      toastMessage,
+      toastDevelop,
+      toastPromise,
+      fetchDashboardData,
+      user,
+      token,
+      isLoadingDashboard,
+    ]
+  );
 
   return (
-    <DashboardContext.Provider
-      value={{
-        activeMenu,
-        menus,
-        activeSubmenu,
-        submenus,
-        submenuPage,
-        handleSubmenuPage,
-        accessMenus,
-        toastMessage,
-        toastDevelop,
-        toastPromise,
-        fetchDashboardData,
-        user,
-        token,
-        isLoadingDashboard,
-        setDashboardLoader,
-      }}
-    >
+    <DashboardContext.Provider value={contextValue}>
+      {isLoadingDashboard && (
+        <div className="loader-pages">
+          <div className="loader-pages-item"></div>
+        </div>
+      )}
       {children}
       <ToastContainer />
     </DashboardContext.Provider>

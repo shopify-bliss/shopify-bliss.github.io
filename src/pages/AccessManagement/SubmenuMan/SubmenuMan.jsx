@@ -6,7 +6,7 @@ import { useDashboard } from "../../../components/LayoutDashboard/DashboardConte
 import { Link } from "react-router-dom";
 
 function DisplayView({
-  isLoadingSubmenuMan,
+  isLoadingDashboard,
   submenus,
   setSubmenuId,
   setIsUpdateModalOpen,
@@ -15,7 +15,7 @@ function DisplayView({
 }) {
   return (
     <>
-      {isLoadingSubmenuMan && (
+      {isLoadingDashboard && (
         <div className="loader-pages">
           <div className="loader-pages-item"></div>
         </div>
@@ -118,7 +118,7 @@ function SubmenuMan() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [submenuId, setSubmenuId] = useState(null);
 
-  const { submenus, fetchDashboardData, isLoading } = useDashboard();
+  const { submenus, fetchDashboardData, isLoadingDashboard } = useDashboard();
 
   const handleDisplayChange = useCallback((display) => {
     setActiveDisplay(display);
@@ -136,7 +136,7 @@ function SubmenuMan() {
         />
         {activeDisplay === "grid" ? (
           <DisplayView
-            isLoadingSubmenuMan={isLoading}
+            isLoadingDashboard={isLoadingDashboard}
             submenus={submenus}
             setSubmenuId={setSubmenuId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}
@@ -145,7 +145,7 @@ function SubmenuMan() {
           />
         ) : (
           <DisplayView
-            isLoadingSubmenuMan={isLoading}
+            isLoadingDashboard={isLoadingDashboard}
             submenus={submenus}
             setSubmenuId={setSubmenuId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}
