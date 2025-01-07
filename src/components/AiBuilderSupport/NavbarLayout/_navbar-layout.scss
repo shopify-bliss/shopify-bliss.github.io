@@ -3,7 +3,7 @@
 @use "../ai-builder-support" as support;
 @use "./Config/navbar-layout-config" as config;
 
-@mixin white-intro-el() {
+@mixin white-intro() {
   color: #fff;
 
   .template-search {
@@ -13,53 +13,55 @@
   }
 }
 
-@mixin navbar-layout($manipulation: false) {
+@mixin navbar-layout($manipulation: false, $element: false) {
   width: 100%;
   padding: (v.$p-navter * 0.8) v.$p-navter 0 v.$p-navter;
   border: v.$border-hover;
   position: absolute;
   z-index: 10;
 
-  .change-layout {
-    display: none;
-  }
-
   @if $manipulation {
     padding-bottom: 3.1rem;
   }
 
-  &.intro-el-1 {
-    @include support.change-layout(
-      $bg-color: adjust-color($color: #fff, $blackness: 90%),
-      $border-color: adjust-color($color: #fff, $blackness: 90%),
-      $color: #000
-    );
-  }
+  @if $element {
+    .change-layout {
+      display: none;
+    }
 
-  &.intro-el-2 {
-    @include support.change-layout(
-      $bg-color: adjust-color($color: #000, $whiteness: 90%),
-      $border-color: adjust-color($color: #000, $whiteness: 90%),
-      $color: #fff
-    );
-  }
+    &.intro-1 {
+      @include support.change-layout(
+        $bg-color: adjust-color($color: #fff, $blackness: 90%),
+        $border-color: adjust-color($color: #fff, $blackness: 90%),
+        $color: #000
+      );
+    }
 
-  &.intro-el-3 {
-    @include white-intro-el();
-    @include support.change-layout(
-      $bg-color: adjust-color($color: #fff, $blackness: 10%),
-      $border-color: adjust-color($color: #fff, $blackness: 10%),
-      $color: adjust-color($color: #000, $whiteness: 90%)
-    );
-  }
+    &.intro-2 {
+      @include support.change-layout(
+        $bg-color: adjust-color($color: #000, $whiteness: 90%),
+        $border-color: adjust-color($color: #000, $whiteness: 90%),
+        $color: #fff
+      );
+    }
 
-  &.intro-el-4 {
-    @include white-intro-el();
-    @include support.change-layout(
-      $bg-color: adjust-color($color: #fff, $blackness: 10%),
-      $border-color: adjust-color($color: #fff, $blackness: 10%),
-      $color: adjust-color($color: #000, $whiteness: 90%)
-    );
+    &.intro-3 {
+      @include white-intro();
+      @include support.change-layout(
+        $bg-color: adjust-color($color: #fff, $blackness: 10%),
+        $border-color: adjust-color($color: #fff, $blackness: 10%),
+        $color: adjust-color($color: #000, $whiteness: 90%)
+      );
+    }
+
+    &.intro-4 {
+      @include white-intro();
+      @include support.change-layout(
+        $bg-color: adjust-color($color: #fff, $blackness: 10%),
+        $border-color: adjust-color($color: #fff, $blackness: 10%),
+        $color: adjust-color($color: #000, $whiteness: 90%)
+      );
+    }
   }
 
   &.style-1 {

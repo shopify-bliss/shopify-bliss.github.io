@@ -1,7 +1,14 @@
-import React, { useState, Fragment, useCallback, useEffect } from "react";
+import React, {
+  useState,
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+} from "react";
 import SiteInfo from "./SiteInfo/SiteInfo";
 import PagesAi from "./PagesAi/PagesAi";
 import ElementPages from "./ElementPages/ElementPages";
+import Colors from "./Colors/Colors";
 import { siteTitleSchema } from "../../helpers/ValidationSchema";
 import { toastMessage } from "../../helpers/AlertMessage";
 import { ToastContainer } from "react-toastify";
@@ -29,6 +36,16 @@ function AiBuilder() {
   const [dataElements, setDataElements] = useState([]);
   const [isLoadingPagesAi, setIsLoadingPagesAi] = useState(false);
   const [isLoadingElementPages, setIsLoadingElementPages] = useState(false);
+
+  const [activeColor, setActiveColor] = useState(1);
+  const [activeStyles, setActiveStyles] = useState({
+    navbar: 1,
+    intro: 1,
+    products: 1,
+    services: 1,
+    about: 1,
+    form: 1,
+  });
 
   const handleSiteTitleInput = useCallback((e) => {
     const inputSiteTitle = e.target.value;
@@ -146,6 +163,82 @@ function AiBuilder() {
     }
   }, [currentStep, fetchDataPages, fetchDataElements]);
 
+  const activeStylesTemplate = useMemo(
+    () => ({
+      intro: 1,
+      products: 1,
+      services: 1,
+      about: 1,
+      form: 1,
+      navbar: 1,
+    }),
+    []
+  );
+
+  useEffect(() => {
+    if (!currentPageId) return;
+
+    const currentActiveSections = activeSections[currentPageId] || [];
+    const updatedStyles = { ...activeStylesTemplate };
+
+    currentActiveSections.forEach((sectionId) => {
+      switch (sectionId) {
+        case "798f1ce0-b732-45a6-838e-f28e137243f7":
+          updatedStyles.intro = 1;
+          break;
+        case "b42d4d56-d411-4aa8-ae01-52f0c406328a":
+          updatedStyles.products = 1;
+          break;
+        case "4fd1e0cc-06f3-4554-9f79-ce8e02db03c8":
+          updatedStyles.services = 1;
+          break;
+        case "1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed":
+          updatedStyles.about = 1;
+          break;
+        case "2089ce88-93a7-4555-8d0d-7f88f1dc3a7e":
+          updatedStyles.form = 1;
+          break;
+        default:
+          break;
+      }
+    });
+
+    if (activePages.includes("2bff7888-e861-4341-869b-189af29ad3f8")) {
+      updatedStyles.navbar = 1;
+    }
+
+    setActiveStyles((prevStyles) => {
+      const hasChanges = Object.keys(updatedStyles).some(
+        (key) => prevStyles[key] !== updatedStyles[key]
+      );
+      return hasChanges ? updatedStyles : prevStyles;
+    });
+  }, [currentPageId, activeSections, activePages, activeStylesTemplate]);
+
+  const updateActiveStyle = useCallback(
+    (section, value) => {
+      setActiveStyles((prevStyles) => ({
+        ...prevStyles,
+        [section]: value,
+      }));
+    },
+    [setActiveStyles]
+  );
+
+  const handleActiveNavbar = (value) => updateActiveStyle("navbar", value);
+  const handleActiveIntro = (value) => updateActiveStyle("intro", value);
+  const handleActiveProducts = (value) => updateActiveStyle("products", value);
+  const handleActiveServices = (value) => updateActiveStyle("services", value);
+  const handleActiveAbout = (value) => updateActiveStyle("about", value);
+  const handleActiveForm = (value) => updateActiveStyle("form", value);
+
+  const handleActiveColor = useCallback(
+    (color) => {
+      setActiveColor(color);
+    },
+    [setActiveColor]
+  );
+
   const handleNext = () => {
     if (currentStep === 1) {
       if (activePages.length < 3) {
@@ -218,9 +311,43 @@ function AiBuilder() {
                 setCurrentPageId={setCurrentPageId}
                 dataElements={dataElements}
                 toastMessage={toastMessage}
+                activeNavbar={activeStyles.navbar}
+                handleActiveNavbar={handleActiveNavbar}
+                activeIntro={activeStyles.intro}
+                handleActiveIntro={handleActiveIntro}
+                activeProducts={activeStyles.products}
+                handleActiveProducts={handleActiveProducts}
+                activeServices={activeStyles.services}
+                handleActiveServices={handleActiveServices}
+                activeAbout={activeStyles.about}
+                handleActiveAbout={handleActiveAbout}
+                activeForm={activeStyles.form}
+                handleActiveForm={handleActiveForm}
+                activeColor={activeColor}
               />
             )}
           </>
+        )}
+        {currentStep === 3 && (
+          <Colors
+            activePages={activePages}
+            activeSections={activeSections}
+            handleActiveSection={handleActiveSection}
+            siteTitle={siteTitle}
+            dataPages={dataPages}
+            currentPageId={currentPageId}
+            setCurrentPageId={setCurrentPageId}
+            dataElements={dataElements}
+            toastMessage={toastMessage}
+            activeColor={activeColor}
+            handleActiveColor={handleActiveColor}
+            activeNavbar={activeStyles.navbar}
+            activeIntro={activeStyles.intro}
+            activeProducts={activeStyles.products}
+            activeServices={activeStyles.services}
+            activeAbout={activeStyles.about}
+            activeForm={activeStyles.form}
+          />
         )}
         <div className="ai-builder-steps">
           <div className="step-prev">

@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import horizontalLoop from "../../../helpers/horizontalLoop";
-import brandPersonalities from "../../../data/fonts.json";
+import brandPersonalities from "../../../data/brands.json";
 import {
   Logo,
   Quit,

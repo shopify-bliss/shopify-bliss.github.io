@@ -24,26 +24,32 @@ export const signupSchema = yup.object().shape({
     ),
 });
 
+export const recoverySchema = yup.object().shape({
+  email: yup.string().email("Invalid email").required("Email is required"),
+});
+
 export const userSchema = yup.object().shape({
   avatar: yup.string().required("Avatar is required"),
   username: yup.string().required("Username is required"),
   phoneNumber: yup.number().required("Phone number is required"),
 });
 
-export const updateProfileSchema = yup.object().shape({
-  avatar: yup.string().required("Avatar is required"),
+export const adminSchema = yup.object().shape({
+  email: yup.string().email("Invalid email").required("Email is required"),
   username: yup.string().required("Username is required"),
   phoneNumber: yup.number().required("Phone number is required"),
+  roleID: yup.string().required("Role is required"),
 });
 
-export const tempPagesSchema = yup.object().shape({
-  type: yup.string().required("Page name is required"),
-  icon: yup.string().required("Page icon is required"),
-  name_class: yup.string().required("Page class is required"),
-});
-
-export const TempSectionsSchema = yup.object().shape({
-  name: yup.string().required("Section name is required"),
+export const resetPasswordSchema = yup.object().shape({
+  oldPassword: yup.string().required("Current password is required"),
+  newPassword: yup
+    .string()
+    .required("Set password is required")
+    .notOneOf(
+      [yup.ref("oldPassword")],
+      "Set password must not be the same as current password"
+    ),
 });
 
 export const MenuManSchema = yup.object().shape({
@@ -69,4 +75,14 @@ export const RoleManSchema = yup.object().shape({
 export const updateUserRoleSchema = yup.object().shape({
   userID: yup.string().required("User Id is required"),
   role: yup.string().required("Role is required"),
+});
+
+export const tempPagesSchema = yup.object().shape({
+  type: yup.string().required("Page name is required"),
+  icon: yup.string().required("Page icon is required"),
+  name_class: yup.string().required("Page class is required"),
+});
+
+export const TempSectionsSchema = yup.object().shape({
+  name: yup.string().required("Section name is required"),
 });

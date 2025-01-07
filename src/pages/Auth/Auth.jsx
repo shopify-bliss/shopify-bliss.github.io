@@ -21,12 +21,10 @@ import {
   toastPromise,
   toastDevelop,
 } from "../../helpers/AlertMessage";
-import Cookies from "universal-cookie";
-import { jwtDecode } from "jwt-decode";
+import Cookies from "js-cookie";
 
 function Auth({ typeMain }) {
   axios.defaults.withCredentials = true;
-  const cookies = new Cookies(null, { path: "/" });
 
   const [values, setValues] = useState({
     email: "",
@@ -71,7 +69,11 @@ function Auth({ typeMain }) {
 
       window.history.replaceState({}, document.title, newUrl);
     } else if (getTokenParams && getRoleParams) {
-      cookies.set("shopify-bliss", getTokenParams);
+      Cookies.set("shopify-bliss", getTokenParams, {
+        path: "/",
+        secure: true,
+        sameSite: "Strict",
+      });
 
       params.delete("shopify-bliss");
       params.delete("role");
@@ -85,13 +87,15 @@ function Auth({ typeMain }) {
         state: { messageLoginGoogle: "Login successfully!" },
       });
     }
-  }, [searchParams, cookies, navigate]);
+  }, [searchParams, navigate]);
 
   useEffect(() => {
     axios
       .get("https://restcountries.com/v3.1/all")
       .then((res) => {
         const data = res.data;
+
+        // console.log(data);
 
         const getCodes = data
           .filter((item) => item.idd && item.idd.root)
@@ -183,7 +187,7 @@ function Auth({ typeMain }) {
               },
               () => {
                 if (statusSignup.current === true) {
-                  navigate("/verify-code", {
+                  navigate("/verify-email", {
                     state: {
                       email: values.email,
                     },
@@ -248,15 +252,13 @@ function Auth({ typeMain }) {
           .then((res) => {
             // console.log(res.data);
             const token = res.data.token;
-
             statusLogin.current = res.status;
 
-            cookies.set("shopify-bliss", token);
-            const decoded = jwtDecode(token);
-
-            if (!decoded.role) {
-              toastMessage("error", "Access denied. Role not recognized.");
-            }
+            Cookies.set("shopify-bliss", token, {
+              path: "/",
+              secure: true,
+              sameSite: "Strict",
+            });
 
             setValues("");
           })
@@ -282,6 +284,15 @@ function Auth({ typeMain }) {
       });
       navigate(location.pathname, {
         state: { ...location.state, messageNoEmail: undefined },
+        replace: true,
+      });
+    } else if (location.state?.messageTimeout) {
+      toastMessage("info", location.state.messageTimeout, {
+        position: "top-center",
+        autoClose: 5000,
+      });
+      navigate(location.pathname, {
+        state: { ...location.state, messageTimeout: undefined },
         replace: true,
       });
     }

@@ -17,10 +17,12 @@ function NavbarLayout({
   siteTitle,
   activePages,
   currentPageId,
-  activeIntroEl,
+  activeIntro,
   activeNavbar,
-  handleActiveNavbar,
+  handleActiveNavbar = null,
   toastMessage,
+  typeMain = null,
+  activeColor,
 }) {
   const [activeFeatures, setActiveFeatures] = useState([]);
   const [isExpandLayout, setIsExpandLayout] = useState(false);
@@ -55,14 +57,14 @@ function NavbarLayout({
     <>
       <div
         className={`display-data-navbar ${typeNavbarStyles.className} ${
-          activeIntroEl === 1
-            ? "intro-el-1"
-            : activeIntroEl === 2
-            ? "intro-el-2"
-            : activeIntroEl === 3
-            ? "intro-el-3"
-            : activeIntroEl === 4
-            ? "intro-el-4"
+          activeIntro === 1
+            ? "intro-1"
+            : activeIntro === 2
+            ? "intro-2"
+            : activeIntro === 3
+            ? "intro-3"
+            : activeIntro === 4
+            ? "intro-4"
             : ""
         }`}
       >
@@ -89,13 +91,15 @@ function NavbarLayout({
           </div>
         )}
 
-        <ChangeLayout
-          expandLayoutRef={expandLayoutRef}
-          isExpandLayout={isExpandLayout}
-          setIsExpandLayout={setIsExpandLayout}
-          onExpand={() => setIsExpandLayout(true)}
-          onCollapse={() => setIsExpandLayout(false)}
-        />
+        {typeMain === "element" && (
+          <ChangeLayout
+            expandLayoutRef={expandLayoutRef}
+            isExpandLayout={isExpandLayout}
+            setIsExpandLayout={setIsExpandLayout}
+            onExpand={() => setIsExpandLayout(true)}
+            onCollapse={() => setIsExpandLayout(false)}
+          />
+        )}
       </div>
       {isExpandLayout && (
         <div ref={expandLayoutRef} className="expalot-navbar">

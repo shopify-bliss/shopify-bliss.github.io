@@ -1,16 +1,20 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import axios from "axios";
 import urlEndpoint from "../../helpers/urlEndpoint";
-import { useAuth } from "../../helpers/AuthContext";
+import Cookies from "js-cookie";
 import { AuthValidationPassword } from "../../components/AuthSupport/AuthSupport";
-import { useLocation, useNavigate } from "react-router-dom";
+import { resetPasswordSchema } from "../../helpers/ValidationSchema";
+import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
 
 function Password() {
   axios.defaults.withCredentials = true;
 
+  const [data, setData] = useState({
+    oldPassword: "",
+    newPassword: "",
+  });
   const [hideCurrPassword, setHideCurrPassword] = useState(true);
   const [hideSetPassword, setHideSetPassword] = useState(true);
-
   const [validationPassword, setValidationPassword] = useState({
     length: false,
     uppercase: false,
@@ -19,16 +23,13 @@ function Password() {
     special: false,
   });
 
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const { token } = useAuth();
+  const { toastPromise, toastMessage, token } = useDashboard();
 
   const handleChange = useCallback(
     (e) => {
       const { name, value } = e.target;
 
-      if (name === "setPassword") {
+      if (name === "newPassword") {
         setValidationPassword({
           length: value.length >= 8,
           uppercase: /[A-Z]/.test(value),
@@ -37,20 +38,72 @@ function Password() {
           special: /[@$!%*?&#^()_\-+=]/.test(value),
         });
       }
+
+      setData((prev) => {
+        return {
+          ...prev,
+          [name]: value,
+        };
+      });
     },
-    [setValidationPassword]
+    [setValidationPassword, setData]
+  );
+
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+
+      resetPasswordSchema
+        .validate(data, { abortEarly: false })
+        .then(() => {
+          const resetPasswordPromise = axios.put(
+            urlEndpoint.updatePassword,
+            data,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          toastPromise(
+            resetPasswordPromise,
+            {
+              pending: "Reset password on progress, please wait..!",
+              success: "Reset password has been successfully updated!",
+              error: "Failed to reset password!",
+            },
+            { autoClose: 2500, position: "top-center" }
+          );
+
+          resetPasswordPromise
+            .then((res) => {
+              console.log(res.data);
+            })
+            .catch((error) => {
+              console.error("Error updating password:", error);
+            });
+        })
+        .catch((err) => {
+          err.inner.forEach((error) => {
+            toastMessage("error", error.message);
+          });
+        });
+    },
+    [data, urlEndpoint.updatePassword, token, toastPromise, toastMessage]
   );
 
   return (
-    <form className="core">
+    <form className="core" onSubmit={handleSubmit}>
       <div className="core-input">
         <div className="core-input-group core-input-pw">
-          <label htmlFor="currentPassword">Current Password</label>
+          <label htmlFor="oldPassword">Current Password</label>
           <input
             type={`${hideCurrPassword ? "password" : "text"}`}
-            id="currentPassword"
-            name="currentPassword"
+            id="oldPassword"
+            name="oldPassword"
             autoComplete="off"
+            onChange={handleChange}
           />
           <span
             className="material-symbols-outlined"
@@ -61,11 +114,11 @@ function Password() {
           <div className="input-border"></div>
         </div>
         <div className="core-input-group core-input-pw">
-          <label htmlFor="setPassword">Set New Password</label>
+          <label htmlFor="newPassword">Set New Password</label>
           <input
             type={`${hideSetPassword ? "password" : "text"}`}
-            id="setPassword"
-            name="setPassword"
+            id="newPassword"
+            name="newPassword"
             autoComplete="off"
             onChange={handleChange}
           />

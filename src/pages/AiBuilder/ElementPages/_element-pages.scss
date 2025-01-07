@@ -2,11 +2,13 @@
 @use "../../../helpers/variables" as v;
 @use "../../../components/AiBuilderSupport/ai-builder-support" as support;
 @use "../../../components/AiBuilderSupport/NavbarLayout/navbar-layout" as navbar;
-@use "./IntroEl/intro-el" as intro-el;
-@use "./ProductsEl/products-el" as products-el;
-@use "./ServicesEl/services-el" as services-el;
-@use "./AboutEl/about-el" as about-el;
-@use "./FormEl/form-el" as form-el;
+@use "../../../components/AiBuilderSupport/ElementsLayout/Intro/intro" as intro;
+@use "../../../components/AiBuilderSupport/ElementsLayout/Products/products" as
+  products;
+@use "../../../components/AiBuilderSupport/ElementsLayout/Services/services" as
+  services;
+@use "../../../components/AiBuilderSupport/ElementsLayout/About/about" as about;
+@use "../../../components/AiBuilderSupport/ElementsLayout/Form/form" as form;
 
 @mixin element-pages-overview() {
   .element-pages {
@@ -44,7 +46,7 @@
 
         &-navbar {
           grid-area: navbar;
-          @include navbar.navbar-layout($manipulation: true);
+          @include navbar.navbar-layout($manipulation: true, $element: true);
         }
 
         &-section {
@@ -53,27 +55,27 @@
           overflow-y: visible;
           height: max-content;
 
-          .intro-el {
-            @include intro-el.intro-el();
+          .intro {
+            @include intro.intro($element: true);
           }
 
-          .products-el {
-            @include products-el.products-el();
+          .products {
+            @include products.products($element: true);
           }
 
-          .services-el {
-            @include services-el.services-el();
+          .services {
+            @include services.services($element: true);
           }
 
-          .about-el {
-            @include about-el.about-el();
+          .about {
+            @include about.about($element: true);
           }
 
-          .form-el {
-            @include form-el.form-el();
+          .form {
+            @include form.form($element: true);
           }
 
-          .text {
+          .no-element {
             font-size: 22px;
             font-weight: 500;
           }

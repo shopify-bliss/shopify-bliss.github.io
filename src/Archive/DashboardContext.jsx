@@ -12,7 +12,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
 import urlEndpoint from "../../helpers/urlEndpoint";
-import { useDataToken } from "../../helpers/DataToken";
+import Cookies from "js-cookie";
 
 const DashboardContext = createContext({
   activeMenu: null,
@@ -40,7 +40,7 @@ export const DashboardProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
-  const { token } = useDataToken();
+  // const token = //Cookies.get("shopify-bliss");
 
   useEffect(() => {
     const fetchDashboardData = async () => {

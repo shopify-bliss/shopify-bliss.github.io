@@ -1,26 +1,18 @@
 @use "../../../helpers/variables" as v;
 
 $personality-font-classes: (
-  font-friendly: v.$open-sans,
-  font-friendly-reverse: v.$raleway,
-  font-professional: v.$roboto,
-  font-professional-reverse: v.$georgia,
-  font-luxury: v.$abril-fatface,
-  font-luxury-reverse: v.$cormorant-garamond,
-  font-innovative: v.$space-mono,
-  font-innovative-reverse: v.$orbitron,
-  font-bold: v.$anton,
-  font-bold-reverse: v.$bebas-neue,
-  font-classic: v.$lora,
-  font-classic-reverse: v.$pt-serif,
-  font-edgy: v.$oswald,
-  font-edgy-reverse: v.$russo-one,
-  font-playful: v.$poppins,
-  font-playful-reverse: v.$fredoka-one,
-  font-sophisticated: v.$playfair-display,
-  font-sophisticated-reverse: v.$merriweather,
-  font-quirky: v.$lobster,
-  font-quirky-reverse: v.$pacifico,
+  font-professional: v.$merriweather,
+  font-professional-reverse: v.$fira-sans-extra-condensed,
+  font-friendly: v.$amatic-sc,
+  font-friendly-reverse: v.$roboto-condensed,
+  font-luxury: v.$cinzel,
+  font-luxury-reverse: v.$josefin-sans,
+  font-innovative: v.$bebas-neue,
+  font-innovative-reverse: v.$ibm-plex-mono,
+  font-classic: v.$cormorant-garamond,
+  font-classic-reverse: v.$archivo-black,
+  font-playful: v.$lobster,
+  font-playful-reverse: v.$raleway,
 );
 
 // ===== Function Fonts ===== //
@@ -28,4 +20,12 @@ $personality-font-classes: (
   .#{$class-name} {
     font-family: #{$font};
   }
+}
+
+.font-playful-reverse {
+  font-weight: 100;
+}
+
+.font-professional {
+  font-weight: 100;
 }

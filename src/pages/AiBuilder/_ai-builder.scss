@@ -6,6 +6,8 @@
 @use "./SiteInfo/site-info" as site-info;
 @use "./PagesAi/pages-ai" as pages-ai;
 @use "./ElementPages/element-pages" as element-pages;
+@use "./Colors/colors" as colors;
+@use "./Colors/each-color-function";
 
 .ai-builder {
   width: 100%;
@@ -29,6 +31,7 @@
     @include site-info.site-info-overview();
     @include pages-ai.pages-ai-overview();
     @include element-pages.element-pages-overview();
+    @include colors.colors-overview();
   }
 
   &-content {
@@ -41,6 +44,7 @@
     @include site-info.site-info-content();
     @include pages-ai.pages-ai-content();
     @include element-pages.element-pages-content();
+    @include colors.colors-content();
   }
 
   &-steps {
@@ -52,9 +56,12 @@
     padding: 0 v.$px-main;
     box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, 0.15);
     background-color: #fff;
+    position: relative;
+    z-index: 41;
 
     @include steps.steps();
 
-    background: url("../../../assets/images/ai-builder/ai-builder-bg.jpg") no-repeat center center;
+    background: url("../../../assets/images/ai-builder/ai-builder-bg.jpg")
+      no-repeat center center;
   }
 }

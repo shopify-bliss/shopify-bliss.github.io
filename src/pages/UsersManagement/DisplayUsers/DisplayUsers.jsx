@@ -2,13 +2,13 @@ import React, { useState, useCallback, useEffect } from "react";
 import { Header } from "../../../components/LayoutDashboard/Support/SupportDashboard";
 import axios from "axios";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { useAuth } from "../../../helpers/AuthContext";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import DisplayUsersModal from "./DisplayUsersModal";
 
 function DisplayView({
-  isLoading,
+  isLoadingDashboard,
   users,
+  user,
   setUserId,
   setIsUpdateModalOpen,
   setIsDeleteModalOpen,
@@ -16,7 +16,7 @@ function DisplayView({
 }) {
   return (
     <>
-      {isLoading && (
+      {isLoadingDashboard && (
         <div className="loader-pages">
           <div className="loader-pages-item"></div>
         </div>
@@ -25,6 +25,11 @@ function DisplayView({
         <div className="display-users-grid">
           {users.map((data) => {
             const avatar = `/avatar/${data.avatar}`;
+            const validRole =
+              user.role_id === "3de65f44-6341-4b4d-8d9f-c8ca3ea80b80"
+                ? data.role_id === "3de65f44-6341-4b4d-8d9f-c8ca3ea80b80"
+                : data.role_id === "3de65f44-6341-4b4d-8d9f-c8ca3ea80b80" ||
+                  data.role_id === "0057ae60-509f-40de-a637-b2b6fdc1569e";
 
             return (
               <div className="item" key={data.user_id}>
@@ -35,41 +40,73 @@ function DisplayView({
                 <div className="item-action">
                   <div
                     className={`item-action-role ${
-                      data.role === "admin" ? "" : "customer"
+                      data.roles.role_name === "super admin"
+                        ? "super-admin"
+                        : data.roles.role_name === "admin"
+                        ? "admin"
+                        : data.roles.role_name === "customer"
+                        ? "customer"
+                        : ""
                     }`}
                   >
                     <span
                       className={`material-symbols-outlined item-action-role-icon ${
-                        data.role === "admin" ? "" : "customer"
+                        data.roles.role_name === "super admin"
+                          ? "super-admin"
+                          : data.roles.role_name === "admin"
+                          ? "admin"
+                          : data.roles.role_name === "customer"
+                          ? "customer"
+                          : ""
                       }`}
                     >
-                      {data.role === "admin" ? "manage_accounts" : "person"}
+                      {data.roles.role_name === "super admin"
+                        ? "admin_panel_settings"
+                        : data.roles.role_name === "admin"
+                        ? "manage_accounts"
+                        : data.roles.role_name === "customer"
+                        ? "person"
+                        : "deployed_code_account"}
                     </span>
                     <span
                       className={`item-action-role-text ${
-                        data.role === "admin" ? "" : "customer"
+                        data.roles.role_name === "super admin"
+                          ? "super-admin"
+                          : data.roles.role_name === "admin"
+                          ? "admin"
+                          : data.roles.role_name === "customer"
+                          ? "customer"
+                          : ""
                       }`}
                     >
-                      {data.role || "Super Whooo"}
+                      {data.roles.role_name || "Super Whooo"}
                     </span>
                   </div>
                   <span
                     className="material-symbols-rounded item-action-edit"
-                    onClick={() => {
-                      setIsUpdateModalOpen(true);
-                      setUserId(data.user_id);
-                    }}
+                    onClick={
+                      validRole
+                        ? null
+                        : () => {
+                            setIsUpdateModalOpen(true);
+                            setUserId(data.user_id);
+                          }
+                    }
                   >
-                    edit_square
+                    {validRole ? "block" : "edit_square"}
                   </span>
                   <span
                     className="material-symbols-rounded item-action-delete"
-                    onClick={() => {
-                      setIsDeleteModalOpen(true);
-                      setUserId(data.user_id);
-                    }}
+                    onClick={
+                      validRole
+                        ? null
+                        : () => {
+                            setIsDeleteModalOpen(true);
+                            setUserId(data.user_id);
+                          }
+                    }
                   >
-                    delete
+                    {validRole ? "block" : "delete"}
                   </span>
                 </div>
               </div>
@@ -87,6 +124,11 @@ function DisplayView({
           </div>
           {users.map((data, index) => {
             const avatar = `/avatar/${data.avatar}`;
+            const validRole =
+              user.role_id === "3de65f44-6341-4b4d-8d9f-c8ca3ea80b80"
+                ? data.role_id === "3de65f44-6341-4b4d-8d9f-c8ca3ea80b80"
+                : data.role_id === "3de65f44-6341-4b4d-8d9f-c8ca3ea80b80" ||
+                  data.role_id === "0057ae60-509f-40de-a637-b2b6fdc1569e";
 
             return (
               <div className="body" key={data.user_id}>
@@ -102,30 +144,44 @@ function DisplayView({
                 <div className="body-col">
                   <div
                     className={`body-col-role ${
-                      data.role === "admin" ? "" : "customer"
+                      data.roles.role_name === "super admin"
+                        ? "super-admin"
+                        : data.roles.role_name === "admin"
+                        ? "admin"
+                        : data.roles.role_name === "customer"
+                        ? "customer"
+                        : ""
                     }`}
                   >
-                    {data.role || "Super Whooo"}
+                    {data.roles.role_name || "Super Whooo"}
                   </div>
                 </div>
                 <div className="body-col">
                   <span
                     className="material-symbols-rounded edit"
-                    onClick={() => {
-                      setIsUpdateModalOpen(true);
-                      setUserId(data.user_id);
-                    }}
+                    onClick={
+                      validRole
+                        ? null
+                        : () => {
+                            setIsUpdateModalOpen(true);
+                            setUserId(data.user_id);
+                          }
+                    }
                   >
-                    edit_square
+                    {validRole ? "block" : "edit_square"}
                   </span>
                   <span
                     className="material-symbols-rounded delete"
-                    onClick={() => {
-                      setIsDeleteModalOpen(true);
-                      setUserId(data.user_id);
-                    }}
+                    onClick={
+                      validRole
+                        ? null
+                        : () => {
+                            setIsDeleteModalOpen(true);
+                            setUserId(data.user_id);
+                          }
+                    }
                   >
-                    delete
+                    {validRole ? "block" : "delete"}
                   </span>
                 </div>
               </div>
@@ -140,21 +196,21 @@ function DisplayView({
 function DisplayUsers() {
   axios.defaults.withCredentials = true;
   const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [activeDisplay, setActiveDisplay] = useState("list");
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [userId, setUserId] = useState("");
 
-  const { token } = useAuth();
+  const { token, user, isLoadingDashboard, setDashboardLoader } =
+    useDashboard();
 
   const handleDisplayChange = useCallback((display) => {
     setActiveDisplay(display);
   }, []);
 
   const fetchUsers = useCallback(async () => {
-    setIsLoading(true);
+    setDashboardLoader(true);
 
     try {
       const response = await axios.get(urlEndpoint.allusers, {
@@ -167,13 +223,13 @@ function DisplayUsers() {
     } catch (error) {
       console.error(error);
     } finally {
-      setIsLoading(false);
+      setDashboardLoader(false);
     }
-  }, [token, urlEndpoint.allusers]);
+  }, [urlEndpoint.allusers, token]);
 
   useEffect(() => {
     fetchUsers();
-  }, [fetchUsers]);
+  }, []);
 
   return (
     <>
@@ -187,8 +243,9 @@ function DisplayUsers() {
         />
         {activeDisplay === "grid" ? (
           <DisplayView
-            isLoading={isLoading}
+            isLoadingDashboard={isLoadingDashboard}
             users={users}
+            user={user}
             setUserId={setUserId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}
             setIsDeleteModalOpen={setIsDeleteModalOpen}
@@ -196,8 +253,9 @@ function DisplayUsers() {
           />
         ) : (
           <DisplayView
-            isLoading={isLoading}
+            isLoadingDashboard={isLoadingDashboard}
             users={users}
+            user={user}
             setUserId={setUserId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}
             setIsDeleteModalOpen={setIsDeleteModalOpen}

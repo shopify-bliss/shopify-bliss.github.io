@@ -15,11 +15,14 @@ const urlEndpoint = {
   submenusId: `${baseUrl}/api/sub-menu-id`,
   accessManagement: `${baseUrl}/api/access-management`,
   allusers: `${baseUrl}/api/all-user`,
+  addAdmin: `${baseUrl}/api/add-admin`,
   userId: `${baseUrl}/api/user`,
   role: `${baseUrl}/auth/role`,
   roleId: `${baseUrl}/auth/role-id`,
   updateUserRole: `${baseUrl}/api/role-update`,
-  otpPassword: `${baseUrl}/auth/otp-password`,
+  sendOtpPassword: `${baseUrl}/api/send-otp`,
+  verifyOtpPassword: `${baseUrl}/api/otp-password`,
+  updatePassword: `${baseUrl}/api/update-password`,
 };
 
 export default urlEndpoint;

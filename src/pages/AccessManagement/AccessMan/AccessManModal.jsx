@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
-import { useAuth } from "../../../helpers/AuthContext";
+
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import { AccessManSchema } from "../../../helpers/ValidationSchema";
@@ -24,8 +24,7 @@ function AccessManModal({
   const listMenuRef = useRef(null);
   const listRoleRef = useRef(null);
 
-  const { toastMessage, toastPromise, menus } = useDashboard();
-  const { token } = useAuth();
+  const { toastMessage, toastPromise, menus, token } = useDashboard();
 
   const handleClickOutside = useCallback(
     (e) => {
@@ -95,7 +94,6 @@ function AccessManModal({
             },
             () => {
               onClose();
-              refreshData();
             }
           );
           elementsAiPromise.catch((error) => {
@@ -113,7 +111,6 @@ function AccessManModal({
       valueRole,
       valueMenu,
       onClose,
-      refreshData,
       token,
       accessId,
       toastMessage,
@@ -148,7 +145,6 @@ function AccessManModal({
         },
         () => {
           onClose();
-          refreshData();
         }
       );
 
@@ -156,14 +152,7 @@ function AccessManModal({
         console.error("Error deleting access data:", error);
       });
     },
-    [
-      token,
-      toastPromise,
-      accessId,
-      onClose,
-      refreshData,
-      urlEndpoint.accessManagement,
-    ]
+    [token, toastPromise, accessId, onClose, urlEndpoint.accessManagement]
   );
 
   return (

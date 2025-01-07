@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import { useAuth } from "../../../helpers/AuthContext";
+
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import { RoleManSchema } from "../../../helpers/ValidationSchema";
@@ -13,8 +13,7 @@ function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
     roleName: "",
   });
 
-  const { toastMessage, toastPromise } = useDashboard();
-  const { token } = useAuth();
+  const { toastMessage, toastPromise, token } = useDashboard();
 
   useEffect(() => {
     if (onOpen && type === "create") {

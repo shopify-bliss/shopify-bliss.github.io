@@ -3,7 +3,7 @@ import { Header } from "../../../components/LayoutDashboard/Support/SupportDashb
 import axios from "axios";
 import RoleManModal from "./RoleManModal";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
-import { useAuth } from "../../../helpers/AuthContext";
+
 import urlEndpoint from "../../../helpers/urlEndpoint";
 
 function DisplayView({
@@ -98,8 +98,7 @@ function RoleMan() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [roleId, setRoleId] = useState(null);
 
-  const { token } = useAuth();
-  const { fetchDashboardData } = useDashboard();
+  const { fetchDashboardData, token } = useDashboard();
 
   const handleDisplayChange = useCallback((display) => {
     setActiveDisplay(display);

@@ -1,0 +1,93 @@
+$colors-classes: (
+  // Professional 1
+  color-font-000000: #000000,
+  color-special-000000: #000000,
+  color-other-EAEAEA: #eaeaea,
+  color-bg-FFFFFF: #ffffff,
+
+  // Professional 2
+  color-font-2A2A72: #2a2a72,
+  color-special-2A2A72: #2a2a72,
+  color-other-3A6F77: #3a6f77,
+  color-bg-EDEFF2: #edeff2,
+
+  // Friendly 1
+  color-font-5A4634: #5a4634,
+  color-special-5A4634: #5a4634,
+  color-other-A7E9AF: #a7e9af,
+  color-bg-FFF8E7: #fff8e7,
+
+  // Friendly 2
+  color-font-4A4A4A: #4a4a4a,
+  color-special-4A4A4A: #4a4a4a,
+  color-other-A6DCEF: #a6dcef,
+  color-bg-FFF7CC: #fff7cc,
+
+  // Luxury 1
+  color-font-0A0A0A: #0a0a0a,
+  color-special-0A0A0A: #0a0a0a,
+  color-other-C9B037: #c9b037,
+  color-bg-F7E1D7: #f7e1d7,
+
+  // Luxury 2
+  color-font-4B0E16: #4b0e16,
+  color-special-4B0E16: #4b0e16,
+  color-other-A97142: #a97142,
+  color-bg-FFFFF0: #fffff0,
+
+  // Innovative 1
+  color-font-3C3C3C: #3c3c3c,
+  color-special-3C3C3C: #3c3c3c,
+  color-other-00BCD4: #00bcd4,
+  color-bg-F9F9F9: #f9f9f9,
+
+  // Innovative 2
+  color-font-2A2F4F: #2a2f4f,
+  color-special-2A2F4F: #2a2f4f,
+  color-other-39FF14: #39ff14,
+  color-bg-ECEFF1: #eceff1,
+
+  // Classic 1
+  color-font-001F3F: #001f3f,
+  color-special-001F3F: #001f3f,
+  color-other-014421: #014421,
+  color-bg-F5F5F5: #f5f5f5,
+
+  // Classic 2
+  color-font-1C1C1C: #1c1c1c,
+  color-special-1C1C1C: #1c1c1c,
+  color-other-DC143C: #dc143c,
+  color-bg-F5F5DC: #f5f5dc,
+
+  // Playful 1
+  color-font-682C91: #682c91,
+  color-special-682C91: #682c91,
+  color-other-FFD700: #ffd700,
+  color-bg-F3E8FF: #f3e8ff,
+
+  // Playful 2
+  color-font-D0006F: #d0006f,
+  color-special-D0006F: #d0006f,
+  color-other-FFA500: #ffa500,
+  color-bg-E0FFFF: #e0ffff
+);
+
+@each $class-color, $color in $colors-classes {
+  @if str-index($class-color, "color-font-") {
+    .#{$class-color} {
+      color: #{$color};
+    }
+  } @else if str-index($class-color, "color-special-") {
+    .#{$class-color} {
+      background-color: #{$color};
+    }
+  } @else if str-index($class-color, "color-other-") {
+    .#{$class-color} {
+      background-color: #{$color};
+    }
+  } @else if str-index($class-color, "color-bg-") {
+    .#{$class-color} {
+      background-color: #{$color};
+    }
+  }
+}

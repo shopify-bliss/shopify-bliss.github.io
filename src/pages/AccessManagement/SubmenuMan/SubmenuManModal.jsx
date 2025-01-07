@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
-import { useAuth } from "../../../helpers/AuthContext";
+
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import { SubmenuManSchema } from "../../../helpers/ValidationSchema";
@@ -16,8 +16,7 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
 
   const listMenuRef = useRef(null);
 
-  const { toastMessage, toastPromise, menus } = useDashboard();
-  const { token } = useAuth();
+  const { toastMessage, toastPromise, menus, token } = useDashboard();
 
   const handleClickOutside = useCallback(
     (e) => {

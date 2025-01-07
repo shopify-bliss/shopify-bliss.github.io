@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "professional",
+    "fontClass": "font-professional",
+    "fontClassReverse": "font-professional-reverse"
+  },
+  {
+    "id": 2,
+    "name": "friendly",
+    "fontClass": "font-friendly",
+    "fontClassReverse": "font-friendly-reverse"
+  },
+  {
+    "id": 3,
+    "name": "luxury",
+    "fontClass": "font-luxury",
+    "fontClassReverse": "font-luxury-reverse"
+  },
+  {
+    "id": 4,
+    "name": "innovative",
+    "fontClass": "font-innovative",
+    "fontClassReverse": "font-innovative-reverse"
+  },
+  {
+    "id": 5,
+    "name": "classic",
+    "fontClass": "font-classic",
+    "fontClassReverse": "font-classic-reverse"
+  },
+  {
+    "id": 6,
+    "name": "playful",
+    "fontClass": "font-playful",
+    "fontClassReverse": "font-playful-reverse"
+  }
+]

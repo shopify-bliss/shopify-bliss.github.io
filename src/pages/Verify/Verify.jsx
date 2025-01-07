@@ -112,7 +112,11 @@ function Verify({ typeMain }) {
             },
             () => {
               if (statusRecovery.current === true) {
-                navigate("/login");
+                navigate("/reset-password", {
+                  state: {
+                    email: location.state.email,
+                  },
+                });
               }
             }
           );
@@ -134,16 +138,16 @@ function Verify({ typeMain }) {
     [typeMain, code, urlEndpoint.verifyEmail, urlEndpoint.otpPassword, navigate]
   );
 
-  useEffect(() => {
-    if (!location.state) {
-      navigate("/login", {
-        state: {
-          messageNoEmail:
-            "Email is missing. Please go back to the previous step and ensure your email is entered correctly!",
-        },
-      });
-    }
-  }, [navigate, location.state]);
+  // useEffect(() => {
+  //   if (!location.state) {
+  //     navigate("/login", {
+  //       state: {
+  //         messageNoEmail:
+  //           "Email is missing. Please go back to the previous step and ensure your email is entered correctly!",
+  //       },
+  //     });
+  //   }
+  // }, [navigate, location.state]);
 
   return (
     <>

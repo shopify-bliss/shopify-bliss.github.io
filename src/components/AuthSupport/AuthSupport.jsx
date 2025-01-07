@@ -27,16 +27,24 @@ export function AuthHeader({ type, classDiff = "auth" }) {
         <Link className={`${classDiff}-header-link`} to={"/signup"}>
           Create Account
         </Link>
-      ) : (
-        <div className={`${classDiff}-header-link`}>Verify Code</div>
-      )}
+      ) : type === "verify" ? (
+        <div className={`${classDiff}-header-link`}>Verify Email Code</div>
+      ) : type === "verify-password" ? (
+        <div className={`${classDiff}-header-link`}>Verify Password Code</div>
+      ) : type === "recovery" ? (
+        <div className={`${classDiff}-header-link`}>Recovery Account</div>
+      ) : null}
     </>
   );
 }
 
-export function AuthTitle({ logo, type, classDiff = "auth" }) {
+export function AuthTitle({ logo, type, classDiff = "auth", email = null }) {
   return (
-    <div className={`${classDiff}-content-title`}>
+    <div
+      className={`${classDiff}-content-title ${
+        type === "recovery" ? "recovery" : ""
+      }`}
+    >
       <img className="logo" src={logo} alt="Shopify Bliss Logo" />
       {type === "signup" ? (
         <div className="text">Create Your Account</div>
@@ -46,7 +54,7 @@ export function AuthTitle({ logo, type, classDiff = "auth" }) {
         </div>
       ) : type === "verify" ? (
         <>
-          <div className="text">Verification Email!</div>
+          <div className="text">Verification Email to Registration</div>
           <div className="desc">
             Please check your email inbox for a 6-digit verification code we
             have sent to your registered email address. Enter the code in the
@@ -54,16 +62,33 @@ export function AuthTitle({ logo, type, classDiff = "auth" }) {
             process.
           </div>
         </>
-      ) : (
+      ) : type === "verify-password" ? (
         <>
-          <div className="text">Reset Password!</div>
+          <div className="text">Verification Email to Reset Password</div>
           <div className="desc">
             Please check your email inbox for a 6-digit verification code we
-            have sent to your email address. Enter the code in the field below
-            to confirm your email and complete the reset password process.
+            have sent to your recovered email address. Enter the code in the
+            field below to confirm your email and complete the reset password
+            process.
           </div>
         </>
-      )}
+      ) : type === "recovery" ? (
+        <>
+          <div className="text">Recovery Your Account</div>
+          <div className="desc">
+            Enter your account's email and we'll send you an otp code in the
+            email to reset the password.
+          </div>
+        </>
+      ) : type === "reset-password" ? (
+        <>
+          <div className="text">Reset Password</div>
+          <div className="desc">
+            Enter a new password for your account and confirm it.
+            {email && <div className="desc-email">{email}</div>}
+          </div>
+        </>
+      ) : null}
     </div>
   );
 }

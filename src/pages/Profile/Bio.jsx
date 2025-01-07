@@ -3,14 +3,13 @@ import avatar from "../../data/avatar.json";
 import axios from "axios";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../helpers/urlEndpoint";
-import { useAuth } from "../../helpers/AuthContext";
-import { updateProfileSchema } from "../../helpers/ValidationSchema";
+import { userSchema } from "../../helpers/ValidationSchema";
 
 function Bio({ onClose }) {
   axios.defaults.withCredentials = true;
 
-  const { user, toastPromise, toastMessage } = useDashboard();
-  const { token } = useAuth();
+  const { user, toastPromise, toastMessage, token, fetchDashboardData } =
+    useDashboard();
 
   const [activeAvatar, setActiveAvatar] = useState(user?.avatar);
   const [showAvatar, setShowAvatar] = useState(false);
@@ -73,7 +72,7 @@ function Bio({ onClose }) {
         phoneNumber: data.phoneNumber,
       };
 
-      updateProfileSchema
+      userSchema
         .validate(formData, {
           abortEarly: false,
         })
@@ -96,10 +95,9 @@ function Bio({ onClose }) {
             },
             () => {
               onClose();
+              fetchDashboardData();
             }
           );
-
-          console.log(response.data);
         })
         .catch((errors) => {
           errors.inner.forEach((error) => {
@@ -107,7 +105,17 @@ function Bio({ onClose }) {
           });
         });
     },
-    [activeAvatar, data, urlEndpoint.userId, token]
+    [
+      userSchema,
+      activeAvatar,
+      data,
+      urlEndpoint.userId,
+      token,
+      toastPromise,
+      onClose,
+      fetchDashboardData,
+      toastMessage,
+    ]
   );
 
   return (
@@ -125,7 +133,10 @@ function Bio({ onClose }) {
                   key={index}
                   src={`/avatar/${avatar.image}`}
                   alt="Avatar List"
-                  onClick={() => setActiveAvatar(avatar.image)}
+                  onClick={() => {
+                    setActiveAvatar(avatar.image);
+                    setShowAvatar(false);
+                  }}
                 />
               );
             })}

@@ -104,6 +104,10 @@
         line-height: 135%;
         margin-top: -0.1rem;
       }
+
+      &.recovery {
+        margin-top: 2.6rem;
+      }
     }
 
     &-core {
@@ -117,6 +121,12 @@
       &.signup {
         width: 37.5%;
         grid-template-columns: 1fr;
+      }
+
+      &.recovery {
+        width: 37.5%;
+        grid-template-columns: 1fr;
+        height: 30vh;
       }
 
       .form {

@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Logo } from "../../AiBuilderSupport/AiBuilderSupport";
 import { useDashboard } from "../DashboardContext";
-import profileImage from "../../../assets/images/elements/intro/pexels-alancabello-1291515.jpg";
-import Cookies from "universal-cookie";
-import { useAuth } from "../../../helpers/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import Profile from "../../../pages/Profile/Profile";
+import Cookies from "js-cookie";
 
 function Topbar() {
   const [isAccountModal, setIsAccountModal] = useState(false);
@@ -21,9 +19,8 @@ function Topbar() {
     toastDevelop,
     menus,
     user,
+    token,
   } = useDashboard();
-  const { token } = useAuth();
-
   const navigate = useNavigate();
 
   const handleOutsideModal = useCallback(
@@ -49,9 +46,7 @@ function Topbar() {
 
   const handleLogout = useCallback(() => {
     if (token) {
-      const cookies = new Cookies(null, { path: "/" });
-
-      cookies.remove("shopify-bliss");
+      Cookies.remove("shopify-bliss");
       navigate("/login", { state: { messageLogout: "Logout successfully!" } });
     }
   }, [token]);
@@ -91,7 +86,7 @@ function Topbar() {
             onClick={() => setIsAccountModal(true)}
           >
             <div className="text">Account Setting</div>
-            <img src={profileImage} alt="Profile image's" />
+            <img src={`/avatar/${user?.avatar}`} alt="Profile image's" />
           </div>
           {isAccountModal ? (
             <div className="account-modal" ref={modalRef}>

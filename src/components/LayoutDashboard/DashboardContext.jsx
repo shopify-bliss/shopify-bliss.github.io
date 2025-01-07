@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   toastMessage,
   toastDevelop,
@@ -13,9 +13,9 @@ import {
 } from "../../helpers/AlertMessage";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
-import urlEndpoint from "../../helpers/urlEndpoint";
-import { useAuth } from "../../helpers/AuthContext";
 import { jwtDecode } from "jwt-decode";
+import Cookies from "js-cookie";
+import urlEndpoint from "../../helpers/urlEndpoint";
 
 const DashboardContext = createContext({
   activeMenu: null,
@@ -30,6 +30,9 @@ const DashboardContext = createContext({
   toastPromise: null,
   fetchDashboardData: () => {},
   user: null,
+  token: null,
+  isLoadingDashboard: false,
+  setDashboardLoader: () => {},
 });
 
 export const DashboardProvider = ({ children }) => {
@@ -42,15 +45,41 @@ export const DashboardProvider = ({ children }) => {
   const [submenus, setSubmenus] = useState([]);
   const [accessMenus, setAccessMenus] = useState([]);
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  const [isLoadingDashboard, setIsLoadingDashboard] = useState(false);
 
   const location = useLocation();
-  const { token } = useAuth();
+  const navigate = useNavigate();
+
+  const setDashboardLoader = useCallback(
+    (loading) => {
+      setIsLoadingDashboard(loading);
+    },
+    [setIsLoadingDashboard]
+  );
+
+  useEffect(() => {
+    const tokenFromCookies = Cookies.get("shopify-bliss");
+
+    if (tokenFromCookies) {
+      setToken(tokenFromCookies);
+    } else {
+      navigate("/login", { replace: true });
+    }
+  }, [navigate]);
 
   const fetchDashboardData = useCallback(async () => {
-    const currentPath = location.pathname.replace("/", "");
-    const decoded = jwtDecode(token);
+    setDashboardLoader(true);
+
+    if (!token) {
+      navigate("/401", { replace: true });
+      return;
+    }
 
     try {
+      const decoded = jwtDecode(token);
+      const currentPath = location.pathname.replace("/", "");
+
       const [menuResponse, submenuResponse, accessMenuResponse, userResponse] =
         await Promise.all([
           axios.get(urlEndpoint.menus),
@@ -64,7 +93,7 @@ export const DashboardProvider = ({ children }) => {
               Authorization: `Bearer ${token}`,
             },
           }),
-          axios.get(`${urlEndpoint.userId}?id=${decoded.user_id}`, {
+          axios.get(`${urlEndpoint.userId}?userID=${decoded.user_id}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -93,8 +122,11 @@ export const DashboardProvider = ({ children }) => {
       }
     } catch (err) {
       console.error("Error fetching dashboard data:", err);
+      navigate("/login", { replace: true });
+    } finally {
+      setDashboardLoader(false);
     }
-  }, [token, location.pathname, urlEndpoint]);
+  }, [token, location.pathname, navigate]);
 
   useEffect(() => {
     if (token) {
@@ -105,6 +137,14 @@ export const DashboardProvider = ({ children }) => {
   const handleSubmenuPage = useCallback((submenuName) => {
     setSubmenuPage(submenuName);
   }, []);
+
+  if (isLoadingDashboard) {
+    return (
+      <div className="loader-pages">
+        <div className="loader-pages-item"></div>
+      </div>
+    );
+  }
 
   return (
     <DashboardContext.Provider
@@ -121,6 +161,9 @@ export const DashboardProvider = ({ children }) => {
         toastPromise,
         fetchDashboardData,
         user,
+        token,
+        isLoadingDashboard,
+        setDashboardLoader,
       }}
     >
       {children}

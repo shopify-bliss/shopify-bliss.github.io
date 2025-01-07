@@ -2,15 +2,16 @@ import React, { useEffect, useState, useCallback, useRef } from "react";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
 import Password from "./Password";
 import Bio from "./Bio";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../helpers/AuthContext";
 import Modal from "../../components/LayoutDashboard/Modal/Modal";
-import Verify from "./Verify";
+import VerifyDashboard from "./VerifyDashboard";
+import axios from "axios";
+import urlEndpoint from "../../helpers/urlEndpoint";
 
 function Profile({ onClose, onOpen }) {
   if (!onOpen) return null;
+  axios.defaults.withCredentials = true;
 
-  const { submenus } = useDashboard();
+  const { submenus, toastPromise, token, user } = useDashboard();
 
   const [currentSubmenu, setCurrentSubmenu] = useState(
     submenus.filter(
@@ -21,11 +22,6 @@ function Profile({ onClose, onOpen }) {
   );
   const [openConfirm, setOpenConfirm] = useState(false);
   const [resetPassword, setResetPassword] = useState(false);
-
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const { token } = useAuth();
 
   const handleCurrentSubmenu = useCallback(
     (submenuId) => {
@@ -41,6 +37,54 @@ function Profile({ onClose, onOpen }) {
     [resetPassword]
   );
 
+  const handleConfirmReset = useCallback(
+    (e) => {
+      e.preventDefault();
+
+      setCurrentSubmenu("a14736d9-7bcc-4eef-9be3-2015223cc5ed");
+
+      const sendOtpPasswordPromise = axios.post(
+        urlEndpoint.sendOtpPassword,
+        { email: user.email },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      toastPromise(
+        sendOtpPasswordPromise,
+        {
+          pending: "Sending OTP password on progress, please wait..!",
+          success: "OTP password sent successfully.",
+          error: "Failed to send OTP password.",
+        },
+        {
+          position: "top-center",
+          autoClose: 2500,
+        },
+        () => {
+          setOpenConfirm(false);
+          setResetPassword(true);
+
+          setTimeout(() => {
+            setResetPassword(false);
+          }, 60000);
+        }
+      );
+
+      sendOtpPasswordPromise
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    [urlEndpoint.sendOtpPassword, token, toastPromise]
+  );
+
   // useEffect(() => {
   //   console.log(resetPassword);
   // }, [resetPassword]);
@@ -51,7 +95,6 @@ function Profile({ onClose, onOpen }) {
         className="overlay-modal-menu"
         onClick={() => {
           onClose();
-          setResetPassword(false);
         }}
       >
         <div
@@ -135,12 +178,12 @@ function Profile({ onClose, onOpen }) {
               </span>
             </div>
             {currentSubmenu === "0977a7d1-7ee9-4b68-8e3d-edad0ef87a56" ? (
-              <Bio onClose={() => setOpenConfirm(false)} />
+              <Bio onClose={onClose} />
             ) : currentSubmenu === "d86578b0-4497-4d43-bdad-0f50af1011aa" &&
               resetPassword ? (
               <Password />
             ) : (
-              <Verify />
+              <VerifyDashboard setCurrentSubmenu={setCurrentSubmenu} />
             )}
           </div>
         </div>
@@ -151,7 +194,6 @@ function Profile({ onClose, onOpen }) {
         descModal="If you sure want to change your password, please check your email for a verification code."
         onClose={() => {
           setOpenConfirm(false);
-          setResetPassword(false);
         }}
         onOpen={openConfirm}
       >
@@ -160,19 +202,11 @@ function Profile({ onClose, onOpen }) {
             className="cancel"
             onClick={() => {
               setOpenConfirm(false);
-              setResetPassword(false);
             }}
           >
             cancel
           </div>
-          <div
-            className="confirm"
-            onClick={() => {
-              setOpenConfirm(false);
-              setResetPassword(true);
-              setCurrentSubmenu("a14736d9-7bcc-4eef-9be3-2015223cc5ed");
-            }}
-          >
+          <div className="confirm" onClick={handleConfirmReset}>
             reset
           </div>
         </div>

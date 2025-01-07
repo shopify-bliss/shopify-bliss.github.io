@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
-import { useAuth } from "../../../helpers/AuthContext";
+
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import {
@@ -14,9 +14,10 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
 
   const [roles, setRoles] = useState([]);
   const [data, setData] = useState({
-    avatar: "",
+    email: "",
     username: "",
     phoneNumber: "",
+    roleID: "",
   });
   const [updateData, setUpdateData] = useState({
     userID: "",
@@ -26,8 +27,7 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
 
   const listRoleRef = useRef(null);
 
-  const { toastMessage, toastPromise } = useDashboard();
-  const { token } = useAuth();
+  const { toastMessage, toastPromise, token, user } = useDashboard();
 
   useEffect(() => {
     axios
@@ -66,8 +66,6 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
   }, [openRole]);
 
   useEffect(() => {
-    console.log(userId);
-
     if (onOpen && type === "update") {
       axios
         .get(`${urlEndpoint.userId}?userID=${userId}`, {
@@ -76,7 +74,6 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
           },
         })
         .then((res) => {
-          console.log(res.data.data);
           setUpdateData({
             userID: res.data.data.user_id,
             role: res.data.data.role_id,
@@ -105,7 +102,7 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
         userSchema
           .validate(data, { abortEarly: false })
           .then(() => {
-            const userPromise = axios.post(urlEndpoint.allusers, data, {
+            const userPromise = axios.post(urlEndpoint.addAdmin, data, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -200,7 +197,7 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
       e.preventDefault();
 
       const deletePromise = axios.delete(
-        `${urlEndpoint.allusers}?id=${userId}`,
+        `${urlEndpoint.userId}?userID=${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -262,6 +259,49 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
           onClose={onClose}
         >
           <form className="modal-dashboard-form" onSubmit={handleSubmit}>
+            {type === "create" ? (
+              <>
+                <div className="modal-dashboard-form-group">
+                  <label htmlFor="username">
+                    Username <span>(Required)</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Example"
+                    value={data.username}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="modal-dashboard-form-group">
+                  <label htmlFor="email">
+                    Email <span>(Required)</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    placeholder="example@gmail.com"
+                    value={data.email}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="modal-dashboard-form-group">
+                  <label htmlFor="phoneNumber">
+                    Phone Number <span>(Required)</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    placeholder="628123456789"
+                    value={data.phoneNumber}
+                    onChange={handleChange}
+                  />
+                </div>
+              </>
+            ) : null}
             <div className="modal-dashboard-form-group">
               <div className="label">
                 Role <span>(Required)</span>
@@ -285,7 +325,16 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
               {openRole && (
                 <div className="select-list no-more" ref={listRoleRef}>
                   {roles
-                    .filter((item) => item.role_id !== updateData.role)
+                    .filter(
+                      (item) =>
+                        item.role_id !== updateData.role &&
+                        item.role_id !==
+                          "3de65f44-6341-4b4d-8d9f-c8ca3ea80b80" &&
+                        (user.role_id !== "3de65f44-6341-4b4d-8d9f-c8ca3ea80b80"
+                          ? item.role_id !==
+                            "0057ae60-509f-40de-a637-b2b6fdc1569e"
+                          : item.role_id)
+                    )
                     .map((data) => {
                       return (
                         <div

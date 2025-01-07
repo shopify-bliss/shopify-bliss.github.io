@@ -12,11 +12,11 @@ import {
 } from "../../../components/AiBuilderSupport/AiBuilderSupport";
 import { ControllingOverviews } from "../../../components/AiBuilderSupport/AiBuilderSupport";
 import NavbarLayout from "../../../components/AiBuilderSupport/NavbarLayout/NavbarLayout";
-import IntroEl from "./IntroEl/IntroEl";
-import ProductsEl from "./ProductsEl/ProductsEl";
-import ServicesEl from "./ServicesEl/ServicesEl";
-import AboutEl from "./AboutEl/AboutEl";
-import FormEl from "./FormEl/FormEl";
+import Intro from "../../../components/AiBuilderSupport/ElementsLayout/Intro/Intro";
+import Products from "../../../components/AiBuilderSupport/ElementsLayout/Products/Products";
+import Services from "../../../components/AiBuilderSupport/ElementsLayout/Services/Services";
+import About from "../../../components/AiBuilderSupport/ElementsLayout/About/About";
+import Form from "../../../components/AiBuilderSupport/ElementsLayout/Form/Form";
 
 function ElementPages({
   activePages,
@@ -28,147 +28,20 @@ function ElementPages({
   setCurrentPageId,
   toastMessage,
   dataElements,
+  activeNavbar,
+  handleActiveNavbar,
+  activeIntro,
+  handleActiveIntro,
+  activeProducts,
+  handleActiveProducts,
+  activeServices,
+  handleActiveServices,
+  activeAbout,
+  handleActiveAbout,
+  activeForm,
+  handleActiveForm,
+  activeColor,
 }) {
-  const [activeNavbar, setActiveNavbar] = useState(1);
-  const [activeIntroEl, setActiveIntroEl] = useState(1);
-  const [activeProductsEl, setActiveProductsEl] = useState(1);
-  const [activeServicesEl, setActiveServicesEl] = useState(1);
-  const [activeAboutEl, setActiveAboutEl] = useState(1);
-  const [activeFormEl, setActiveFormEl] = useState(1);
-  const [activeStyles, setActiveStyles] = useState({});
-
-  useEffect(() => {
-    if (!currentPageId) return;
-
-    const currentActiveSections = activeSections[currentPageId] || [];
-
-    const updatedStyles = currentActiveSections.reduce((styles, sectionId) => {
-      if (sectionId === "798f1ce0-b732-45a6-838e-f28e137243f7") {
-        styles[sectionId] = activeIntroEl;
-      } else if (sectionId === "b42d4d56-d411-4aa8-ae01-52f0c406328a") {
-        styles[sectionId] = activeProductsEl;
-      } else if (sectionId === "4fd1e0cc-06f3-4554-9f79-ce8e02db03c8") {
-        styles[sectionId] = activeServicesEl;
-      } else if (sectionId === "1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed") {
-        styles[sectionId] = activeAboutEl;
-      } else if (sectionId === "2089ce88-93a7-4555-8d0d-7f88f1dc3a7e") {
-        styles[sectionId] = activeFormEl;
-      }
-      return styles;
-    }, {});
-
-    activePages.forEach((pageId) => {
-      if (pageId === "2bff7888-e861-4341-869b-189af29ad3f8") {
-        updatedStyles[pageId] = activeNavbar;
-      }
-    });
-
-    setActiveStyles((prevStyles) => ({
-      ...prevStyles,
-      [currentPageId]: updatedStyles,
-    }));
-  }, [
-    currentPageId,
-    activeIntroEl,
-    activeProductsEl,
-    activeServicesEl,
-    activeAboutEl,
-    activeFormEl,
-    activeNavbar,
-    activeSections,
-    activePages,
-  ]);
-
-  const handleActiveNavbar = useCallback(
-    (navbarId) => {
-      setActiveNavbar(navbarId);
-
-      setActiveStyles((prevStyles) => ({
-        ...prevStyles,
-        [currentPageId]: {
-          ...prevStyles[currentPageId],
-          ["2bff7888-e861-4341-869b-189af29ad3f8"]: navbarId,
-        },
-      }));
-    },
-    [currentPageId]
-  );
-
-  const handleActiveIntroEl = useCallback(
-    (introElId) => {
-      setActiveIntroEl(introElId);
-
-      setActiveStyles((prevStyles) => ({
-        ...prevStyles,
-        [currentPageId]: {
-          ...prevStyles[currentPageId],
-          ["798f1ce0-b732-45a6-838e-f28e137243f7"]: introElId,
-        },
-      }));
-    },
-    [currentPageId]
-  );
-
-  const handleActiveProductsEl = useCallback(
-    (productElId) => {
-      setActiveProductsEl(productElId);
-
-      setActiveStyles((prevStyles) => ({
-        ...prevStyles,
-        [currentPageId]: {
-          ...prevStyles[currentPageId],
-          ["b42d4d56-d411-4aa8-ae01-52f0c406328a"]: productElId,
-        },
-      }));
-    },
-    [currentPageId]
-  );
-
-  const handleActiveServicesEl = useCallback(
-    (serviceElId) => {
-      setActiveServicesEl(serviceElId);
-
-      setActiveStyles((prevStyles) => ({
-        ...prevStyles,
-        [currentPageId]: {
-          ...prevStyles[currentPageId],
-          ["4fd1e0cc-06f3-4554-9f79-ce8e02db03c8"]: serviceElId,
-        },
-      }));
-    },
-    [currentPageId]
-  );
-
-  const handleActiveAboutEl = useCallback(
-    (aboutElId) => {
-      setActiveAboutEl(aboutElId);
-
-      setActiveStyles((prevStyles) => ({
-        ...prevStyles,
-        [currentPageId]: {
-          ...prevStyles[currentPageId],
-          ["1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed"]: aboutElId,
-        },
-      }));
-    },
-    [currentPageId]
-  );
-
-  const handleActiveFormEl = useCallback(
-    (formElId) => {
-      setActiveFormEl(formElId);
-
-      setActiveStyles((prevStyles) => ({
-        ...prevStyles,
-        [currentPageId]: {
-          ...prevStyles[currentPageId],
-          ["2089ce88-93a7-4555-8d0d-7f88f1dc3a7e"]: formElId,
-        },
-      }));
-    },
-    [currentPageId]
-  );
-
   const { handleNext, handlePrev } = ControllingOverviews({
     activePages: activePages,
     currentPageId: currentPageId,
@@ -197,8 +70,9 @@ function ElementPages({
                 currentPageId={currentPageId}
                 activeNavbar={activeNavbar}
                 handleActiveNavbar={handleActiveNavbar}
-                activeIntroEl={activeIntroEl}
+                activeIntro={activeIntro}
                 toastMessage={toastMessage}
+                typeMain="element"
               />
               {currentPageId !== null && (
                 <div className="display-data-section">
@@ -212,42 +86,52 @@ function ElementPages({
                       <Fragment key={section.section_id}>
                         {section.section_id ===
                         "798f1ce0-b732-45a6-838e-f28e137243f7" ? (
-                          <IntroEl
-                            handleActiveIntroEl={handleActiveIntroEl}
-                            activeIntroEl={activeIntroEl}
+                          <Intro
+                            handleActiveIntro={handleActiveIntro}
+                            activeIntro={activeIntro}
                             activeNavbar={activeNavbar}
                             toastMessage={toastMessage}
+                            activeColor={activeColor}
+                            typeMain="element"
                           />
                         ) : section.section_id ===
                           "b42d4d56-d411-4aa8-ae01-52f0c406328a" ? (
-                          <ProductsEl
-                            handleActiveProductsEl={handleActiveProductsEl}
-                            activeProductsEl={activeProductsEl}
+                          <Products
+                            handleActiveProducts={handleActiveProducts}
+                            activeProducts={activeProducts}
                             toastMessage={toastMessage}
+                            activeColor={activeColor}
+                            typeMain="element"
                           />
                         ) : section.section_id ===
                           "4fd1e0cc-06f3-4554-9f79-ce8e02db03c8" ? (
-                          <ServicesEl
-                            handleActiveServicesEl={handleActiveServicesEl}
-                            activeServicesEl={activeServicesEl}
+                          <Services
+                            handleActiveServices={handleActiveServices}
+                            activeServices={activeServices}
                             toastMessage={toastMessage}
+                            activeColor={activeColor}
+                            typeMain="element"
                           />
                         ) : section.section_id ===
                           "1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed" ? (
-                          <AboutEl
-                            handleActiveAboutEl={handleActiveAboutEl}
-                            activeAboutEl={activeAboutEl}
+                          <About
+                            handleActiveAbout={handleActiveAbout}
+                            activeAbout={activeAbout}
                             toastMessage={toastMessage}
+                            activeColor={activeColor}
+                            typeMain="element"
                           />
                         ) : section.section_id ===
                           "2089ce88-93a7-4555-8d0d-7f88f1dc3a7e" ? (
-                          <FormEl
-                            handleActiveFormEl={handleActiveFormEl}
-                            activeFormEl={activeFormEl}
+                          <Form
+                            handleActiveForm={handleActiveForm}
+                            activeForm={activeForm}
                             toastMessage={toastMessage}
+                            activeColor={activeColor}
+                            typeMain="element"
                           />
                         ) : (
-                          <div className="text">{section.name}</div>
+                          <div className="no-element">{section.name}</div>
                         )}
                       </Fragment>
                     ))}

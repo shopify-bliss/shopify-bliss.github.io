@@ -1,6 +1,6 @@
 [
-  { "id": 1, "className": "style-1" },
-  { "id": 2, "className": "style-2" },
-  { "id": 3, "className": "style-3" },
-  { "id": 4, "className": "style-4" }
+  { "id": 1, "className": "style-1", "layoutClassName": "layout-1" },
+  { "id": 2, "className": "style-2", "layoutClassName": "layout-2" },
+  { "id": 3, "className": "style-3", "layoutClassName": "layout-3" },
+  { "id": 4, "className": "style-4", "layoutClassName": "layout-4" }
 ]

@@ -21,7 +21,7 @@ import {
   toastPromise,
   toastDevelop,
 } from "../../helpers/AlertMessage";
-import Cookies from "universal-cookie";
+import Cookies from "";
 import { jwtDecode } from "jwt-decode";
 
 function Auth({ typeMain }) {
@@ -222,7 +222,7 @@ function Auth({ typeMain }) {
               },
               () => {
                 if (statusSignup.current === true) {
-                  navigate("/verify-code", {
+                  navigate("/verify/-code", {
                     state: {
                       email: values.email,
                     },

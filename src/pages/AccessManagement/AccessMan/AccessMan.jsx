@@ -1,13 +1,11 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { Header } from "../../../components/LayoutDashboard/Support/SupportDashboard";
 import axios from "axios";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import AccessManModal from "./AccessManModal";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { useAuth } from "../../../helpers/AuthContext";
 
 function DisplayView({
-  isLoadingAccessMan,
   accessMenus,
   setAccessId,
   setIsDeleteModalOpen,
@@ -16,10 +14,11 @@ function DisplayView({
   activeRole,
   handleActiveRole,
   roles,
+  isLoadingDashboard,
 }) {
   return (
     <>
-      {isLoadingAccessMan && (
+      {isLoadingDashboard && (
         <div className="loader-pages">
           <div className="loader-pages-item"></div>
         </div>
@@ -120,18 +119,18 @@ function DisplayView({
 function AccessMan() {
   axios.defaults.withCredentials = true;
 
-  const [isLoadingAccessMan, setIsLoadingAccessMan] = useState(true);
-  const [activeDisplay, setActiveDisplay] = useState("list");
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [accessId, setAccessId] = useState(null);
   const [activeRole, setActiveRole] = useState(
     "3de65f44-6341-4b4d-8d9f-c8ca3ea80b80"
   );
   const [roles, setRoles] = useState([]);
+  const [activeDisplay, setActiveDisplay] = useState("list");
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [accessId, setAccessId] = useState(null);
+  const [isFetched, setIsFetched] = useState(false);
 
-  const { token } = useAuth();
-  const { accessMenus, fetchDashboardData, menus } = useDashboard();
+  const { accessMenus, menus, token, isLoadingDashboard, setDashboardLoader } =
+    useDashboard();
 
   const handleDisplayChange = useCallback((display) => {
     setActiveDisplay(display);
@@ -142,7 +141,9 @@ function AccessMan() {
   }, []);
 
   const fetchRoles = useCallback(async () => {
-    setIsLoadingAccessMan(true);
+    if (isFetched) return; // Cegah fetch ulang
+
+    setDashboardLoader(true);
 
     try {
       const response = await axios.get(urlEndpoint.role, {
@@ -150,22 +151,21 @@ function AccessMan() {
           Authorization: `Bearer ${token}`,
         },
       });
-      const data = response.data.data;
 
-      setRoles(data);
-      setIsLoadingAccessMan(false);
+      console.log(response.data.data);
+
+      setRoles(response.data.data);
+      setIsFetched(true); // Tandai fetch selesai
     } catch (error) {
       console.error(error);
-      setIsLoadingAccessMan(false);
     } finally {
-      setIsLoadingAccessMan(false);
+      setDashboardLoader(false);
     }
-  }, [token, urlEndpoint.role]);
+  }, [isFetched]); // Tambahkan dependensi yang diperlukan
 
   useEffect(() => {
-    fetchDashboardData();
     fetchRoles();
-  }, [fetchRoles, fetchDashboardData]);
+  }, [fetchRoles]); // Tambahkan dependensi yang diperlukan
 
   return (
     <>
@@ -180,7 +180,7 @@ function AccessMan() {
         {activeDisplay === "grid" ? (
           <DisplayView
             roles={roles}
-            isLoadingAccessMan={isLoadingAccessMan}
+            isLoadingDashboard={isLoadingDashboard}
             accessMenus={accessMenus}
             setAccessId={setAccessId}
             setIsDeleteModalOpen={setIsDeleteModalOpen}
@@ -192,7 +192,7 @@ function AccessMan() {
         ) : (
           <DisplayView
             roles={roles}
-            isLoadingAccessMan={isLoadingAccessMan}
+            isLoadingDashboard={isLoadingDashboard}
             accessMenus={accessMenus}
             setAccessId={setAccessId}
             setIsDeleteModalOpen={setIsDeleteModalOpen}
@@ -206,14 +206,12 @@ function AccessMan() {
           type="create"
           onOpen={isCreateModalOpen}
           onClose={() => setIsCreateModalOpen(false)}
-          refreshData={fetchDashboardData}
           roles={roles}
         />
         <AccessManModal
           type="delete"
           onOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
-          refreshData={fetchDashboardData}
           accessId={accessId}
           roles={roles}
         />

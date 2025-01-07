@@ -53,7 +53,7 @@
     cursor: pointer;
     @include m.flex();
     text-decoration: none;
-
+    
     .material-symbols-outlined {
       padding: 0.3rem;
       font-size: 1.7rem;
@@ -61,14 +61,14 @@
       color: #000;
       border-radius: 50%;
       transition: transform 0.4s ease-out, background-color 0.4s ease-out;
-      background-color: #fff;
+      background-color: transparent;
     }
 
     &:hover {
       .material-symbols-outlined {
         transform: rotate(90deg);
         transition: transform 0.4s ease-out, background-color 0.4s ease-out;
-        background-color: adjust-color($color: #fff, $blackness: 5%);
+        background-color: adjust-color($color: #fff, $blackness: 5%, $alpha: 0.1);
       }
     }
   }
@@ -193,14 +193,16 @@
 }
 
 @mixin expalot-elements($isbottom: true, $vertical: 0, $right: v.$p-navter) {
-  position: absolute;
+  position: fixed;
   width: 36vw;
-  height: auto;
+  height: fit-content;
   background-color: #f7f7f7;
   border-radius: 0.8rem;
   padding: v.$p-navter;
   z-index: 19;
-  right: $right;
+  top: 10.4rem;
+  left: 10.31rem;
+  // right: $right;
 
   @if $isbottom {
     bottom: $vertical + v.$p-navter;

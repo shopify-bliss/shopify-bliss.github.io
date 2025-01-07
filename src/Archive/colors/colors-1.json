@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "brand": "professional",
+    "color-1": "#000000",
+    "class-color-1": "color-professional-11",
+    "color-2": "#EAEAEA",
+    "class-color-2": "color-professional-12",
+    "color-3": "#FFFFFF",
+    "class-color-3": "color-professional-13"
+  },
+  {
+    "id": 2,
+    "brand": "professional",
+    "color-1": "#333333",
+    "class-color-1": "color-professional-21",
+    "color-2": "#F4F6F8",
+    "class-color-2": "color-professional-22",
+    "color-3": "#4682B4",
+    "class-color-3": "color-professional-23"
+  },
+  {
+    "id": 3,
+    "brand": "professional",
+    "color-1": "#2A2A72",
+    "class-color-1": "color-professional-31",
+    "color-2": "#EDEFF2",
+    "class-color-2": "color-professional-32",
+    "color-3": "#3A6F77",
+    "class-color-3": "color-professional-33"
+  },
+  {
+    "id": 4,
+    "brand": "friendly",
+    "color-1": "#5A4634",
+    "class-color-1": "color-friendly-11",
+    "color-2": "#FFF8E7",
+    "class-color-2": "color-friendly-12",
+    "color-3": "#A7E9AF",
+    "class-color-3": "color-friendly-13"
+  },
+  {
+    "id": 5,
+    "brand": "friendly",
+    "color-1": "#4A4A4A",
+    "class-color-1": "color-friendly-21",
+    "color-2": "#FFF7CC",
+    "class-color-2": "color-friendly-22",
+    "color-3": "#A6DCEF",
+    "class-color-3": "color-friendly-23"
+  },
+  {
+    "id": 6,
+    "brand": "friendly",
+    "color-1": "#5E503F",
+    "class-color-1": "color-friendly-31",
+    "color-2": "#FFEBCC",
+    "class-color-2": "color-friendly-32",
+    "color-3": "#C4F1BE",
+    "class-color-3": "color-friendly-33"
+  },
+  {
+    "id": 7,
+    "brand": "luxury",
+    "color-1": "#0A0A0A",
+    "class-color-1": "color-luxury-11",
+    "color-2": "#F7E1D7",
+    "class-color-2": "color-luxury-12",
+    "color-3": "#C9B037",
+    "class-color-3": "color-luxury-13"
+  },
+  {
+    "id": 8,
+    "brand": "luxury",
+    "color-1": "#4B0E16",
+    "class-color-1": "color-luxury-21",
+    "color-2": "#FFFFF0",
+    "class-color-2": "color-luxury-22",
+    "color-3": "#A97142",
+    "class-color-3": "color-luxury-23"
+  },
+  {
+    "id": 9,
+    "brand": "luxury",
+    "color-1": "#1F2B37",
+    "class-color-1": "color-luxury-31",
+    "color-2": "#F5EFE6",
+    "class-color-2": "color-luxury-32",
+    "color-3": "#50C878",
+    "class-color-3": "color-luxury-33"
+  },
+  {
+    "id": 10,
+    "brand": "innovative",
+    "color-1": "#3C3C3C",
+    "class-color-1": "color-innovative-11",
+    "color-2": "#F9F9F9",
+    "class-color-2": "color-innovative-12",
+    "color-3": "#00BCD4",
+    "class-color-3": "color-innovative-13"
+  },
+  {
+    "id": 11,
+    "brand": "innovative",
+    "color-1": "#2A2F4F",
+    "class-color-1": "color-innovative-21",
+    "color-2": "#ECEFF1",
+    "class-color-2": "color-innovative-22",
+    "color-3": "#39FF14",
+    "class-color-3": "color-innovative-23"
+  },
+  {
+    "id": 12,
+    "brand": "innovative",
+    "color-1": "#212121",
+    "class-color-1": "color-innovative-31",
+    "color-2": "#E3FCEC",
+    "class-color-2": "color-innovative-32",
+    "color-3": "#1FC3D8",
+    "class-color-3": "color-innovative-33"
+  },
+  {
+    "id": 13,
+    "brand": "classic",
+    "color-1": "#001F3F",
+    "class-color-1": "color-classic-11",
+    "color-2": "#F5F5F5",
+    "class-color-2": "color-classic-12",
+    "color-3": "#014421",
+    "class-color-3": "color-classic-13"
+  },
+  {
+    "id": 14,
+    "brand": "classic",
+    "color-1": "#1C1C1C",
+    "class-color-1": "color-classic-21",
+    "color-2": "#F5F5DC",
+    "class-color-2": "color-classic-22",
+    "color-3": "#DC143C",
+    "class-color-3": "color-classic-23"
+  },
+  {
+    "id": 15,
+    "brand": "classic",
+    "color-1": "#4F4F4F",
+    "class-color-1": "color-classic-31",
+    "color-2": "#FFFEEA",
+    "class-color-2": "color-classic-32",
+    "color-3": "#4169E1",
+    "class-color-3": "color-classic-33"
+  },
+  {
+    "id": 16,
+    "brand": "playful",
+    "color-1": "#682C91",
+    "class-color-1": "color-playful-11",
+    "color-2": "#F3E8FF",
+    "class-color-2": "color-playful-12",
+    "color-3": "#FFD700",
+    "class-color-3": "color-playful-13"
+  },
+  {
+    "id": 17,
+    "brand": "playful",
+    "color-1": "#D0006F",
+    "class-color-1": "color-playful-21",
+    "color-2": "#E0FFFF",
+    "class-color-2": "color-playful-22",
+    "color-3": "#FFA500",
+    "class-color-3": "color-playful-23"
+  },
+  {
+    "id": 18,
+    "brand": "playful",
+    "color-1": "#007FFF",
+    "class-color-1": "color-playful-31",
+    "color-2": "#FFFACD",
+    "class-color-2": "color-playful-32",
+    "color-3": "#32CD32",
+    "class-color-3": "color-playful-33"
+  }
+]

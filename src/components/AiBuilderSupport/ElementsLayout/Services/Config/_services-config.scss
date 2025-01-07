@@ -1,0 +1,335 @@
+@use "../../../../../helpers/mixins" as m;
+@use "../../../../../helpers/variables" as v;
+@use "../../../ai-builder-support" as support;
+@use "../../ExpalotComponents/expalot-title" as title;
+
+$fs-desc: 3px;
+$fs-text: 4px;
+$fs-name: 5px;
+$fs-preface: 6px;
+$py-layout: 0.45rem;
+$px-layout: 0.5rem;
+
+@mixin name($fs: $fs-name, $t-decor: false, $fw: 600) {
+  font-size: $fs;
+  font-weight: $fw;
+  line-height: 100%;
+  pointer-events: none;
+
+  @if $t-decor {
+    text-decoration: underline;
+  }
+}
+
+@mixin price($fs: $fs-text) {
+  font-size: $fs;
+  pointer-events: none;
+}
+
+@mixin desc($fs: $fs-desc, $mt: 0.18rem, $w: 100%, $ln-h: 130%) {
+  font-size: $fs;
+  margin-top: $mt;
+  line-height: $ln-h;
+  pointer-events: none;
+  width: $w;
+}
+
+@mixin button(
+  $fs: $fs-text,
+  $mt: 0,
+  $p: 0.22rem 0.62rem,
+  $bg: transparent,
+  $color: #000,
+  $t-decor: none
+) {
+  font-size: $fs;
+  border-radius: 50vw;
+  @include m.flex();
+  width: fit-content;
+  line-height: 100%;
+  cursor: pointer;
+  padding: $p;
+  margin-top: $mt;
+  background-color: $bg;
+  color: $color;
+  text-decoration: $t-decor;
+}
+
+@mixin image($mb: 0.4rem, $h: 4rem) {
+  width: 100%;
+  height: $h;
+  object-fit: cover;
+  object-position: center 100%;
+  margin-bottom: $mb;
+  pointer-events: none;
+}
+
+@mixin container-item($gap: 0.05rem) {
+  @include m.flex($direction: column, $align: flex-start);
+  gap: $gap;
+}
+
+@mixin style-1($gap: 0.4rem) {
+  @include m.flex($direction: column, $justify: flex-start);
+  gap: $gap;
+}
+
+@mixin style-2($gap: 0.4rem) {
+  @include m.flex($direction: column, $align: flex-start, $justify: flex-start);
+  gap: $gap;
+}
+
+@mixin style-3($gap: 0.4rem) {
+  @include m.flex($align: flex-start);
+  gap: $gap;
+}
+
+@mixin style-4($gap: 0.7rem) {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $gap;
+}
+
+@mixin expalot-services {
+  &-styles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "title title"
+      "wrapper wrapper";
+    gap: 0.8rem 0.7rem;
+
+    .title {
+      grid-area: title;
+      @include support.title-expalot();
+    }
+
+    .wrapper-left {
+      @include m.flex(
+        $direction: column,
+        $justify: flex-start,
+        $align: flex-start
+      );
+      overflow: hidden;
+      height: 100%;
+      gap: 0.7rem;
+
+      .style-1 {
+        @include support.layout-styles($section: false);
+        @include style-1();
+
+        .template-title {
+          @include title.title();
+        }
+
+        .template-wrapper {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.25rem;
+
+          .container-item {
+            @include container-item();
+
+            .template-image {
+              @include image();
+            }
+
+            .template-name {
+              @include name($t-decor: true);
+            }
+
+            .template-price {
+              @include price();
+            }
+
+            .template-desc {
+              @include desc($w: 85%);
+            }
+          }
+        }
+      }
+
+      .style-3 {
+        @include support.layout-styles($section: false);
+        @include style-3($gap: 1.4rem);
+
+        .template-title {
+          @include title.title();
+        }
+
+        .template-wrapper {
+          width: 100%;
+          @include m.flex($direction: column);
+
+          .container-item {
+            width: 100%;
+            display: grid;
+            grid-template-areas: "name icon";
+            grid-template-columns: 1fr auto;
+            grid-template-rows: auto;
+            border-top: 0.05px solid #000;
+            padding: 0.3rem 0;
+            align-items: center;
+
+            &.active {
+              grid-template-columns: 1fr auto;
+              grid-template-rows: auto 1fr;
+              grid-template-areas:
+                "name icon"
+                "desc icon";
+              align-items: flex-start;
+
+              .template-desc {
+                margin-bottom: 0.2rem;
+              }
+            }
+
+            &:last-child {
+              border-bottom: 0.05px solid #000;
+            }
+
+            .template-name {
+              grid-area: name;
+              @include name();
+            }
+
+            .template-desc {
+              grid-area: desc;
+              @include desc($mt: 0.18rem);
+            }
+
+            .material-symbols-outlined {
+              grid-area: icon;
+              font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+              font-size: 0.6rem;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+
+    .wrapper-right {
+      @include m.flex(
+        $direction: column,
+        $justify: flex-start,
+        $align: flex-start
+      );
+      height: 100%;
+      gap: 0.7rem;
+      overflow: hidden;
+
+      .style-2 {
+        @include support.layout-styles($section: false);
+        @include style-2();
+
+        .template-title {
+          @include title.title();
+        }
+
+        .template-wrapper {
+          @include m.flex();
+          gap: 0.4rem;
+
+          .container-item {
+            @include container-item();
+
+            .template-name {
+              @include name();
+            }
+
+            .template-desc {
+              @include desc($mt: 0.18rem);
+            }
+
+            .template-button {
+              @include button($p: 0, $t-decor: underline, $mt: 0.025rem);
+            }
+          }
+        }
+      }
+
+      .style-4 {
+        @include support.layout-styles();
+        @include style-4();
+
+        .template-wrapper {
+          @include m.flex(
+            $direction: column,
+            $align: flex-start,
+            $justify: flex-start
+          );
+
+          .template-title {
+            @include title.title();
+          }
+
+          .template-preface {
+            font-size: $fs-desc;
+            pointer-events: none;
+            margin: 0.15rem 0 0.4rem;
+            line-height: 130%;
+          }
+
+          .container-item {
+            padding: 0.2rem 0;
+            border-bottom: 0.05px #000 solid;
+            display: grid;
+            grid-template-areas: "name icon";
+            grid-template-columns: 1fr auto;
+            grid-template-rows: auto;
+            width: 100%;
+            align-items: center;
+
+            &.active {
+              grid-template-rows: auto 1fr;
+              grid-template-areas:
+                "name icon"
+                "desc desc";
+
+              .template-desc {
+                padding-bottom: 0.2rem;
+              }
+            }
+
+            &:nth-child(3) {
+              border-top: 0.05px #000 solid;
+            }
+
+            .template-name {
+              @include name();
+              grid-area: name;
+            }
+
+            .material-symbols-outlined {
+              grid-area: icon;
+              font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+              font-size: 0.6rem;
+              cursor: pointer;
+            }
+
+            .template-desc {
+              @include desc();
+              grid-area: desc;
+              padding-left: 0.4rem;
+            }
+          }
+
+          .template-button {
+            @include button(
+              $bg: #000,
+              $color: #fff,
+              $mt: 0.65rem,
+              $p: 0.22rem 0.7rem
+            );
+          }
+        }
+
+        .template-image {
+          @include image($h: 7.75rem, $mb: 0);
+        }
+      }
+    }
+  }
+}

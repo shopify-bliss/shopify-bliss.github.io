@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "brand": "professional",
+    "color1": "000000",
+    "color2": "EAEAEA",
+    "color3": "FFFFFF"
+  },
+  {
+    "id": 2,
+    "brand": "professional",
+    "color1": "2A2A72",
+    "color2": "3A6F77",
+    "color3": "EDEFF2"
+  },
+  {
+    "id": 3,
+    "brand": "friendly",
+    "color1": "5A4634",
+    "color2": "A7E9AF",
+    "color3": "FFF8E7"
+  },
+  {
+    "id": 4,
+    "brand": "friendly",
+    "color1": "4A4A4A",
+    "color2": "A6DCEF",
+    "color3": "FFF7CC"
+  },
+  {
+    "id": 5,
+    "brand": "luxury",
+    "color1": "0A0A0A",
+    "color2": "C9B037",
+    "color3": "F7E1D7"
+  },
+  {
+    "id": 6,
+    "brand": "luxury",
+    "color1": "4B0E16",
+    "color2": "A97142",
+    "color3": "FFFFF0"
+  },
+  {
+    "id": 7,
+    "brand": "innovative",
+    "color1": "3C3C3C",
+    "color2": "00BCD4",
+    "color3": "F9F9F9"
+  },
+  {
+    "id": 8,
+    "brand": "innovative",
+    "color1": "2A2F4F",
+    "color2": "39FF14",
+    "color3": "ECEFF1"
+  },
+  {
+    "id": 9,
+    "brand": "classic",
+    "color1": "001F3F",
+    "color2": "014421",
+    "color3": "F5F5F5"
+  },
+  {
+    "id": 10,
+    "brand": "classic",
+    "color1": "1C1C1C",
+    "color2": "DC143C",
+    "color3": "F5F5DC"
+  },
+  {
+    "id": 11,
+    "brand": "playful",
+    "color1": "682C91",
+    "color2": "FFD700",
+    "color3": "F3E8FF"
+  },
+  {
+    "id": 12,
+    "brand": "playful",
+    "color1": "D0006F",
+    "color2": "FFA500",
+    "color3": "E0FFFF"
+  }
+]

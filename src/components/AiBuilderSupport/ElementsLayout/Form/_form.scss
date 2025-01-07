@@ -1,0 +1,208 @@
+@use "../../../../helpers/mixins" as m;
+@use "../../../../helpers/variables" as v;
+@use "../../ai-builder-support" as support;
+@use "../ExpalotComponents/expalot-title" as title;
+@use "./Config/form-config" as config;
+
+$fs-title: 1.5rem;
+$fs-desc: 8px;
+$fs-text: 10px;
+
+@mixin form($element: false) {
+  width: 100%;
+  min-height: 44vh;
+  height: auto;
+  border: v.$border-hover;
+  position: relative;
+
+  @if $element {
+    .change-layout {
+      display: none;
+    }
+
+    @include support.change-layout(
+      $bg-color-default: adjust-color($color: #fff, $blackness: 90%),
+      $bg-color: #000,
+      $border-color: adjust-color($color: #fff, $blackness: 90%),
+      $color: #fff
+    );
+  }
+
+  &.style-1 {
+    @include config.style-1();
+    padding: v.$py-layout-section v.$p-navter;
+
+    .template-wrapper {
+      .template-title {
+        @include title.title($fs: $fs-title);
+      }
+
+      .template-desc {
+        @include config.desc($fs: $fs-desc);
+      }
+    }
+
+    .template-form {
+      @include config.form(
+        $overview: true,
+        $fs: $fs-text,
+        $p-input-textarea: 0.52rem 0.64rem,
+        $fs-input: $fs-desc,
+        $h-textarea: 5rem,
+        $size-radius: 0.8rem,
+        $gap-group: 0.3rem,
+        $gap-parent: 0.8rem
+      );
+
+      .template-button {
+        @include config.button(
+          $bg: #000,
+          $color: #fff,
+          $fs: $fs-desc,
+          $p: 0.6rem 1.7rem
+        );
+      }
+    }
+  }
+
+  &.style-2 {
+    @include config.style-2($gap: 1.8rem);
+    background-color: #dbdbdb;
+    padding: v.$py-layout-section v.$p-navter;
+
+    .template-wrapper {
+      @include m.flex($direction: column);
+
+      .template-title {
+        @include title.title($t-align: center, $fs: $fs-title);
+      }
+
+      .template-desc {
+        @include config.desc($t-align: center, $w: 85%, $fs: $fs-desc);
+      }
+    }
+
+    .template-form {
+      @include config.form(
+        $w-parent: 52%,
+        $align-form: center,
+        $border-input: 0 0 0 0.2px #000,
+        $overview: true,
+        $fs: $fs-text,
+        $p-input-textarea: 0.52rem 0.64rem,
+        $fs-input: $fs-desc,
+        $h-textarea: 5rem,
+        $size-radius: 0.8rem,
+        $gap-group: 0.3rem,
+        $gap-parent: 0.8rem
+      );
+
+      .template-button {
+        @include config.button(
+          $bg: #000,
+          $color: #fff,
+          $p: 0.6rem 1.7rem,
+          $fs: $fs-desc
+        );
+      }
+    }
+  }
+
+  &.style-3 {
+    @include config.style-3($gap: 3.3rem);
+    padding: v.$py-layout-section v.$p-navter;
+
+    .template-wrapper {
+      @include m.flex($direction: column);
+      height: 100%;
+
+      .template-title {
+        @include title.title($fs: $fs-title * 2, $ln-h: 85%);
+      }
+
+      .template-desc {
+        @include config.desc($fs: $fs-desc);
+      }
+
+      .template-form {
+        @include config.form(
+          $radius-input-textarea: false,
+          $m-parent: auto 0 0,
+          $border-color: #ccc,
+          $overview: true,
+          $fs: $fs-text,
+          $p-input-textarea: 0.52rem 0.64rem,
+          $fs-input: $fs-desc,
+          $h-textarea: 5rem,
+          $size-radius: 0.8rem,
+          $gap-parent: 0.4rem
+        );
+
+        .template-button {
+          @include config.button(
+            $bg: #000,
+            $color: #fff,
+            $m: 0.6rem 0 0,
+            $p: 0.6rem 1.7rem,
+            $fs: $fs-desc
+          );
+        }
+      }
+    }
+
+    .template-image {
+      @include config.image($h: 15.5rem, $mb: 0);
+    }
+  }
+
+  &.style-4 {
+    @include config.style-4($p: 0 6.8rem);
+
+    .template-wrapper {
+      background-color: #fff;
+      padding: (v.$py-layout-section * 1.2) (v.$p-navter * 1.1);
+      @include m.flex($direction: column);
+      gap: 0.55rem;
+
+      .template-title {
+        @include title.title($t-align: center, $fs: $fs-title);
+      }
+
+      .template-desc {
+        @include config.desc(
+          $t-align: center,
+          $m: -0.25rem 0 1.2rem,
+          $fs: $fs-desc
+        );
+      }
+
+      @include config.form(
+        $form-parent: false,
+        $radius-input-textarea: false,
+        $w-group: 60%,
+        $border-input: 0 0 0 0.1px adjust-color(#000, $whiteness: 100%),
+        $overview: true,
+        $fs: $fs-text,
+        $p-input-textarea: 0.52rem 0.64rem,
+        $fs-input: $fs-desc,
+        $h-textarea: 5rem,
+        $size-radius: 0.8rem
+      );
+
+      .template-button {
+        @include config.button(
+          $bg: #000,
+          $color: #fff,
+          $p: 0.6rem 1.7rem,
+          $fs: $fs-desc
+        );
+      }
+    }
+  }
+}
+
+.expalot-form {
+  @include support.expalot-elements();
+
+  @include config.expalot-form();
+}

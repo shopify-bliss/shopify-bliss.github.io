@@ -11,7 +11,7 @@
   &-grid {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
     gap: 0.3rem;
     font-size: 0.95rem;
 
@@ -71,14 +71,30 @@
           @include m.flex();
           transition: all 0.3s ease-in;
           cursor: default;
-          border: support.$cyan solid 1px;
+          border: support.$pink solid 1px;
+          
+          &.super-admin {
+            border: support.$purple solid 1px;
+          }
+
+          &.admin {
+            border: support.$cyan solid 1px;
+          }
 
           &.customer {
             border: support.$teal solid 1px;
           }
 
           &-icon {
-            @include support.icon-action(support.$cyan, $default: true);
+            @include support.icon-action(support.$pink, $default: true);
+            
+            &.super-admin {
+              @include support.icon-action(support.$purple, $default: true);
+            }
+
+            &.admin {
+              @include support.icon-action(support.$cyan, $default: true);
+            }
 
             &.customer {
               @include support.icon-action(support.$teal, $default: true);
@@ -91,7 +107,15 @@
             font-family: v.$raleway;
             transition: all 0.3s ease-in;
             padding-right: 0.33rem;
-            color: support.$cyan;
+            color: support.$pink;
+            
+            &.super-admin {
+              color: support.$purple;
+            }
+
+            &.admin {
+              color: support.$cyan;
+            }
 
             &.customer {
               color: support.$teal;
@@ -100,7 +124,15 @@
 
           &:hover {
             transition: all 0.3s ease-out;
-            background-color: support.$cyan;
+            background-color: support.$pink;
+
+            &.super-admin {
+              background-color: support.$purple;
+            }
+
+            &.admin {
+              background-color: support.$cyan;
+            }
 
             &.customer {
               background-color: support.$teal;
@@ -213,11 +245,29 @@
           .body-col-role {
             text-transform: capitalize;
             @include support.set-default(
-              $bg: support.$cyan,
+              $bg: support.$pink,
               $color: #fff,
               $static: false,
               $p: 0.45rem 0.7rem
             );
+
+            &.super-admin {
+              @include support.set-default(
+                $bg: support.$purple,
+                $color: #fff,
+                $static: false,
+                $p: 0.45rem 0.7rem
+              );
+            }
+
+            &.admin {
+              @include support.set-default(
+                $bg: support.$cyan,
+                $color: #fff,
+                $static: false,
+                $p: 0.45rem 0.7rem
+              );
+            }
 
             &.customer {
               @include support.set-default(

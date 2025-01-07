@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useAuth } from "../../../helpers/AuthContext";
+
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import { tempPagesSchema } from "../../../helpers/ValidationSchema";
@@ -15,8 +15,7 @@ function TempPagesModal({ type, onOpen, onClose, refreshData, pageId }) {
     name_class: "",
   });
 
-  const { toastMessage, toastPromise } = useDashboard();
-  const { token } = useAuth();
+  const { toastMessage, toastPromise, token } = useDashboard();
 
   useEffect(() => {
     if (onOpen && type === "create") {
@@ -231,19 +230,6 @@ function TempPagesModal({ type, onOpen, onClose, refreshData, pageId }) {
                 name="icon"
                 placeholder="home (google material icon)"
                 value={data.icon}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="modal-dashboard-form-group">
-              <label htmlFor="name_class">
-                Page class <span>(Required)</span>
-              </label>
-              <input
-                type="text"
-                id="name_class"
-                name="name_class"
-                placeholder="home-page"
-                value={data.name_class}
                 onChange={handleChange}
               />
             </div>
