@@ -9,6 +9,7 @@ import FormConfig, {
   messageField,
 } from "./Config/FormConfig";
 import { BgColors } from "../../ColorsSupport";
+import { FontType1, FontType2 } from "../../FontsSupport";
 
 function Form({
   toastMessage,
@@ -23,6 +24,8 @@ function Form({
   const [imageStyle4, setImageStyle4] = useState(null);
 
   const bg = BgColors({ activeColor });
+  const type1 = FontType1({ activeFont });
+  const type2 = FontType2({ activeFont });
 
   const typeFormStyles = useMemo(
     () => sectionsElOptionLayout.find((option) => option.id === activeForm),
@@ -59,23 +62,30 @@ function Form({
                 return (
                   <Fragment key={index}>
                     <div className="template-wrapper">
-                      <div className="template-title">{data.title}</div>
-                      <div className="template-desc">{data.desc}</div>
+                      <div className={`template-title ${type2}`}>
+                        {data.title}
+                      </div>
+                      <div className={`template-desc ${type1}`}>
+                        {data.desc}
+                      </div>
                     </div>
                     <form className="template-form">
                       {data.username.required === true &&
-                        usernameField(true, data.username.placeholder)}
+                        usernameField(true, data.username.placeholder, type1, type2)}
 
                       {data.email.required === true &&
-                        emailField(true, data.email.placeholder)}
+                        emailField(true, data.email.placeholder, type1, type2)}
 
                       {data.phone.required === true &&
-                        phoneField(true, data.phone.placeholder)}
+                        phoneField(true, data.phone.placeholder, type1, type2)}
 
                       {data.message.required === true &&
-                        messageField(true, data.message.placeholder)}
+                        messageField(true, data.message.placeholder, type1, type2)}
 
-                      <button type="submit" className="template-button">
+                      <button
+                        type="submit"
+                        className={`template-button ${type1}`}
+                      >
                         {data.button}
                       </button>
                     </form>
@@ -93,23 +103,30 @@ function Form({
                 return (
                   <Fragment key={index}>
                     <div className="template-wrapper">
-                      <div className="template-title">{data.title}</div>
-                      <div className="template-desc">{data.desc}</div>
+                      <div className={`template-title ${type2}`}>
+                        {data.title}
+                      </div>
+                      <div className={`template-desc ${type1}`}>
+                        {data.desc}
+                      </div>
                     </div>
                     <form className="template-form">
                       {data.username.required === true &&
-                        usernameField(true, data.username.placeholder)}
+                        usernameField(true, data.username.placeholder, type1, type2)}
 
                       {data.email.required === true &&
-                        emailField(true, data.email.placeholder)}
+                        emailField(true, data.email.placeholder, type1, type2)}
 
                       {data.phone.required === true &&
-                        phoneField(true, data.phone.placeholder)}
+                        phoneField(true, data.phone.placeholder, type1, type2)}
 
                       {data.message.required === true &&
-                        messageField(true, data.message.placeholder)}
+                        messageField(true, data.message.placeholder, type1, type2)}
 
-                      <button type="submit" className="template-button">
+                      <button
+                        type="submit"
+                        className={`template-button ${type1}`}
+                      >
                         {data.button}
                       </button>
                     </form>
@@ -129,19 +146,30 @@ function Form({
                 return (
                   <Fragment key={index}>
                     <div className="template-wrapper">
-                      <div className="template-title">{data.title}</div>
-                      <div className="template-desc">{data.desc}</div>
+                      <div className={`template-title ${type2}`}>
+                        {data.title}
+                      </div>
+                      <div className={`template-desc ${type1}`}>
+                        {data.desc}
+                      </div>
                       <form className="template-form">
                         {data.username.required === true &&
-                          usernameField(false, data.username.placeholder)}
+                          usernameField(
+                            false,
+                            data.username.placeholder,
+                            type1
+                          )}
 
                         {data.email.required === true &&
-                          emailField(false, data.email.placeholder)}
+                          emailField(false, data.email.placeholder, type1, type2)}
 
                         {data.phone.required === true &&
-                          phoneField(false, data.phone.placeholder)}
+                          phoneField(false, data.phone.placeholder, type1, type2)}
 
-                        <button type="submit" className="template-button">
+                        <button
+                          type="submit"
+                          className={`template-button ${type1}`}
+                        >
                           {data.button}
                         </button>
                       </form>
@@ -165,19 +193,26 @@ function Form({
                 return (
                   <Fragment key={index}>
                     <div className="template-wrapper">
-                      <div className="template-title">{data.title}</div>
-                      <div className="template-desc">{data.desc}</div>
+                      <div className={`template-title ${type2}`}>
+                        {data.title}
+                      </div>
+                      <div className={`template-desc ${type1}`}>
+                        {data.desc}
+                      </div>
 
                       {data.username.required === true &&
-                        usernameField(false, data.username.placeholder)}
+                        usernameField(false, data.username.placeholder, type1, type2)}
 
                       {data.email.required === true &&
-                        emailField(false, data.email.placeholder)}
+                        emailField(false, data.email.placeholder, type1, type2)}
 
                       {data.phone.required === true &&
-                        phoneField(false, data.phone.placeholder)}
+                        phoneField(false, data.phone.placeholder, type1, type2)}
 
-                      <button type="submit" className="template-button">
+                      <button
+                        type="submit"
+                        className={`template-button ${type1}`}
+                      >
                         {data.button}
                       </button>
                     </div>

@@ -12,6 +12,7 @@ import servicesSample from "../../../../data/services.json";
 import image from "/products/pexels-anna-nekrashevich-8516697.jpg";
 import ServicesConfig from "./Config/ServicesConfig";
 import { BgColors } from "../../ColorsSupport";
+import { FontType1, FontType2 } from "../../FontsSupport";
 
 function Services({
   handleActiveServices,
@@ -27,6 +28,8 @@ function Services({
   const [activeDescIds4, setActiveDescIds4] = useState([1]);
 
   const bg = BgColors({ activeColor });
+  const type1 = FontType1({ activeFont });
+  const type2 = FontType2({ activeFont });
 
   const typeServicesElStyles = useMemo(
     () => sectionsElOptionLayout.find((option) => option.id === activeServices),
@@ -56,7 +59,7 @@ function Services({
       <div className={`services ${typeServicesElStyles.className} ${bg}`}>
         {typeServicesElStyles.id === 1 && (
           <>
-            <div className="template-title">Our Services</div>
+            <div className={`template-title ${type2}`}>Our Services</div>
             <div className="template-wrapper">
               {servicesSample.map((data) => {
                 const image = `products/${data.image}`;
@@ -65,11 +68,15 @@ function Services({
                   <>
                     <div className="container-item" key={data.id}>
                       <img className="template-image" src={image} />
-                      <div className="template-name">{data.name} Service</div>
-                      <div className="template-price">
+                      <div className={`template-name ${type2}`}>
+                        {data.name} Service
+                      </div>
+                      <div className={`template-price ${type1}`}>
                         {FormatCurrencyIDR(data.price)}
                       </div>
-                      <div className="template-desc">{data.desc}</div>
+                      <div className={`template-desc ${type1}`}>
+                        {data.desc}
+                      </div>
                     </div>
                   </>
                 );
@@ -79,14 +86,14 @@ function Services({
         )}
         {typeServicesElStyles.id === 2 && (
           <>
-            <div className="template-title">Our Services</div>
+            <div className={`template-title ${type2}`}>Our Services</div>
             <div className="template-wrapper">
               {servicesSample.map((data) => {
                 return (
                   <div className="container-item" key={data.id}>
-                    <div className="template-name">{data.name}</div>
-                    <div className="template-desc">{data.desc}</div>
-                    <div className="template-button">Learn more</div>
+                    <div className={`template-name ${type2}`}>{data.name}</div>
+                    <div className={`template-desc ${type1}`}>{data.desc}</div>
+                    <div className={`template-button ${type1}`}>Learn more</div>
                   </div>
                 );
               })}
@@ -95,7 +102,7 @@ function Services({
         )}
         {typeServicesElStyles.id === 3 && (
           <>
-            <div className="template-title">Our Services</div>
+            <div className={`template-title ${type2}`}>Our Services</div>
             <div className="template-wrapper">
               {servicesSample.map((data) => (
                 <div
@@ -108,9 +115,9 @@ function Services({
                   <span className="material-symbols-outlined">
                     {activeDescIds3.includes(data.id) ? "remove" : "add"}
                   </span>
-                  <div className="template-name">{data.name}</div>
+                  <div className={`template-name ${type2}`}>{data.name}</div>
                   {activeDescIds3.includes(data.id) && (
-                    <div className="template-desc" key={data.id}>
+                    <div className={`template-desc ${type1}`} key={data.id}>
                       {data.desc}
                     </div>
                   )}
@@ -122,8 +129,8 @@ function Services({
         {typeServicesElStyles.id === 4 && (
           <>
             <div className="template-wrapper">
-              <div className="template-title">Our Services</div>
-              <div className="template-preface">
+              <div className={`template-title ${type2}`}>Our Services</div>
+              <div className={`template-preface ${type2}`}>
                 Use this section to explain what you provide. What key
                 information should people know about your services, and what
                 makes them stand out?
@@ -141,9 +148,11 @@ function Services({
                       <span className="material-symbols-outlined">
                         {activeDescIds4.includes(data.id) ? "remove" : "add"}
                       </span>
-                      <div className="template-name">{data.name}</div>
+                      <div className={`template-name ${type2}`}>
+                        {data.name}
+                      </div>
                       {activeDescIds4.includes(data.id) && (
-                        <div className="template-desc" key={data.id}>
+                        <div className={`template-desc ${type1}`} key={data.id}>
                           {data.desc}
                         </div>
                       )}
@@ -151,7 +160,7 @@ function Services({
                   </>
                 );
               })}
-              <div className="template-button">Learn more</div>
+              <div className={`template-button ${type1}`}>Learn more</div>
             </div>
             <img className="template-image" src={image} alt="image" />
           </>

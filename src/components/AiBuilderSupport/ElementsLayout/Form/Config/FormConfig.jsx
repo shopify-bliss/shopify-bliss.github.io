@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 
-export const usernameField = (label, placeholder) => {
+export const usernameField = (label, placeholder, type1, type2) => {
   return (
     <div className="template-form-group">
       {label && (
-        <label htmlFor="username">
+        <label className={`${type2}`} htmlFor="username">
           Username <span>(required)</span>
         </label>
       )}
@@ -14,16 +14,17 @@ export const usernameField = (label, placeholder) => {
         name="username"
         autoComplete="username"
         placeholder={placeholder}
+        className={`${type1}`}
       />
     </div>
   );
 };
 
-export const emailField = (label, placeholder) => {
+export const emailField = (label, placeholder, type1, type2) => {
   return (
     <div className="template-form-group">
       {label && (
-        <label htmlFor="email">
+        <label className={`${type2}`} htmlFor="email">
           Email <span>(required)</span>
         </label>
       )}
@@ -33,16 +34,17 @@ export const emailField = (label, placeholder) => {
         name="email"
         autoComplete="email"
         placeholder={placeholder}
+        className={`${type1}`}
       />
     </div>
   );
 };
 
-export const phoneField = (label, placeholder) => {
+export const phoneField = (label, placeholder, type1, type2) => {
   return (
     <div className="template-form-group">
       {label && (
-        <label htmlFor="phone">
+        <label className={`${type2}`} htmlFor="phone">
           Phone Number <span>(required)</span>
         </label>
       )}
@@ -52,16 +54,17 @@ export const phoneField = (label, placeholder) => {
         name="phone"
         autoComplete="tel"
         placeholder={placeholder}
+        className={`${type1}`}
       />
     </div>
   );
 };
 
-export const messageField = (label, placeholder) => {
+export const messageField = (label, placeholder, type1, type2) => {
   return (
     <div className="template-form-group">
       {label && (
-        <label htmlFor="message">
+        <label className={`${type2}`} htmlFor="message">
           Message <span>(required)</span>
         </label>
       )}
@@ -69,6 +72,7 @@ export const messageField = (label, placeholder) => {
         name="message"
         id="message"
         placeholder={placeholder}
+        className={`${type1}`}
       ></textarea>
     </div>
   );

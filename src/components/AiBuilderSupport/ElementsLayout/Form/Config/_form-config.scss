@@ -79,7 +79,6 @@ $px-layout: 0.5rem;
       outline: none;
       padding: $p-input-textarea;
       @include m.flex();
-      font-family: v.$raleway;
       box-shadow: $border-input;
       background-color: transparent;
 
@@ -89,7 +88,6 @@ $px-layout: 0.5rem;
     }
 
     textarea {
-      font-family: v.$raleway;
       box-shadow: 0 0 0 0.3px #000;
       padding: $p-input-textarea;
       width: 100%;

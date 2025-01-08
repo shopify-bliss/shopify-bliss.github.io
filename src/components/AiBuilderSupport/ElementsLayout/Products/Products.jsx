@@ -5,6 +5,7 @@ import { FormatCurrencyIDR } from "../../../../helpers/FormatCurrencyIDR";
 import productSamples from "../../../../data/products.json";
 import ProductsConfig from "./Config/ProductsConfig";
 import { BgColors } from "../../ColorsSupport";
+import { FontType1, FontType2 } from "../../FontsSupport";
 
 function Products({
   handleActiveProducts,
@@ -18,6 +19,8 @@ function Products({
   const expandLayoutRef = useRef(null);
 
   const bg = BgColors({ activeColor });
+  const type1 = FontType1({ activeFont });
+  const type2 = FontType2({ activeFont });
 
   const typeProductsStyles = useMemo(
     () => sectionsElOptionLayout.find((option) => option.id === activeProducts),
@@ -35,7 +38,7 @@ function Products({
       <div className={`products ${typeProductsStyles.className} ${bg}`}>
         {typeProductsStyles.id === 1 && (
           <>
-            <div className="template-title">Featured Products</div>
+            <div className={`template-title ${type2}`}>Featured Products</div>
             <div className="template-wrapper">
               {productSamples.map((data) => {
                 const image = `/products/${data.image}`;
@@ -47,27 +50,27 @@ function Products({
                       src={image}
                       alt="products"
                     />
-                    <div className="template-name">{data.name}</div>
-                    <div className="template-price">
+                    <div className={`template-name ${type2}`}>{data.name}</div>
+                    <div className={`template-price ${type1}`}>
                       {FormatCurrencyIDR(data.price)}
                     </div>
                   </div>
                 );
               })}
             </div>
-            <div className="template-button">Shop All</div>
+            <div className={`template-button ${type1}`}>Shop All</div>
           </>
         )}
 
         {typeProductsStyles.id === 2 && (
           <>
             <div className="template-wrapper-loan">
-              <div className="template-title">Featured Products</div>
-              <div className="template-desc">
+              <div className={`template-title ${type2}`}>Featured Products</div>
+              <div className={`template-desc ${type1}`}>
                 Share how and where your products are made and what makes them
                 special.
               </div>
-              <div className="template-button">Shop All</div>
+              <div className={`template-button ${type1}`}>Shop All</div>
             </div>
             <div className="template-wrapper">
               {productSamples
@@ -82,8 +85,10 @@ function Products({
                         src={image}
                         alt="products"
                       />
-                      <div className="template-name">{data.name}</div>
-                      <div className="template-price">
+                      <div className={`template-name ${type2}`}>
+                        {data.name}
+                      </div>
+                      <div className={`template-price ${type1}`}>
                         {FormatCurrencyIDR(data.price)}
                       </div>
                     </div>
@@ -96,7 +101,7 @@ function Products({
         {typeProductsStyles.id === 3 && (
           <>
             <div className="template-wrapper">
-              <div className="template-title">
+              <div className={`template-title ${type2}`}>
                 <p>Featured</p>
                 <p>Products</p>
                 <p aria-hidden="true">Featured</p>
@@ -119,11 +124,11 @@ function Products({
                 );
               })}
             <div className="template-wrapper-loan">
-              <div className="template-desc">
+              <div className={`template-desc ${type1}`}>
                 Share how and where your products are made and what makes them
                 special.
               </div>
-              <div className="template-button">Shop All</div>
+              <div className={`template-button ${type1}`}>Shop All</div>
             </div>
           </>
         )}
@@ -131,8 +136,8 @@ function Products({
         {typeProductsStyles.id === 4 && (
           <>
             <div className="template-wrapper-loan">
-              <div className="template-title">Featured Products</div>
-              <div className="template-button">Shop All</div>
+              <div className={`template-title ${type2}`}>Featured Products</div>
+              <div className={`template-button ${type1}`}>Shop All</div>
             </div>
             <div className="template-wrapper">
               {productSamples.map((data) => {
@@ -145,8 +150,8 @@ function Products({
                       src={image}
                       alt="products"
                     />
-                    <div className="template-name">{data.name}</div>
-                    <div className="template-price">
+                    <div className={`template-name ${type2}`}>{data.name}</div>
+                    <div className={`template-price ${type1}`}>
                       {FormatCurrencyIDR(data.price)}
                     </div>
                   </div>

@@ -166,8 +166,6 @@ function Fonts({
                         const getBrand = font.brand;
                         const getGroup = font.group;
 
-                        console.log(getBrand, getGroup);
-
                         const allType1 = AllFontType1({
                           brand: getBrand,
                           group: getGroup,
