@@ -1,12 +1,14 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 function IntroConfig({
   layoutIds,
   activeIntro,
   handleActiveIntro,
   sectionsElOptionLayout,
-  activeColor,
-  activeFont,
+  introSample,
+  imageStyle3,
+  imageStyle4,
+  imageIntro,
 }) {
   return (
     <>
@@ -19,60 +21,105 @@ function IntroConfig({
               activeIntro === layout.id ? "active" : ""
             }`}
             onClick={() => handleActiveIntro(layout.id)}
+            style={
+              layout.id === 3
+                ? { background: `url(${imageStyle3}) no-repeat center / cover` }
+                : layout.id === 4
+                ? {
+                    background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${imageStyle4}) no-repeat center / cover`,
+                  }
+                : {}
+            }
           >
             {layout.id === 1 && (
               <>
-                <div className="template-brand">Your Brand Name</div>
-                <div className="template-desc">
-                  Greet visitors to your site with a brief, engaging
-                  introduction that reflects your personality.
-                </div>
-                <div className="template-image"></div>
+                {introSample
+                  .filter((intro) => intro.id === 1)
+                  .map((intro) => {
+                    return (
+                      <Fragment key={intro.id}>
+                        <div className="template-brand">{intro.brand}</div>
+                        <div className="template-desc">{intro.desc}</div>
+                        <div
+                          className="template-image"
+                          style={
+                            intro.image !== null
+                              ? { background: imageIntro(intro) }
+                              : {}
+                          }
+                        ></div>
+                      </Fragment>
+                    );
+                  })}
               </>
             )}
 
             {layout.id === 2 && (
               <>
-                <div className="template-wrapper">
-                  <div className="template-preface">Introduce your brand</div>
-                  <div className="template-desc">
-                    Greet visitors to your site with a brief, engaging
-                    introduction that reflects your personality.
-                  </div>
-                  <div className="template-button">Learn More</div>
-                </div>
-                <div className="template-image"></div>
+                {introSample
+                  .filter((intro) => intro.id === 2)
+                  .map((intro) => {
+                    return (
+                      <Fragment key={intro.id}>
+                        <div className="template-wrapper">
+                          <div className="template-preface">
+                            {intro.preface}
+                          </div>
+                          <div className="template-desc">{intro.desc}</div>
+                          <div className="template-button">{intro.button}</div>
+                        </div>
+                        <div
+                          className="template-image"
+                          style={
+                            intro.image !== null
+                              ? { background: imageIntro(intro) }
+                              : {}
+                          }
+                        ></div>
+                      </Fragment>
+                    );
+                  })}
               </>
             )}
 
             {layout.id === 3 && (
               <>
-                <div className="template-preface">Introduce your brand</div>
-                <div className="template-desc">
-                  Greet visitors to your site with a brief, engaging
-                  introduction that reflects your personality.
-                </div>
-                <div className="template-button">Learn More</div>
+                {introSample
+                  .filter((intro) => intro.id === 3)
+                  .map((intro) => {
+                    return (
+                      <Fragment key={intro.id}>
+                        <div className="template-preface">{intro.preface}</div>
+                        <div className="template-desc">{intro.desc}</div>
+                        <div className="template-button">{intro.button}</div>
+                      </Fragment>
+                    );
+                  })}
               </>
             )}
 
             {layout.id === 4 && (
               <>
-                <div className="template-desc">
-                  Greet visitors to your site with a brief, engaging
-                  introduction that reflects your personality.
-                </div>
-                <div className="template-button">Learn More</div>
-                <div className="template-wrapper">
-                  <div className="template-brand">
-                    <p>Your</p>
-                    <p>Brand</p>
-                    <p>Name</p>
-                    <p aria-hidden="true">Your</p>
-                    <p aria-hidden="true">Brand</p>
-                    <p aria-hidden="true">Name</p>
-                  </div>
-                </div>
+                {introSample
+                  .filter((intro) => intro.id === 4)
+                  .map((intro) => {
+                    return (
+                      <Fragment key={intro.id}>
+                        <div className="template-desc">{intro.desc}</div>
+                        <div className="template-button">{intro.button}</div>
+                        <div className="template-wrapper">
+                          <div className="template-brand">
+                            <p>Your</p>
+                            <p>Brand</p>
+                            <p>Name</p>
+                            <p aria-hidden="true">Your</p>
+                            <p aria-hidden="true">Brand</p>
+                            <p aria-hidden="true">Name</p>
+                          </div>
+                        </div>
+                      </Fragment>
+                    );
+                  })}
               </>
             )}
           </div>

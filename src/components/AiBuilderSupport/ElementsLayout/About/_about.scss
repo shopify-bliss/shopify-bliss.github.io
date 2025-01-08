@@ -4,7 +4,6 @@
 @use "../ExpalotComponents/expalot-title" as title;
 @use "./Config/about-config" as config;
 
-
 $fs-title: 1.5rem;
 $fs-desc: 8px;
 $fs-text: 10px;
@@ -52,7 +51,6 @@ $fs-preface: 6px;
       .template-button {
         @include config.button(
           $m: 1.9rem 0 1.7rem,
-          $bg: #000,
           $color: #fff,
           $fs: $fs-desc,
           $p: 0.6rem 1.7rem
@@ -111,7 +109,6 @@ $fs-preface: 6px;
       .template-button {
         @include config.button(
           $m: 1.5rem 0 0,
-          $bg: #000,
           $color: #fff,
           $fs: $fs-desc,
           $p: 0.6rem 1.7rem
@@ -148,7 +145,6 @@ $fs-preface: 6px;
       .template-button {
         @include config.button(
           $m: 1.6rem 0 0,
-          $bg: #000,
           $color: #fff,
           $fs: $fs-desc,
           $p: 0.6rem 1.7rem

@@ -42,12 +42,17 @@ function ElementPages({
   handleActiveForm,
   activeColor,
   activeFont,
+  activeStyles,
 }) {
   const { handleNext, handlePrev } = ControllingOverviews({
     activePages: activePages,
     currentPageId: currentPageId,
     setCurrentPageId: setCurrentPageId,
   });
+
+  useEffect(() => {
+    console.log(activeStyles);
+  }, [activeStyles]);
 
   return (
     <>
@@ -74,6 +79,8 @@ function ElementPages({
                 activeIntro={activeIntro}
                 toastMessage={toastMessage}
                 typeMain="element"
+                activeFont={activeFont}
+                activeColor={activeColor}
               />
               {currentPageId !== null && (
                 <div className="display-data-section">

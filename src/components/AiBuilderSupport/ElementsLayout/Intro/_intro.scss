@@ -34,7 +34,7 @@ $fs-button: 9px;
     }
 
     &.navbar-3 {
-      padding-top: $pt-overview * 1.25;
+      padding-top: $pt-overview * 1.4;
     }
 
     .template-brand {
@@ -53,18 +53,12 @@ $fs-button: 9px;
     }
 
     .template-image {
-      @include config.image(
-        $image: (
-          linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-          url("assets/images/elements/intro/pexels-heyho-7535030.jpg"),
-        ),
-        $height: $h-image
-      );
+      @include config.image($height: $h-image);
     }
   }
 
   &.style-2 {
-    @include config.style-2();
+    @include config.style-2($gap: 2.4rem);
 
     @if $element {
       @include support.change-layout(
@@ -96,7 +90,6 @@ $fs-button: 9px;
 
       .template-button {
         @include config.button(
-          $bg: #000,
           $color: #fff,
           $fs: $fs-button,
           $p: 0.4rem 0.8rem,
@@ -106,12 +99,7 @@ $fs-button: 9px;
     }
 
     .template-image {
-      @include config.image(
-        $image: (
-          linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-          url("assets/images/elements/intro/pexels-heyho-7535030.jpg"),
-        )
-      );
+      @include config.image();
     }
   }
 
@@ -185,7 +173,6 @@ $fs-button: 9px;
     .template-button {
       @include config.button(
         $bordered: true,
-        $bg: transparent,
         $color: #fff,
         $color-border: #fff,
         $fs: $fs-button,

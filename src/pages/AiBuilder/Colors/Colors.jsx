@@ -68,6 +68,7 @@ function Colors({
                 activeIntro={activeIntro}
                 toastMessage={toastMessage}
                 activeColor={activeColor}
+                activeFont={activeFont}
               />
               {currentPageId !== null && (
                 <div className="display-data-color">

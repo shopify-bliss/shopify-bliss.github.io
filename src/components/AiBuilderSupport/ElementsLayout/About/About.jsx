@@ -3,7 +3,7 @@ import { ChangeLayout } from "../../AiBuilderSupport";
 import sectionsElOptionLayout from "../../../../data/sectionsElOptionLayout.json";
 import about from "../../../../data/about.json";
 import AboutConfig from "./Config/AboutConfig";
-import { BgColors } from "../../ColorsSupport";
+import { BgColors, SpecialColors, FontColors } from "../../ColorsSupport";
 import { FontType1, FontType2 } from "../../FontsSupport";
 
 function About({
@@ -20,9 +20,10 @@ function About({
   const [imageStyle3, setImageStyle3] = useState(null);
 
   const bg = BgColors({ activeColor });
+  const special = SpecialColors({ activeColor });
+  const font = FontColors({ activeColor });
   const type1 = FontType1({ activeFont });
   const type2 = FontType2({ activeFont });
-
 
   const typeAboutStyles = useMemo(
     () => sectionsElOptionLayout.find((option) => option.id === activeAbout),
@@ -66,9 +67,15 @@ function About({
                 return (
                   <Fragment key={index}>
                     <div className="template-wrapper">
-                      <div className={`template-title ${type2}`}>{data.title}</div>
-                      <div className={`template-desc ${type1}`}>{data.desc_1}</div>
-                      <div className={`template-button ${type1}`}>{data.button}</div>
+                      <div className={`template-title ${type2} ${font}`}>
+                        {data.title}
+                      </div>
+                      <div className={`template-desc ${type1}`}>
+                        {data.desc_1}
+                      </div>
+                      <div className={`template-button ${type1} ${special}`}>
+                        {data.button}
+                      </div>
                       <img
                         className="template-image-1"
                         src={image_1}
@@ -94,9 +101,15 @@ function About({
                 return (
                   <Fragment key={index}>
                     <div className="template-wrapper">
-                      <div className={`template-title ${type2}`}>{data.title}</div>
-                      <div className={`template-desc ${type1}`}>{data.desc_1}</div>
-                      <div className={`template-desc ${type1}`}>{data.desc_2}</div>
+                      <div className={`template-title ${type2} ${font}`}>
+                        {data.title}
+                      </div>
+                      <div className={`template-desc ${type1}`}>
+                        {data.desc_1}
+                      </div>
+                      <div className={`template-desc ${type1}`}>
+                        {data.desc_2}
+                      </div>
                     </div>
                     <div
                       className="template-image"
@@ -119,11 +132,15 @@ function About({
                 return (
                   <>
                     <div className="template-wrapper" key={index}>
-                      <div className={`template-title ${type2}`}>{data.title}</div>
+                      <div className={`template-title ${type2} ${font}`}>
+                        {data.title}
+                      </div>
                       <div className={`template-desc ${type1}`}>
                         {data.desc_1 + data.desc_2}
                       </div>
-                      <div className={`template-button ${type1}`}>{data.button}</div>
+                      <div className={`template-button ${type1} ${special}`}>
+                        {data.button}
+                      </div>
                     </div>
                   </>
                 );
@@ -146,12 +163,20 @@ function About({
                       alt="about section's image"
                     />
                     <div className="template-wrapper">
-                      <div className={`template-title ${type2}`}>{data.title}</div>
-                      <div className="template-loan">
-                        <div className={`template-desc ${type1}`}>{data.desc_1}</div>
-                        <div className={`template-desc ${type1}`}>{data.desc_2}</div>
+                      <div className={`template-title ${type2} ${font}`}>
+                        {data.title}
                       </div>
-                      <div className={`template-button ${type1}`}>{data.button}</div>
+                      <div className="template-loan">
+                        <div className={`template-desc ${type1}`}>
+                          {data.desc_1}
+                        </div>
+                        <div className={`template-desc ${type1}`}>
+                          {data.desc_2}
+                        </div>
+                      </div>
+                      <div className={`template-button ${type1} ${special}`}>
+                        {data.button}
+                      </div>
                     </div>
                   </Fragment>
                 );

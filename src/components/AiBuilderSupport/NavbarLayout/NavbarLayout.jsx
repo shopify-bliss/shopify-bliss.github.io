@@ -11,6 +11,8 @@ import {
 import navbarFeatures from "../../../data/navbarFeature.json";
 import navbarOptionLayout from "../../../data/navbarOptionLayout.json";
 import { ChangeLayout } from "../AiBuilderSupport";
+import { OtherColors } from "../ColorsSupport";
+import { FontType1, FontType2 } from "../FontsSupport";
 
 function NavbarLayout({
   dataPages,
@@ -22,12 +24,16 @@ function NavbarLayout({
   handleActiveNavbar = null,
   toastMessage,
   typeMain = null,
-  activeColor = null,
-  activeFont = null,
+  activeColor,
+  activeFont,
 }) {
   const [activeFeatures, setActiveFeatures] = useState([]);
   const [isExpandLayout, setIsExpandLayout] = useState(false);
   const expandLayoutRef = useRef(null);
+
+  const others = OtherColors({ activeColor });
+  const type1 = FontType1({ activeFont });
+  const type2 = FontType2({ activeFont });
 
   const displaySiteTitle = useDisplaySiteTitle({ siteTitle });
   const displayLogo = useDisplayLogo({ dataPages, displaySiteTitle });
@@ -67,27 +73,29 @@ function NavbarLayout({
             : activeIntro === 4
             ? "intro-4"
             : ""
-        }`}
+        } ${others}`}
       >
-        <div className="template-logo">{displayLogo}</div>
+        <div className={`template-logo ${type2}`}>{displayLogo}</div>
 
         {typeNavbarStyles.id === 3 ? (
           <div className="template-wrapper">
             <div
               className={`template-search ${
                 activeFeatures.includes(1) ? "active" : ""
-              }`}
+              } ${type1}`}
             >
               {displayActiveFeatures("just-1")}
             </div>
-            <div className="template-links">{displayActivePages}</div>
+            <div className={`template-links ${type1}`}>
+              {displayActivePages}
+            </div>
           </div>
         ) : (
-          <div className="template-links">{displayActivePages}</div>
+          <div className={`template-links ${type1}`}>{displayActivePages}</div>
         )}
 
         {typeNavbarStyles.features && (
-          <div className="template-features">
+          <div className={`template-features ${type1}`}>
             {displayActiveFeatures(typeNavbarStyles.features)}
           </div>
         )}

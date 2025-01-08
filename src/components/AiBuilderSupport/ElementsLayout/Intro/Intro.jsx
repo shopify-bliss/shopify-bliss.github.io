@@ -1,9 +1,10 @@
-import React, { useRef, useState, useEffect, useMemo } from "react";
+import React, { useRef, useState, useEffect, useMemo, Fragment } from "react";
 import { ChangeLayout } from "../../AiBuilderSupport";
 import sectionsElOptionLayout from "../../../../data/sectionsElOptionLayout.json";
 import IntroConfig from "./Config/IntroConfig";
-import { OtherColors } from "../../ColorsSupport";
+import { OtherColors, SpecialColors } from "../../ColorsSupport";
 import { FontType1, FontType2 } from "../../FontsSupport";
+import introSample from "../../../../data/intro.json";
 
 function Intro({
   handleActiveIntro = null,
@@ -15,9 +16,12 @@ function Intro({
   typeMain = null,
 }) {
   const [isExpandLayout, setIsExpandLayout] = useState(false);
+  const [imageStyle3, setImageStyle3] = useState(null);
+  const [imageStyle4, setImageStyle4] = useState(null);
   const expandLayoutRef = useRef(null);
 
   const others = OtherColors({ activeColor });
+  const special = SpecialColors({ activeColor });
   const type1 = FontType1({ activeFont });
   const type2 = FontType2({ activeFont });
 
@@ -32,70 +36,134 @@ function Intro({
     }
   }, [typeIntroStyles, toastMessage]);
 
+  useEffect(() => {
+    const getId3 = introSample.filter((intro) => intro.id === 3);
+    const getId4 = introSample.filter((intro) => intro.id === 4);
+
+    setImageStyle3(getId3.length > 0 ? `intro/${getId3[0].image}` : null);
+    setImageStyle4(getId4.length > 0 ? `intro/${getId4[0].image}` : null);
+  }, []);
+
+  const imageIntro = (intro) =>
+    `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(intro/${intro.image}) no-repeat center / cover`;
+
   return (
     <>
       <div
         className={`intro ${typeIntroStyles.className} ${
           activeNavbar === 2 ? "navbar-2" : activeNavbar === 3 ? "navbar-3" : ""
         } ${others}`}
+        style={
+          typeIntroStyles.id === 3
+            ? { background: `url(${imageStyle3}) no-repeat center / cover` }
+            : typeIntroStyles.id === 4
+            ? {
+                background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${imageStyle4}) no-repeat center / cover`,
+              }
+            : {}
+        }
       >
         {typeIntroStyles.id === 1 && (
           <>
-            <div className={`template-brand ${type2}`}>Your Brand Name</div>
-            <div className={`template-desc ${type1}`}>
-              Greet visitors to your site with a brief, engaging introduction
-              that reflects your personality.
-            </div>
-            <div className="template-image"></div>
+            {introSample
+              .filter((intro) => intro.id === 1)
+              .map((intro) => {
+                return (
+                  <Fragment key={intro.id}>
+                    <div className={`template-brand ${type2}`}>
+                      {intro.brand}
+                    </div>
+                    <div className={`template-desc ${type1}`}>{intro.desc}</div>
+                    <div
+                      className="template-image"
+                      style={
+                        intro.image !== null
+                          ? { background: imageIntro(intro) }
+                          : {}
+                      }
+                    ></div>
+                  </Fragment>
+                );
+              })}
           </>
         )}
 
         {typeIntroStyles.id === 2 && (
           <>
-            <div className="template-wrapper">
-              <div className={`template-preface ${type2}`}>
-                Introduce your brand
-              </div>
-              <div className={`template-desc ${type1}`}>
-                Greet visitors to your site with a brief, engaging introduction
-                that reflects your personality.
-              </div>
-              <div className="template-button">Learn More</div>
-            </div>
-            <div className="template-image"></div>
+            {introSample
+              .filter((intro) => intro.id === 2)
+              .map((intro) => {
+                return (
+                  <Fragment key={intro.id}>
+                    <div className="template-wrapper">
+                      <div className={`template-preface ${type2}`}>
+                        {intro.preface}
+                      </div>
+                      <div className={`template-desc ${type1}`}>
+                        {intro.desc}
+                      </div>
+                      <div className={`template-button ${type1} ${special}`}>
+                        {intro.button}
+                      </div>
+                    </div>
+                    <div
+                      className="template-image"
+                      style={
+                        intro.image !== null
+                          ? { background: imageIntro(intro) }
+                          : {}
+                      }
+                    ></div>
+                  </Fragment>
+                );
+              })}
           </>
         )}
 
         {typeIntroStyles.id === 3 && (
           <>
-            <div className={`template-preface ${type2}`}>
-              Introduce your brand
-            </div>
-            <div className={`template-desc ${type1}`}>
-              Greet visitors to your site with a brief, engaging introduction
-              that reflects your personality.
-            </div>
-            <div className="template-button">Learn More</div>
+            {introSample
+              .filter((intro) => intro.id === 3)
+              .map((intro) => {
+                return (
+                  <Fragment key={intro.id}>
+                    <div className={`template-preface ${type2}`}>
+                      {intro.preface}
+                    </div>
+                    <div className={`template-desc ${type1}`}>{intro.desc}</div>
+                    <div className={`template-button ${type1} ${special}`}>
+                      {intro.button}
+                    </div>
+                  </Fragment>
+                );
+              })}
           </>
         )}
 
         {typeIntroStyles.id === 4 && (
           <>
-            <div className={`template-desc ${type1}`}>
-              Greet visitors to your site with a brief, engaging introduction
-              that reflects your personality.
-            </div>
-            <div className="template-button">Learn More</div>
-            <div className="template-wrapper">
-              <div className={`template-brand ${type2}`}>
-                <p>Your</p>
-                <p>Brand</p>
-                <p>Name</p>
-                <p aria-hidden="true">Your</p>
-                <p aria-hidden="true">Brand</p>
-                <p aria-hidden="true">Name</p>
-              </div>
-            </div>
+            {introSample
+              .filter((intro) => intro.id === 4)
+              .map((intro) => {
+                return (
+                  <Fragment key={intro.id}>
+                    <div className={`template-desc ${type1}`}>{intro.desc}</div>
+                    <div className={`template-button ${type1} ${special}`}>
+                      {intro.button}
+                    </div>
+                    <div className="template-wrapper">
+                      <div className={`template-brand ${type2}`}>
+                        <p>Your</p>
+                        <p>Brand</p>
+                        <p>Name</p>
+                        <p aria-hidden="true">Your</p>
+                        <p aria-hidden="true">Brand</p>
+                        <p aria-hidden="true">Name</p>
+                      </div>
+                    </div>
+                  </Fragment>
+                );
+              })}
           </>
         )}
 
@@ -120,8 +188,10 @@ function Intro({
                 activeIntro={activeIntro}
                 handleActiveIntro={handleActiveIntro}
                 sectionsElOptionLayout={sectionsElOptionLayout}
-                activeColor={activeColor}
-                activeFont={activeFont}
+                introSample={introSample}
+                imageStyle3={imageStyle3}
+                imageStyle4={imageStyle4}
+                imageIntro={imageIntro}
               />
             </div>
             <div className="wrapper-right">
@@ -130,8 +200,10 @@ function Intro({
                 activeIntro={activeIntro}
                 handleActiveIntro={handleActiveIntro}
                 sectionsElOptionLayout={sectionsElOptionLayout}
-                activeColor={activeColor}
-                activeFont={activeFont}
+                introSample={introSample}
+                imageStyle3={imageStyle3}
+                imageStyle4={imageStyle4}
+                imageIntro={imageIntro}
               />
             </div>
           </div>

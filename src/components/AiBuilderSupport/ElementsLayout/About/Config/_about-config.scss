@@ -25,7 +25,6 @@ $fs-text: 4px;
   $fs: $fs-text,
   $m: 0,
   $p: 0.22rem 0.62rem,
-  $bg: transparent,
   $color: #000,
   $t-decor: none
 ) {
@@ -37,7 +36,6 @@ $fs-text: 4px;
   cursor: pointer;
   padding: $p;
   margin: $m;
-  background-color: $bg;
   color: $color;
   text-decoration: $t-decor;
 }
@@ -117,7 +115,7 @@ $fs-text: 4px;
           }
 
           .template-button {
-            @include button($m: 0.75rem 0, $bg: #000, $color: #fff);
+            @include button($m: 0.75rem 0, $color: #fff);
           }
 
           .template-image-1 {
@@ -148,7 +146,7 @@ $fs-text: 4px;
           }
 
           .template-button {
-            @include button($m: 0.6rem 0 0.25rem, $bg: #000, $color: #fff);
+            @include button($m: 0.6rem 0 0.25rem, $color: #fff);
           }
         }
       }
@@ -214,7 +212,7 @@ $fs-text: 4px;
           }
 
           .template-button {
-            @include button($bg: #000, $color: #fff, $m: 0.65rem 0 0);
+            @include button($color: #fff, $m: 0.65rem 0 0);
           }
         }
       }

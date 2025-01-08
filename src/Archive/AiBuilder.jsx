@@ -38,10 +38,16 @@ function AiBuilder() {
   const [isLoadingPagesAi, setIsLoadingPagesAi] = useState(false);
   const [isLoadingElementPages, setIsLoadingElementPages] = useState(false);
 
+  const [activeStyles, setActiveStyles] = useState({
+    navbar: 1,
+    intro: 1,
+    products: 1,
+    services: 1,
+    about: 1,
+    form: 1,
+  });
   const [activeColor, setActiveColor] = useState(1);
   const [activeFont, setActiveFont] = useState(7);
-  const [pageStyles, setPageStyles] = useState({});
-  const [mergedPageStyles, setMergedPageStyles] = useState({});
 
   const handleSiteTitleInput = useCallback((e) => {
     const inputSiteTitle = e.target.value;
@@ -54,8 +60,7 @@ function AiBuilder() {
     (pageId) => {
       if (
         pageId === "2bff7888-e861-4341-869b-189af29ad3f8" ||
-        pageId === "40229892-a523-4e1f-a936-a3051e9d30bb" ||
-        pageId === initialPageId
+        pageId === "40229892-a523-4e1f-a936-a3051e9d30bb"
       ) {
         return;
       }
@@ -79,10 +84,10 @@ function AiBuilder() {
             const onlyNavbarAndFooterActive =
               updatedPages.length === 2 &&
               updatedPages.includes("2bff7888-e861-4341-869b-189af29ad3f8") &&
-              updatedPages.includes("40229892-a523-4e1f-a936-a3051e9d30bb") &&
-              setCurrentPageId(
-                onlyNavbarAndFooterActive ? initialPageId : newPageId
-              );
+              updatedPages.includes("40229892-a523-4e1f-a936-a3051e9d30bb");
+            setCurrentPageId(
+              onlyNavbarAndFooterActive ? initialPageId : newPageId
+            );
           }
         } else {
           // Tambahkan halaman berdasarkan id
@@ -173,52 +178,61 @@ function AiBuilder() {
   );
 
   useEffect(() => {
-    if (!currentPageId || pageStyles[currentPageId]) return;
+    if (!currentPageId) return;
 
-    setPageStyles((prevStyles) => ({
-      ...prevStyles,
-      [currentPageId]: { ...activeStylesTemplate },
-    }));
-  }, [currentPageId, activeStylesTemplate, pageStyles]);
+    const currentActiveSections = activeSections[currentPageId] || [];
+    const updatedStyles = { ...activeStyles };
 
-  const updatePageStyle = (section, value) => {
-    setPageStyles((prevStyles) => ({
-      ...prevStyles,
-      [currentPageId]: {
-        ...prevStyles[currentPageId],
+    currentActiveSections.forEach((sectionId) => {
+      switch (sectionId) {
+        case "798f1ce0-b732-45a6-838e-f28e137243f7":
+          updatedStyles.intro = 1;
+          break;
+        case "b42d4d56-d411-4aa8-ae01-52f0c406328a":
+          updatedStyles.products = 1;
+          break;
+        case "4fd1e0cc-06f3-4554-9f79-ce8e02db03c8":
+          updatedStyles.services = 1;
+          break;
+        case "1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed":
+          updatedStyles.about = 1;
+          break;
+        case "2089ce88-93a7-4555-8d0d-7f88f1dc3a7e":
+          updatedStyles.form = 1;
+          break;
+        default:
+          break;
+      }
+    });
+
+    if (activePages.includes("2bff7888-e861-4341-869b-189af29ad3f8")) {
+      updatedStyles.navbar = 1;
+    }
+
+    setActiveStyles((prevStyles) => {
+      const hasChanges = Object.keys(updatedStyles).some(
+        (key) => prevStyles[key] !== updatedStyles[key]
+      );
+      return hasChanges ? updatedStyles : prevStyles;
+    });
+  }, [currentPageId, activeSections, activePages, activeStylesTemplate]);
+
+  const updateActiveStyle = useCallback(
+    (section, value) => {
+      setActiveStyles((prevStyles) => ({
+        ...prevStyles,
         [section]: value,
-      },
-    }));
-  };
-
-  const currentPageStyles = useMemo(
-    () => pageStyles[currentPageId] || activeStylesTemplate,
-    [pageStyles, currentPageId, activeStylesTemplate]
+      }));
+    },
+    [setActiveStyles]
   );
 
-  useEffect(() => {
-    setMergedPageStyles((prevMergedStyles) => {
-      const filteredStyles = Object.keys(pageStyles)
-        .filter((pageId) => pageId !== "99") // Filter out pageId "99"
-        .reduce((acc, pageId) => {
-          acc[pageId] = pageStyles[pageId];
-          return acc;
-        }, {});
-
-      return {
-        ...prevMergedStyles,
-        ...filteredStyles,
-      };
-    });
-  }, [pageStyles]);
-
-  useEffect(() => {
-    console.log("Current Page Styles:", pageStyles[currentPageId]);
-  }, [pageStyles, currentPageId]);
-
-  useEffect(() => {
-    console.log("Merged Page Styles:", mergedPageStyles);
-  }, [mergedPageStyles]);
+  const handleActiveNavbar = (value) => updateActiveStyle("navbar", value);
+  const handleActiveIntro = (value) => updateActiveStyle("intro", value);
+  const handleActiveProducts = (value) => updateActiveStyle("products", value);
+  const handleActiveServices = (value) => updateActiveStyle("services", value);
+  const handleActiveAbout = (value) => updateActiveStyle("about", value);
+  const handleActiveForm = (value) => updateActiveStyle("form", value);
 
   const handleActiveColor = useCallback(
     (color) => {
@@ -306,24 +320,21 @@ function AiBuilder() {
                 setCurrentPageId={setCurrentPageId}
                 dataElements={dataElements}
                 toastMessage={toastMessage}
-                activeNavbar={currentPageStyles.navbar}
-                handleActiveNavbar={(value) => updatePageStyle("navbar", value)}
-                activeIntro={currentPageStyles.intro}
-                handleActiveIntro={(value) => updatePageStyle("intro", value)}
-                activeProducts={currentPageStyles.products}
-                handleActiveProducts={(value) =>
-                  updatePageStyle("products", value)
-                }
-                activeServices={currentPageStyles.services}
-                handleActiveServices={(value) =>
-                  updatePageStyle("services", value)
-                }
-                activeAbout={currentPageStyles.about}
-                handleActiveAbout={(value) => updatePageStyle("about", value)}
-                activeForm={currentPageStyles.form}
-                handleActiveForm={(value) => updatePageStyle("form", value)}
+                activeNavbar={activeStyles.navbar}
+                handleActiveNavbar={handleActiveNavbar}
+                activeIntro={activeStyles.intro}
+                handleActiveIntro={handleActiveIntro}
+                activeProducts={activeStyles.products}
+                handleActiveProducts={handleActiveProducts}
+                activeServices={activeStyles.services}
+                handleActiveServices={handleActiveServices}
+                activeAbout={activeStyles.about}
+                handleActiveAbout={handleActiveAbout}
+                activeForm={activeStyles.form}
+                handleActiveForm={handleActiveForm}
                 activeColor={activeColor}
                 activeFont={activeFont}
+                activeStyles={activeStyles}
               />
             )}
           </>
@@ -338,12 +349,12 @@ function AiBuilder() {
             setCurrentPageId={setCurrentPageId}
             dataElements={dataElements}
             toastMessage={toastMessage}
-            activeNavbar={currentPageStyles.navbar}
-            activeIntro={currentPageStyles.intro}
-            activeProducts={currentPageStyles.products}
-            activeServices={currentPageStyles.services}
-            activeAbout={currentPageStyles.about}
-            activeForm={currentPageStyles.form}
+            activeNavbar={activeStyles.navbar}
+            activeIntro={activeStyles.intro}
+            activeProducts={activeStyles.products}
+            activeServices={activeStyles.services}
+            activeAbout={activeStyles.about}
+            activeForm={activeStyles.form}
             activeColor={activeColor}
             handleActiveColor={handleActiveColor}
             activeFont={activeFont}
@@ -360,12 +371,12 @@ function AiBuilder() {
             setCurrentPageId={setCurrentPageId}
             dataElements={dataElements}
             toastMessage={toastMessage}
-            activeNavbar={currentPageStyles.navbar}
-            activeIntro={currentPageStyles.intro}
-            activeProducts={currentPageStyles.products}
-            activeServices={currentPageStyles.services}
-            activeAbout={currentPageStyles.about}
-            activeForm={currentPageStyles.form}
+            activeNavbar={activeStyles.navbar}
+            activeIntro={activeStyles.intro}
+            activeProducts={activeStyles.products}
+            activeServices={activeStyles.services}
+            activeAbout={activeStyles.about}
+            activeForm={activeStyles.form}
             activeColor={activeColor}
             activeFont={activeFont}
             handleActiveFont={handleActiveFont}

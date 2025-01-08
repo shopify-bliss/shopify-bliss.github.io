@@ -84,7 +84,6 @@ $fs-brand: 22px;
   $fs: $fs-text,
   $m-top: 0.3rem,
   $p: 0.18rem 0.45rem,
-  $bg: transparent,
   $color: #000,
   $color-border: #000
 ) {
@@ -96,7 +95,6 @@ $fs-brand: 22px;
   cursor: pointer;
   margin-top: $m-top;
   @include m.flex();
-  background-color: $bg;
   color: $color;
   border: 1px solid transparent;
 
@@ -105,39 +103,27 @@ $fs-brand: 22px;
   }
 }
 
-@mixin image($image: #fff, $height: 100%) {
-  width: 100%;
+@mixin image($width: 100%, $height: 100%) {
+  width: $width;
   height: $height;
-  background: $image;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 @mixin style-1() {
   @include m.flex($direction: column, $justify: flex-start);
 }
 
-@mixin style-2() {
+@mixin style-2($gap: 0.3rem) {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: $gap;
 }
 
 @mixin style-3() {
   @include m.flex($direction: column);
-  background: url("assets/images/elements/intro/pexels-alancabello-1291515.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 @mixin style-4() {
   @include m.flex($direction: column, $align: flex-start, $justify: flex-start);
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("assets/images/elements/intro/pexels-heyho-7535030.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 @mixin expalot-intro {
@@ -171,6 +157,7 @@ $fs-brand: 22px;
         @include style-1();
         gap: 0.15rem;
         padding: 0.4rem 0.45rem;
+        background-color: #eaeaea;
 
         .template-brand {
           @include brand();
@@ -183,13 +170,7 @@ $fs-brand: 22px;
         }
 
         .template-image {
-          @include image(
-            $image: (
-              linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-              url("assets/images/elements/intro/pexels-heyho-7535030.jpg"),
-            ),
-            $height: 4.5rem
-          );
+          @include image($height: 4.5rem);
         }
       }
 
@@ -225,6 +206,7 @@ $fs-brand: 22px;
       .style-2 {
         @include support.layout-styles();
         @include style-2();
+        background-color: #eaeaea;
 
         .template-wrapper {
           @include m.flex($direction: column, $align: flex-start);
@@ -240,18 +222,12 @@ $fs-brand: 22px;
           }
 
           .template-button {
-            @include button($bg: #000, $color: #fff);
+            @include button($color: #fff);
           }
         }
 
         .template-image {
-          @include image(
-            $image: (
-              linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-              url("assets/images/elements/intro/pexels-heyho-7535030.jpg"),
-            ),
-            $height: 6.5rem
-          );
+          @include image($height: 6.5rem);
         }
       }
 
@@ -270,7 +246,6 @@ $fs-brand: 22px;
         .template-button {
           @include button(
             $bordered: true,
-            $bg: transparent,
             $color: #fff,
             $color-border: #fff,
             $m-top: 0.2rem

@@ -6,9 +6,9 @@ import React, {
   useCallback,
 } from "react";
 import { Link } from "react-router-dom";
-import google from "../../assets/images/login/google.png";
-import facebook from "../../assets/images/login/facebook.png";
-import whatsapp from "../../assets/images/login/whatsapp (1).png";
+import google from "../../assets/login/google.png";
+import facebook from "../../assets/login/facebook.png";
+import whatsapp from "../../assets/login/whatsapp (1).png";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import { useSearch } from "../../helpers/SearchContext";
 

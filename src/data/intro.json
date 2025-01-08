@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "brand": "Your Brand Name",
+    "marquee": false,
+    "preface": null,
+    "desc": "Greet visitors to your site with a brief, engaging introduction that reflects your personality.",
+    "button": null,
+    "image": "pexels-heyho-7535030.jpg"
+  },
+  {
+    "id": 2,
+    "brand": null,
+    "marquee": false,
+    "preface": "Introduce your brand",
+    "desc": "Greet visitors to your site with a brief, engaging introduction that reflects your personality.",
+    "button": "Learn More",
+    "image": "pexels-heyho-7535030.jpg"
+  },
+  {
+    "id": 3,
+    "brand": null,
+    "marquee": false,
+    "preface": "Introduce your brand",
+    "desc": "Greet visitors to your site with a brief, engaging introduction that reflects your personality.",
+    "button": "Learn More",
+    "image": "pexels-alancabello-1291515.jpg"
+  },
+  {
+    "id": 4,
+    "brand": "Your Brand Name",
+    "marquee": true,
+    "preface": null,
+    "desc": "Greet visitors to your site with a brief, engaging introduction that reflects your personality.",
+    "button": "Learn More",
+    "image": "pexels-heyho-7535030.jpg"
+  }
+]
