@@ -4,7 +4,7 @@
 @use "./Config/intro-config" as config;
 
 $h-image: 14rem;
-$pt-overview: 2.8rem;
+$pt-overview: 2.7rem;
 $fs-brand: 3.5rem;
 $fs-desc: 12px;
 $fs-preface: 1.5rem;
@@ -33,10 +33,6 @@ $fs-button: 9px;
       );
     }
 
-    &.navbar-3 {
-      padding-top: $pt-overview * 1.4;
-    }
-
     .template-brand {
       @include config.brand($fs: $fs-brand);
     }
@@ -55,6 +51,14 @@ $fs-button: 9px;
     .template-image {
       @include config.image($height: $h-image);
     }
+
+    &.navbar-2 {
+      padding-top: $pt-overview * 1.25;
+    }
+
+    &.navbar-3 {
+      padding-top: $pt-overview * 1.65;
+    }
   }
 
   &.style-2 {
@@ -66,14 +70,6 @@ $fs-button: 9px;
         $border-color: adjust-color($color: #fff, $blackness: 90%),
         $color: #fff
       );
-    }
-
-    &.navbar-2 {
-      padding-top: $pt-overview * 1.24;
-    }
-
-    &.navbar-3 {
-      padding-top: $pt-overview * 1.56;
     }
 
     .template-wrapper {
@@ -90,20 +86,36 @@ $fs-button: 9px;
 
       .template-button {
         @include config.button(
-          $color: #fff,
           $fs: $fs-button,
-          $p: 0.4rem 0.8rem,
+          $p: 0.5rem 0.9rem,
           $m-top: 1rem
         );
       }
     }
 
     .template-image {
-      @include config.image();
+      @include config.image($height: $h-image * 1.1);
+    }
+
+    &.navbar-1,
+    &.navbar-4 {
+      padding-top: $pt-overview * 1.15;
+    }
+
+    &.navbar-2 {
+      padding-top: $pt-overview * 1.48;
+    }
+
+    &.navbar-3 {
+      padding-top: $pt-overview * 1.95;
     }
   }
 
   &.style-3 {
+    @include config.style-3();
+    gap: 0.9rem;
+    padding-top: v.$p-navter * 3;
+
     @if $element {
       @include support.change-layout(
         $bg-color: adjust-color($color: #fff, $blackness: 90%),
@@ -111,10 +123,6 @@ $fs-button: 9px;
         $color: #fff
       );
     }
-
-    @include config.style-3();
-    gap: 0.9rem;
-    padding-top: v.$p-navter * 3;
 
     .template-preface {
       @include config.preface(
@@ -136,33 +144,25 @@ $fs-button: 9px;
     .template-button {
       @include config.button(
         $fs: $fs-button,
-        $p: 0.4rem 0.8rem,
+        $p: 0.5rem 0.9rem,
         $m-top: 0.8rem
       );
     }
   }
 
   &.style-4 {
-    @if $element {
-      @include support.change-layout(
-        $bg-color: adjust-color($color: #fff, $blackness: 90%),
-        $border-color: adjust-color($color: #fff, $blackness: 90%),
-        $color: #fff
-      );
-    }
-
     @include config.style-4();
     gap: 0.7rem;
     padding-left: 0;
     padding-top: $pt-overview * 1.45;
     padding-bottom: v.$p-navter * 0.6;
 
-    &.navbar-2 {
-      padding-top: $pt-overview * 1.6;
-    }
-
-    &.navbar-3 {
-      padding-top: $pt-overview * 1.75;
+    @if $element {
+      @include support.change-layout(
+        $bg-color: adjust-color($color: #fff, $blackness: 90%),
+        $border-color: adjust-color($color: #fff, $blackness: 90%),
+        $color: #fff
+      );
     }
 
     .template-desc {
@@ -173,13 +173,13 @@ $fs-button: 9px;
     .template-button {
       @include config.button(
         $bordered: true,
-        $color: #fff,
         $color-border: #fff,
         $fs: $fs-button,
-        $p: 0.4rem 0.8rem,
+        $p: 0.5rem 0.9rem,
         $m-top: 0.3rem
       );
       margin-left: v.$p-navter;
+      background-color: transparent;
     }
 
     .template-wrapper {
@@ -195,6 +195,14 @@ $fs-button: 9px;
           $distance: 1.05rem
         );
       }
+    }
+
+    &.navbar-2 {
+      padding-top: $pt-overview * 1.6;
+    }
+
+    &.navbar-3 {
+      padding-top: $pt-overview * 1.95;
     }
   }
 }

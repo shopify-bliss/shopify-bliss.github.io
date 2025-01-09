@@ -3,15 +3,22 @@ import { ChangeLayout } from "../../AiBuilderSupport";
 import sectionsElOptionLayout from "../../../../data/sectionsElOptionLayout.json";
 import about from "../../../../data/about.json";
 import AboutConfig from "./Config/AboutConfig";
-import { BgColors, SpecialColors, FontColors } from "../../ColorsSupport";
+import {
+  BgColors,
+  SpecialColors,
+  FontColors,
+  OtherColors,
+} from "../../ColorsSupport";
 import { FontType1, FontType2 } from "../../FontsSupport";
 
 function About({
   toastMessage,
   handleActiveAbout,
+  activeNavbar,
   activeAbout,
-  activeColor,
-  activeFont,
+  activeColors,
+  activeFonts,
+  firstAbout,
   typeMain = null,
 }) {
   const [isExpandLayout, setIsExpandLayout] = useState(false);
@@ -19,11 +26,12 @@ function About({
   const [imageStyle2, setImageStyle2] = useState(null);
   const [imageStyle3, setImageStyle3] = useState(null);
 
-  const bg = BgColors({ activeColor });
-  const special = SpecialColors({ activeColor });
-  const font = FontColors({ activeColor });
-  const type1 = FontType1({ activeFont });
-  const type2 = FontType2({ activeFont });
+  const bg = BgColors({ activeColors });
+  const special = SpecialColors({ activeColors });
+  const others = OtherColors({ activeColors });
+  const font = FontColors({ activeColors });
+  const type1 = FontType1({ activeFonts });
+  const type2 = FontType2({ activeFonts });
 
   const typeAboutStyles = useMemo(
     () => sectionsElOptionLayout.find((option) => option.id === activeAbout),
@@ -47,7 +55,11 @@ function About({
   return (
     <>
       <div
-        className={`about ${typeAboutStyles.className} ${bg}`}
+        className={`about ${typeAboutStyles.className} ${
+          activeAbout === 2 ? others : bg
+        } ${firstAbout ? "first-about" : ""} ${
+          activeNavbar === 2 ? "navbar-2" : activeNavbar === 3 ? "navbar-3" : ""
+        }`}
         style={
           typeAboutStyles.id === 3
             ? {

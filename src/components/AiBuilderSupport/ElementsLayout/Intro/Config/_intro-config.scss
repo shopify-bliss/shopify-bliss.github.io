@@ -84,7 +84,6 @@ $fs-brand: 22px;
   $fs: $fs-text,
   $m-top: 0.3rem,
   $p: 0.18rem 0.45rem,
-  $color: #000,
   $color-border: #000
 ) {
   padding: $p;
@@ -95,7 +94,6 @@ $fs-brand: 22px;
   cursor: pointer;
   margin-top: $m-top;
   @include m.flex();
-  color: $color;
   border: 1px solid transparent;
 
   @if $bordered {
@@ -189,6 +187,7 @@ $fs-brand: 22px;
 
         .template-button {
           @include button($m-top: 0.5rem);
+          background-color: #fff;
         }
       }
     }
@@ -222,7 +221,9 @@ $fs-brand: 22px;
           }
 
           .template-button {
-            @include button($color: #fff);
+            @include button();
+            background-color: #000;
+            color: #fff;
           }
         }
 
@@ -244,12 +245,8 @@ $fs-brand: 22px;
         }
 
         .template-button {
-          @include button(
-            $bordered: true,
-            $color: #fff,
-            $color-border: #fff,
-            $m-top: 0.2rem
-          );
+          @include button($bordered: true, $color-border: #fff, $m-top: 0.2rem);
+          color: #fff;
           margin-left: 0.4rem;
         }
 

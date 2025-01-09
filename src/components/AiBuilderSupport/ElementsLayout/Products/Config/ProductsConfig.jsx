@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 function ProductsConfig({
   layoutIds,
@@ -22,121 +22,161 @@ function ProductsConfig({
           >
             {layout.id === 1 && (
               <>
-                <div className="template-title">Featured Products</div>
-                <div className="template-wrapper">
-                  {productSamples.map((data) => {
-                    const image = `/products/${data.image}`;
-
+                {productSamples
+                  .filter((product) => product.id === 1)
+                  .map((product) => {
                     return (
-                      <div className="container-product" key={data.id}>
-                        <img
-                          className="template-image"
-                          src={image}
-                          alt="products"
-                        />
-                        <div className="template-name">{data.name}</div>
-                        <div className="template-price">
-                          {FormatCurrencyIDR(data.price)}
+                      <Fragment key={product.id}>
+                        <div className="template-title">{product.title}</div>
+                        <div className="template-wrapper">
+                          {product.products.map((data) => {
+                            const image = `/products/${data.image}`;
+
+                            return (
+                              <div className="container-product" key={data.id}>
+                                <img
+                                  className="template-image"
+                                  src={image}
+                                  alt="products"
+                                />
+                                <div className="template-name">{data.name}</div>
+                                <div className="template-price">
+                                  {FormatCurrencyIDR(data.price)}
+                                </div>
+                              </div>
+                            );
+                          })}
                         </div>
-                      </div>
+                        <div className="template-button">{product.button}</div>
+                      </Fragment>
                     );
                   })}
-                </div>
-                <div className="template-button">Shop All</div>
               </>
             )}
+
             {layout.id === 2 && (
               <>
-                <div className="template-wrapper-loan">
-                  <div className="template-title">Featured Products</div>
-                  <div className="template-desc">
-                    Share how and where your products are made and what makes
-                    them special.
-                  </div>
-                  <div className="template-button">Shop All</div>
-                </div>
-                <div className="template-wrapper">
-                  {productSamples
-                    .filter((item) => [2, 3].includes(item.id))
-                    .map((data) => {
-                      const image = `/products/${data.image}`;
-
-                      return (
-                        <div className="container-product" key={data.id}>
-                          <img
-                            className="template-image"
-                            src={image}
-                            alt="products"
-                          />
-                          <div className="template-name">{data.name}</div>
-                          <div className="template-price">
-                            {FormatCurrencyIDR(data.price)}
+                {productSamples
+                  .filter((product) => product.id === 2)
+                  .map((product) => {
+                    return (
+                      <Fragment key={product.id}>
+                        <div className="template-wrapper-loan">
+                          <div className="template-title">{product.title}</div>
+                          <div className="template-desc">{product.desc}</div>
+                          <div className="template-button">
+                            {product.button}
                           </div>
                         </div>
-                      );
-                    })}
-                </div>
+                        <div className="template-wrapper">
+                          {product.products
+                            .filter((item) => [2, 3].includes(item.id))
+                            .map((data) => {
+                              const image = `/products/${data.image}`;
+
+                              return (
+                                <div
+                                  className="container-product"
+                                  key={data.id}
+                                >
+                                  <img
+                                    className="template-image"
+                                    src={image}
+                                    alt="products"
+                                  />
+                                  <div className="template-name">
+                                    {data.name}
+                                  </div>
+                                  <div className="template-price">
+                                    {FormatCurrencyIDR(data.price)}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                        </div>
+                      </Fragment>
+                    );
+                  })}
               </>
             )}
+
             {layout.id === 3 && (
               <>
-                <div className="template-wrapper">
-                  <div className="template-title">
-                    <p>Featured</p>
-                    <p>Products</p>
-                    <p aria-hidden="true">Featured</p>
-                    <p aria-hidden="true">Products</p>
-                  </div>
-                </div>
                 {productSamples
-                  .filter((item) => item.id === 1)
-                  .map((data) => {
-                    const image = `/products/${data.image}`;
-
+                  .filter((product) => product.id === 3)
+                  .map((product) => {
                     return (
-                      <div className="container-product" key={data.id}>
-                        <img
-                          className="template-image"
-                          src={image}
-                          alt="products"
-                        />
-                      </div>
+                      <Fragment key={product.id}>
+                        <div className="template-wrapper">
+                          <div className="template-title">
+                            <p>Featured</p>
+                            <p>Products</p>
+                            <p aria-hidden="true">Featured</p>
+                            <p aria-hidden="true">Products</p>
+                          </div>
+                        </div>
+                        {product.products
+                          .filter((item) => item.id === 1)
+                          .map((data) => {
+                            const image = `/products/${data.image}`;
+
+                            return (
+                              <div className="container-product" key={data.id}>
+                                <img
+                                  className="template-image"
+                                  src={image}
+                                  alt="products"
+                                />
+                              </div>
+                            );
+                          })}
+                        <div className="template-wrapper-loan">
+                          <div className="template-desc">{product.desc}</div>
+                          <div className="template-button">
+                            {product.button}
+                          </div>
+                        </div>
+                      </Fragment>
                     );
                   })}
-                <div className="template-wrapper-loan">
-                  <div className="template-desc">
-                    Share how and where your products are made and what makes
-                    them special.
-                  </div>
-                  <div className="template-button">Shop All</div>
-                </div>
               </>
             )}
+
             {layout.id === 4 && (
               <>
-                <div className="template-wrapper-loan">
-                  <div className="template-title">Featured Products</div>
-                  <div className="template-button">Shop All</div>
-                </div>
-                <div className="template-wrapper">
-                  {productSamples.map((data) => {
-                    const image = `/products/${data.image}`;
-
+                {productSamples
+                  .filter((product) => product.id === 4)
+                  .map((product) => {
                     return (
-                      <div className="container-product" key={data.id}>
-                        <img
-                          className="template-image"
-                          src={image}
-                          alt="products"
-                        />
-                        <div className="template-name">{data.name}</div>
-                        <div className="template-price">
-                          {FormatCurrencyIDR(data.price)}
+                      <Fragment key={product.id}>
+                        <div className="template-wrapper-loan">
+                          <div className="template-title">{product.title}</div>
+                          <div className="template-button">
+                            {product.button}
+                          </div>
                         </div>
-                      </div>
+                        <div className="template-wrapper">
+                          {product.products.map((data) => {
+                            const image = `/products/${data.image}`;
+
+                            return (
+                              <div className="container-product" key={data.id}>
+                                <img
+                                  className="template-image"
+                                  src={image}
+                                  alt="products"
+                                />
+                                <div className="template-name">{data.name}</div>
+                                <div className="template-price">
+                                  {FormatCurrencyIDR(data.price)}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </Fragment>
                     );
                   })}
-                </div>
               </>
             )}
           </div>

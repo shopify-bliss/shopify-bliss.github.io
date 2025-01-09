@@ -4,6 +4,7 @@ import axios from "axios";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import DisplayUsersModal from "./DisplayUsersModal";
+import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
 
 function DisplayView({
   isLoadingDashboard,
@@ -16,11 +17,7 @@ function DisplayView({
 }) {
   return (
     <>
-      {isLoadingDashboard && (
-        <div className="loader-pages">
-          <div className="loader-pages-item"></div>
-        </div>
-      )}
+      {isLoadingDashboard && <LoaderPages />}
       {type === "grid" ? (
         <div className="display-users-grid">
           {users.map((data) => {

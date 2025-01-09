@@ -8,24 +8,27 @@ import FormConfig, {
   phoneField,
   messageField,
 } from "./Config/FormConfig";
-import { BgColors } from "../../ColorsSupport";
+import { BgColors, OtherColors } from "../../ColorsSupport";
 import { FontType1, FontType2 } from "../../FontsSupport";
 
 function Form({
   toastMessage,
   activeForm,
+  activeNavbar,
   handleActiveForm,
-  activeColor,
-  activeFont,
+  activeColors,
+  activeFonts,
+  firstForm,
   typeMain = null,
 }) {
   const [isExpandLayout, setIsExpandLayout] = useState(false);
   const expandLayoutRef = useRef(null);
   const [imageStyle4, setImageStyle4] = useState(null);
 
-  const bg = BgColors({ activeColor });
-  const type1 = FontType1({ activeFont });
-  const type2 = FontType2({ activeFont });
+  const bg = BgColors({ activeColors });
+  const others = OtherColors({ activeColors });
+  const type1 = FontType1({ activeFonts });
+  const type2 = FontType2({ activeFonts });
 
   const typeFormStyles = useMemo(
     () => sectionsElOptionLayout.find((option) => option.id === activeForm),
@@ -47,7 +50,11 @@ function Form({
   return (
     <>
       <div
-        className={`form ${typeFormStyles.className} ${bg}`}
+        className={`form ${typeFormStyles.className} ${
+          activeForm === 2 ? others : bg
+        } ${firstForm ? "first-form" : ""} ${
+          activeNavbar === 2 ? "navbar-2" : activeNavbar === 3 ? "navbar-3" : ""
+        }`}
         style={
           typeFormStyles.id === 4
             ? { background: `url(${imageStyle4}) no-repeat center 81% / cover` }
@@ -71,7 +78,12 @@ function Form({
                     </div>
                     <form className="template-form">
                       {data.username.required === true &&
-                        usernameField(true, data.username.placeholder, type1, type2)}
+                        usernameField(
+                          true,
+                          data.username.placeholder,
+                          type1,
+                          type2
+                        )}
 
                       {data.email.required === true &&
                         emailField(true, data.email.placeholder, type1, type2)}
@@ -80,7 +92,12 @@ function Form({
                         phoneField(true, data.phone.placeholder, type1, type2)}
 
                       {data.message.required === true &&
-                        messageField(true, data.message.placeholder, type1, type2)}
+                        messageField(
+                          true,
+                          data.message.placeholder,
+                          type1,
+                          type2
+                        )}
 
                       <button
                         type="submit"
@@ -112,7 +129,12 @@ function Form({
                     </div>
                     <form className="template-form">
                       {data.username.required === true &&
-                        usernameField(true, data.username.placeholder, type1, type2)}
+                        usernameField(
+                          true,
+                          data.username.placeholder,
+                          type1,
+                          type2
+                        )}
 
                       {data.email.required === true &&
                         emailField(true, data.email.placeholder, type1, type2)}
@@ -121,7 +143,12 @@ function Form({
                         phoneField(true, data.phone.placeholder, type1, type2)}
 
                       {data.message.required === true &&
-                        messageField(true, data.message.placeholder, type1, type2)}
+                        messageField(
+                          true,
+                          data.message.placeholder,
+                          type1,
+                          type2
+                        )}
 
                       <button
                         type="submit"
@@ -161,10 +188,20 @@ function Form({
                           )}
 
                         {data.email.required === true &&
-                          emailField(false, data.email.placeholder, type1, type2)}
+                          emailField(
+                            false,
+                            data.email.placeholder,
+                            type1,
+                            type2
+                          )}
 
                         {data.phone.required === true &&
-                          phoneField(false, data.phone.placeholder, type1, type2)}
+                          phoneField(
+                            false,
+                            data.phone.placeholder,
+                            type1,
+                            type2
+                          )}
 
                         <button
                           type="submit"
@@ -201,7 +238,12 @@ function Form({
                       </div>
 
                       {data.username.required === true &&
-                        usernameField(false, data.username.placeholder, type1, type2)}
+                        usernameField(
+                          false,
+                          data.username.placeholder,
+                          type1,
+                          type2
+                        )}
 
                       {data.email.required === true &&
                         emailField(false, data.email.placeholder, type1, type2)}

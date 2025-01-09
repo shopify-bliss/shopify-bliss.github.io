@@ -13,36 +13,39 @@ import Fonts from "./Fonts/Fonts";
 import { siteTitleSchema } from "../../helpers/ValidationSchema";
 import { toastMessage } from "../../helpers/AlertMessage";
 import { ToastContainer } from "react-toastify";
+import { LoaderProgress } from "../../components/LoaderProgress/LoaderProgress";
+import urlEndpoint from "../../helpers/urlEndpoint";
 import steps from "../../data/steps.json";
 import axios from "axios";
-import { useAiBuilder } from "../../components/AiBuilderSupport/AiBuilderContext";
-import PagesAiLogics from "./PagesAi/PagesAiLogics";
-import ElementPagesLogics from "./ElementPages/ElementPagesLogics";
-import ColorsAiLogics from "./Colors/ColorsAiLogics";
-import FontsAiLogics from "./Fonts/FontsAiLogics";
+import SiteInfoLogic from "../../components/AiBuilderSupport/AiBuilderLogics/SiteInfoLogic";
+import PagesLogic from "../../components/AiBuilderSupport/AiBuilderLogics/PagesLogic";
+import SectionsLogic from "../../components/AiBuilderSupport/AiBuilderLogics/SectionsLogic";
+import ColorsLogic from "../../components/AiBuilderSupport/AiBuilderLogics/ColorsLogic";
+import FontsLogic from "../../components/AiBuilderSupport/AiBuilderLogics/FontsLogic";
 
 function AiBuilder() {
   axios.defaults.withCredentials = true;
 
-  const [currentStep, setCurrentStep] = useState(0);
-  const [siteTitle, setSiteTitle] = useState("");
-  const maxChars = 60;
-
+  const { siteTitle, maxChars, handleSiteTitleInput } = SiteInfoLogic();
   const {
-    dataBrands,
-    dataPages,
-    dataElements,
-    dataColors,
-    dataFonts,
     initialPageId,
+    activePages,
     currentPageId,
     setCurrentPageId,
-  } = useAiBuilder();
-
-  const { activePages, handleActivePage } = PagesAiLogics();
-  const { activeSections, handleActiveSection } = ElementPagesLogics();
-  const { activeColors, handleactiveColors } = ColorsAiLogics();
-  const { activeFonts, handleactiveFonts } = FontsAiLogics();
+    dataPages,
+    isLoadingPagesAi,
+    handleActivePage,
+    fetchDataPages,
+  } = PagesLogic();
+  const {
+    activeSections,
+    dataElements,
+    isLoadingElementPages,
+    handleActiveSection,
+    fetchDataElements,
+  } = SectionsLogic();
+  const { activeColors, handleactiveColors } = ColorsLogic();
+  const { activeFonts, handleactiveFonts } = FontsLogic();
 
   const activeStylesTemplate = useMemo(
     () => ({
@@ -68,16 +71,18 @@ function AiBuilder() {
     []
   );
 
+  const [currentStep, setCurrentStep] = useState(0);
   const [navbarStyle, setNavbarStyle] = useState(activeStylesTemplate.navbar);
   const [pageStyles, setPageStyles] = useState({});
   const [mergedPageStyles, setMergedPageStyles] = useState({});
 
-  const handleSiteTitleInput = useCallback((e) => {
-    const inputSiteTitle = e.target.value;
-    if (inputSiteTitle.length <= maxChars) {
-      setSiteTitle(inputSiteTitle);
+  useEffect(() => {
+    if (currentStep === 1) {
+      fetchDataPages();
+    } else if (currentStep === 2) {
+      fetchDataElements();
     }
-  }, []);
+  }, [currentStep, fetchDataPages, fetchDataElements]);
 
   // Inisialisasi gaya halaman jika belum ada
   useEffect(() => {
@@ -171,9 +176,8 @@ function AiBuilder() {
     });
   }, [pageStyles, activeSections, sectionMapping]);
 
-  // Debugging log
+  // // Debugging log
   // useEffect(() => {
-  //   console.log("Current Page ID:", currentPageId);
   //   console.log("Active Sections:", activeSections[currentPageId]);
   //   console.log("Filtered Current Page Styles:", currentPageStyles);
   //   console.log("Merged Page Styles:", mergedPageStyles);
@@ -217,48 +221,62 @@ function AiBuilder() {
             siteTitle={siteTitle}
             maxChars={maxChars}
             handleSiteTitleInput={handleSiteTitleInput}
-            dataBrands={dataBrands}
           />
         )}
         {currentStep === 1 && (
-          <PagesAi
-            siteTitle={siteTitle}
-            initialPageId={initialPageId}
-            activePages={activePages}
-            currentPageId={currentPageId}
-            setCurrentPageId={setCurrentPageId}
-            handleActivePage={handleActivePage}
-            dataPages={dataPages}
-            activeNavbar={currentPageStyles.navbar}
-          />
+          <>
+            {isLoadingPagesAi ? (
+              <LoaderProgress />
+            ) : (
+              <PagesAi
+                siteTitle={siteTitle}
+                initialPageId={initialPageId}
+                activePages={activePages}
+                currentPageId={currentPageId}
+                setCurrentPageId={setCurrentPageId}
+                handleActivePage={handleActivePage}
+                dataPages={dataPages}
+              />
+            )}
+          </>
         )}
 
         {currentStep === 2 && (
-          <ElementPages
-            activePages={activePages}
-            activeSections={activeSections}
-            handleActiveSection={handleActiveSection}
-            siteTitle={siteTitle}
-            dataPages={dataPages}
-            currentPageId={currentPageId}
-            setCurrentPageId={setCurrentPageId}
-            dataElements={dataElements}
-            toastMessage={toastMessage}
-            activeNavbar={currentPageStyles.navbar}
-            handleActiveNavbar={(value) => updatePageStyle("navbar", value)}
-            activeIntro={currentPageStyles.intro}
-            handleActiveIntro={(value) => updatePageStyle("intro", value)}
-            activeProducts={currentPageStyles.products}
-            handleActiveProducts={(value) => updatePageStyle("products", value)}
-            activeServices={currentPageStyles.services}
-            handleActiveServices={(value) => updatePageStyle("services", value)}
-            activeAbout={currentPageStyles.about}
-            handleActiveAbout={(value) => updatePageStyle("about", value)}
-            activeForm={currentPageStyles.form}
-            handleActiveForm={(value) => updatePageStyle("form", value)}
-            activeColors={activeColors}
-            activeFonts={activeFonts}
-          />
+          <>
+            {isLoadingElementPages ? (
+              <LoaderProgress />
+            ) : (
+              <ElementPages
+                activePages={activePages}
+                activeSections={activeSections}
+                handleActiveSection={handleActiveSection}
+                siteTitle={siteTitle}
+                dataPages={dataPages}
+                currentPageId={currentPageId}
+                setCurrentPageId={setCurrentPageId}
+                dataElements={dataElements}
+                toastMessage={toastMessage}
+                activeNavbar={currentPageStyles.navbar}
+                handleActiveNavbar={(value) => updatePageStyle("navbar", value)}
+                activeIntro={currentPageStyles.intro}
+                handleActiveIntro={(value) => updatePageStyle("intro", value)}
+                activeProducts={currentPageStyles.products}
+                handleActiveProducts={(value) =>
+                  updatePageStyle("products", value)
+                }
+                activeServices={currentPageStyles.services}
+                handleActiveServices={(value) =>
+                  updatePageStyle("services", value)
+                }
+                activeAbout={currentPageStyles.about}
+                handleActiveAbout={(value) => updatePageStyle("about", value)}
+                activeForm={currentPageStyles.form}
+                handleActiveForm={(value) => updatePageStyle("form", value)}
+                activeColors={activeColors}
+                activeFonts={activeFonts}
+              />
+            )}
+          </>
         )}
 
         {currentStep === 3 && (
@@ -266,7 +284,6 @@ function AiBuilder() {
             activePages={activePages}
             activeSections={activeSections}
             siteTitle={siteTitle}
-            dataBrands={dataBrands}
             dataPages={dataPages}
             currentPageId={currentPageId}
             setCurrentPageId={setCurrentPageId}
@@ -281,7 +298,6 @@ function AiBuilder() {
             activeColors={activeColors}
             handleactiveColors={handleactiveColors}
             activeFonts={activeFonts}
-            dataColors={dataColors}
           />
         )}
 
@@ -290,7 +306,6 @@ function AiBuilder() {
             activePages={activePages}
             activeSections={activeSections}
             siteTitle={siteTitle}
-            dataBrands={dataBrands}
             dataPages={dataPages}
             currentPageId={currentPageId}
             setCurrentPageId={setCurrentPageId}
@@ -305,7 +320,6 @@ function AiBuilder() {
             activeColors={activeColors}
             activeFonts={activeFonts}
             handleactiveFonts={handleactiveFonts}
-            dataFonts={dataFonts}
           />
         )}
 

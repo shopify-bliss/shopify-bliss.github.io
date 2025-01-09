@@ -11,7 +11,7 @@ import {
 import navbarFeatures from "../../../data/navbarFeature.json";
 import navbarOptionLayout from "../../../data/navbarOptionLayout.json";
 import { ChangeLayout } from "../AiBuilderSupport";
-import { OtherColors } from "../ColorsSupport";
+import { OtherColors, OtherColorsWhite } from "../ColorsSupport";
 import { FontType1, FontType2 } from "../FontsSupport";
 
 function NavbarLayout({
@@ -19,21 +19,29 @@ function NavbarLayout({
   siteTitle,
   activePages,
   currentPageId,
+  activeSections,
   activeIntro,
   activeNavbar,
   handleActiveNavbar = null,
   toastMessage,
   typeMain = null,
-  activeColor,
-  activeFont,
+  activeColors,
+  activeFonts,
 }) {
   const [activeFeatures, setActiveFeatures] = useState([]);
   const [isExpandLayout, setIsExpandLayout] = useState(false);
   const expandLayoutRef = useRef(null);
 
-  const others = OtherColors({ activeColor });
-  const type1 = FontType1({ activeFont });
-  const type2 = FontType2({ activeFont });
+  const others = OtherColors({ activeColors });
+  const colorStyle =
+    typeMain === "page"
+      ? null
+      : OtherColorsWhite({
+          others,
+          activeSections: activeSections[currentPageId],
+        });
+  const type1 = FontType1({ activeFonts });
+  const type2 = FontType2({ activeFonts });
 
   const displaySiteTitle = useDisplaySiteTitle({ siteTitle });
   const displayLogo = useDisplayLogo({ dataPages, displaySiteTitle });
@@ -74,6 +82,7 @@ function NavbarLayout({
             ? "intro-4"
             : ""
         } ${others}`}
+        style={{ ...colorStyle }}
       >
         <div className={`template-logo ${type2}`}>{displayLogo}</div>
 

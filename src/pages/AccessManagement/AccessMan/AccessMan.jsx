@@ -4,6 +4,7 @@ import axios from "axios";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import AccessManModal from "./AccessManModal";
 import urlEndpoint from "../../../helpers/urlEndpoint";
+import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
 
 function DisplayView({
   accessMenus,
@@ -18,11 +19,7 @@ function DisplayView({
 }) {
   return (
     <>
-      {isLoadingDashboard && (
-        <div className="loader-pages">
-          <div className="loader-pages-item"></div>
-        </div>
-      )}
+      {isLoadingDashboard && <LoaderPages />}
       <div className="access-man-wrapper">
         <div className="access-man-roles">
           {roles.length > 0

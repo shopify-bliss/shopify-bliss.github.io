@@ -4,11 +4,12 @@ import React, {
   useEffect,
   useMemo,
   useCallback,
+  Fragment,
 } from "react";
 import { ChangeLayout } from "../../AiBuilderSupport";
 import sectionsElOptionLayout from "../../../../data/sectionsElOptionLayout.json";
 import { FormatCurrencyIDR } from "../../../../helpers/FormatCurrencyIDR";
-import servicesSample from "../../../../data/services.json";
+import serviceSamples from "../../../../data/services.json";
 import image from "/products/pexels-anna-nekrashevich-8516697.jpg";
 import ServicesConfig from "./Config/ServicesConfig";
 import { BgColors } from "../../ColorsSupport";
@@ -17,9 +18,11 @@ import { FontType1, FontType2 } from "../../FontsSupport";
 function Services({
   handleActiveServices,
   activeServices,
+  activeNavbar,
   toastMessage,
-  activeColor,
-  activeFont,
+  activeColors,
+  activeFonts,
+  firstService,
   typeMain = null,
 }) {
   const [isExpandLayout, setIsExpandLayout] = useState(false);
@@ -27,9 +30,9 @@ function Services({
   const [activeDescIds3, setActiveDescIds3] = useState([1]);
   const [activeDescIds4, setActiveDescIds4] = useState([1]);
 
-  const bg = BgColors({ activeColor });
-  const type1 = FontType1({ activeFont });
-  const type2 = FontType2({ activeFont });
+  const bg = BgColors({ activeColors });
+  const type1 = FontType1({ activeFonts });
+  const type2 = FontType2({ activeFonts });
 
   const typeServicesElStyles = useMemo(
     () => sectionsElOptionLayout.find((option) => option.id === activeServices),
@@ -56,113 +59,178 @@ function Services({
 
   return (
     <>
-      <div className={`services ${typeServicesElStyles.className} ${bg}`}>
+      <div
+        className={`services ${typeServicesElStyles.className} ${bg} ${
+          firstService ? "first-service" : ""
+        } ${
+          activeNavbar === 2 ? "navbar-2" : activeNavbar === 3 ? "navbar-3" : ""
+        }`}
+      >
         {typeServicesElStyles.id === 1 && (
           <>
-            <div className={`template-title ${type2}`}>Our Services</div>
-            <div className="template-wrapper">
-              {servicesSample.map((data) => {
-                const image = `products/${data.image}`;
-
+            {serviceSamples
+              .filter((service) => service.id === 1)
+              .map((service) => {
                 return (
-                  <>
-                    <div className="container-item" key={data.id}>
-                      <img className="template-image" src={image} />
-                      <div className={`template-name ${type2}`}>
-                        {data.name} Service
-                      </div>
-                      <div className={`template-price ${type1}`}>
-                        {FormatCurrencyIDR(data.price)}
-                      </div>
-                      <div className={`template-desc ${type1}`}>
-                        {data.desc}
-                      </div>
+                  <Fragment key={service.id}>
+                    <div className={`template-title ${type2}`}>
+                      {service.title}
                     </div>
-                  </>
+                    <div className="template-wrapper">
+                      {service.services.map((data) => {
+                        const image = `products/${data.image}`;
+
+                        return (
+                          <>
+                            <div className="container-item" key={data.id}>
+                              <img className="template-image" src={image} />
+                              <div className={`template-name ${type2}`}>
+                                {data.name} Service
+                              </div>
+                              <div className={`template-price ${type1}`}>
+                                {FormatCurrencyIDR(data.price)}
+                              </div>
+                              <div className={`template-desc ${type1}`}>
+                                {data.desc}
+                              </div>
+                            </div>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </Fragment>
                 );
               })}
-            </div>
           </>
         )}
+
         {typeServicesElStyles.id === 2 && (
           <>
-            <div className={`template-title ${type2}`}>Our Services</div>
-            <div className="template-wrapper">
-              {servicesSample.map((data) => {
+            {serviceSamples
+              .filter((service) => service.id === 2)
+              .map((service) => {
                 return (
-                  <div className="container-item" key={data.id}>
-                    <div className={`template-name ${type2}`}>{data.name}</div>
-                    <div className={`template-desc ${type1}`}>{data.desc}</div>
-                    <div className={`template-button ${type1}`}>Learn more</div>
-                  </div>
+                  <Fragment key={service.id}>
+                    <div className={`template-title ${type2}`}>
+                      {service.title}
+                    </div>
+                    <div className="template-wrapper">
+                      {service.services.map((data) => {
+                        return (
+                          <div className="container-item" key={data.id}>
+                            <div className={`template-name ${type2}`}>
+                              {data.name}
+                            </div>
+                            <div className={`template-desc ${type1}`}>
+                              {data.desc}
+                            </div>
+                            <div className={`template-button ${type1}`}>
+                              {service.button}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </Fragment>
                 );
               })}
-            </div>
           </>
         )}
         {typeServicesElStyles.id === 3 && (
           <>
-            <div className={`template-title ${type2}`}>Our Services</div>
-            <div className="template-wrapper">
-              {servicesSample.map((data) => (
-                <div
-                  className={`container-item ${
-                    activeDescIds3.includes(data.id) ? "active" : ""
-                  }`}
-                  key={data.id}
-                  onClick={() => handleOpenDesc3(data.id)}
-                >
-                  <span className="material-symbols-outlined">
-                    {activeDescIds3.includes(data.id) ? "remove" : "add"}
-                  </span>
-                  <div className={`template-name ${type2}`}>{data.name}</div>
-                  {activeDescIds3.includes(data.id) && (
-                    <div className={`template-desc ${type1}`} key={data.id}>
-                      {data.desc}
+            {serviceSamples
+              .filter((service) => service.id === 3)
+              .map((service) => {
+                return (
+                  <Fragment key={service.id}>
+                    <div className={`template-title ${type2}`}>
+                      {service.title}
                     </div>
-                  )}
-                </div>
-              ))}
-            </div>
+                    <div className="template-wrapper">
+                      {service.services.map((data) => (
+                        <div
+                          className={`container-item ${
+                            activeDescIds3.includes(data.id) ? "active" : ""
+                          }`}
+                          key={data.id}
+                          onClick={() => handleOpenDesc3(data.id)}
+                        >
+                          <span className="material-symbols-outlined">
+                            {activeDescIds3.includes(data.id)
+                              ? "remove"
+                              : "add"}
+                          </span>
+                          <div className={`template-name ${type2}`}>
+                            {data.name}
+                          </div>
+                          {activeDescIds3.includes(data.id) && (
+                            <div
+                              className={`template-desc ${type1}`}
+                              key={data.id}
+                            >
+                              {data.desc}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </Fragment>
+                );
+              })}
           </>
         )}
         {typeServicesElStyles.id === 4 && (
           <>
-            <div className="template-wrapper">
-              <div className={`template-title ${type2}`}>Our Services</div>
-              <div className={`template-preface ${type2}`}>
-                Use this section to explain what you provide. What key
-                information should people know about your services, and what
-                makes them stand out?
-              </div>
-              {servicesSample.map((data) => {
+            {serviceSamples
+              .filter((service) => service.id === 4)
+              .map((service) => {
                 return (
-                  <>
-                    <div
-                      className={`container-item ${
-                        activeDescIds4.includes(data.id) ? "active" : ""
-                      }`}
-                      key={data.id}
-                      onClick={() => handleOpenDesc4(data.id)}
-                    >
-                      <span className="material-symbols-outlined">
-                        {activeDescIds4.includes(data.id) ? "remove" : "add"}
-                      </span>
-                      <div className={`template-name ${type2}`}>
-                        {data.name}
+                  <Fragment key={service.id}>
+                    <div className="template-wrapper">
+                      <div className={`template-title ${type2}`}>
+                        {service.title}
                       </div>
-                      {activeDescIds4.includes(data.id) && (
-                        <div className={`template-desc ${type1}`} key={data.id}>
-                          {data.desc}
-                        </div>
-                      )}
+                      <div className={`template-preface ${type2}`}>
+                        {service.preface}
+                      </div>
+                      {service.services.map((data) => {
+                        return (
+                          <>
+                            <div
+                              className={`container-item ${
+                                activeDescIds4.includes(data.id) ? "active" : ""
+                              }`}
+                              key={data.id}
+                              onClick={() => handleOpenDesc4(data.id)}
+                            >
+                              <span className="material-symbols-outlined">
+                                {activeDescIds4.includes(data.id)
+                                  ? "remove"
+                                  : "add"}
+                              </span>
+                              <div className={`template-name ${type2}`}>
+                                {data.name}
+                              </div>
+                              {activeDescIds4.includes(data.id) && (
+                                <div
+                                  className={`template-desc ${type1}`}
+                                  key={data.id}
+                                >
+                                  {data.desc}
+                                </div>
+                              )}
+                            </div>
+                          </>
+                        );
+                      })}
+                      <div className={`template-button ${type1}`}>
+                        {service.button}
+                      </div>
                     </div>
-                  </>
+                    <img className="template-image" src={image} alt="image" />
+                  </Fragment>
                 );
               })}
-              <div className={`template-button ${type1}`}>Learn more</div>
-            </div>
-            <img className="template-image" src={image} alt="image" />
           </>
         )}
 
@@ -189,7 +257,7 @@ function Services({
                 activeDescIds3={activeDescIds3}
                 activeDescIds4={activeDescIds4}
                 sectionsElOptionLayout={sectionsElOptionLayout}
-                servicesSample={servicesSample}
+                serviceSamples={serviceSamples}
                 FormatCurrencyIDR={FormatCurrencyIDR}
                 image={image}
               />
@@ -202,7 +270,7 @@ function Services({
                 activeDescIds3={activeDescIds3}
                 activeDescIds4={activeDescIds4}
                 sectionsElOptionLayout={sectionsElOptionLayout}
-                servicesSample={servicesSample}
+                serviceSamples={serviceSamples}
                 FormatCurrencyIDR={FormatCurrencyIDR}
                 image={image}
               />

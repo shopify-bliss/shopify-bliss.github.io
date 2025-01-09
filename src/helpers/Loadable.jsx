@@ -1,12 +1,5 @@
 import { Suspense } from "react";
-
-const LoaderPages = () => {
-  return (
-    <div className="loader-pages">
-      <div className="loader-pages-item"></div>
-    </div>
-  );
-};
+import { LoaderPages } from "../components/LoaderProgress/LoaderProgress";
 
 const Loadable = (Component) => (props) => {
   return (

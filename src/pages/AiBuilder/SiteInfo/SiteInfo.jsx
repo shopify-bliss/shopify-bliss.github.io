@@ -1,8 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import horizontalLoop from "../../../helpers/horizontalLoop";
-import brandPersonalities from "../../../data/brands.json";
 import {
   Logo,
   Quit,
@@ -10,14 +15,10 @@ import {
 
 gsap.registerPlugin(useGSAP);
 
-const defaultActivePersonality = brandPersonalities[0];
-
-function SiteInfo({ siteTitle, handleSiteTitleInput, maxChars }) {
+function SiteInfo({ siteTitle, handleSiteTitleInput, maxChars, dataBrands }) {
+  const [activePersonality, setActivePersonality] = useState({});
   const marqueeRefs = useRef([]);
   const marqueeReverseRefs = useRef([]);
-  const [activePersonality, setActivePersonality] = useState(
-    defaultActivePersonality
-  );
 
   const initializeMarquee = (refs, className, options) => {
     document.fonts.ready.then(() => {
@@ -48,18 +49,27 @@ function SiteInfo({ siteTitle, handleSiteTitleInput, maxChars }) {
     { scope: marqueeReverseRefs }
   );
 
-  const handlePersonalityClick = (personalityId) => {
-    const selectedPersonality = brandPersonalities.find(
-      (personality) => personality.id === personalityId
-    );
-    if (selectedPersonality) {
-      setActivePersonality(selectedPersonality);
+  useEffect(() => {
+    if (dataBrands.length > 0) {
+      setActivePersonality(dataBrands[0]);
     }
-  };
+  }, [dataBrands]);
+
+  const handlePersonalityClick = useCallback(
+    (personalityId) => {
+      const selectedPersonality = dataBrands.find(
+        (personality) => personality.brand_id === personalityId
+      );
+      if (selectedPersonality) {
+        setActivePersonality(selectedPersonality);
+      }
+    },
+    [dataBrands]
+  );
 
   return (
     <>
-      <div className={`ai-builder-overview ${activePersonality.fontClass}`}>
+      <div className={`ai-builder-overview ${activePersonality?.font_class}`}>
         <Logo />
         <div className="site-info">
           {[...Array(4)].map((_, i) => (
@@ -78,8 +88,8 @@ function SiteInfo({ siteTitle, handleSiteTitleInput, maxChars }) {
                     i % 2 === 0 ? "site-info-text" : "site-info-text-reverse"
                   } ${
                     i % 2 === 0
-                      ? activePersonality.fontClass
-                      : activePersonality.fontClassReverse
+                      ? activePersonality?.font_class
+                      : activePersonality?.font_class_reverse
                   }`}
                   key={j}
                 >
@@ -119,13 +129,15 @@ function SiteInfo({ siteTitle, handleSiteTitleInput, maxChars }) {
               of colors, fonts, and tone for crafting AI-generated content.
             </div>
             <div className="content-list">
-              {brandPersonalities.map((personality) => (
+              {dataBrands.map((personality) => (
                 <div
-                  key={personality.id}
+                  key={personality.brand_id}
                   className={`content-list-item ${
-                    activePersonality.id === personality.id ? "active" : ""
+                    activePersonality?.brand_id === personality.brand_id
+                      ? "active"
+                      : ""
                   }`}
-                  onClick={() => handlePersonalityClick(personality.id)}
+                  onClick={() => handlePersonalityClick(personality.brand_id)}
                 >
                   {personality.name}
                 </div>

@@ -16,17 +16,18 @@ import Products from "../../../components/AiBuilderSupport/ElementsLayout/Produc
 import Services from "../../../components/AiBuilderSupport/ElementsLayout/Services/Services";
 import About from "../../../components/AiBuilderSupport/ElementsLayout/About/About";
 import Form from "../../../components/AiBuilderSupport/ElementsLayout/Form/Form";
-import fonts from "../../../data/fonts.json";
-import brands from "../../../data/brands.json";
 import {
   AllFontType1,
   AllFontType2,
 } from "../../../components/AiBuilderSupport/FontsSupport";
+import FirstComponent from "../../../components/AiBuilderSupport/FirstComponent";
+import { BgColors } from "../../../components/AiBuilderSupport/ColorsSupport";
 
 function Fonts({
   activePages,
   activeSections,
   siteTitle,
+  dataBrands,
   dataPages,
   currentPageId,
   setCurrentPageId,
@@ -38,15 +39,23 @@ function Fonts({
   activeServices,
   activeAbout,
   activeForm,
-  activeColor,
-  activeFont,
-  handleActiveFont,
+  activeColors,
+  activeFonts,
+  handleactiveFonts,
+  dataFonts,
 }) {
   const { handleNext, handlePrev } = ControllingOverviews({
     activePages: activePages,
     currentPageId: currentPageId,
     setCurrentPageId: setCurrentPageId,
   });
+
+  const { firstProduct, firstService, firstAbout, firstForm } = FirstComponent({
+    activeSections: activeSections,
+    currentPageId: currentPageId,
+  });
+
+  const bg = BgColors({ activeColors });
 
   return (
     <>
@@ -62,17 +71,18 @@ function Fonts({
               </span>
             </div>
 
-            <div className="display-data">
+            <div className={`display-data ${bg}`}>
               <Navbar
+                siteTitle={siteTitle}
                 activePages={activePages}
                 dataPages={dataPages}
-                siteTitle={siteTitle}
                 currentPageId={currentPageId}
+                activeSections={activeSections}
                 activeNavbar={activeNavbar}
                 activeIntro={activeIntro}
                 toastMessage={toastMessage}
-                activeColor={activeColor}
-                activeFont={activeFont}
+                activeColors={activeColors}
+                activeFonts={activeFonts}
               />
               {currentPageId !== null && (
                 <div className="display-data-font">
@@ -87,43 +97,53 @@ function Fonts({
                         {section.section_id ===
                         "798f1ce0-b732-45a6-838e-f28e137243f7" ? (
                           <Intro
+                            currentPageId={currentPageId}
                             activeIntro={activeIntro}
                             activeNavbar={activeNavbar}
                             toastMessage={toastMessage}
-                            activeColor={activeColor}
-                            activeFont={activeFont}
+                            activeColors={activeColors}
+                            activeFonts={activeFonts}
+                            activeSections={activeSections}
                           />
                         ) : section.section_id ===
                           "b42d4d56-d411-4aa8-ae01-52f0c406328a" ? (
                           <Products
                             activeProducts={activeProducts}
                             toastMessage={toastMessage}
-                            activeColor={activeColor}
-                            activeFont={activeFont}
+                            activeColors={activeColors}
+                            activeFonts={activeFonts}
+                            activeNavbar={activeNavbar}
+                            firstProduct={firstProduct}
                           />
                         ) : section.section_id ===
                           "4fd1e0cc-06f3-4554-9f79-ce8e02db03c8" ? (
                           <Services
                             activeServices={activeServices}
                             toastMessage={toastMessage}
-                            activeColor={activeColor}
-                            activeFont={activeFont}
+                            activeColors={activeColors}
+                            activeFonts={activeFonts}
+                            activeNavbar={activeNavbar}
+                            firstService={firstService}
                           />
                         ) : section.section_id ===
                           "1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed" ? (
                           <About
                             activeAbout={activeAbout}
                             toastMessage={toastMessage}
-                            activeColor={activeColor}
-                            activeFont={activeFont}
+                            activeColors={activeColors}
+                            activeFonts={activeFonts}
+                            activeNavbar={activeNavbar}
+                            firstAbout={firstAbout}
                           />
                         ) : section.section_id ===
                           "2089ce88-93a7-4555-8d0d-7f88f1dc3a7e" ? (
                           <Form
                             activeForm={activeForm}
                             toastMessage={toastMessage}
-                            activeColor={activeColor}
-                            activeFont={activeFont}
+                            activeColors={activeColors}
+                            activeFonts={activeFonts}
+                            activeNavbar={activeNavbar}
+                            firstForm={firstForm}
                           />
                         ) : (
                           <div className="no-element">{section.name}</div>
@@ -149,18 +169,18 @@ function Fonts({
       <div className="ai-builder-content">
         <Quit />
         <div className="fonts">
-          <div className="fonts-title">Select a set of fonts</div>
+          <div className="fonts-title">Select a combination of fonts</div>
           <div className="fonts-desc">
-            Our designers have crafted these custom palettes, and you can adjust
-            the fonts anytime.
+            Our designers have created these custom pairings, but you can
+            explore other font options later.
           </div>
           <div className="content">
-            {brands.map((brand) => {
+            {dataBrands.map((brand) => {
               return (
-                <div className={`content-item`} key={brand.id}>
+                <div className={`content-item`} key={brand.brand_id}>
                   <div className="content-item-title">{brand.name}</div>
                   <div className="content-item-list">
-                    {fonts
+                    {dataFonts
                       .filter((font) => font.brand === brand.name)
                       .map((font) => {
                         const getBrand = font.brand;
@@ -178,10 +198,10 @@ function Fonts({
                         return (
                           <div
                             className={`content-item-list-font ${
-                              activeFont === font.id ? "active" : ""
+                              activeFonts === font.font_id ? "active" : ""
                             }`}
-                            key={font.id}
-                            onClick={() => handleActiveFont(font.id)}
+                            key={font.font_id}
+                            onClick={() => handleactiveFonts(font.font_id)}
                           >
                             <span className={`${allType1}`}>
                               {font.fontType1}

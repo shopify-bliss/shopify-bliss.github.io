@@ -1,20 +1,106 @@
 [
   {
     "id": 1,
-    "image": "pexels-frostroomhead-7897470.jpg",
-    "name": "Product 1",
-    "price": 1000
+    "title": "Featured Products",
+    "desc": null,
+    "button": "Shop All",
+    "products": [
+      {
+        "id": 1,
+        "image": "pexels-frostroomhead-7897470.jpg",
+        "name": "Product 1",
+        "price": 1000
+      },
+      {
+        "id": 2,
+        "image": "pexels-anna-nekrashevich-8516697.jpg",
+        "name": "Product 2",
+        "price": 2000
+      },
+      {
+        "id": 3,
+        "image": "pexels-njeromin-15352967.jpg",
+        "name": "Product 3",
+        "price": 3000
+      }
+    ]
   },
   {
     "id": 2,
-    "image": "pexels-anna-nekrashevich-8516697.jpg",
-    "name": "Product 2",
-    "price": 2000
+    "title": "Featured Products",
+    "desc": "Share how and where your products are made and what makes them special.",
+    "button": "Shop All",
+    "products": [
+      {
+        "id": 1,
+        "image": "pexels-frostroomhead-7897470.jpg",
+        "name": "Product 1",
+        "price": 1000
+      },
+      {
+        "id": 2,
+        "image": "pexels-anna-nekrashevich-8516697.jpg",
+        "name": "Product 2",
+        "price": 2000
+      },
+      {
+        "id": 3,
+        "image": "pexels-njeromin-15352967.jpg",
+        "name": "Product 3",
+        "price": 3000
+      }
+    ]
   },
   {
     "id": 3,
-    "image": "pexels-njeromin-15352967.jpg",
-    "name": "Product 3",
-    "price": 3000
+    "title": "Featured Products",
+    "desc": "Share how and where your products are made and what makes them special.",
+    "button": "Shop All",
+    "products": [
+      {
+        "id": 1,
+        "image": "pexels-frostroomhead-7897470.jpg",
+        "name": "Product 1",
+        "price": 1000
+      },
+      {
+        "id": 2,
+        "image": "pexels-anna-nekrashevich-8516697.jpg",
+        "name": "Product 2",
+        "price": 2000
+      },
+      {
+        "id": 3,
+        "image": "pexels-njeromin-15352967.jpg",
+        "name": "Product 3",
+        "price": 3000
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Featured Products",
+    "button": "Shop All",
+    "desc": null,
+    "products": [
+      {
+        "id": 1,
+        "image": "pexels-frostroomhead-7897470.jpg",
+        "name": "Product 1",
+        "price": 1000
+      },
+      {
+        "id": 2,
+        "image": "pexels-anna-nekrashevich-8516697.jpg",
+        "name": "Product 2",
+        "price": 2000
+      },
+      {
+        "id": 3,
+        "image": "pexels-njeromin-15352967.jpg",
+        "name": "Product 3",
+        "price": 3000
+      }
+    ]
   }
 ]

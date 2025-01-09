@@ -4,10 +4,7 @@ import {
   Quit,
   DefaultFooter,
 } from "../../../components/AiBuilderSupport/AiBuilderSupport";
-import {
-  ControllingOverviews,
-  useHandleActiveEl,
-} from "../../../components/AiBuilderSupport/AiBuilderSupport";
+import { ControllingOverviews } from "../../../components/AiBuilderSupport/AiBuilderSupport";
 import NavbarLayout from "../../../components/AiBuilderSupport/NavbarLayout/NavbarLayout";
 
 function PagesAi({
@@ -18,17 +15,12 @@ function PagesAi({
   initialPageId,
   handleActivePage,
   dataPages,
+  activeNavbar,
 }) {
-  const [activeNavbar, setActiveNavbar] = useState(1);
-
   const { handleNext, handlePrev } = ControllingOverviews({
-    activePages: activePages,
-    currentPageId: currentPageId,
-    setCurrentPageId: setCurrentPageId,
-  });
-
-  const handleActiveNavbar = useHandleActiveEl({
-    setActiveEl: setActiveNavbar,
+    activePages,
+    currentPageId,
+    setCurrentPageId,
   });
 
   return (
@@ -73,7 +65,7 @@ function PagesAi({
                     siteTitle={siteTitle}
                     currentPageId={currentPageId}
                     activeNavbar={activeNavbar}
-                    handleActiveNavbar={handleActiveNavbar}
+                    typeMain="page"
                   />
                   <div className="display-data-page">
                     <span className="material-symbols-rounded">

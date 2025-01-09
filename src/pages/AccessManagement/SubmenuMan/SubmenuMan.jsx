@@ -4,6 +4,7 @@ import axios from "axios";
 import SubmenuManModal from "./SubmenuManModal";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import { Link } from "react-router-dom";
+import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
 
 function DisplayView({
   isLoadingDashboard,
@@ -15,11 +16,7 @@ function DisplayView({
 }) {
   return (
     <>
-      {isLoadingDashboard && (
-        <div className="loader-pages">
-          <div className="loader-pages-item"></div>
-        </div>
-      )}
+      {isLoadingDashboard && <LoaderPages />}
       {type === "grid" ? (
         <div className="submenu-man-grid">
           {submenus.map((data) => (

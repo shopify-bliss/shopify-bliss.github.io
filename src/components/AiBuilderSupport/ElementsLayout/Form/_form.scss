@@ -63,11 +63,22 @@ $fs-text: 10px;
         );
       }
     }
+
+    &.first-form {
+      margin-top: 2rem;
+
+      &.navbar-2 {
+        margin-top: 3.25rem;
+      }
+
+      &.navbar-3 {
+        margin-top: 4.3rem;
+      }
+    }
   }
 
   &.style-2 {
     @include config.style-2($gap: 1.8rem);
-    background-color: #dbdbdb;
     padding: v.$py-layout-section v.$p-navter;
 
     .template-wrapper {
@@ -104,6 +115,18 @@ $fs-text: 10px;
           $p: 0.6rem 1.7rem,
           $fs: $fs-desc
         );
+      }
+    }
+
+    &.first-form {
+      margin-top: 1.85rem;
+
+      &.navbar-2 {
+        margin-top: 2.65rem;
+      }
+
+      &.navbar-3 {
+        margin-top: 3.75rem;
       }
     }
   }
@@ -153,10 +176,22 @@ $fs-text: 10px;
     .template-image {
       @include config.image($h: 15.5rem, $mb: 0);
     }
+
+    &.first-form {
+      margin-top: 2rem;
+
+      &.navbar-2 {
+        margin-top: 3.2rem;
+      }
+
+      &.navbar-3 {
+        margin-top: 4.35rem;
+      }
+    }
   }
 
   &.style-4 {
-    @include config.style-4($p: 0 6.8rem);
+    @include config.style-4($p: 0 6.8rem 3.2rem);
 
     .template-wrapper {
       background-color: #fff;
@@ -196,6 +231,24 @@ $fs-text: 10px;
           $p: 0.6rem 1.7rem,
           $fs: $fs-desc
         );
+      }
+    }
+
+    &.first-form {
+      .template-wrapper {
+        margin-top: 3.65rem;
+      }
+
+      &.navbar-2 {
+        .template-wrapper {
+          margin-top: 4.7rem;
+        }
+      }
+
+      &.navbar-3 {
+        .template-wrapper {
+          margin-top: 5.55rem;
+        }
       }
     }
   }

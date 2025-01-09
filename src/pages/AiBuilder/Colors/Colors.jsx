@@ -16,13 +16,14 @@ import Products from "../../../components/AiBuilderSupport/ElementsLayout/Produc
 import Services from "../../../components/AiBuilderSupport/ElementsLayout/Services/Services";
 import About from "../../../components/AiBuilderSupport/ElementsLayout/About/About";
 import Form from "../../../components/AiBuilderSupport/ElementsLayout/Form/Form";
-import colors from "../../../data/colors.json";
-import brands from "../../../data/brands.json";
+import FirstComponent from "../../../components/AiBuilderSupport/FirstComponent";
+import { BgColors } from "../../../components/AiBuilderSupport/ColorsSupport";
 
 function Colors({
   activePages,
   activeSections,
   siteTitle,
+  dataBrands,
   dataPages,
   currentPageId,
   setCurrentPageId,
@@ -34,15 +35,23 @@ function Colors({
   activeServices,
   activeAbout,
   activeForm,
-  activeColor,
-  handleActiveColor,
-  activeFont,
+  activeColors,
+  dataColors,
+  handleactiveColors,
+  activeFonts,
 }) {
   const { handleNext, handlePrev } = ControllingOverviews({
-    activePages: activePages,
-    currentPageId: currentPageId,
-    setCurrentPageId: setCurrentPageId,
+    activePages,
+    currentPageId,
+    setCurrentPageId,
   });
+
+  const { firstProduct, firstService, firstAbout, firstForm } = FirstComponent({
+    activeSections: activeSections,
+    currentPageId: currentPageId,
+  });
+
+  const bg = BgColors({ activeColors });
 
   return (
     <>
@@ -58,17 +67,18 @@ function Colors({
               </span>
             </div>
 
-            <div className="display-data">
+            <div className={`display-data ${bg}`}>
               <Navbar
+                siteTitle={siteTitle}
                 activePages={activePages}
                 dataPages={dataPages}
-                siteTitle={siteTitle}
                 currentPageId={currentPageId}
+                activeSections={activeSections}
                 activeNavbar={activeNavbar}
                 activeIntro={activeIntro}
                 toastMessage={toastMessage}
-                activeColor={activeColor}
-                activeFont={activeFont}
+                activeColors={activeColors}
+                activeFonts={activeFonts}
               />
               {currentPageId !== null && (
                 <div className="display-data-color">
@@ -83,43 +93,53 @@ function Colors({
                         {section.section_id ===
                         "798f1ce0-b732-45a6-838e-f28e137243f7" ? (
                           <Intro
+                            activeSections={activeSections}
+                            currentPageId={currentPageId}
                             activeIntro={activeIntro}
                             activeNavbar={activeNavbar}
                             toastMessage={toastMessage}
-                            activeColor={activeColor}
-                            activeFont={activeFont}
+                            activeColors={activeColors}
+                            activeFonts={activeFonts}
                           />
                         ) : section.section_id ===
                           "b42d4d56-d411-4aa8-ae01-52f0c406328a" ? (
                           <Products
                             activeProducts={activeProducts}
                             toastMessage={toastMessage}
-                            activeColor={activeColor}
-                            activeFont={activeFont}
+                            activeColors={activeColors}
+                            activeFonts={activeFonts}
+                            activeNavbar={activeNavbar}
+                            firstProduct={firstProduct}
                           />
                         ) : section.section_id ===
                           "4fd1e0cc-06f3-4554-9f79-ce8e02db03c8" ? (
                           <Services
                             activeServices={activeServices}
                             toastMessage={toastMessage}
-                            activeColor={activeColor}
-                            activeFont={activeFont}
+                            activeColors={activeColors}
+                            activeFonts={activeFonts}
+                            activeNavbar={activeNavbar}
+                            firstService={firstService}
                           />
                         ) : section.section_id ===
                           "1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed" ? (
                           <About
                             activeAbout={activeAbout}
                             toastMessage={toastMessage}
-                            activeColor={activeColor}
-                            activeFont={activeFont}
+                            activeColors={activeColors}
+                            activeFonts={activeFonts}
+                            activeNavbar={activeNavbar}
+                            firstAbout={firstAbout}
                           />
                         ) : section.section_id ===
                           "2089ce88-93a7-4555-8d0d-7f88f1dc3a7e" ? (
                           <Form
                             activeForm={activeForm}
                             toastMessage={toastMessage}
-                            activeColor={activeColor}
-                            activeFont={activeFont}
+                            activeColors={activeColors}
+                            activeFonts={activeFonts}
+                            activeNavbar={activeNavbar}
+                            firstForm={firstForm}
                           />
                         ) : (
                           <div className="no-element">{section.name}</div>
@@ -151,21 +171,21 @@ function Colors({
             the colors anytime.
           </div>
           <div className="content">
-            {brands.map((brand) => {
+            {dataBrands.map((brand) => {
               return (
-                <div className={`content-item`} key={brand.id}>
+                <div className={`content-item`} key={brand.brand_id}>
                   <div className="content-item-title">{brand.name}</div>
                   <div className="content-item-list">
-                    {colors
+                    {dataColors
                       .filter((color) => color.brand === brand.name)
                       .map((color) => {
                         return (
                           <div
                             className={`content-item-list-color ${
-                              activeColor === color.id ? "active" : ""
+                              activeColors === color.color_id ? "active" : ""
                             }`}
-                            key={color.id}
-                            onClick={() => handleActiveColor(color.id)}
+                            key={color.color_id}
+                            onClick={() => handleactiveColors(color.color_id)}
                           >
                             <span
                               className={`color-special-${color.color1}`}

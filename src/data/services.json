@@ -1,23 +1,118 @@
 [
   {
     "id": 1,
-    "name": "Basic",
-    "price": 250000,
-    "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
-    "image": "pexels-anna-nekrashevich-8516697.jpg"
+    "title": "Our Services",
+    "preface": null,
+    "button": null,
+    "services": [
+      {
+        "id": 1,
+        "name": "Basic",
+        "price": 250000,
+        "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
+        "image": "pexels-anna-nekrashevich-8516697.jpg"
+      },
+      {
+        "id": 2,
+        "name": "Intermediate",
+        "price": 500000,
+        "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
+        "image": "pexels-njeromin-15352967.jpg"
+      },
+      {
+        "id": 3,
+        "name": "Advanced",
+        "price": 750000,
+        "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
+        "image": "pexels-frostroomhead-7897470.jpg"
+      }
+    ]
   },
   {
     "id": 2,
-    "name": "Intermediate",
-    "price": 500000,
-    "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
-    "image": "pexels-njeromin-15352967.jpg"
+    "title": "Our Services",
+    "preface": null,
+    "button": "Learn more",
+    "services": [
+      {
+        "id": 1,
+        "name": "Basic",
+        "price": 250000,
+        "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
+        "image": "pexels-anna-nekrashevich-8516697.jpg"
+      },
+      {
+        "id": 2,
+        "name": "Intermediate",
+        "price": 500000,
+        "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
+        "image": "pexels-njeromin-15352967.jpg"
+      },
+      {
+        "id": 3,
+        "name": "Advanced",
+        "price": 750000,
+        "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
+        "image": "pexels-frostroomhead-7897470.jpg"
+      }
+    ]
   },
   {
     "id": 3,
-    "name": "Advanced",
-    "price": 750000,
-    "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
-    "image": "pexels-frostroomhead-7897470.jpg"
+    "title": "Our Services",
+    "preface": null,
+    "button": null,
+    "services": [
+      {
+        "id": 1,
+        "name": "Basic",
+        "price": 250000,
+        "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
+        "image": "pexels-anna-nekrashevich-8516697.jpg"
+      },
+      {
+        "id": 2,
+        "name": "Intermediate",
+        "price": 500000,
+        "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
+        "image": "pexels-njeromin-15352967.jpg"
+      },
+      {
+        "id": 3,
+        "name": "Advanced",
+        "price": 750000,
+        "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
+        "image": "pexels-frostroomhead-7897470.jpg"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Our Services",
+    "preface": " Use this section to explain what you provide. What key information should people know about your services, and what makes them stand out?",
+    "button": "Learn more",
+    "services": [
+      {
+        "id": 1,
+        "name": "Basic",
+        "price": 250000,
+        "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
+        "image": "pexels-anna-nekrashevich-8516697.jpg"
+      },
+      {
+        "id": 2,
+        "name": "Intermediate",
+        "price": 500000,
+        "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
+        "image": "pexels-njeromin-15352967.jpg"
+      },
+      {
+        "id": 3,
+        "name": "Advanced",
+        "price": 750000,
+        "desc": "Highlight key details like price, value, service duration, and uniqueness, or showcase the core values of your offerings.",
+        "image": "pexels-frostroomhead-7897470.jpg"
+      }
+    ]
   }
 ]

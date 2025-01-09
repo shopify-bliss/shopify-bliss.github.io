@@ -3,7 +3,7 @@ export const AllFontType1 = ({ brand, group }) => {
     brand === "professional" && group === 1
       ? "merriweather"
       : brand === "professional" && group === 2
-      ? "work-sans"
+      ? "libre-baskerville"
       : brand === "friendly" && group === 1
       ? "poppins"
       : brand === "friendly" && group === 2
@@ -29,31 +29,31 @@ export const AllFontType1 = ({ brand, group }) => {
   return allType1;
 };
 
-export const FontType1 = ({ activeFont }) => {
+export const FontType1 = ({ activeFonts }) => {
   const type1 =
-    activeFont === 1
+    activeFonts === "6935ba3e-e5af-4eec-887e-05a24367f16b"
       ? "merriweather"
-      : activeFont === 2
+      : activeFonts === "cab69ce3-377a-4f88-9b83-ac36c4213f8c"
       ? "libre-baskerville"
-      : activeFont === 3
+      : activeFonts === "052cf742-79b0-4057-94e3-08126ec32c8c"
       ? "poppins"
-      : activeFont === 4
+      : activeFonts === "a0a57ad8-ea49-43ce-b37f-45a873f591dc"
       ? "quicksand"
-      : activeFont === 5
+      : activeFonts === "854cb94a-34f9-4ebb-b052-e360375a8019"
       ? "playfair-display"
-      : activeFont === 6
+      : activeFonts === "d050d941-499f-4eb7-b8fa-662f5c7f0e9f"
       ? "cormorant-garamond"
-      : activeFont === 7
+      : activeFonts === "f9c8e695-17ec-48b0-834f-82b61aeeac1a"
       ? "montserrat"
-      : activeFont === 8
+      : activeFonts === "c9be8d19-4f6d-4579-9e38-2705e3ba6017"
       ? "exo-2"
-      : activeFont === 9
+      : activeFonts === "58ec129b-3e39-4033-a474-5e279cd5b46d"
       ? "eb-garamond"
-      : activeFont === 10
+      : activeFonts === "6f8967f4-42cc-46ac-9caf-4a59952e5b34"
       ? "crimson-text"
-      : activeFont === 11
+      : activeFonts === "cb27eccc-0072-41f0-b535-ec2ee4bee963"
       ? "amatic-sc"
-      : activeFont === 12
+      : activeFonts === "414dd255-a77f-4f01-a97d-9560d08ab1e8"
       ? "gloria-hallelujah"
       : "";
 
@@ -65,7 +65,7 @@ export const AllFontType2 = ({ brand, group }) => {
     brand === "professional" && group === 1
       ? "roboto"
       : brand === "professional" && group === 2
-      ? "libre-baskerville"
+      ? "work-sans"
       : brand === "friendly" && group === 1
       ? "patrick-hand"
       : brand === "friendly" && group === 2
@@ -91,31 +91,31 @@ export const AllFontType2 = ({ brand, group }) => {
   return allType2;
 };
 
-export const FontType2 = ({ activeFont }) => {
+export const FontType2 = ({ activeFonts }) => {
   const type2 =
-    activeFont === 1
+    activeFonts === "6935ba3e-e5af-4eec-887e-05a24367f16b"
       ? "roboto"
-      : activeFont === 2
+      : activeFonts === "cab69ce3-377a-4f88-9b83-ac36c4213f8c"
       ? "work-sans"
-      : activeFont === 3
+      : activeFonts === "052cf742-79b0-4057-94e3-08126ec32c8c"
       ? "patrick-hand"
-      : activeFont === 4
+      : activeFonts === "a0a57ad8-ea49-43ce-b37f-45a873f591dc"
       ? "caveat"
-      : activeFont === 5
+      : activeFonts === "854cb94a-34f9-4ebb-b052-e360375a8019"
       ? "lora"
-      : activeFont === 6
+      : activeFonts === "d050d941-499f-4eb7-b8fa-662f5c7f0e9f"
       ? "dm-sans"
-      : activeFont === 7
+      : activeFonts === "f9c8e695-17ec-48b0-834f-82b61aeeac1a"
       ? "raleway"
-      : activeFont === 8
+      : activeFonts === "c9be8d19-4f6d-4579-9e38-2705e3ba6017"
       ? "bebas-neue"
-      : activeFont === 9
+      : activeFonts === "58ec129b-3e39-4033-a474-5e279cd5b46d"
       ? "open-sans"
-      : activeFont === 10
+      : activeFonts === "6f8967f4-42cc-46ac-9caf-4a59952e5b34"
       ? "josefin-sans"
-      : activeFont === 11
+      : activeFonts === "cb27eccc-0072-41f0-b535-ec2ee4bee963"
       ? "chewy"
-      : activeFont === 12
+      : activeFonts === "414dd255-a77f-4f01-a97d-9560d08ab1e8"
       ? "fredoka"
       : "";
 

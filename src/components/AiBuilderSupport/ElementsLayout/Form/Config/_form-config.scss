@@ -258,7 +258,7 @@ $px-layout: 0.5rem;
       .layout-2 {
         @include support.layout-styles();
         @include style-2();
-        background-color: #dbdbdb;
+        background-color: #eaeaea;
 
         .template-wrapper {
           @include m.flex($direction: column);

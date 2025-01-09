@@ -2,17 +2,23 @@ import React, { useRef, useState, useEffect, useMemo, Fragment } from "react";
 import { ChangeLayout } from "../../AiBuilderSupport";
 import sectionsElOptionLayout from "../../../../data/sectionsElOptionLayout.json";
 import IntroConfig from "./Config/IntroConfig";
-import { OtherColors, SpecialColors } from "../../ColorsSupport";
+import {
+  OtherColors,
+  SpecialColors,
+  OtherColorsWhite,
+} from "../../ColorsSupport";
 import { FontType1, FontType2 } from "../../FontsSupport";
 import introSample from "../../../../data/intro.json";
 
 function Intro({
   handleActiveIntro = null,
+  activeSections,
+  currentPageId,
   activeIntro,
   activeNavbar,
   toastMessage,
-  activeColor,
-  activeFont,
+  activeColors,
+  activeFonts,
   typeMain = null,
 }) {
   const [isExpandLayout, setIsExpandLayout] = useState(false);
@@ -20,10 +26,14 @@ function Intro({
   const [imageStyle4, setImageStyle4] = useState(null);
   const expandLayoutRef = useRef(null);
 
-  const others = OtherColors({ activeColor });
-  const special = SpecialColors({ activeColor });
-  const type1 = FontType1({ activeFont });
-  const type2 = FontType2({ activeFont });
+  const others = OtherColors({ activeColors });
+  const colorStyle = OtherColorsWhite({
+    others,
+    activeSections: activeSections[currentPageId],
+  });
+  const special = SpecialColors({ activeColors });
+  const type1 = FontType1({ activeFonts });
+  const type2 = FontType2({ activeFonts });
 
   const typeIntroStyles = useMemo(
     () => sectionsElOptionLayout.find((option) => option.id === activeIntro),
@@ -47,21 +57,34 @@ function Intro({
   const imageIntro = (intro) =>
     `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(intro/${intro.image}) no-repeat center / cover`;
 
+  const styleParent = () => {
+    const backgroundStyle =
+      typeIntroStyles.id === 3
+        ? { background: `url(${imageStyle3}) no-repeat center / cover` }
+        : typeIntroStyles.id === 4
+        ? {
+            background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${imageStyle4}) no-repeat center / cover`,
+          }
+        : {};
+
+    return { ...backgroundStyle, ...colorStyle };
+  };
+
   return (
     <>
       <div
         className={`intro ${typeIntroStyles.className} ${
-          activeNavbar === 2 ? "navbar-2" : activeNavbar === 3 ? "navbar-3" : ""
+          activeNavbar === 1
+            ? "navbar-1"
+            : activeNavbar === 2
+            ? "navbar-2"
+            : activeNavbar === 3
+            ? "navbar-3"
+            : activeNavbar === 4
+            ? "navbar-4"
+            : ""
         } ${others}`}
-        style={
-          typeIntroStyles.id === 3
-            ? { background: `url(${imageStyle3}) no-repeat center / cover` }
-            : typeIntroStyles.id === 4
-            ? {
-                background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${imageStyle4}) no-repeat center / cover`,
-              }
-            : {}
-        }
+        style={styleParent()}
       >
         {typeIntroStyles.id === 1 && (
           <>

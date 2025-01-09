@@ -21,13 +21,7 @@ $fs-text: 4px;
   text-align: $t-align;
 }
 
-@mixin button(
-  $fs: $fs-text,
-  $m: 0,
-  $p: 0.22rem 0.62rem,
-  $color: #000,
-  $t-decor: none
-) {
+@mixin button($fs: $fs-text, $m: 0, $p: 0.22rem 0.62rem, $t-decor: none) {
   font-size: $fs;
   border-radius: 50vw;
   @include m.flex();
@@ -36,7 +30,6 @@ $fs-text: 4px;
   cursor: pointer;
   padding: $p;
   margin: $m;
-  color: $color;
   text-decoration: $t-decor;
 }
 
@@ -115,7 +108,9 @@ $fs-text: 4px;
           }
 
           .template-button {
-            @include button($m: 0.75rem 0, $color: #fff);
+            @include button($m: 0.75rem 0);
+            background-color: #000;
+            color: #fff;
           }
 
           .template-image-1 {
@@ -146,7 +141,9 @@ $fs-text: 4px;
           }
 
           .template-button {
-            @include button($m: 0.6rem 0 0.25rem, $color: #fff);
+            @include button($m: 0.6rem 0 0.25rem);
+            background-color: #000;
+            color: #fff;
           }
         }
       }
@@ -165,6 +162,7 @@ $fs-text: 4px;
       .style-2 {
         @include support.layout-styles($p: 0);
         @include style-2();
+        background-color: #eaeaea;
 
         .template-wrapper {
           padding: 0.6rem 0.55rem 0 0.55rem;
@@ -212,7 +210,9 @@ $fs-text: 4px;
           }
 
           .template-button {
-            @include button($color: #fff, $m: 0.65rem 0 0);
+            @include button($m: 0.65rem 0 0);
+            background-color: #000;
+            color: #fff;
           }
         }
       }

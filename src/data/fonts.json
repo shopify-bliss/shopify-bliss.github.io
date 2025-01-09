@@ -10,14 +10,14 @@
     "id": 2,
     "brand": "professional",
     "fontType1": "work sans",
-    "fontType2": "libre baskerville",
+    "fontType2": "libre-baskerville",
     "group": 2
   },
   {
     "id": 3,
     "brand": "friendly",
     "fontType1": "poppins",
-    "fontType2": "patrick hand",
+    "fontType2": "patrick-hand",
     "group": 1
   },
   {
@@ -30,15 +30,15 @@
   {
     "id": 5,
     "brand": "luxury",
-    "fontType1": "playfair display",
+    "fontType1": "playfair-display",
     "fontType2": "lora",
     "group": 1
   },
   {
     "id": 6,
     "brand": "luxury",
-    "fontType1": "cormorant garamond",
-    "fontType2": "dm sans",
+    "fontType1": "cormorant-garamond",
+    "fontType2": "dm-sans",
     "group": 2
   },
   {
@@ -51,35 +51,35 @@
   {
     "id": 8,
     "brand": "innovative",
-    "fontType1": "exo 2",
-    "fontType2": "bebas neue",
+    "fontType1": "exo-2",
+    "fontType2": "bebas-neue",
     "group": 2
   },
   {
     "id": 9,
     "brand": "classic",
-    "fontType1": "eb garamond",
-    "fontType2": "open sans",
+    "fontType1": "eb-garamond",
+    "fontType2": "open-sans",
     "group": 1
   },
   {
     "id": 10,
     "brand": "classic",
-    "fontType1": "crimson text",
-    "fontType2": "josefin sans",
+    "fontType1": "crimson-text",
+    "fontType2": "josefin-sans",
     "group": 2
   },
   {
     "id": 11,
     "brand": "playful",
-    "fontType1": "amatic sc",
+    "fontType1": "amatic-sc",
     "fontType2": "chewy",
     "group": 1
   },
   {
     "id": 12,
     "brand": "playful",
-    "fontType1": "gloria hallelujah",
+    "fontType1": "gloria-hallelujah",
     "fontType2": "fredoka",
     "group": 2
   }

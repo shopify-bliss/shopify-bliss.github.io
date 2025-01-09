@@ -17,6 +17,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 import urlEndpoint from "../../helpers/urlEndpoint";
+import { LoaderPages } from "../LoaderProgress/LoaderProgress";
 
 const DashboardContext = createContext({
   activeMenu: null,
@@ -182,11 +183,7 @@ export const DashboardProvider = ({ children }) => {
 
   return (
     <DashboardContext.Provider value={contextValue}>
-      {isLoadingDashboard && (
-        <div className="loader-pages">
-          <div className="loader-pages-item"></div>
-        </div>
-      )}
+      {isLoadingDashboard && <LoaderPages />}
       {children}
       <ToastContainer />
     </DashboardContext.Provider>

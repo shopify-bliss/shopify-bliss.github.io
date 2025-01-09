@@ -17,6 +17,8 @@ import Products from "../../../components/AiBuilderSupport/ElementsLayout/Produc
 import Services from "../../../components/AiBuilderSupport/ElementsLayout/Services/Services";
 import About from "../../../components/AiBuilderSupport/ElementsLayout/About/About";
 import Form from "../../../components/AiBuilderSupport/ElementsLayout/Form/Form";
+import FirstComponent from "../../../components/AiBuilderSupport/FirstComponent";
+import { BgColors } from "../../../components/AiBuilderSupport/ColorsSupport";
 
 function ElementPages({
   activePages,
@@ -40,19 +42,20 @@ function ElementPages({
   handleActiveAbout,
   activeForm,
   handleActiveForm,
-  activeColor,
-  activeFont,
-  activeStyles,
+  activeColors,
+  activeFonts,
 }) {
   const { handleNext, handlePrev } = ControllingOverviews({
-    activePages: activePages,
+    activePages,
+    currentPageId,
+    setCurrentPageId,
+  });
+  const { firstProduct, firstService, firstAbout, firstForm } = FirstComponent({
+    activeSections: activeSections,
     currentPageId: currentPageId,
-    setCurrentPageId: setCurrentPageId,
   });
 
-  useEffect(() => {
-    console.log(activeStyles);
-  }, [activeStyles]);
+  const bg = BgColors({ activeColors });
 
   return (
     <>
@@ -68,10 +71,11 @@ function ElementPages({
               </span>
             </div>
 
-            <div className="display-data">
+            <div className={`display-data ${bg}`}>
               <NavbarLayout
                 activePages={activePages}
                 dataPages={dataPages}
+                activeSections={activeSections}
                 siteTitle={siteTitle}
                 currentPageId={currentPageId}
                 activeNavbar={activeNavbar}
@@ -79,8 +83,8 @@ function ElementPages({
                 activeIntro={activeIntro}
                 toastMessage={toastMessage}
                 typeMain="element"
-                activeFont={activeFont}
-                activeColor={activeColor}
+                activeFonts={activeFonts}
+                activeColors={activeColors}
               />
               {currentPageId !== null && (
                 <div className="display-data-section">
@@ -95,12 +99,14 @@ function ElementPages({
                         {section.section_id ===
                         "798f1ce0-b732-45a6-838e-f28e137243f7" ? (
                           <Intro
+                            activeSections={activeSections}
+                            currentPageId={currentPageId}
                             handleActiveIntro={handleActiveIntro}
                             activeIntro={activeIntro}
                             activeNavbar={activeNavbar}
                             toastMessage={toastMessage}
-                            activeColor={activeColor}
-                            activeFont={activeFont}
+                            activeColors={activeColors}
+                            activeFonts={activeFonts}
                             typeMain="element"
                           />
                         ) : section.section_id ===
@@ -108,9 +114,11 @@ function ElementPages({
                           <Products
                             handleActiveProducts={handleActiveProducts}
                             activeProducts={activeProducts}
+                            activeNavbar={activeNavbar}
                             toastMessage={toastMessage}
-                            activeColor={activeColor}
-                            activeFont={activeFont}
+                            activeColors={activeColors}
+                            activeFonts={activeFonts}
+                            firstProduct={firstProduct}
                             typeMain="element"
                           />
                         ) : section.section_id ===
@@ -118,9 +126,11 @@ function ElementPages({
                           <Services
                             handleActiveServices={handleActiveServices}
                             activeServices={activeServices}
+                            activeNavbar={activeNavbar}
                             toastMessage={toastMessage}
-                            activeColor={activeColor}
-                            activeFont={activeFont}
+                            activeColors={activeColors}
+                            activeFonts={activeFonts}
+                            firstService={firstService}
                             typeMain="element"
                           />
                         ) : section.section_id ===
@@ -128,9 +138,11 @@ function ElementPages({
                           <About
                             handleActiveAbout={handleActiveAbout}
                             activeAbout={activeAbout}
+                            activeNavbar={activeNavbar}
                             toastMessage={toastMessage}
-                            activeColor={activeColor}
-                            activeFont={activeFont}
+                            activeColors={activeColors}
+                            activeFonts={activeFonts}
+                            firstAbout={firstAbout}
                             typeMain="element"
                           />
                         ) : section.section_id ===
@@ -138,9 +150,11 @@ function ElementPages({
                           <Form
                             handleActiveForm={handleActiveForm}
                             activeForm={activeForm}
+                            activeNavbar={activeNavbar}
                             toastMessage={toastMessage}
-                            activeColor={activeColor}
-                            activeFont={activeFont}
+                            activeColors={activeColors}
+                            activeFonts={activeFonts}
+                            firstForm={firstForm}
                             typeMain="element"
                           />
                         ) : (
@@ -181,7 +195,7 @@ function ElementPages({
                     ? "active"
                     : ""
                 }`}
-                key={section.id}
+                key={section.section_id}
                 onClick={() => handleActiveSection(section.section_id)}
               >
                 {activeSections[currentPageId]?.includes(section.section_id) ? (

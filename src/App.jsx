@@ -2,7 +2,9 @@ import React, { lazy } from "react";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { SearchProvider } from "./helpers/SearchContext";
 import { DashboardProvider } from "./components/LayoutDashboard/DashboardContext";
+import { AiBuilderProvider } from "./components/AiBuilderSupport/AiBuilderContext";
 import Loadable from "./helpers/Loadable";
+import { LoaderProgress } from "./components/LoaderProgress/LoaderProgress";
 
 const Auth = Loadable(lazy(() => import("./pages/Auth/Auth")));
 const Recovery = Loadable(lazy(() => import("./pages/Auth/Recovery")));
@@ -23,7 +25,7 @@ const AccessManagement = Loadable(
 const AiBuilder = Loadable(lazy(() => import("./pages/AiBuilder/AiBuilder")));
 
 function App() {
-  const DashboardLayout = () => {
+  const DashboardCore = () => {
     return (
       <DashboardProvider>
         <Outlet />
@@ -31,11 +33,21 @@ function App() {
     );
   };
 
+  const AiBuilderCore = () => {
+    return (
+      <AiBuilderProvider>
+        <AiBuilder />
+      </AiBuilderProvider>
+    );
+  };
+
   return (
     <BrowserRouter>
       <SearchProvider>
         <Routes>
-          <Route path="/" element={<AiBuilder />} />
+          <Route path="/" element={<AiBuilderCore />} />
+          <Route path="/loader" element={<LoaderProgress />} />
+
           <Route path="/login" element={<Auth typeMain={"login"} />} />
           <Route path="/signup" element={<Auth typeMain={"signup"} />} />
           <Route
@@ -58,7 +70,7 @@ function App() {
           <Route path="/401" element={<ErrorParent typeMain={"401"} />} />
           <Route path="/403" element={<ErrorParent typeMain={"403"} />} />
           <Route path="/404" element={<ErrorParent typeMain={"404"} />} />
-          <Route element={<DashboardLayout />}>
+          <Route element={<DashboardCore />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/users-management" element={<UsersManagement />} />

@@ -3,8 +3,8 @@ import { Header } from "../../../components/LayoutDashboard/Support/SupportDashb
 import axios from "axios";
 import RoleManModal from "./RoleManModal";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
-
 import urlEndpoint from "../../../helpers/urlEndpoint";
+import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
 
 function DisplayView({
   isLoadingDashboard,
@@ -16,11 +16,7 @@ function DisplayView({
 }) {
   return (
     <>
-      {isLoadingDashboard && (
-        <div className="loader-pages">
-          <div className="loader-pages-item"></div>
-        </div>
-      )}
+      {isLoadingDashboard && <LoaderPages />}
       {type === "grid" ? (
         <div className="role-man-grid">
           {roles.map((data) => (

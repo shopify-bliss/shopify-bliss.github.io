@@ -3,6 +3,7 @@ import { Header } from "../../../components/LayoutDashboard/Support/SupportDashb
 import axios from "axios";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import TempPagesModal from "./TempPagesModal";
+import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
 
 function DisplayView({
   isLoadingTempPages,
@@ -14,11 +15,7 @@ function DisplayView({
 }) {
   return (
     <>
-      {isLoadingTempPages && (
-        <div className="loader-pages">
-          <div className="loader-pages-item"></div>
-        </div>
-      )}
+      {isLoadingTempPages && <LoaderPages />}
       {type === "grid" ? (
         <div className="temp-pages-grid">
           {pages.map((data) => (

@@ -51,7 +51,6 @@ $fs-preface: 6px;
       .template-button {
         @include config.button(
           $m: 1.9rem 0 1.7rem,
-          $color: #fff,
           $fs: $fs-desc,
           $p: 0.6rem 1.7rem
         );
@@ -64,6 +63,18 @@ $fs-preface: 6px;
 
     .template-image-2 {
       @include config.image($w: 85%, $h: 14rem, $mb: 0);
+    }
+
+    &.first-about {
+      margin-top: 1.95rem;
+
+      &.navbar-2 {
+        margin-top: 3.05rem;
+      }
+
+      &.navbar-3 {
+        margin-top: 4.05rem;
+      }
     }
   }
 
@@ -88,13 +99,24 @@ $fs-preface: 6px;
       height: 100%;
       width: 100%;
     }
+
+    &.first-about {
+      margin-top: 1.75rem;
+
+      &.navbar-2 {
+        margin-top: 2.72rem;
+      }
+
+      &.navbar-3 {
+        margin-top: 3.5rem;
+      }
+    }
   }
 
   &.style-3 {
     @include config.style-3($p: 2.9rem 6.5rem);
 
     .template-wrapper {
-      background-color: #fff;
       padding: 2.5rem;
       @include m.flex($direction: column, $justify: flex-start);
 
@@ -109,10 +131,27 @@ $fs-preface: 6px;
       .template-button {
         @include config.button(
           $m: 1.5rem 0 0,
-          $color: #fff,
           $fs: $fs-desc,
           $p: 0.6rem 1.7rem
         );
+      }
+    }
+
+    &.first-about {
+      .template-wrapper {
+        margin-top: 0.9rem;
+      }
+
+      &.navbar-2 {
+        .template-wrapper {
+          margin-top: 1.75rem;
+        }
+      }
+
+      &.navbar-3 {
+        .template-wrapper {
+          margin-top: 2.85rem;
+        }
       }
     }
   }
@@ -145,10 +184,21 @@ $fs-preface: 6px;
       .template-button {
         @include config.button(
           $m: 1.6rem 0 0,
-          $color: #fff,
           $fs: $fs-desc,
           $p: 0.6rem 1.7rem
         );
+      }
+    }
+
+    &.first-about {
+      margin-top: 2.15rem;
+
+      &.navbar-2 {
+        margin-top: 3.6rem;
+      }
+
+      &.navbar-3 {
+        margin-top: 4.65rem;
       }
     }
   }
