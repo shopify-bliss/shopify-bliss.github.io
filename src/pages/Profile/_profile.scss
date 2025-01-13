@@ -259,6 +259,8 @@ $border-color: adjust-color(
           font-weight: 600;
           @include text(0.82rem, 0.1rem, 1.2px);
         }
+
+        @include auth.validation-password();
       }
 
       .recovery-dashboard {

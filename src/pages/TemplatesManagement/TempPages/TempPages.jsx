@@ -4,6 +4,7 @@ import axios from "axios";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import TempPagesModal from "./TempPagesModal";
 import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
+import { useSearch } from "../../../helpers/SearchContext";
 
 function DisplayView({
   isLoadingTempPages,
@@ -13,39 +14,50 @@ function DisplayView({
   setIsDeleteModalOpen,
   type,
 }) {
+  const { search } = useSearch();
+
   return (
     <>
       {isLoadingTempPages && <LoaderPages />}
       {type === "grid" ? (
         <div className="temp-pages-grid">
-          {pages.map((data) => (
-            <div className="item" key={data.type_template_id}>
-              <span className="material-symbols-rounded item-icon">
-                {data.icon}
-              </span>
-              <div className="item-name">{data.type}</div>
-              <div className="item-action">
-                <span
-                  className="material-symbols-rounded item-action-edit"
-                  onClick={() => {
-                    setIsUpdateModalOpen(true);
-                    setPageId(data.type_template_id);
-                  }}
-                >
-                  edit_square
+          {pages
+            .filter((data) => {
+              const searchLowerCase = search.toLowerCase();
+
+              return (
+                data.type.toLowerCase().includes(searchLowerCase) ||
+                data.icon.toLowerCase().includes(searchLowerCase)
+              );
+            })
+            .map((data) => (
+              <div className="item" key={data.type_template_id}>
+                <span className="material-symbols-rounded item-icon">
+                  {data.icon}
                 </span>
-                <span
-                  className="material-symbols-rounded item-action-delete"
-                  onClick={() => {
-                    setIsDeleteModalOpen(true);
-                    setPageId(data.type_template_id);
-                  }}
-                >
-                  delete
-                </span>
+                <div className="item-name">{data.type}</div>
+                <div className="item-action">
+                  <span
+                    className="material-symbols-rounded item-action-edit"
+                    onClick={() => {
+                      setIsUpdateModalOpen(true);
+                      setPageId(data.type_template_id);
+                    }}
+                  >
+                    edit_square
+                  </span>
+                  <span
+                    className="material-symbols-rounded item-action-delete"
+                    onClick={() => {
+                      setIsDeleteModalOpen(true);
+                      setPageId(data.type_template_id);
+                    }}
+                  >
+                    delete
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       ) : (
         <div className="temp-pages-list">
@@ -56,36 +68,45 @@ function DisplayView({
             <div className="head-col">Name</div>
             <div className="head-col">Action</div>
           </div>
-          {pages.map((data, index) => (
-            <div className="body" key={data.type_template_id}>
-              <div className="body-col">{index + 1}</div>
-              <span className="material-symbols-rounded body-col">
-                {data.icon}
-              </span>
-              <div className="body-col">{data.icon}</div>
-              <div className="body-col">{data.type}</div>
-              <div className="body-col">
-                <span
-                  className="material-symbols-rounded edit"
-                  onClick={() => {
-                    setIsUpdateModalOpen(true);
-                    setPageId(data.type_template_id);
-                  }}
-                >
-                  edit_square
+          {pages
+            .filter((data) => {
+              const searchLowerCase = search.toLowerCase();
+
+              return (
+                data.type.toLowerCase().includes(searchLowerCase) ||
+                data.icon.toLowerCase().includes(searchLowerCase)
+              );
+            })
+            .map((data, index) => (
+              <div className="body" key={data.type_template_id}>
+                <div className="body-col">{index + 1}</div>
+                <span className="material-symbols-rounded body-col">
+                  {data.icon}
                 </span>
-                <span
-                  className="material-symbols-rounded delete"
-                  onClick={() => {
-                    setIsDeleteModalOpen(true);
-                    setPageId(data.type_template_id);
-                  }}
-                >
-                  delete
-                </span>
+                <div className="body-col">{data.icon}</div>
+                <div className="body-col">{data.type}</div>
+                <div className="body-col">
+                  <span
+                    className="material-symbols-rounded edit"
+                    onClick={() => {
+                      setIsUpdateModalOpen(true);
+                      setPageId(data.type_template_id);
+                    }}
+                  >
+                    edit_square
+                  </span>
+                  <span
+                    className="material-symbols-rounded delete"
+                    onClick={() => {
+                      setIsDeleteModalOpen(true);
+                      setPageId(data.type_template_id);
+                    }}
+                  >
+                    delete
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       )}
     </>

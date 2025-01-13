@@ -47,28 +47,36 @@ function AiBuilder() {
     activeBrand,
     handleBrandClick,
   } = SiteInfoLogics({ dataBrands });
-
   const { activePages, handleActivePage } = PagesAiLogics();
   const { activeSections, handleActiveSection } = ElementPagesLogics();
   const { activeColors, handleactiveColors } = ColorsAiLogics();
   const { activeFonts, handleactiveFonts } = FontsAiLogics();
 
-  // Template untuk gaya aktif menggunakan ID
   const activeStylesTemplate = useMemo(
     () => ({
-      "798f1ce0-b732-45a6-838e-f28e137243f7": 1, // Intro
-      "b42d4d56-d411-4aa8-ae01-52f0c406328a": 1, // Products
-      "4fd1e0cc-06f3-4554-9f79-ce8e02db03c8": 1, // Services
-      "1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed": 1, // About
-      "2089ce88-93a7-4555-8d0d-7f88f1dc3a7e": 1, // Form
-      "2bff7888-e861-4341-869b-189af29ad3f8": 1, // Navbar
+      intro: 1,
+      products: 1,
+      services: 1,
+      about: 1,
+      form: 1,
+      navbar: 1,
     }),
     []
   );
 
-  const [navbarStyle, setNavbarStyle] = useState(
-    activeStylesTemplate["2bff7888-e861-4341-869b-189af29ad3f8"]
+  const sectionMapping = useMemo(
+    () => ({
+      intro: "798f1ce0-b732-45a6-838e-f28e137243f7",
+      products: "b42d4d56-d411-4aa8-ae01-52f0c406328a",
+      services: "4fd1e0cc-06f3-4554-9f79-ce8e02db03c8",
+      about: "1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed",
+      form: "2089ce88-93a7-4555-8d0d-7f88f1dc3a7e",
+      navbar: "2bff7888-e861-4341-869b-189af29ad3f8",
+    }),
+    []
   );
+
+  const [navbarStyle, setNavbarStyle] = useState(activeStylesTemplate.navbar);
   const [pageStyles, setPageStyles] = useState({});
   const [mergedPageStyles, setMergedPageStyles] = useState({});
 
@@ -85,23 +93,24 @@ function AiBuilder() {
   }, [currentPageId, activeStylesTemplate, pageStyles]);
 
   // Fungsi untuk memperbarui gaya
-  const updatePageStyle = (sectionId, value) => {
+  const updatePageStyle = (section, value) => {
     setPageStyles((prevStyles) => {
       const updatedPageStyles = {
         ...prevStyles,
         [currentPageId]: {
           ...prevStyles[currentPageId],
-          [sectionId]: value,
+          [section]: value,
         },
       };
 
-      // Jika ID adalah navbar, sinkronkan gaya ke semua halaman
-      if (sectionId === "2bff7888-e861-4341-869b-189af29ad3f8") {
+      // Jika `section` adalah `navbar`, perbarui `navbarStyle` global
+      if (section === "navbar") {
         setNavbarStyle(value);
+        // Sinkronkan gaya `navbar` ke semua halaman
         Object.keys(updatedPageStyles).forEach((pageId) => {
           updatedPageStyles[pageId] = {
             ...updatedPageStyles[pageId],
-            [sectionId]: value,
+            navbar: value,
           };
         });
       }
@@ -115,14 +124,16 @@ function AiBuilder() {
     const activeSectionsForPage = activeSections[currentPageId] || [];
 
     const filteredStyles = Object.entries(activeStylesTemplate)
-      .filter(([id]) => activeSectionsForPage.includes(id))
-      .reduce((acc, [id, styleValue]) => {
-        acc[id] = styleValue;
+      .filter(([section]) =>
+        activeSectionsForPage.includes(sectionMapping[section])
+      )
+      .reduce((acc, [section, styleValue]) => {
+        acc[section] = styleValue;
         return acc;
       }, {});
 
     return {
-      "2bff7888-e861-4341-869b-189af29ad3f8": navbarStyle, // Navbar
+      navbar: navbarStyle, // Gunakan gaya navbar global
       ...filteredStyles,
       ...(pageStyles[currentPageId] || {}),
     };
@@ -131,6 +142,7 @@ function AiBuilder() {
     currentPageId,
     activeStylesTemplate,
     activeSections,
+    sectionMapping,
     navbarStyle,
   ]);
 
@@ -138,18 +150,18 @@ function AiBuilder() {
   useEffect(() => {
     setMergedPageStyles(() => {
       const filteredStyles = Object.keys(pageStyles)
-        .filter((pageId) => pageId !== "99")
+        .filter((pageId) => pageId !== "99") // Hapus ID `99`
         .reduce((acc, pageId) => {
           const activeSectionsForPage = activeSections[pageId] || [];
 
           acc[pageId] = Object.entries(pageStyles[pageId] || {})
             .filter(
-              ([id]) =>
-                id === "2bff7888-e861-4341-869b-189af29ad3f8" || // Navbar selalu ada
-                activeSectionsForPage.includes(id)
+              ([section]) =>
+                section === "navbar" || // Pastikan navbar selalu ada
+                activeSectionsForPage.includes(sectionMapping[section])
             )
-            .reduce((styleAcc, [id, value]) => {
-              styleAcc[id] = value;
+            .reduce((styleAcc, [section, value]) => {
+              styleAcc[section] = value;
               return styleAcc;
             }, {});
 
@@ -158,25 +170,23 @@ function AiBuilder() {
 
       return filteredStyles;
     });
-  }, [pageStyles, activeSections]);
+  }, [pageStyles, activeSections, sectionMapping]);
 
   const aiBuilderElements = useMemo(
     () => ({
       siteTitle: siteTitle,
-      Brand: activeBrand.brand_id,
-      Pages: activePages.filter(
-        (page) =>
-          page !== "2bff7888-e861-4341-869b-189af29ad3f8" &&
-          page !== "40229892-a523-4e1f-a936-a3051e9d30bb"
-      ),
-      Color: activeColors,
-      Font: activeFonts,
-      Styles: mergedPageStyles,
+      activeBrand: activeBrand.brand_id,
+      activePages: activePages,
+      activeSections: activeSections,
+      activeColors: activeColors,
+      activeFonts: activeFonts,
+      mergedPageStyles: mergedPageStyles,
     }),
     [
       siteTitle,
       activeBrand,
       activePages,
+      activeSections,
       activeColors,
       activeFonts,
       mergedPageStyles,
@@ -242,9 +252,7 @@ function AiBuilder() {
             setCurrentPageId={setCurrentPageId}
             handleActivePage={handleActivePage}
             dataPages={dataPages}
-            activeNavbar={
-              currentPageStyles["2bff7888-e861-4341-869b-189af29ad3f8"]
-            }
+            activeNavbar={currentPageStyles.navbar}
           />
         )}
 
@@ -258,43 +266,19 @@ function AiBuilder() {
             currentPageId={currentPageId}
             setCurrentPageId={setCurrentPageId}
             dataElements={dataElements}
-            toastMessage="Toast message example"
-            activeNavbar={
-              currentPageStyles["2bff7888-e861-4341-869b-189af29ad3f8"]
-            }
-            handleActiveNavbar={(value) =>
-              updatePageStyle("2bff7888-e861-4341-869b-189af29ad3f8", value)
-            }
-            activeIntro={
-              currentPageStyles["798f1ce0-b732-45a6-838e-f28e137243f7"]
-            }
-            handleActiveIntro={(value) =>
-              updatePageStyle("798f1ce0-b732-45a6-838e-f28e137243f7", value)
-            }
-            activeProducts={
-              currentPageStyles["b42d4d56-d411-4aa8-ae01-52f0c406328a"]
-            }
-            handleActiveProducts={(value) =>
-              updatePageStyle("b42d4d56-d411-4aa8-ae01-52f0c406328a", value)
-            }
-            activeServices={
-              currentPageStyles["4fd1e0cc-06f3-4554-9f79-ce8e02db03c8"]
-            }
-            handleActiveServices={(value) =>
-              updatePageStyle("4fd1e0cc-06f3-4554-9f79-ce8e02db03c8", value)
-            }
-            activeAbout={
-              currentPageStyles["1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed"]
-            }
-            handleActiveAbout={(value) =>
-              updatePageStyle("1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed", value)
-            }
-            activeForm={
-              currentPageStyles["2089ce88-93a7-4555-8d0d-7f88f1dc3a7e"]
-            }
-            handleActiveForm={(value) =>
-              updatePageStyle("2089ce88-93a7-4555-8d0d-7f88f1dc3a7e", value)
-            }
+            toastMessage={toastMessage}
+            activeNavbar={currentPageStyles.navbar}
+            handleActiveNavbar={(value) => updatePageStyle("navbar", value)}
+            activeIntro={currentPageStyles.intro}
+            handleActiveIntro={(value) => updatePageStyle("intro", value)}
+            activeProducts={currentPageStyles.products}
+            handleActiveProducts={(value) => updatePageStyle("products", value)}
+            activeServices={currentPageStyles.services}
+            handleActiveServices={(value) => updatePageStyle("services", value)}
+            activeAbout={currentPageStyles.about}
+            handleActiveAbout={(value) => updatePageStyle("about", value)}
+            activeForm={currentPageStyles.form}
+            handleActiveForm={(value) => updatePageStyle("form", value)}
             activeColors={activeColors}
             activeFonts={activeFonts}
           />
@@ -311,24 +295,12 @@ function AiBuilder() {
             setCurrentPageId={setCurrentPageId}
             dataElements={dataElements}
             toastMessage={toastMessage}
-            activeNavbar={
-              currentPageStyles["2bff7888-e861-4341-869b-189af29ad3f8"]
-            }
-            activeIntro={
-              currentPageStyles["798f1ce0-b732-45a6-838e-f28e137243f7"]
-            }
-            activeProducts={
-              currentPageStyles["b42d4d56-d411-4aa8-ae01-52f0c406328a"]
-            }
-            activeServices={
-              currentPageStyles["4fd1e0cc-06f3-4554-9f79-ce8e02db03c8"]
-            }
-            activeAbout={
-              currentPageStyles["1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed"]
-            }
-            activeForm={
-              currentPageStyles["2089ce88-93a7-4555-8d0d-7f88f1dc3a7e"]
-            }
+            activeNavbar={currentPageStyles.navbar}
+            activeIntro={currentPageStyles.intro}
+            activeProducts={currentPageStyles.products}
+            activeServices={currentPageStyles.services}
+            activeAbout={currentPageStyles.about}
+            activeForm={currentPageStyles.form}
             activeColors={activeColors}
             handleactiveColors={handleactiveColors}
             activeFonts={activeFonts}
@@ -347,24 +319,12 @@ function AiBuilder() {
             setCurrentPageId={setCurrentPageId}
             dataElements={dataElements}
             toastMessage={toastMessage}
-            activeNavbar={
-              currentPageStyles["2bff7888-e861-4341-869b-189af29ad3f8"]
-            }
-            activeIntro={
-              currentPageStyles["798f1ce0-b732-45a6-838e-f28e137243f7"]
-            }
-            activeProducts={
-              currentPageStyles["b42d4d56-d411-4aa8-ae01-52f0c406328a"]
-            }
-            activeServices={
-              currentPageStyles["4fd1e0cc-06f3-4554-9f79-ce8e02db03c8"]
-            }
-            activeAbout={
-              currentPageStyles["1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed"]
-            }
-            activeForm={
-              currentPageStyles["2089ce88-93a7-4555-8d0d-7f88f1dc3a7e"]
-            }
+            activeNavbar={currentPageStyles.navbar}
+            activeIntro={currentPageStyles.intro}
+            activeProducts={currentPageStyles.products}
+            activeServices={currentPageStyles.services}
+            activeAbout={currentPageStyles.about}
+            activeForm={currentPageStyles.form}
             activeColors={activeColors}
             activeFonts={activeFonts}
             handleactiveFonts={handleactiveFonts}

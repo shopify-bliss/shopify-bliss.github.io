@@ -126,7 +126,12 @@ export const DashboardProvider = ({ children }) => {
       }
     } catch (err) {
       console.error("Error fetching dashboard data:", err);
-      navigate("/login", { replace: true });
+      navigate("/login", {
+        replace: true,
+        state: {
+          messageSessionExpired: "Session expired, Please login again.",
+        },
+      });
     } finally {
       setDashboardLoader(false);
     }

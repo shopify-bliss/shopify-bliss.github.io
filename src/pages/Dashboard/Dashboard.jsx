@@ -3,6 +3,8 @@ import LayoutDashboard from "../../components/LayoutDashboard/LayoutDashboard";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
 import Analytics from "./Analytics/Analytics";
 import { useLocation, useNavigate } from "react-router-dom";
+import Accumulation from "./Accumulation/Accumulation";
+import UserRoles from "./UserRoles/UserRoles";
 
 function Dashboard() {
   const { submenuPage, toastMessage, user, accessMenus } = useDashboard();
@@ -41,13 +43,19 @@ function Dashboard() {
       <LayoutDashboard>
         {submenuPage === "analytics 1" &&
           (user?.roles?.role_name === "super admin" ? (
-            <div>Dashboard Super Admin</div>
+            <>
+              <Accumulation />
+            </>
           ) : user?.roles?.role_name === "admin" ? (
-            <div>Dashboard Admin</div>
-          ) : user?.roles?.role_name === "customer" ? (
-            <div>Dashboard Customer</div>
+            <>
+              <Accumulation />
+            </>
+          ) : user?.roles?.role_name === "developer" ? (
+            <>
+              <Accumulation />
+            </>
           ) : (
-            <div>Dashboard Who</div>
+            <div>Dashboard Customer</div>
           ))}
         {submenuPage === "analytics 2" && <Analytics />}
       </LayoutDashboard>

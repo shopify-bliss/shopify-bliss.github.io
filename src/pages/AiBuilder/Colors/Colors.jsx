@@ -177,23 +177,29 @@ function Colors({
                   <div className="content-item-title">{brand.name}</div>
                   <div className="content-item-list">
                     {dataColors
-                      .filter((color) => color.brand === brand.name)
+                      .filter((color) => color.brand_id === brand.brand_id)
                       .map((color) => {
                         return (
                           <div
                             className={`content-item-list-color ${
-                              activeColors === color.color_id ? "active" : ""
+                              activeColors === color.color_design_id
+                                ? "active"
+                                : ""
                             }`}
-                            key={color.color_id}
-                            onClick={() => handleactiveColors(color.color_id)}
+                            key={color.color_design_id}
+                            onClick={() =>
+                              handleactiveColors(color.color_design_id)
+                            }
                           >
                             <span
-                              className={`color-special-${color.color1}`}
+                              className={`color-special-${color.color1.color}`}
                             ></span>
                             <span
-                              className={`color-other-${color.color2}`}
+                              className={`color-other-${color.color2.color}`}
                             ></span>
-                            <span className={`color-bg-${color.color3}`}></span>
+                            <span
+                              className={`color-bg-${color.color3.color}`}
+                            ></span>
                           </div>
                         );
                       })}

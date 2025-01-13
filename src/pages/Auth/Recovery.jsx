@@ -8,10 +8,14 @@ import {
 import logo from "../../assets/logo/black-logo.png";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import axios from "axios";
-import { recoverySchema } from "../../helpers/ValidationSchema";
+import {
+  recoverySchema,
+  resetPasswordSchema,
+} from "../../helpers/ValidationSchema";
 import {
   AuthHeader,
   AuthTitle,
+  AuthValidationPassword,
 } from "../../components/AuthSupport/AuthSupport";
 import { ToastContainer } from "react-toastify";
 import { toastMessage, toastPromise } from "../../helpers/AlertMessage";
@@ -35,7 +39,6 @@ function Recovery({ typeMain }) {
   });
 
   const statusRecovery = useRef(null);
-  const statusOtp = useRef(null);
   const statusResetPassword = useRef(null);
 
   const navigate = useNavigate();
@@ -123,10 +126,81 @@ function Recovery({ typeMain }) {
               });
             });
           });
+      } else {
+        const data = {
+          oldPassword: values.oldPassword,
+          newPassword: values.newPassword,
+        };
+
+        resetPasswordSchema
+          .validate(data, { abortEarly: false })
+          .then(() => {
+            const resetPasswordPromise = axios.put(
+              urlEndpoint.updatePassword,
+              data
+            );
+
+            toastPromise(
+              resetPasswordPromise,
+              {
+                pending: "Reset password on progress, please wait..!",
+                success: "Reset password has been successfully updated!",
+                error: "Failed to reset password!",
+              },
+              { autoClose: 2500, position: "top-center" },
+              () => {
+                if (statusResetPassword.current === true) {
+                  navigate("/login");
+                }
+              }
+            );
+
+            resetPasswordPromise
+              .then((res) => {
+                // console.log(res.data);
+
+                statusResetPassword.current = res.data.success;
+
+                setValues("");
+              })
+              .catch((error) => {
+                console.error("Error updating password:", error);
+              });
+          })
+          .catch((err) => {
+            err.inner.forEach((error) => {
+              toastMessage("error", error.message);
+            });
+          });
       }
     },
     [recoverySchema, urlEndpoint.sendOtpPassword, values, typeMain]
   );
+
+  useEffect(() => {
+    if (typeMain === "reset-password" && !location.state) {
+      navigate("/recovery", {
+        state: {
+          messageNoEmail:
+            "Email is missing. Please go back to the previous step and ensure your email is entered correctly!",
+        },
+      });
+    }
+
+    if (
+      (typeMain === "recovery" && location.state?.messageNoEmail) ||
+      (typeMain === "reset-password" && location.state?.messageNoEmail)
+    ) {
+      toastMessage("warn", location.state.messageNoEmail, {
+        position: "top-center",
+        autoClose: 5000,
+      });
+      navigate(location.pathname, {
+        state: { ...location.state, messageNoEmail: undefined },
+        replace: true,
+      });
+    }
+  }, [location.state, navigate, location.pathname, typeMain]);
 
   return (
     <>
@@ -195,6 +269,9 @@ function Recovery({ typeMain }) {
                     </span>
                     <div className="input-border"></div>
                   </div>
+                  <AuthValidationPassword
+                    validationPassword={validationPassword}
+                  />
                 </>
               )}
               <button

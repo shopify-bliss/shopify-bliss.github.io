@@ -44,10 +44,6 @@
       transform: scale(1);
     }
   }
-
-  &:disabled {
-    opacity: 0;
-  }
 }
 
 @mixin steps() {
@@ -103,6 +99,10 @@
         $border-color-hover: adjust-color($color: #fff, $blackness: 5%),
         $tranform-origin: right
       );
+
+      &:disabled {
+        opacity: 0;
+      }
     }
   }
 
@@ -118,6 +118,19 @@
         $border-color-hover: adjust-color($color: #000, $whiteness: 25%),
         $tranform-origin: left
       );
+
+      &:disabled {
+        background-color: adjust-color($color: #fff, $blackness: 5%);
+        color: adjust-color($color: #fff, $blackness: 40%);
+        cursor: not-allowed;
+        border-color: adjust-color($color: #fff, $blackness: 5%);
+
+        &:hover {
+          &::after {
+            transform: scale(0);
+          }
+        }
+      }
     }
   }
 }

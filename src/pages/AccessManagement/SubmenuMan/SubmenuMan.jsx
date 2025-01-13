@@ -5,6 +5,7 @@ import SubmenuManModal from "./SubmenuManModal";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import { Link } from "react-router-dom";
 import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
+import { useSearch } from "../../../helpers/SearchContext";
 
 function DisplayView({
   isLoadingDashboard,
@@ -14,49 +15,62 @@ function DisplayView({
   setIsDeleteModalOpen,
   type,
 }) {
+  const { search } = useSearch();
+
   return (
     <>
       {isLoadingDashboard && <LoaderPages />}
       {type === "grid" ? (
         <div className="submenu-man-grid">
-          {submenus.map((data) => (
-            <div className="item" key={data.sub_menu_id}>
-              <div className="item-name">{data.name}</div>
-              <Link className="item-menu" to={`/${data.menus.url}`}>
-                {data.menus.url}
-              </Link>
-              <div className="item-action">
-                {data.default === true ? (
-                  <>
-                    <div className="item-action-default">
-                      <span className="material-symbols-outlined item-action-default-icon">
-                        settings
-                      </span>
-                      <span className="item-action-default-text">Default</span>
-                    </div>
-                  </>
-                ) : null}
-                <span
-                  className="material-symbols-rounded item-action-edit"
-                  onClick={() => {
-                    setIsUpdateModalOpen(true);
-                    setSubmenuId(data.sub_menu_id);
-                  }}
-                >
-                  edit_square
-                </span>
-                <span
-                  className="material-symbols-rounded item-action-delete"
-                  onClick={() => {
-                    setIsDeleteModalOpen(true);
-                    setSubmenuId(data.sub_menu_id);
-                  }}
-                >
-                  delete
-                </span>
+          {submenus
+            .filter((data) => {
+              const searchLowerCase = search.toLowerCase();
+
+              return (
+                data.name.toLowerCase().includes(searchLowerCase) ||
+                data.menus.url.toLowerCase().includes(searchLowerCase)
+              );
+            })
+            .map((data) => (
+              <div className="item" key={data.sub_menu_id}>
+                <div className="item-name">{data.name}</div>
+                <Link className="item-menu" to={`/${data.menus.url}`}>
+                  {data.menus.url}
+                </Link>
+                <div className="item-action">
+                  {data.default === true ? (
+                    <>
+                      <div className="item-action-default">
+                        <span className="material-symbols-outlined item-action-default-icon">
+                          settings
+                        </span>
+                        <span className="item-action-default-text">
+                          Default
+                        </span>
+                      </div>
+                    </>
+                  ) : null}
+                  <span
+                    className="material-symbols-rounded item-action-edit"
+                    onClick={() => {
+                      setIsUpdateModalOpen(true);
+                      setSubmenuId(data.sub_menu_id);
+                    }}
+                  >
+                    edit_square
+                  </span>
+                  <span
+                    className="material-symbols-rounded item-action-delete"
+                    onClick={() => {
+                      setIsDeleteModalOpen(true);
+                      setSubmenuId(data.sub_menu_id);
+                    }}
+                  >
+                    delete
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       ) : (
         <div className="submenu-man-list">
@@ -67,40 +81,49 @@ function DisplayView({
             <div className="head-col">Default</div>
             <div className="head-col">Action</div>
           </div>
-          {submenus.map((data, index) => (
-            <div className="body" key={data.sub_menu_id}>
-              <div className="body-col">{index + 1}</div>
-              <div className="body-col">{data.name}</div>
-              <div className="body-col">{data.menus.name}</div>
-              <div className="body-col">
-                {data.default === true ? (
-                  <span className="default">Default</span>
-                ) : (
-                  <span className="nope">-</span>
-                )}
+          {submenus
+            .filter((data) => {
+              const searchLowerCase = search.toLowerCase();
+
+              return (
+                data.name.toLowerCase().includes(searchLowerCase) ||
+                data.menus.url.toLowerCase().includes(searchLowerCase)
+              );
+            })
+            .map((data, index) => (
+              <div className="body" key={data.sub_menu_id}>
+                <div className="body-col">{index + 1}</div>
+                <div className="body-col">{data.name}</div>
+                <div className="body-col">{data.menus.name}</div>
+                <div className="body-col">
+                  {data.default === true ? (
+                    <span className="default">Default</span>
+                  ) : (
+                    <span className="nope">-</span>
+                  )}
+                </div>
+                <div className="body-col">
+                  <span
+                    className="material-symbols-rounded edit"
+                    onClick={() => {
+                      setIsUpdateModalOpen(true);
+                      setSubmenuId(data.sub_menu_id);
+                    }}
+                  >
+                    edit_square
+                  </span>
+                  <span
+                    className="material-symbols-rounded delete"
+                    onClick={() => {
+                      setIsDeleteModalOpen(true);
+                      setSubmenuId(data.sub_menu_id);
+                    }}
+                  >
+                    delete
+                  </span>
+                </div>
               </div>
-              <div className="body-col">
-                <span
-                  className="material-symbols-rounded edit"
-                  onClick={() => {
-                    setIsUpdateModalOpen(true);
-                    setSubmenuId(data.sub_menu_id);
-                  }}
-                >
-                  edit_square
-                </span>
-                <span
-                  className="material-symbols-rounded delete"
-                  onClick={() => {
-                    setIsDeleteModalOpen(true);
-                    setSubmenuId(data.sub_menu_id);
-                  }}
-                >
-                  delete
-                </span>
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       )}
     </>

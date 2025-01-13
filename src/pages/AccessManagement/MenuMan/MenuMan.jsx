@@ -5,6 +5,7 @@ import MenuManModal from "./MenuManModal";
 import { Link } from "react-router-dom";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
+import { useSearch } from "../../../helpers/SearchContext";
 
 function DisplayView({
   isLoadingDashboard,
@@ -14,39 +15,50 @@ function DisplayView({
   setIsDeleteModalOpen,
   type,
 }) {
+  const { search } = useSearch();
+
   return (
     <>
       {isLoadingDashboard && <LoaderPages />}
       {type === "grid" ? (
         <div className="menu-man-grid">
-          {menus.map((data) => (
-            <div className="item" key={data.menu_id}>
-              <div className="item-name">{data.name}</div>
-              <Link to={`/${data.url}`} className="item-url">
-                {data.url}
-              </Link>
-              <div className="item-action">
-                <span
-                  className="material-symbols-rounded item-action-edit"
-                  onClick={() => {
-                    setIsUpdateModalOpen(true);
-                    setMenuId(data.menu_id);
-                  }}
-                >
-                  edit_square
-                </span>
-                <span
-                  className="material-symbols-rounded item-action-delete"
-                  onClick={() => {
-                    setIsDeleteModalOpen(true);
-                    setMenuId(data.menu_id);
-                  }}
-                >
-                  delete
-                </span>
+          {menus
+            .filter((data) => {
+              const searchLowerCase = search.toLowerCase();
+
+              return (
+                data.name.toLowerCase().includes(searchLowerCase) ||
+                data.url.toLowerCase().includes(searchLowerCase)
+              );
+            })
+            .map((data) => (
+              <div className="item" key={data.menu_id}>
+                <div className="item-name">{data.name}</div>
+                <Link to={`/${data.url}`} className="item-url">
+                  {data.url}
+                </Link>
+                <div className="item-action">
+                  <span
+                    className="material-symbols-rounded item-action-edit"
+                    onClick={() => {
+                      setIsUpdateModalOpen(true);
+                      setMenuId(data.menu_id);
+                    }}
+                  >
+                    edit_square
+                  </span>
+                  <span
+                    className="material-symbols-rounded item-action-delete"
+                    onClick={() => {
+                      setIsDeleteModalOpen(true);
+                      setMenuId(data.menu_id);
+                    }}
+                  >
+                    delete
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       ) : (
         <div className="menu-man-list">
@@ -56,35 +68,44 @@ function DisplayView({
             <div className="head-col">Url</div>
             <div className="head-col">Action</div>
           </div>
-          {menus.map((data, index) => (
-            <div className="body" key={data.menu_id}>
-              <div className="body-col">{index + 1}</div>
-              <div className="body-col">{data.name}</div>
-              <Link to={`/${data.url}`} className="body-col">
-                {data.url}
-              </Link>
-              <div className="body-col">
-                <span
-                  className="material-symbols-rounded edit"
-                  onClick={() => {
-                    setIsUpdateModalOpen(true);
-                    setMenuId(data.menu_id);
-                  }}
-                >
-                  edit_square
-                </span>
-                <span
-                  className="material-symbols-rounded delete"
-                  onClick={() => {
-                    setIsDeleteModalOpen(true);
-                    setMenuId(data.menu_id);
-                  }}
-                >
-                  delete
-                </span>
+          {menus
+            .filter((data) => {
+              const searchLowerCase = search.toLowerCase();
+
+              return (
+                data.name.toLowerCase().includes(searchLowerCase) ||
+                data.url.toLowerCase().includes(searchLowerCase)
+              );
+            })
+            .map((data, index) => (
+              <div className="body" key={data.menu_id}>
+                <div className="body-col">{index + 1}</div>
+                <div className="body-col">{data.name}</div>
+                <Link to={`/${data.url}`} className="body-col">
+                  {data.url}
+                </Link>
+                <div className="body-col">
+                  <span
+                    className="material-symbols-rounded edit"
+                    onClick={() => {
+                      setIsUpdateModalOpen(true);
+                      setMenuId(data.menu_id);
+                    }}
+                  >
+                    edit_square
+                  </span>
+                  <span
+                    className="material-symbols-rounded delete"
+                    onClick={() => {
+                      setIsDeleteModalOpen(true);
+                      setMenuId(data.menu_id);
+                    }}
+                  >
+                    delete
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       )}
     </>

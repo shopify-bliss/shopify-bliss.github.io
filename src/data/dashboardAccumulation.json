@@ -1,0 +1,86 @@
+[
+  {
+    "dashboard_config_id": 1,
+    "name": "Users",
+    "icon": "group",
+    "access": ["super admin", "admin"],
+    "total": 6
+  },
+  {
+    "dashboard_config_id": 2,
+    "name": "Super Admins",
+    "icon": "admin_panel_settings",
+    "access": ["super admin"],
+    "total": 2
+  },
+  {
+    "dashboard_config_id": 3,
+    "name": "Admins",
+    "icon": "manage_accounts",
+    "access": ["super admin"],
+    "total": 2
+  },
+  {
+    "dashboard_config_id": 4,
+    "name": "Developers",
+    "icon": "deployed_code_account",
+    "access": ["super admin", "admin"],
+    "total": 3
+  },
+  {
+    "dashboard_config_id": 5,
+    "name": "Customers",
+    "icon": "person",
+    "access": ["super admin", "admin"],
+    "total": 16
+  },
+  {
+    "dashboard_config_id": 6,
+    "name": "Pages",
+    "icon": "select_window",
+    "access": ["super admin", "admin", "developer"],
+    "total": 7
+  },
+  {
+    "dashboard_config_id": 7,
+    "name": "Sections",
+    "icon": "browse",
+    "access": ["super admin", "admin", "developer"],
+    "total": 5
+  },
+  {
+    "dashboard_config_id": 8,
+    "name": "Colors",
+    "icon": "invert_colors",
+    "access": ["super admin", "admin", "developer"],
+    "total": 36
+  },
+  {
+    "dashboard_config_id": 9,
+    "name": "Color Designs",
+    "icon": "palette",
+    "access": ["super admin", "admin", "developer"],
+    "total": 12
+  },
+  {
+    "dashboard_config_id": 10,
+    "name": "Fonts",
+    "icon": "serif",
+    "access": ["super admin", "admin", "developer"],
+    "total": 24
+  },
+  {
+    "dashboard_config_id": 11,
+    "name": "Font Designs",
+    "icon": "text_fields",
+    "access": ["super admin", "admin", "developer"],
+    "total": 12
+  },
+  {
+    "dashboard_config_id": 12,
+    "name": "Website Builder",
+    "icon": "language",
+    "access": ["super admin", "admin"],
+    "total": 9
+  }
+]

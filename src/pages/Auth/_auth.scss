@@ -127,6 +127,12 @@
         width: 37.5%;
         grid-template-columns: 1fr;
         height: 30vh;
+
+        .form {
+          &-submit {
+            margin-bottom: 5.4rem;
+          }
+        }
       }
 
       .form {

@@ -37,10 +37,9 @@ input[type="file"]::-webkit-file-upload-button {
   z-index: 9999;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
   padding: 0.8rem;
-}
-
-.Toastify__toast-container {
   width: 30vw;
+  // left: 50%;
+  // transform: translateX(-50%);
 }
 
 .Toastify__toast-icon {

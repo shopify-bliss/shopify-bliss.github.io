@@ -1,4 +1,5 @@
 import React from "react";
+import { useSearch } from "../../../helpers/SearchContext";
 
 export function Header({
   className,
@@ -7,10 +8,25 @@ export function Header({
   handleDisplayChange,
   setIsCreateModalOpen,
 }) {
+  const { setSearch } = useSearch();
+
+  const handleSearchChange = (e) => {
+    setSearch(e.target.value);
+  };
+
   return (
     <div className={`${className}-header`}>
       <div className="title">{title}</div>
       <div className="header-wrapper">
+        <div className="header-wrapper-search">
+          <div className="search-loan">
+            <input
+              type="text"
+              placeholder="Search keywords..."
+              onChange={handleSearchChange}
+            />
+          </div>
+        </div>
         <div className="new-data" onClick={() => setIsCreateModalOpen(true)}>
           Add new data
         </div>

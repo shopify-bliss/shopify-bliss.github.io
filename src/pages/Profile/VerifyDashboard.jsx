@@ -10,7 +10,7 @@ function VerifyDashboard({ setCurrentSubmenu }) {
 
   const statusRecovery = useRef(null);
 
-  const { toastMessage, toastPromise, token } = useDashboard();
+  const { toastMessage, toastPromise, user } = useDashboard();
 
   const handleVerifyChange = useCallback(
     (e, index) => {
@@ -50,17 +50,10 @@ function VerifyDashboard({ setCurrentSubmenu }) {
       const codeValue = code.join("");
 
       if (codeValue.length === 6) {
-        const recoveryPromise = axios.post(
-          urlEndpoint.verifyOtpPassword,
-          {
-            otp: parseInt(codeValue),
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const recoveryPromise = axios.post(urlEndpoint.verifyOtpPassword, {
+          email: user.email,
+          otp: codeValue,
+        });
         toastPromise(
           recoveryPromise,
           {
@@ -91,14 +84,7 @@ function VerifyDashboard({ setCurrentSubmenu }) {
         toastMessage("error", "Please enter all 6 digits.");
       }
     },
-    [
-      code,
-      urlEndpoint.otpPassword,
-      token,
-      setCurrentSubmenu,
-      toastPromise,
-      toastMessage,
-    ]
+    [code, setCurrentSubmenu, toastPromise, toastMessage]
   );
 
   return (

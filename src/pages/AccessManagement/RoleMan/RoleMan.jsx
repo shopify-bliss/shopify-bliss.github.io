@@ -5,6 +5,7 @@ import RoleManModal from "./RoleManModal";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
+import { useSearch } from "../../../helpers/SearchContext";
 
 function DisplayView({
   isLoadingDashboard,
@@ -14,36 +15,44 @@ function DisplayView({
   setIsDeleteModalOpen,
   type,
 }) {
+  const { search } = useSearch();
+
   return (
     <>
       {isLoadingDashboard && <LoaderPages />}
       {type === "grid" ? (
         <div className="role-man-grid">
-          {roles.map((data) => (
-            <div className="item" key={data.role_id}>
-              <div className="item-name">{data.role_name}</div>
-              <div className="item-action">
-                <span
-                  className="material-symbols-rounded item-action-edit"
-                  onClick={() => {
-                    setIsUpdateModalOpen(true);
-                    setRoleId(data.role_id);
-                  }}
-                >
-                  edit_square
-                </span>
-                <span
-                  className="material-symbols-rounded item-action-delete"
-                  onClick={() => {
-                    setIsDeleteModalOpen(true);
-                    setRoleId(data.role_id);
-                  }}
-                >
-                  delete
-                </span>
+          {roles
+            .filter((data) => {
+              const searchLowerCase = search.toLowerCase();
+
+              return data.role_name.toLowerCase().includes(searchLowerCase);
+            })
+            .map((data) => (
+              <div className="item" key={data.role_id}>
+                <div className="item-name">{data.role_name}</div>
+                <div className="item-action">
+                  <span
+                    className="material-symbols-rounded item-action-edit"
+                    onClick={() => {
+                      setIsUpdateModalOpen(true);
+                      setRoleId(data.role_id);
+                    }}
+                  >
+                    edit_square
+                  </span>
+                  <span
+                    className="material-symbols-rounded item-action-delete"
+                    onClick={() => {
+                      setIsDeleteModalOpen(true);
+                      setRoleId(data.role_id);
+                    }}
+                  >
+                    delete
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       ) : (
         <div className="role-man-list">
@@ -52,32 +61,38 @@ function DisplayView({
             <div className="head-col">Name</div>
             <div className="head-col">Action</div>
           </div>
-          {roles.map((data, index) => (
-            <div className="body" key={data.role_id}>
-              <div className="body-col">{index + 1}</div>
-              <div className="body-col">{data.role_name}</div>
-              <div className="body-col">
-                <span
-                  className="material-symbols-rounded edit"
-                  onClick={() => {
-                    setIsUpdateModalOpen(true);
-                    setRoleId(data.role_id);
-                  }}
-                >
-                  edit_square
-                </span>
-                <span
-                  className="material-symbols-rounded delete"
-                  onClick={() => {
-                    setIsDeleteModalOpen(true);
-                    setRoleId(data.role_id);
-                  }}
-                >
-                  delete
-                </span>
+          {roles
+            .filter((data) => {
+              const searchLowerCase = search.toLowerCase();
+
+              return data.role_name.toLowerCase().includes(searchLowerCase);
+            })
+            .map((data, index) => (
+              <div className="body" key={data.role_id}>
+                <div className="body-col">{index + 1}</div>
+                <div className="body-col">{data.role_name}</div>
+                <div className="body-col">
+                  <span
+                    className="material-symbols-rounded edit"
+                    onClick={() => {
+                      setIsUpdateModalOpen(true);
+                      setRoleId(data.role_id);
+                    }}
+                  >
+                    edit_square
+                  </span>
+                  <span
+                    className="material-symbols-rounded delete"
+                    onClick={() => {
+                      setIsDeleteModalOpen(true);
+                      setRoleId(data.role_id);
+                    }}
+                  >
+                    delete
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       )}
     </>
@@ -116,7 +131,7 @@ function RoleMan() {
     } finally {
       setDashboardLoader(false);
     }
-  }, [token, urlEndpoint]);
+  }, [token]);
 
   useEffect(() => {
     fetchRoles();

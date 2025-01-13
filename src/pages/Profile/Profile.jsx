@@ -43,15 +43,9 @@ function Profile({ onClose, onOpen }) {
 
       setCurrentSubmenu("a14736d9-7bcc-4eef-9be3-2015223cc5ed");
 
-      const sendOtpPasswordPromise = axios.post(
-        urlEndpoint.sendOtpPassword,
-        { email: user.email },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const sendOtpPasswordPromise = axios.post(urlEndpoint.sendOtpPassword, {
+        email: user.email,
+      });
 
       toastPromise(
         sendOtpPasswordPromise,
@@ -70,7 +64,7 @@ function Profile({ onClose, onOpen }) {
 
           setTimeout(() => {
             setResetPassword(false);
-          }, 60000);
+          }, 30000);
         }
       );
 
@@ -84,10 +78,6 @@ function Profile({ onClose, onOpen }) {
     },
     [urlEndpoint.sendOtpPassword, token, toastPromise]
   );
-
-  // useEffect(() => {
-  //   console.log(resetPassword);
-  // }, [resetPassword]);
 
   return (
     <>

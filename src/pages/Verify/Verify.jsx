@@ -97,7 +97,8 @@ function Verify({ typeMain }) {
         const codeValue = code.join("");
 
         if (codeValue.length === 6) {
-          const recoveryPromise = axios.post(urlEndpoint.otpPassword, {
+          const recoveryPromise = axios.post(urlEndpoint.verifyOtpPassword, {
+            email: location.state?.email,
             otp: codeValue,
           });
           toastPromise(
@@ -114,7 +115,7 @@ function Verify({ typeMain }) {
               if (statusRecovery.current === true) {
                 navigate("/reset-password", {
                   state: {
-                    email: location.state.email,
+                    messageNoEmail: location.state?.email,
                   },
                 });
               }
@@ -135,19 +136,26 @@ function Verify({ typeMain }) {
         }
       }
     },
-    [typeMain, code, urlEndpoint.verifyEmail, urlEndpoint.otpPassword, navigate]
+    [typeMain, code, navigate, location.state]
   );
 
-  // useEffect(() => {
-  //   if (!location.state) {
-  //     navigate("/login", {
-  //       state: {
-  //         messageNoEmail:
-  //           "Email is missing. Please go back to the previous step and ensure your email is entered correctly!",
-  //       },
-  //     });
-  //   }
-  // }, [navigate, location.state]);
+  useEffect(() => {
+    if (typeMain === "verify" && !location.state) {
+      navigate("/login", {
+        state: {
+          messageNoEmail:
+            "Email is missing. Please go back to the previous step and ensure your email is entered correctly!",
+        },
+      });
+    } else if (typeMain === "verify-password" && !location.state) {
+      navigate("/recovery", {
+        state: {
+          messageNoEmail:
+            "Email is missing. Please go back to the previous step and ensure your email is entered correctly!",
+        },
+      });
+    }
+  }, [navigate, location.state]);
 
   return (
     <>

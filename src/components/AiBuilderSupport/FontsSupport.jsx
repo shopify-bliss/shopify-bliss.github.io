@@ -1,121 +1,121 @@
 export const AllFontType1 = ({ brand, group }) => {
   const allType1 =
-    brand === "professional" && group === 1
+    brand === "b8068198-68fc-4505-a79e-3a21e626b095" && group === 1
       ? "merriweather"
-      : brand === "professional" && group === 2
+      : brand === "b8068198-68fc-4505-a79e-3a21e626b095" && group === 2
       ? "libre-baskerville"
-      : brand === "friendly" && group === 1
+      : brand === "6eb77185-a457-467f-a756-a94f53510964" && group === 1
       ? "poppins"
-      : brand === "friendly" && group === 2
+      : brand === "6eb77185-a457-467f-a756-a94f53510964" && group === 2
       ? "quicksand"
-      : brand === "luxury" && group === 1
+      : brand === "b865eb72-0072-4bb3-b8ba-990dfda10e02" && group === 1
       ? "playfair-display"
-      : brand === "luxury" && group === 2
+      : brand === "b865eb72-0072-4bb3-b8ba-990dfda10e02" && group === 2
       ? "cormorant-garamond"
-      : brand === "innovative" && group === 1
-      ? "montserrat"
-      : brand === "innovative" && group === 2
+      : brand === "80c6b3ae-9c2d-4ee0-b5a3-7811dab8f08a" && group === 1
+      ? "raleway"
+      : brand === "80c6b3ae-9c2d-4ee0-b5a3-7811dab8f08a" && group === 2
       ? "exo-2"
-      : brand === "classic" && group === 1
+      : brand === "fcf1c013-e9a7-4997-a9d7-8fce5be5fcba" && group === 1
       ? "eb-garamond"
-      : brand === "classic" && group === 2
+      : brand === "fcf1c013-e9a7-4997-a9d7-8fce5be5fcba" && group === 2
       ? "crimson-text"
-      : brand === "playful" && group === 1
+      : brand === "29a4e401-fa5d-4669-9a89-b8c7d4010b18" && group === 1
       ? "amatic-sc"
-      : brand === "playful" && group === 2
+      : brand === "29a4e401-fa5d-4669-9a89-b8c7d4010b18" && group === 2
       ? "gloria-hallelujah"
       : "";
 
   return allType1;
 };
 
-export const FontType1 = ({ activeFonts }) => {
-  const type1 =
-    activeFonts === "6935ba3e-e5af-4eec-887e-05a24367f16b"
-      ? "merriweather"
-      : activeFonts === "cab69ce3-377a-4f88-9b83-ac36c4213f8c"
-      ? "libre-baskerville"
-      : activeFonts === "052cf742-79b0-4057-94e3-08126ec32c8c"
-      ? "poppins"
-      : activeFonts === "a0a57ad8-ea49-43ce-b37f-45a873f591dc"
-      ? "quicksand"
-      : activeFonts === "854cb94a-34f9-4ebb-b052-e360375a8019"
-      ? "playfair-display"
-      : activeFonts === "d050d941-499f-4eb7-b8fa-662f5c7f0e9f"
-      ? "cormorant-garamond"
-      : activeFonts === "f9c8e695-17ec-48b0-834f-82b61aeeac1a"
-      ? "montserrat"
-      : activeFonts === "c9be8d19-4f6d-4579-9e38-2705e3ba6017"
-      ? "exo-2"
-      : activeFonts === "58ec129b-3e39-4033-a474-5e279cd5b46d"
-      ? "eb-garamond"
-      : activeFonts === "6f8967f4-42cc-46ac-9caf-4a59952e5b34"
-      ? "crimson-text"
-      : activeFonts === "cb27eccc-0072-41f0-b535-ec2ee4bee963"
-      ? "amatic-sc"
-      : activeFonts === "414dd255-a77f-4f01-a97d-9560d08ab1e8"
-      ? "gloria-hallelujah"
-      : "";
-
-  return type1;
-};
-
 export const AllFontType2 = ({ brand, group }) => {
   const allType2 =
-    brand === "professional" && group === 1
+    brand === "b8068198-68fc-4505-a79e-3a21e626b095" && group === 1
       ? "roboto"
-      : brand === "professional" && group === 2
+      : brand === "b8068198-68fc-4505-a79e-3a21e626b095" && group === 2
       ? "work-sans"
-      : brand === "friendly" && group === 1
+      : brand === "6eb77185-a457-467f-a756-a94f53510964" && group === 1
       ? "patrick-hand"
-      : brand === "friendly" && group === 2
+      : brand === "6eb77185-a457-467f-a756-a94f53510964" && group === 2
       ? "caveat"
-      : brand === "luxury" && group === 1
+      : brand === "b865eb72-0072-4bb3-b8ba-990dfda10e02" && group === 1
       ? "lora"
-      : brand === "luxury" && group === 2
+      : brand === "b865eb72-0072-4bb3-b8ba-990dfda10e02" && group === 2
       ? "dm-sans"
-      : brand === "innovative" && group === 1
-      ? "raleway"
-      : brand === "innovative" && group === 2
+      : brand === "80c6b3ae-9c2d-4ee0-b5a3-7811dab8f08a" && group === 1
+      ? "montserrat"
+      : brand === "80c6b3ae-9c2d-4ee0-b5a3-7811dab8f08a" && group === 2
       ? "bebas-neue"
-      : brand === "classic" && group === 1
+      : brand === "fcf1c013-e9a7-4997-a9d7-8fce5be5fcba" && group === 1
       ? "open-sans"
-      : brand === "classic" && group === 2
+      : brand === "fcf1c013-e9a7-4997-a9d7-8fce5be5fcba" && group === 2
       ? "josefin-sans"
-      : brand === "playful" && group === 1
+      : brand === "29a4e401-fa5d-4669-9a89-b8c7d4010b18" && group === 1
       ? "chewy"
-      : brand === "playful" && group === 2
+      : brand === "29a4e401-fa5d-4669-9a89-b8c7d4010b18" && group === 2
       ? "fredoka"
       : "";
 
   return allType2;
 };
 
+export const FontType1 = ({ activeFonts }) => {
+  const type1 =
+    activeFonts === "1cb11fe1-215b-478b-9cf9-e6f3f2cb77f0"
+      ? "merriweather"
+      : activeFonts === "b4d62042-c2ce-40f3-9639-5214c089dec3"
+      ? "libre-baskerville"
+      : activeFonts === "d1da437e-5ace-4577-85f0-ce16efc694a0"
+      ? "poppins"
+      : activeFonts === "924e9cf5-51d9-4596-8a91-de82d9ccdb9b"
+      ? "quicksand"
+      : activeFonts === "4da41ab9-eed1-4707-a996-015ddc1f09de"
+      ? "playfair-display"
+      : activeFonts === "ad8da796-45e1-4038-af1e-d5b92b551e52"
+      ? "cormorant-garamond"
+      : activeFonts === "f5731b0d-8017-44a4-b158-f617716a1fb9"
+      ? "raleway"
+      : activeFonts === "b066df70-b67b-4262-bef8-faf9a5dbf9db"
+      ? "exo-2"
+      : activeFonts === "8c2a5a1e-ac5e-4e24-9d12-bf1d7c4b128e"
+      ? "eb-garamond"
+      : activeFonts === "8ab69d4a-2b73-45a3-9e4e-79cdc9adcd0e"
+      ? "crimson-text"
+      : activeFonts === "f5ae5c39-0401-4286-96b1-757ca7d74f66"
+      ? "amatic-sc"
+      : activeFonts === "e48e710f-d3d9-4c9f-ade8-f9134ab0a3d3"
+      ? "gloria-hallelujah"
+      : "";
+
+  return type1;
+};
+
 export const FontType2 = ({ activeFonts }) => {
   const type2 =
-    activeFonts === "6935ba3e-e5af-4eec-887e-05a24367f16b"
+    activeFonts === "1cb11fe1-215b-478b-9cf9-e6f3f2cb77f0"
       ? "roboto"
-      : activeFonts === "cab69ce3-377a-4f88-9b83-ac36c4213f8c"
+      : activeFonts === "b4d62042-c2ce-40f3-9639-5214c089dec3"
       ? "work-sans"
-      : activeFonts === "052cf742-79b0-4057-94e3-08126ec32c8c"
+      : activeFonts === "d1da437e-5ace-4577-85f0-ce16efc694a0"
       ? "patrick-hand"
-      : activeFonts === "a0a57ad8-ea49-43ce-b37f-45a873f591dc"
+      : activeFonts === "924e9cf5-51d9-4596-8a91-de82d9ccdb9b"
       ? "caveat"
-      : activeFonts === "854cb94a-34f9-4ebb-b052-e360375a8019"
+      : activeFonts === "4da41ab9-eed1-4707-a996-015ddc1f09de"
       ? "lora"
-      : activeFonts === "d050d941-499f-4eb7-b8fa-662f5c7f0e9f"
+      : activeFonts === "ad8da796-45e1-4038-af1e-d5b92b551e52"
       ? "dm-sans"
-      : activeFonts === "f9c8e695-17ec-48b0-834f-82b61aeeac1a"
-      ? "raleway"
-      : activeFonts === "c9be8d19-4f6d-4579-9e38-2705e3ba6017"
+      : activeFonts === "f5731b0d-8017-44a4-b158-f617716a1fb9"
+      ? "montserrat"
+      : activeFonts === "b066df70-b67b-4262-bef8-faf9a5dbf9db"
       ? "bebas-neue"
-      : activeFonts === "58ec129b-3e39-4033-a474-5e279cd5b46d"
+      : activeFonts === "8c2a5a1e-ac5e-4e24-9d12-bf1d7c4b128e"
       ? "open-sans"
-      : activeFonts === "6f8967f4-42cc-46ac-9caf-4a59952e5b34"
+      : activeFonts === "8ab69d4a-2b73-45a3-9e4e-79cdc9adcd0e"
       ? "josefin-sans"
-      : activeFonts === "cb27eccc-0072-41f0-b535-ec2ee4bee963"
+      : activeFonts === "f5ae5c39-0401-4286-96b1-757ca7d74f66"
       ? "chewy"
-      : activeFonts === "414dd255-a77f-4f01-a97d-9560d08ab1e8"
+      : activeFonts === "e48e710f-d3d9-4c9f-ade8-f9134ab0a3d3"
       ? "fredoka"
       : "";
 

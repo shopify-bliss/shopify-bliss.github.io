@@ -15,7 +15,16 @@ import { useSearch } from "../../helpers/SearchContext";
 export function AuthHeader({ type, classDiff = "auth" }) {
   return (
     <>
-      <Link to={"/"} className={`${classDiff}-header-back`}>
+      <Link
+        to={
+          type === "recovery" ||
+          type === "reset-password" ||
+          type === "verify-password"
+            ? "/login"
+            : "/"
+        }
+        className={`${classDiff}-header-back`}
+      >
         <span className="material-symbols-outlined">chevron_backward</span>
         <div className="text">Back</div>
       </Link>
@@ -33,6 +42,8 @@ export function AuthHeader({ type, classDiff = "auth" }) {
         <div className={`${classDiff}-header-link`}>Verify Password Code</div>
       ) : type === "recovery" ? (
         <div className={`${classDiff}-header-link`}>Recovery Account</div>
+      ) : type === "reset-password" ? (
+        <div className={`${classDiff}-header-link`}>Reset Password</div>
       ) : null}
     </>
   );

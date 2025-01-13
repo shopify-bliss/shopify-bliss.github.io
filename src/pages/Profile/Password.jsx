@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from "react";
 import axios from "axios";
 import urlEndpoint from "../../helpers/urlEndpoint";
-import Cookies from "js-cookie";
 import { AuthValidationPassword } from "../../components/AuthSupport/AuthSupport";
 import { resetPasswordSchema } from "../../helpers/ValidationSchema";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
@@ -23,7 +22,7 @@ function Password() {
     special: false,
   });
 
-  const { toastPromise, toastMessage, token } = useDashboard();
+  const { toastPromise, toastMessage } = useDashboard();
 
   const handleChange = useCallback(
     (e) => {
@@ -58,12 +57,7 @@ function Password() {
         .then(() => {
           const resetPasswordPromise = axios.put(
             urlEndpoint.updatePassword,
-            data,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
+            data
           );
 
           toastPromise(
@@ -90,7 +84,7 @@ function Password() {
           });
         });
     },
-    [data, urlEndpoint.updatePassword, token, toastPromise, toastMessage]
+    [data, toastPromise, toastMessage]
   );
 
   return (
@@ -130,8 +124,8 @@ function Password() {
           </span>
           <div className="input-border"></div>
         </div>
-        <AuthValidationPassword validationPassword={validationPassword} />
       </div>
+      <AuthValidationPassword validationPassword={validationPassword} />
       <button className="core-button" type="submit">
         Save
       </button>

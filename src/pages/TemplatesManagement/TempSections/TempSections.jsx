@@ -4,6 +4,7 @@ import axios from "axios";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import TempPagesModal from "./TempSectionsModal";
 import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
+import { useSearch } from "../../../helpers/SearchContext";
 
 function DisplayView({
   isLoadingTempSections,
@@ -13,36 +14,44 @@ function DisplayView({
   setIsDeleteModalOpen,
   type,
 }) {
+  const { search } = useSearch();
+
   return (
     <>
       {isLoadingTempSections && <LoaderPages />}
       {type === "grid" ? (
         <div className="temp-sections-grid">
-          {sections.map((data) => (
-            <div className="item" key={data.section_id}>
-              <div className="item-name">{data.name}</div>
-              <div className="item-action">
-                <span
-                  className="material-symbols-rounded item-action-edit"
-                  onClick={() => {
-                    setIsUpdateModalOpen(true);
-                    setSectionId(data.section_id);
-                  }}
-                >
-                  edit_square
-                </span>
-                <span
-                  className="material-symbols-rounded item-action-delete"
-                  onClick={() => {
-                    setIsDeleteModalOpen(true);
-                    setSectionId(data.section_id);
-                  }}
-                >
-                  delete
-                </span>
+          {sections
+            .filter((data) => {
+              const searchLowerCase = search.toLowerCase();
+
+              return data.name.toLowerCase().includes(searchLowerCase);
+            })
+            .map((data) => (
+              <div className="item" key={data.section_id}>
+                <div className="item-name">{data.name}</div>
+                <div className="item-action">
+                  <span
+                    className="material-symbols-rounded item-action-edit"
+                    onClick={() => {
+                      setIsUpdateModalOpen(true);
+                      setSectionId(data.section_id);
+                    }}
+                  >
+                    edit_square
+                  </span>
+                  <span
+                    className="material-symbols-rounded item-action-delete"
+                    onClick={() => {
+                      setIsDeleteModalOpen(true);
+                      setSectionId(data.section_id);
+                    }}
+                  >
+                    delete
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       ) : (
         <div className="temp-sections-list">
@@ -51,32 +60,38 @@ function DisplayView({
             <div className="head-col">Name</div>
             <div className="head-col">Action</div>
           </div>
-          {sections.map((data, index) => (
-            <div className="body" key={data.section_id}>
-              <div className="body-col">{index + 1}</div>
-              <div className="body-col">{data.name}</div>
-              <div className="body-col">
-                <span
-                  className="material-symbols-rounded edit"
-                  onClick={() => {
-                    setIsUpdateModalOpen(true);
-                    setSectionId(data.section_id);
-                  }}
-                >
-                  edit_square
-                </span>
-                <span
-                  className="material-symbols-rounded delete"
-                  onClick={() => {
-                    setIsDeleteModalOpen(true);
-                    setSectionId(data.section_id);
-                  }}
-                >
-                  delete
-                </span>
+          {sections
+            .filter((data) => {
+              const searchLowerCase = search.toLowerCase();
+
+              return data.name.toLowerCase().includes(searchLowerCase);
+            })
+            .map((data, index) => (
+              <div className="body" key={data.section_id}>
+                <div className="body-col">{index + 1}</div>
+                <div className="body-col">{data.name}</div>
+                <div className="body-col">
+                  <span
+                    className="material-symbols-rounded edit"
+                    onClick={() => {
+                      setIsUpdateModalOpen(true);
+                      setSectionId(data.section_id);
+                    }}
+                  >
+                    edit_square
+                  </span>
+                  <span
+                    className="material-symbols-rounded delete"
+                    onClick={() => {
+                      setIsDeleteModalOpen(true);
+                      setSectionId(data.section_id);
+                    }}
+                  >
+                    delete
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       )}
     </>

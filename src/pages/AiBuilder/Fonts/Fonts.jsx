@@ -181,9 +181,9 @@ function Fonts({
                   <div className="content-item-title">{brand.name}</div>
                   <div className="content-item-list">
                     {dataFonts
-                      .filter((font) => font.brand === brand.name)
+                      .filter((font) => font.brand_id === brand.brand_id)
                       .map((font) => {
-                        const getBrand = font.brand;
+                        const getBrand = font.brand_id;
                         const getGroup = font.group;
 
                         const allType1 = AllFontType1({
@@ -198,16 +198,20 @@ function Fonts({
                         return (
                           <div
                             className={`content-item-list-font ${
-                              activeFonts === font.font_id ? "active" : ""
+                              activeFonts === font.font_designs_id
+                                ? "active"
+                                : ""
                             }`}
-                            key={font.font_id}
-                            onClick={() => handleactiveFonts(font.font_id)}
+                            key={font.font_designs_id}
+                            onClick={() =>
+                              handleactiveFonts(font.font_designs_id)
+                            }
                           >
                             <span className={`${allType1}`}>
-                              {font.fontType1}
+                              {font.font1.name}
                             </span>
                             <span className={`${allType2}`}>
-                              {font.fontType2}
+                              {font.font2.name}
                             </span>
                           </div>
                         );

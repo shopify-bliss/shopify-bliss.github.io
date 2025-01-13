@@ -280,7 +280,7 @@ function Auth({ typeMain }) {
     } else if (location.state?.messageNoEmail) {
       toastMessage("warn", location.state.messageNoEmail, {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 3500,
       });
       navigate(location.pathname, {
         state: { ...location.state, messageNoEmail: undefined },
@@ -289,14 +289,23 @@ function Auth({ typeMain }) {
     } else if (location.state?.messageTimeout) {
       toastMessage("info", location.state.messageTimeout, {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 3500,
       });
       navigate(location.pathname, {
         state: { ...location.state, messageTimeout: undefined },
         replace: true,
       });
+    } else if (location.state?.messageSessionExpired) {
+      toastMessage("info", location.state.messageSessionExpired, {
+        position: "top-center",
+        autoClose: 3500,
+      });
+      navigate(location.pathname, {
+        state: { ...location.state, messageSessionExpired: undefined },
+        replace: true,
+      });
     }
-  }, [location.state, navigate, toastMessage, location.pathname]);
+  }, [location.state, navigate, location.pathname]);
 
   return (
     <>
@@ -332,12 +341,9 @@ function Auth({ typeMain }) {
             )}
           </div>
           {typeMain === "login" ? (
-            <span
-              className="auth-content-problems"
-              onClick={() => toastDevelop("can't log in")}
-            >
+            <Link to="/recovery" className="auth-content-problems">
               Can't Log In
-            </span>
+            </Link>
           ) : (
             ""
           )}

@@ -15,8 +15,14 @@ import {
 
 gsap.registerPlugin(useGSAP);
 
-function SiteInfo({ siteTitle, handleSiteTitleInput, maxChars, dataBrands }) {
-  const [activePersonality, setActivePersonality] = useState({});
+function SiteInfo({
+  siteTitle,
+  handleSiteTitleInput,
+  maxChars,
+  dataBrands,
+  activeBrand,
+  handleBrandClick,
+}) {
   const marqueeRefs = useRef([]);
   const marqueeReverseRefs = useRef([]);
 
@@ -49,27 +55,9 @@ function SiteInfo({ siteTitle, handleSiteTitleInput, maxChars, dataBrands }) {
     { scope: marqueeReverseRefs }
   );
 
-  useEffect(() => {
-    if (dataBrands.length > 0) {
-      setActivePersonality(dataBrands[0]);
-    }
-  }, [dataBrands]);
-
-  const handlePersonalityClick = useCallback(
-    (personalityId) => {
-      const selectedPersonality = dataBrands.find(
-        (personality) => personality.brand_id === personalityId
-      );
-      if (selectedPersonality) {
-        setActivePersonality(selectedPersonality);
-      }
-    },
-    [dataBrands]
-  );
-
   return (
     <>
-      <div className={`ai-builder-overview ${activePersonality?.font_class}`}>
+      <div className={`ai-builder-overview ${activeBrand?.font_class}`}>
         <Logo />
         <div className="site-info">
           {[...Array(4)].map((_, i) => (
@@ -88,8 +76,8 @@ function SiteInfo({ siteTitle, handleSiteTitleInput, maxChars, dataBrands }) {
                     i % 2 === 0 ? "site-info-text" : "site-info-text-reverse"
                   } ${
                     i % 2 === 0
-                      ? activePersonality?.font_class
-                      : activePersonality?.font_class_reverse
+                      ? activeBrand?.font_class
+                      : activeBrand?.font_class_reverse
                   }`}
                   key={j}
                 >
@@ -129,17 +117,15 @@ function SiteInfo({ siteTitle, handleSiteTitleInput, maxChars, dataBrands }) {
               of colors, fonts, and tone for crafting AI-generated content.
             </div>
             <div className="content-list">
-              {dataBrands.map((personality) => (
+              {dataBrands.map((brand) => (
                 <div
-                  key={personality.brand_id}
+                  key={brand.brand_id}
                   className={`content-list-item ${
-                    activePersonality?.brand_id === personality.brand_id
-                      ? "active"
-                      : ""
+                    activeBrand?.brand_id === brand.brand_id ? "active" : ""
                   }`}
-                  onClick={() => handlePersonalityClick(personality.brand_id)}
+                  onClick={() => handleBrandClick(brand.brand_id)}
                 >
-                  {personality.name}
+                  {brand.name}
                 </div>
               ))}
             </div>

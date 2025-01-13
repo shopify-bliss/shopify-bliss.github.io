@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 
 function ColorsAiLogics() {
   const [activeColors, setactiveColors] = useState(
-    "75dde78e-34ab-42c1-a5d4-09b2f70d5a49"
+    "ccd9aaf1-0f39-416b-83b4-b2678bf77a72"
   );
 
   const handleactiveColors = useCallback(
