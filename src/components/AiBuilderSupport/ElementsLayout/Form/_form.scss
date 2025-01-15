@@ -1,8 +1,9 @@
 @use "../../../../helpers/mixins" as m;
 @use "../../../../helpers/variables" as v;
 @use "../../ai-builder-support" as support;
-@use "../ExpalotComponents/expalot-title" as title;
 @use "./Config/form-config" as config;
+@use "../ExpalotComponents/expalot-title" as title;
+@use "../ExpalotComponents/expalot-desc" as desc;
 
 $fs-title: 1.5rem;
 $fs-desc: 8px;
@@ -38,7 +39,7 @@ $fs-text: 10px;
       }
 
       .template-desc {
-        @include config.desc($fs: $fs-desc);
+        @include desc.desc($fs: $fs-desc, $m: 0.18rem 0 0, $ln-h: 135%);
       }
     }
 
@@ -89,7 +90,13 @@ $fs-text: 10px;
       }
 
       .template-desc {
-        @include config.desc($t-align: center, $w: 85%, $fs: $fs-desc);
+        @include desc.desc(
+          $t-align: center,
+          $w: 85%,
+          $fs: $fs-desc,
+          $m: 0.18rem 0 0,
+          $ln-h: 135%
+        );
       }
     }
 
@@ -144,7 +151,7 @@ $fs-text: 10px;
       }
 
       .template-desc {
-        @include config.desc($fs: $fs-desc);
+        @include desc.desc($fs: $fs-desc, $m: 0.65rem 0 0, $ln-h: 135%);
       }
 
       .template-form {
@@ -204,10 +211,11 @@ $fs-text: 10px;
       }
 
       .template-desc {
-        @include config.desc(
+        @include desc.desc(
           $t-align: center,
           $m: -0.25rem 0 1.2rem,
-          $fs: $fs-desc
+          $fs: $fs-desc,
+          $ln-h: 135%
         );
       }
 

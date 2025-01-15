@@ -57,6 +57,12 @@ function ElementPages({
 
   const bg = BgColors({ activeColors });
 
+  useEffect(() => {
+    console.log(activeSections);
+
+    console.log(activeSections[currentPageId]);
+  }, [activeSections, currentPageId]);
+
   return (
     <>
       <div className="ai-builder-overview">

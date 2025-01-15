@@ -1,7 +1,8 @@
 @use "../../../helpers/mixins" as m;
 @use "../../../helpers/variables" as v;
 @use "../ai-builder-support" as support;
-@use "./Config/navbar-layout-config" as config;
+@use "./Config/navbar-config" as config;
+@use "./Config/navbar-preview" as preview;
 
 @mixin white-intro() {
   color: #fff;
@@ -13,7 +14,7 @@
   }
 }
 
-@mixin navbar-layout($manipulation: false, $element: false) {
+@mixin navbar-layout($manipulation: false, $element: false, $preview: false) {
   width: 100%;
   padding: (v.$p-navter * 0.8) v.$p-navter 0 v.$p-navter;
   border: v.$border-hover;
@@ -191,5 +192,9 @@
         $m-top: -0.05rem
       );
     }
+  }
+
+  @if $preview {
+    @include preview.navbar-preview();
   }
 }

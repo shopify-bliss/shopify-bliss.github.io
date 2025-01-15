@@ -1,0 +1,66 @@
+@use "../../helpers/mixins" as m;
+@use "../../helpers/variables" as v;
+@use "../../components/AiBuilderSupport/ai-builder-support" as support;
+@use "../../components/AiBuilderSupport/NavbarLayout/navbar-layout" as navbar;
+@use "../../components/AiBuilderSupport/ElementsLayout/Intro/intro" as intro;
+@use "../../components/AiBuilderSupport/ElementsLayout/Products/products" as
+  products;
+@use "../../components/AiBuilderSupport/ElementsLayout/Services/services" as
+  services;
+@use "../../components/AiBuilderSupport/ElementsLayout/About/about" as about;
+@use "../../components/AiBuilderSupport/ElementsLayout/Form/form" as form;
+
+.aibuilder-preview {
+  width: 100%;
+  min-height: 100vh;
+  height: auto;
+  box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "navbar"
+    "pages"
+    "footer";
+  position: relative;
+  overflow-y: auto;
+  font-family: v.$raleway;
+
+  &-navbar {
+    grid-area: navbar;
+    @include navbar.navbar-layout($preview: true);
+  }
+
+  &-section {
+    @include m.flex($direction: column, $justify: flex-start);
+    overflow-x: hidden;
+    overflow-y: visible;
+    height: max-content;
+
+    .intro {
+      @include intro.intro($preview: true);
+    }
+
+    .products {
+      @include products.products();
+    }
+
+    .services {
+      @include services.services();
+    }
+
+    .about {
+      @include about.about();
+    }
+
+    .form {
+      @include form.form();
+    }
+
+    .no-element {
+      font-size: 22px;
+      font-weight: 500;
+    }
+  }
+
+  @include support.default-footer();
+}

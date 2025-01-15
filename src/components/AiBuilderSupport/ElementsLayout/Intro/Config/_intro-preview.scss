@@ -1,38 +1,19 @@
-@use "../../../../helpers/mixins" as m;
-@use "../../../../helpers/variables" as v;
-@use "../../ai-builder-support" as support;
-@use "./Config/intro-config" as config;
-@use "./Config/intro-preview" as preview;
+@use "../../../../../helpers/mixins" as m;
+@use "../../../../../helpers/variables" as v;
+@use "../../../../../helpers/animation";
+@use "../../../ai-builder-support" as support;
+@use "./intro-config" as config;
 
-$h-image: 14rem;
-$pt-overview: 2.7rem;
-$fs-brand: 3.2rem;
-$fs-desc: 12px;
-$fs-preface: 1.5rem;
-$fs-button: 9px;
-
-@mixin intro($element: false, $preview: false) {
-  width: 100%;
-  height: auto;
-  min-height: 52vh;
-  border: v.$border-hover;
-  position: relative;
-  padding: $pt-overview v.$p-navter v.$p-navter;
-
-  .change-layout {
-    display: none;
-  }
+@mixin intro-preview() {
+  $h-image: 14rem;
+  $pt-overview: 2.7rem;
+  $fs-brand: 8.1rem;
+  $fs-desc: 1.2rem;
+  $fs-preface: 1.5rem;
+  $fs-button: .85rem;
 
   &.style-1 {
     @include config.style-1();
-
-    @if $element {
-      @include support.change-layout(
-        $bg-color: adjust-color($color: #fff, $blackness: 90%),
-        $border-color: adjust-color($color: #fff, $blackness: 90%),
-        $color: #fff
-      );
-    }
 
     .template-brand {
       @include config.brand($fs: $fs-brand);
@@ -64,14 +45,6 @@ $fs-button: 9px;
 
   &.style-2 {
     @include config.style-2($gap: 2.4rem);
-
-    @if $element {
-      @include support.change-layout(
-        $bg-color: adjust-color($color: #fff, $blackness: 90%),
-        $border-color: adjust-color($color: #fff, $blackness: 90%),
-        $color: #fff
-      );
-    }
 
     .template-wrapper {
       @include m.flex($direction: column, $align: flex-start);
@@ -117,14 +90,6 @@ $fs-button: 9px;
     gap: 0.9rem;
     padding-top: v.$p-navter * 3;
 
-    @if $element {
-      @include support.change-layout(
-        $bg-color: adjust-color($color: #fff, $blackness: 90%),
-        $border-color: adjust-color($color: #fff, $blackness: 90%),
-        $color: #fff
-      );
-    }
-
     .template-preface {
       @include config.preface(
         $white-theme: true,
@@ -158,17 +123,10 @@ $fs-button: 9px;
     padding-top: $pt-overview * 1.45;
     padding-bottom: v.$p-navter * 0.6;
 
-    @if $element {
-      @include support.change-layout(
-        $bg-color: adjust-color($color: #fff, $blackness: 90%),
-        $border-color: adjust-color($color: #fff, $blackness: 90%),
-        $color: #fff
-      );
-    }
-
     .template-desc {
-      @include config.desc($w: 45%, $white-theme: true, $fs: $fs-desc);
-      margin-left: v.$p-navter;
+      @include config.desc($w: 30%, $white-theme: true, $fs: $fs-desc);
+      pointer-events: all;
+      line-height: 135%;
     }
 
     .template-button {
@@ -176,10 +134,9 @@ $fs-button: 9px;
         $bordered: true,
         $color-border: #fff,
         $fs: $fs-button,
-        $p: 0.5rem 0.9rem,
+        $p: 0.65rem 1.4rem,
         $m-top: 0.3rem
       );
-      margin-left: v.$p-navter;
       background-color: transparent;
     }
 
@@ -193,7 +150,7 @@ $fs-button: 9px;
           $fs-marquee: $fs-brand + 0.4rem,
           $white-theme: true,
           $marquee: true,
-          $distance: 1.05rem
+          $distance: 2rem
         );
       }
     }
@@ -206,15 +163,4 @@ $fs-button: 9px;
       padding-top: $pt-overview * 1.95;
     }
   }
-
-  @if $preview {
-    @include preview.intro-preview();
-    min-height: 100vh;
-  }
-}
-
-.expalot-intro {
-  @include support.expalot-elements();
-
-  @include config.expalot-intro();
 }

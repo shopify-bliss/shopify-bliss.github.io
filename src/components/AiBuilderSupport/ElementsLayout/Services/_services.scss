@@ -2,6 +2,7 @@
 @use "../../../../helpers/variables" as v;
 @use "../../ai-builder-support" as support;
 @use "../ExpalotComponents/expalot-title" as title;
+@use "../ExpalotComponents/expalot-desc" as desc;
 @use "./Config/services-config" as config;
 
 $fs-title: 1.5rem;
@@ -53,7 +54,7 @@ $fs-preface: 6px;
     .template-wrapper {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
+      gap: 0.55rem;
 
       .container-item {
         @include config.container-item($gap: 0.2rem);
@@ -71,7 +72,12 @@ $fs-preface: 6px;
         }
 
         .template-desc {
-          @include config.desc($fs: $fs-desc, $mt: 0.4rem, $w: 85%);
+          @include desc.desc(
+            $fs: $fs-desc,
+            $m: 0.4rem 0 0,
+            $w: 85%,
+            $ln-h: 135%
+          );
         }
       }
     }
@@ -97,7 +103,7 @@ $fs-preface: 6px;
         }
 
         .template-desc {
-          @include config.desc($fs: $fs-desc, $mt: 0.6rem);
+          @include desc.desc($fs: $fs-desc, $m: 0.6rem 0 0, $ln-h: 135%);
         }
 
         .template-button {
@@ -170,7 +176,7 @@ $fs-preface: 6px;
 
         .template-desc {
           grid-area: desc;
-          @include config.desc($fs: $fs-desc, $mt: 0.3rem, $ln-h: 150%);
+          @include desc.desc($fs: $fs-desc, $m: 0.3rem 0 0, $ln-h: 150%);
         }
 
         .material-symbols-outlined {
@@ -257,7 +263,7 @@ $fs-preface: 6px;
 
         .template-desc {
           padding-left: 0.8rem;
-          @include config.desc($fs: $fs-desc, $mt: 0.3rem, $ln-h: 150%);
+          @include desc.desc($fs: $fs-desc, $m: 0.3rem, $ln-h: 150%);
           grid-area: desc;
         }
       }

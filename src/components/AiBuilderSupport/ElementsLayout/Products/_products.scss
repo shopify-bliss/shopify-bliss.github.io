@@ -2,10 +2,11 @@
 @use "../../../../helpers/variables" as v;
 @use "../../../../helpers/animation";
 @use "../../ai-builder-support" as support;
-@use "../ExpalotComponents/expalot-title" as title;
 @use "./Config/products-config" as config;
+@use "../ExpalotComponents/expalot-title" as title;
+@use "../ExpalotComponents/expalot-desc" as desc;
 
-$fs-title: 1.5rem;
+$fs-title: 1.45rem;
 $fs-title-marquee: 3.1rem;
 $fs-name: 13px;
 $fs-desc: 10px;
@@ -104,7 +105,7 @@ $size-image: 8.2rem;
       }
 
       .template-desc {
-        @include config.desc($w: 90%, $fs: $fs-desc);
+        @include desc.desc($w: 85%, $m: 0.4rem 0 0, $fs: $fs-desc, $ln-h: 135%);
       }
 
       .template-button {
@@ -184,7 +185,12 @@ $size-image: 8.2rem;
       gap: 0.6rem;
 
       .template-desc {
-        @include config.desc($fs: $fs-desc, $isCenter: true, $w: 80%);
+        @include desc.desc(
+          $fs: $fs-desc,
+          $t-align: center,
+          $w: 80%,
+          $ln-h: 130%
+        );
       }
 
       .template-button {

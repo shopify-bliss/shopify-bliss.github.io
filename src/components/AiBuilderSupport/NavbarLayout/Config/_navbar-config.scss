@@ -6,6 +6,7 @@
   $gap: 0.1rem,
   $fs-icon: v.$navter-icon-layout,
   $fs-title: v.$navter-title-layout,
+  $fw-icon: 200,
   $line-height: 100%,
   $start: true
 ) {
@@ -21,7 +22,7 @@
   }
 
   .material-symbols-outlined {
-    font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+    font-variation-settings: "FILL" 0, "wght" $fw-icon, "GRAD" 0, "opsz" 24;
     font-size: $fs-icon;
   }
 
@@ -40,7 +41,7 @@
   width: 100%;
   gap: $gap;
   margin-right: $m-right;
-  pointer-events: none;
+  // pointer-events: none;
 
   @if $end {
     @include m.flex($justify: flex-end);

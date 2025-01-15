@@ -1,12 +1,5 @@
 import * as yup from "yup";
 
-export const siteTitleSchema = yup.object().shape({
-  title: yup
-    .string()
-    .required("Site Title is required")
-    .max(60, "Site Title is too long"),
-});
-
 export const signupSchema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
   username: yup.string().required("Username is required"),

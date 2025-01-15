@@ -3,21 +3,11 @@
 @use "../../../../../helpers/animation";
 @use "../../../ai-builder-support" as support;
 @use "../../ExpalotComponents/expalot-title" as title;
+@use "../../ExpalotComponents/expalot-desc" as desc;
 
-$fs-title: 7.5px;
 $fs-text: 4px;
 $fs-title-marquee: 22px;
 $py-layout: 0.45rem;
-
-@mixin desc($fs: $fs-text, $w: 100%, $isCenter: false) {
-  width: $w;
-  font-size: $fs;
-  pointer-events: none;
-
-  @if $isCenter {
-    text-align: center;
-  }
-}
 
 @mixin button(
   $bordered: false,
@@ -206,7 +196,7 @@ $py-layout: 0.45rem;
           margin-top: 1.9rem;
 
           .template-desc {
-            @include desc($w: 70%, $isCenter: true);
+            @include desc.desc($w: 70%, $t-align: center, $ln-h: 120%);
           }
 
           .template-button {
@@ -241,11 +231,11 @@ $py-layout: 0.45rem;
           gap: 0.1rem;
 
           .template-title {
-            @include title.title();
+            @include title.title($fw: 500);
           }
 
           .template-desc {
-            @include desc($w: 85%);
+            @include desc.desc($w: 85%, $m: 0.08rem 0 0);
           }
 
           .template-button {

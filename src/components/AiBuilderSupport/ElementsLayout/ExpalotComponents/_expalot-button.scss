@@ -1,0 +1,33 @@
+@use "../../../../helpers/mixins" as m;
+@use "../../../../helpers/variables" as v;
+
+$fs-text: 4px;
+
+@mixin button(
+  $bordered: false,
+  $fs: $fs-text,
+  $m: 0,
+  $p: 0.22rem 0.62rem,
+  $ln-h: 100%,
+  $bg: transparent,
+  $clr: #000,
+  $clr-border: #000,
+  $events: none,
+) {
+  border-radius: 50vw;
+  @include m.flex();
+  width: fit-content;
+  line-height: $ln-h;
+  font-size: $fs;
+  padding: $p;
+  margin: $m;
+  background-color: $bg;
+  color: $clr;
+  text-transform: uppercase;
+  cursor: pointer;
+  pointer-events: $events;
+
+  @if $bordered {
+    box-shadow: 0 0 0 0.3px inset $clr-border;
+  }
+}

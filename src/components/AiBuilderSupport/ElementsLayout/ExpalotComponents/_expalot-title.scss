@@ -13,21 +13,23 @@ $fs-title-marquee: 22px;
   $ln-h: normal,
   $pos: static,
   $marquee: false,
-  $distance: 0.5rem
+  $distance: 0.5rem,
+  $events: none,
+  $time: 20s
 ) {
   width: $w;
   font-size: $fs;
   font-weight: $fw;
   text-align: $t-align;
   line-height: $ln-h;
-  pointer-events: none;
   position: $pos;
+  pointer-events: $events;
 
   @if $marquee {
     display: flex;
     gap: $distance;
     width: max-content;
     padding-left: $distance;
-    animation: marquee-text 20s linear infinite forwards;
+    animation: marquee-text $time linear infinite forwards;
   }
 }

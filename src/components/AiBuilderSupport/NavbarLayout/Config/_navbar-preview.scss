@@ -1,0 +1,44 @@
+@use "../../../../helpers/mixins" as m;
+@use "../../../../helpers/variables" as v;
+@use "../../ai-builder-support" as support;
+@use "./navbar-config" as config;
+
+$fs-logo-text: 1.5rem;
+$fs-logo-icon: 2.1rem;
+
+@mixin navbar-preview() {
+  &.style-1,
+  &.style-2,
+  &.style-3,
+  &.style-4 {
+    padding: v.$py-preview v.$px-preview;
+
+    .template-logo {
+      cursor: pointer;
+      pointer-events: all;
+    }
+
+    .template-links {
+      .text {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &.style-1 {
+    @include config.style-1();
+
+    .template-logo {
+      @include config.logo(
+        $gap: 0.2rem,
+        $fs-title: $fs-logo-text,
+        $fs-icon: $fs-logo-icon,
+        $line-height: 120%
+      );
+    }
+
+    .template-links {
+      @include config.links($gap: 1.5rem, $fs-text: 0.85rem, $m-right: 0.1rem);
+    }
+  }
+}

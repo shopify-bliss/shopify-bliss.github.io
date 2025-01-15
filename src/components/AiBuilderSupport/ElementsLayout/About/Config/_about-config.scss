@@ -2,24 +2,10 @@
 @use "../../../../../helpers/variables" as v;
 @use "../../../ai-builder-support" as support;
 @use "../../ExpalotComponents/expalot-title" as title;
+@use "../../ExpalotComponents/expalot-desc" as desc;
 
 $fs-desc: 3px;
 $fs-text: 4px;
-
-@mixin desc(
-  $fs: $fs-desc,
-  $mt: 0.18rem,
-  $w: 100%,
-  $ln-h: 130%,
-  $t-align: left
-) {
-  font-size: $fs;
-  margin-top: $mt;
-  line-height: $ln-h;
-  pointer-events: none;
-  width: $w;
-  text-align: $t-align;
-}
 
 @mixin button($fs: $fs-text, $m: 0, $p: 0.22rem 0.62rem, $t-decor: none) {
   font-size: $fs;
@@ -100,11 +86,16 @@ $fs-text: 4px;
           );
 
           .template-title {
-            @include title.title($w: 50%);
+            @include title.title($w: 50%, $ln-h: 115%);
           }
 
           .template-desc {
-            @include desc($w: 70%);
+            @include desc.desc(
+              $w: 70%,
+              $fs: $fs-desc,
+              $m: 0.18rem 0 0,
+              $ln-h: 135%
+            );
           }
 
           .template-button {
@@ -137,7 +128,13 @@ $fs-text: 4px;
           }
 
           .template-desc {
-            @include desc($t-align: center);
+            @include desc.desc(
+              $t-align: center,
+              $fs: $fs-desc,
+              $m: 0.18rem 0 0,
+              $ln-h: 135%,
+              $w: 80%
+            );
           }
 
           .template-button {
@@ -166,15 +163,15 @@ $fs-text: 4px;
 
         .template-wrapper {
           padding: 0.6rem 0.55rem 0 0.55rem;
-          @include m.flex();
-          gap: 0.4rem;
+          @include m.flex($align: flex-start);
+          gap: 0.5rem;
 
           .template-title {
-            @include title.title($w: 80%);
+            @include title.title($w: 80%, $ln-h: 115%);
           }
 
           .template-desc {
-            @include desc();
+            @include desc.desc($fs: $fs-desc, $m: 0.18rem 0 0, $ln-h: 135%);
           }
         }
 
@@ -205,7 +202,7 @@ $fs-text: 4px;
             gap: 0.2rem;
 
             .template-desc {
-              @include desc();
+              @include desc.desc($fs: $fs-desc, $m: 0.18rem 0 0, $ln-h: 135%);
             }
           }
 

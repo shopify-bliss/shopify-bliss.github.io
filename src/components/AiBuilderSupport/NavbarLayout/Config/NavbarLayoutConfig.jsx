@@ -12,7 +12,8 @@ export function useDisplaySiteTitle({ siteTitle }) {
 export function useDisplayLogo({ dataPages, displaySiteTitle }) {
   const displayLogo = useMemo(() => {
     const logo = dataPages.find(
-      (page) => page.type_template_id === "2bff7888-e861-4341-869b-189af29ad3f8"
+      (page) =>
+        page?.type_template_id === "2bff7888-e861-4341-869b-189af29ad3f8"
     );
 
     return (
@@ -30,6 +31,8 @@ export function useDisplayActivePages({
   activePages,
   dataPages,
   currentPageId,
+  setCurrentPageId,
+  isPreview,
 }) {
   const displayActivePages = activePages
     .filter(
@@ -40,11 +43,17 @@ export function useDisplayActivePages({
         ].includes(id)
     )
     .map((id) => {
-      const page = dataPages.find((page) => page.type_template_id === id);
+      const page = dataPages.find((page) => page?.type_template_id === id);
       const isActive = currentPageId === id;
 
       return (
-        <div className={`text ${isActive ? "active" : ""}`} key={id}>
+        <div
+          className={`text ${isActive ? "active" : ""}`}
+          key={id}
+          onClick={() =>
+            isPreview ? setCurrentPageId(page.type_template_id) : null
+          }
+        >
           {page?.type.replace(/ page$/i, "")}
         </div>
       );

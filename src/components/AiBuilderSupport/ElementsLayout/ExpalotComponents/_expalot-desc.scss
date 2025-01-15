@@ -1,0 +1,20 @@
+@use "../../../../helpers/mixins" as m;
+@use "../../../../helpers/variables" as v;
+
+$fs-desc: 4px;
+
+@mixin desc(
+  $fs: $fs-desc,
+  $w: 100%,
+  $t-align: left,
+  $ln-h: normal,
+  $events: none,
+  $m: 0
+) {
+  width: $w;
+  font-size: $fs;
+  margin: $m;
+  text-align: $t-align;
+  pointer-events: $events;
+  line-height: $ln-h;
+}

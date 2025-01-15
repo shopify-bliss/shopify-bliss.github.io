@@ -9,6 +9,9 @@ import React, {
 import axios from "axios";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import { LoaderProgress } from "../LoaderProgress/LoaderProgress";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const AiBuilderContext = createContext({
   dataBrands: [],
@@ -19,11 +22,16 @@ const AiBuilderContext = createContext({
   initialPageId: 99,
   currentPageId: null,
   setCurrentPageId: () => {},
+  user: null,
+  token: null,
+  isLoadingAiBuilder: false,
+  setAiBuilderLoader: () => {},
 });
 
 export const AiBuilderProvider = ({ children }) => {
   axios.defaults.withCredentials = true;
 
+  const [user, setUser] = useState(null);
   const [dataBrands, setDataBrands] = useState([]);
   const [dataPages, setDataPages] = useState([]);
   const [dataElements, setDataElements] = useState([]);
@@ -32,6 +40,30 @@ export const AiBuilderProvider = ({ children }) => {
   const [isLoadingAiBuilder, setIsLoadingAiBuilder] = useState(false);
   const initialPageId = 99;
   const [currentPageId, setCurrentPageId] = useState(initialPageId);
+  const [token, setToken] = useState(null);
+
+  const navigate = useNavigate();
+
+  const setAiBuilderLoader = useCallback((loading) => {
+    setIsLoadingAiBuilder((prev) => {
+      if (prev !== loading) {
+        return loading;
+      }
+      return prev;
+    });
+  }, []);
+
+  useEffect(() => {
+    const tokenFromCookies = Cookies.get("shopify-bliss");
+    const decodedToken = jwtDecode(tokenFromCookies);
+
+    if (tokenFromCookies) {
+      setToken(tokenFromCookies);
+      setUser(decodedToken);
+    } else {
+      navigate("/login", { replace: true });
+    }
+  }, [navigate]);
 
   const fetchDataAiBuilder = useCallback(async () => {
     setIsLoadingAiBuilder(true);
@@ -70,8 +102,10 @@ export const AiBuilderProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    fetchDataAiBuilder();
-  }, [fetchDataAiBuilder]);
+    if (token) {
+      fetchDataAiBuilder();
+    }
+  }, [token, fetchDataAiBuilder]);
 
   const contextValue = useMemo(
     () => ({
@@ -83,8 +117,14 @@ export const AiBuilderProvider = ({ children }) => {
       initialPageId,
       currentPageId,
       setCurrentPageId,
+      token,
+      user,
+      isLoadingAiBuilder,
+      setAiBuilderLoader,
     }),
     [
+      token,
+      user,
       dataBrands,
       dataPages,
       dataElements,
@@ -93,6 +133,8 @@ export const AiBuilderProvider = ({ children }) => {
       initialPageId,
       currentPageId,
       setCurrentPageId,
+      isLoadingAiBuilder,
+      setAiBuilderLoader,
     ]
   );
 

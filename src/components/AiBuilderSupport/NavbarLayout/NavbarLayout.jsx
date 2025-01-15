@@ -19,6 +19,7 @@ function NavbarLayout({
   siteTitle,
   activePages,
   currentPageId,
+  setCurrentPageId,
   activeSections,
   activeIntro,
   activeNavbar,
@@ -27,6 +28,7 @@ function NavbarLayout({
   typeMain = null,
   activeColors,
   activeFonts,
+  isPreview = false,
 }) {
   const [activeFeatures, setActiveFeatures] = useState([]);
   const [isExpandLayout, setIsExpandLayout] = useState(false);
@@ -49,6 +51,8 @@ function NavbarLayout({
     activePages,
     dataPages,
     currentPageId,
+    setCurrentPageId,
+    isPreview,
   });
 
   const handleActiveFeatures = useHandleActiveFeatures({ setActiveFeatures });
@@ -71,7 +75,9 @@ function NavbarLayout({
   return (
     <>
       <div
-        className={`display-data-navbar ${typeNavbarStyles.className} ${
+        className={`${
+          isPreview ? "aibuilder-preview-navbar" : "display-data-navbar"
+        }  ${typeNavbarStyles?.className} ${
           activeIntro === 1
             ? "intro-1"
             : activeIntro === 2
@@ -86,7 +92,7 @@ function NavbarLayout({
       >
         <div className={`template-logo ${type2}`}>{displayLogo}</div>
 
-        {typeNavbarStyles.id === 3 ? (
+        {typeNavbarStyles?.id === 3 ? (
           <div className="template-wrapper">
             <div
               className={`template-search ${
@@ -103,9 +109,9 @@ function NavbarLayout({
           <div className={`template-links ${type1}`}>{displayActivePages}</div>
         )}
 
-        {typeNavbarStyles.features && (
+        {typeNavbarStyles?.features && (
           <div className={`template-features ${type1}`}>
-            {displayActiveFeatures(typeNavbarStyles.features)}
+            {displayActiveFeatures(typeNavbarStyles?.features)}
           </div>
         )}
 

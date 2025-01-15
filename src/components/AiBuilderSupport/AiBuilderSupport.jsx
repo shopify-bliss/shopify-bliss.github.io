@@ -14,7 +14,7 @@ export function Logo() {
 
 export function Quit() {
   return (
-    <Link to={"/login"} className="ai-builder-quit">
+    <Link to={"/dashboard"} className="ai-builder-quit">
       <span className="material-symbols-outlined">close</span>
     </Link>
   );
@@ -110,12 +110,12 @@ export function useHandleActiveEl({ setActiveEl }) {
   return handleActiveEl;
 }
 
-export function DefaultFooter({ dataPages }) {
+export function DefaultFooter({ dataPages = null, isPreview = false }) {
   const icon = useMemo(
     () =>
       dataPages.find(
         (page) =>
-          page.type_template_id === "40229892-a523-4e1f-a936-a3051e9d30bb"
+          page?.type_template_id === "40229892-a523-4e1f-a936-a3051e9d30bb"
       )?.icon,
     [dataPages]
   );
@@ -124,13 +124,15 @@ export function DefaultFooter({ dataPages }) {
     () =>
       dataPages.find(
         (page) =>
-          page.type_template_id === "40229892-a523-4e1f-a936-a3051e9d30bb"
+          page?.type_template_id === "40229892-a523-4e1f-a936-a3051e9d30bb"
       )?.type,
     [dataPages]
   );
 
   return (
-    <div className="display-data-footer">
+    <div
+      className={`${isPreview ? "aibuilder-preview" : "display-data"}-footer`}
+    >
       <div className="template">
         <span className="material-symbols-outlined">{icon}</span>
         <div className="text">{name}</div>

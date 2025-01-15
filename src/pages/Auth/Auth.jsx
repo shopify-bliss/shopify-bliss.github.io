@@ -243,7 +243,7 @@ function Auth({ typeMain }) {
           },
           () => {
             if (statusLogin.current === 200) {
-              navigate("/dashboard");
+              navigate("/");
             }
           }
         );

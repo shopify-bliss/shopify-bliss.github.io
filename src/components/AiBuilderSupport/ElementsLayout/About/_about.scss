@@ -1,8 +1,9 @@
 @use "../../../../helpers/mixins" as m;
 @use "../../../../helpers/variables" as v;
 @use "../../ai-builder-support" as support;
-@use "../ExpalotComponents/expalot-title" as title;
 @use "./Config/about-config" as config;
+@use "../ExpalotComponents/expalot-title" as title;
+@use "../ExpalotComponents/expalot-desc" as desc;
 
 $fs-title: 1.5rem;
 $fs-desc: 8px;
@@ -41,11 +42,16 @@ $fs-preface: 6px;
       );
 
       .template-title {
-        @include title.title($w: 60%, $fs: $fs-title);
+        @include title.title($w: 60%, $fs: $fs-title, $ln-h: 100%);
       }
 
       .template-desc {
-        @include config.desc($w: 70%, $fs: $fs-desc, $mt: 0.35rem);
+        @include desc.desc(
+          $w: 75%,
+          $fs: $fs-desc,
+          $m: 0.55rem 0 0,
+          $ln-h: 135%
+        );
       }
 
       .template-button {
@@ -84,14 +90,14 @@ $fs-preface: 6px;
     .template-wrapper {
       padding: v.$py-layout-section v.$p-navter (v.$py-layout-section * 0.5);
       @include m.flex($align: flex-start);
-      gap: 0.9rem;
+      gap: 1.3rem;
 
       .template-title {
-        @include title.title($w: 80%, $fs: $fs-title);
+        @include title.title($w: 80%, $fs: $fs-title, $ln-h: 108%);
       }
 
       .template-desc {
-        @include config.desc($fs: $fs-desc, $w: 85%);
+        @include desc.desc($fs: $fs-desc, $w: 85%, $ln-h: 135%);
       }
     }
 
@@ -125,7 +131,12 @@ $fs-preface: 6px;
       }
 
       .template-desc {
-        @include config.desc($t-align: center, $fs: $fs-desc, $mt: 0.6rem);
+        @include desc.desc(
+          $t-align: center,
+          $fs: $fs-desc,
+          $m: 0.6rem 0 0,
+          $ln-h: 135%
+        );
       }
 
       .template-button {
@@ -177,7 +188,8 @@ $fs-preface: 6px;
         gap: 0.5rem;
 
         .template-desc {
-          @include config.desc($fs: $fs-desc, $mt: 0.5rem);
+          @include desc.desc($fs: $fs-desc, $m: 0.6rem 0 0, $ln-h: 135%);
+          // @include config.desc($fs: $fs-desc, $mt: 0.5rem);
         }
       }
 

@@ -126,7 +126,7 @@ export const OtherColorsWhite = ({ others, activeSections }) => {
   return (others === "color-other-3A6F77" ||
     others === "color-other-A97142" ||
     others === "color-other-014421") &&
-    activeSections.includes("798f1ce0-b732-45a6-838e-f28e137243f7")
+    activeSections?.includes("798f1ce0-b732-45a6-838e-f28e137243f7")
     ? { color: "#fff" }
     : {};
 };

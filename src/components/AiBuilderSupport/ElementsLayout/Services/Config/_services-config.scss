@@ -2,11 +2,11 @@
 @use "../../../../../helpers/variables" as v;
 @use "../../../ai-builder-support" as support;
 @use "../../ExpalotComponents/expalot-title" as title;
+@use "../../ExpalotComponents/expalot-desc" as desc;
 
 $fs-desc: 3px;
 $fs-text: 4px;
 $fs-name: 5px;
-$fs-preface: 6px;
 $py-layout: 0.45rem;
 $px-layout: 0.5rem;
 
@@ -24,14 +24,6 @@ $px-layout: 0.5rem;
 @mixin price($fs: $fs-text) {
   font-size: $fs;
   pointer-events: none;
-}
-
-@mixin desc($fs: $fs-desc, $mt: 0.18rem, $w: 100%, $ln-h: 130%) {
-  font-size: $fs;
-  margin-top: $mt;
-  line-height: $ln-h;
-  pointer-events: none;
-  width: $w;
 }
 
 @mixin button(
@@ -144,7 +136,12 @@ $px-layout: 0.5rem;
             }
 
             .template-desc {
-              @include desc($w: 85%);
+              @include desc.desc(
+                $fs: $fs-desc,
+                $w: 85%,
+                $m: 0.18rem 0 0,
+                $ln-h: 135%
+              );
             }
           }
         }
@@ -196,7 +193,7 @@ $px-layout: 0.5rem;
 
             .template-desc {
               grid-area: desc;
-              @include desc($mt: 0.18rem);
+              @include desc.desc($fs: $fs-desc, $m: 0.18rem 0 0, $ln-h: 135%);
             }
 
             .material-symbols-outlined {
@@ -240,7 +237,7 @@ $px-layout: 0.5rem;
             }
 
             .template-desc {
-              @include desc($mt: 0.18rem);
+              @include desc.desc($fs: $fs-desc, $m: 0.18rem 0 0, $ln-h: 135%);
             }
 
             .template-button {
@@ -266,10 +263,10 @@ $px-layout: 0.5rem;
           }
 
           .template-preface {
-            font-size: $fs-desc;
+            font-size: $fs-desc + 0.5px;
             pointer-events: none;
             margin: 0.15rem 0 0.4rem;
-            line-height: 130%;
+            line-height: 110%;
           }
 
           .container-item {
@@ -310,7 +307,12 @@ $px-layout: 0.5rem;
             }
 
             .template-desc {
-              @include desc();
+              @include desc.desc(
+                $fs: $fs-desc,
+                $m: 0.18rem,
+                $w: 100%,
+                $ln-h: 135%
+              );
               grid-area: desc;
               padding-left: 0.4rem;
             }

@@ -2,27 +2,13 @@
 @use "../../../../../helpers/variables" as v;
 @use "../../../ai-builder-support" as support;
 @use "../../ExpalotComponents/expalot-title" as title;
+@use "../../ExpalotComponents/expalot-desc" as desc;
 
 $fs-title: 7.5px;
 $fs-desc: 3px;
 $fs-text: 4px;
 $py-layout: 0.45rem;
 $px-layout: 0.5rem;
-
-@mixin desc(
-  $fs: $fs-desc,
-  $m: 0.18rem 0 0,
-  $w: 100%,
-  $ln-h: 130%,
-  $t-align: left
-) {
-  font-size: $fs;
-  margin: $m;
-  line-height: $ln-h;
-  pointer-events: none;
-  width: $w;
-  text-align: $t-align;
-}
 
 @mixin form(
   $fs: $fs-text,
@@ -196,7 +182,7 @@ $px-layout: 0.5rem;
           }
 
           .template-desc {
-            @include desc();
+            @include desc.desc($fs: $fs-desc, $m: 0.18rem 0 0, $ln-h: 135%);
           }
         }
 
@@ -222,7 +208,7 @@ $px-layout: 0.5rem;
           }
 
           .template-desc {
-            @include desc();
+            @include desc.desc($fs: $fs-desc, $m: 0.18rem 0 0, $ln-h: 135%);
           }
 
           .template-form {
@@ -268,7 +254,7 @@ $px-layout: 0.5rem;
           }
 
           .template-desc {
-            @include desc($t-align: center, $w: 85%);
+            @include desc.desc($t-align: center, $w: 85%, $ln-h: 135%);
           }
         }
 
@@ -300,7 +286,12 @@ $px-layout: 0.5rem;
           }
 
           .template-desc {
-            @include desc($t-align: center, $m: -0.15rem 0 0.2rem);
+            @include desc.desc(
+              $fs: $fs-desc,
+              $m: -0.15rem 0 0.2rem,
+              $ln-h: 135%,
+              $t-align: center
+            );
           }
 
           @include form(

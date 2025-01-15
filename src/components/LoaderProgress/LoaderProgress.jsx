@@ -1,11 +1,15 @@
 import React from "react";
 
-export function LoaderProgress() {
+export function LoaderProgress({ isAi = false }) {
   return (
     <>
       <div className="loader-progress">
         <div className="loader"></div>
-        <span>Setting things up...</span>
+        {isAi ? (
+          <span>Ai Builder is working on it...</span>
+        ) : (
+          <span>Setting things up...</span>
+        )}
       </div>
     </>
   );

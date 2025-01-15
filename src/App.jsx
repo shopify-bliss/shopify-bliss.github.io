@@ -23,6 +23,9 @@ const AccessManagement = Loadable(
   lazy(() => import("./pages/AccessManagement/AccessManagement"))
 );
 const AiBuilder = Loadable(lazy(() => import("./pages/AiBuilder/AiBuilder")));
+const AiBuilderPreview = Loadable(
+  lazy(() => import("./pages/AiBuiderPreview/AiBuilderPreview"))
+);
 
 function App() {
   const DashboardCore = () => {
@@ -36,7 +39,7 @@ function App() {
   const AiBuilderCore = () => {
     return (
       <AiBuilderProvider>
-        <AiBuilder />
+        <Outlet />
       </AiBuilderProvider>
     );
   };
@@ -45,7 +48,10 @@ function App() {
     <BrowserRouter>
       <SearchProvider>
         <Routes>
-          <Route path="/" element={<AiBuilderCore />} />
+          <Route element={<AiBuilderCore />}>
+            <Route path="/" element={<AiBuilder />} />
+            <Route path="/preview" element={<AiBuilderPreview />} />
+          </Route>
           <Route path="/loader" element={<LoaderProgress />} />
 
           <Route path="/login" element={<Auth typeMain={"login"} />} />
