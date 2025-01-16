@@ -13,7 +13,8 @@ const urlEndpoint = {
   colorsAi: `${baseUrl}/api/color-design`,
   fontsAi: `${baseUrl}/api/font-design`,
   aiBuilder: `${baseUrl}/api/ai-builder`,
-  aiBuilderId: `${baseUrl}/api/ai-builder-id`,
+  aiBuilderUser: `${baseUrl}/api/ai-builder-id`, // by user_id
+  aiBuilderId: `${baseUrl}/api/ai-builder-id-builder`, // by ai_builder_id
   aiBuilderSections: `${baseUrl}/api/ai-builder-section`,
   aiBuilderSectionsId: `${baseUrl}/api/ai-builder-section-id`,
   aiBuilderSupports: `${baseUrl}/api/ai-builder-support`,

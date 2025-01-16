@@ -23,6 +23,7 @@ import urlEndpoint from "../../helpers/urlEndpoint";
 import { ToastContainer } from "react-toastify";
 import { toastMessage } from "../../helpers/AlertMessage";
 import { LoaderProgress } from "../../components/LoaderProgress/LoaderProgress";
+import { useNavigate } from "react-router-dom";
 
 function AiBuilder() {
   axios.defaults.withCredentials = true;
@@ -74,6 +75,8 @@ function AiBuilder() {
   );
   const [pageStyles, setPageStyles] = useState({});
   const [mergedPageStyles, setMergedPageStyles] = useState({});
+
+  const navigate = useNavigate();
 
   // Inisialisasi gaya halaman jika belum ada
   useEffect(() => {
@@ -213,7 +216,7 @@ function AiBuilder() {
 
         // Tunggu hasil AI Builder utama
         const aiBuilderResponse = await aiBuilderPromise;
-        const aiBuilderID = aiBuilderResponse.data.data[0].ai_builder_id;
+        const aiBuilderId = aiBuilderResponse.data.data[0].ai_builder_id;
 
         // Promise untuk sections
         const aiBuilderSectionsPromise = Object.entries(
@@ -227,7 +230,7 @@ function AiBuilder() {
             .map(([sectionId, style]) =>
               axios
                 .post(urlEndpoint.aiBuilderSections, {
-                  aiBuilderID: aiBuilderID,
+                  aiBuilderID: aiBuilderId,
                   pageID: pageId,
                   styleDesign: style,
                   sectionID: sectionId,
@@ -261,7 +264,7 @@ function AiBuilder() {
         const aiBuilderSupportsPromise = supportStyles.length
           ? axios
               .post(urlEndpoint.aiBuilderSupports, {
-                aiBuilderID: aiBuilderID,
+                aiBuilderID: aiBuilderId,
                 styleDesign: supportStyles[0].styleDesign,
                 supportID: supportStyles[0].supportID,
               })
@@ -278,9 +281,16 @@ function AiBuilder() {
           aiBuilderSupportsPromise,
         ])
           .then(() => {
+            navigate("/preview", {
+              state: {
+                aiBuilderId: aiBuilderId,
+                messageAiBuilder:
+                  "Website generation complete! Explore it now.",
+              },
+            });
             toastMessage(
               "success",
-              "AI Builder process completed successfully."
+              "Website generation complete! Explore it now."
             );
           })
           .catch(() => {
@@ -299,6 +309,10 @@ function AiBuilder() {
       setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
     }
   }, [currentStep, siteTitle]);
+
+  useEffect(() => {
+    console.log(activeSections[currentPageId]);
+  }, [activeSections, currentPageId]);
 
   const handlePrev = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 0));

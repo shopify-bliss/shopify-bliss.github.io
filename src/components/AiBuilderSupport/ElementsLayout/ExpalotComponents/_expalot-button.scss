@@ -1,33 +1,47 @@
 @use "../../../../helpers/mixins" as m;
 @use "../../../../helpers/variables" as v;
 
-$fs-text: 4px;
+$fs-text: 2.8px;
 
 @mixin button(
-  $bordered: false,
   $fs: $fs-text,
   $m: 0,
-  $p: 0.22rem 0.62rem,
+  $p: 0.25rem 0.4rem,
   $ln-h: 100%,
-  $bg: transparent,
-  $clr: #000,
-  $clr-border: #000,
+  $b-clr: #000,
+  $b-weight: 0.1px,
   $events: none,
+  $t-transform: uppercase,
+  $l-spacing: 0.4px,
+  $f-weight: normal,
+  $b-radius: 100vw,
+  $bordered: false,
+  $underline: false
 ) {
-  border-radius: 50vw;
   @include m.flex();
-  width: fit-content;
   line-height: $ln-h;
   font-size: $fs;
   padding: $p;
   margin: $m;
-  background-color: $bg;
-  color: $clr;
-  text-transform: uppercase;
-  cursor: pointer;
+  text-transform: $t-transform;
+  font-weight: $f-weight;
   pointer-events: $events;
+  letter-spacing: $l-spacing;
+  border-radius: $b-radius;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;
+  cursor: pointer;
+  border: none;
+  outline: none;
 
   @if $bordered {
-    box-shadow: 0 0 0 0.3px inset $clr-border;
+    box-shadow: 0 0 0 $b-weight $b-clr;
+    background-color: transparent;
+  }
+
+  @if $underline {
+    box-shadow: 0 $b-weight 0 $b-clr;
+    background-color: transparent;
   }
 }

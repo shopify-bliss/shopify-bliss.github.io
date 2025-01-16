@@ -4,7 +4,7 @@ import sectionsElOptionLayout from "../../../../data/sectionsElOptionLayout.json
 import { FormatCurrencyIDR } from "../../../../helpers/FormatCurrencyIDR";
 import productSamples from "../../../../data/products.json";
 import ProductsConfig from "./Config/ProductsConfig";
-import { BgColors } from "../../ColorsSupport";
+import { BgColors, SpecialColors, FontColors } from "../../ColorsSupport";
 import { FontType1, FontType2 } from "../../FontsSupport";
 
 function Products({
@@ -20,7 +20,9 @@ function Products({
   const [isExpandLayout, setIsExpandLayout] = useState(false);
   const expandLayoutRef = useRef(null);
 
+  const font = FontColors({ activeColors });
   const bg = BgColors({ activeColors });
+  const special = SpecialColors({ activeColors });
   const type1 = FontType1({ activeFonts });
   const type2 = FontType2({ activeFonts });
 
@@ -49,9 +51,11 @@ function Products({
             {productSamples
               .filter((product) => product.id === 1)
               .map((product) => {
+                const borderedFont = font.replace(/^color-font-/i, "");
+
                 return (
                   <Fragment key={product.id}>
-                    <div className={`template-title ${type2}`}>
+                    <div className={`template-title ${type2} ${font}`}>
                       {product.title}
                     </div>
                     <div className="template-wrapper">
@@ -65,7 +69,12 @@ function Products({
                               src={image}
                               alt="products"
                             />
-                            <div className={`template-name ${type2}`}>
+                            <div
+                              className={`template-name ${type2} ${font}`}
+                              style={{
+                                "--border-font-color": `#${borderedFont}`,
+                              }}
+                            >
                               {data.name}
                             </div>
                             <div className={`template-price ${type1}`}>
@@ -75,7 +84,7 @@ function Products({
                         );
                       })}
                     </div>
-                    <div className={`template-button ${type1}`}>
+                    <div className={`template-button ${type1} ${special}`}>
                       {product.button}
                     </div>
                   </Fragment>
@@ -83,22 +92,23 @@ function Products({
               })}
           </>
         )}
-
         {typeProductsStyles.id === 2 && (
           <>
             {productSamples
               .filter((product) => product.id === 2)
               .map((product) => {
+                const borderedFont = font.replace(/^color-font-/i, "");
+
                 return (
                   <Fragment key={product.id}>
                     <div className="template-wrapper-loan">
-                      <div className={`template-title ${type2}`}>
+                      <div className={`template-title ${type2} ${font}`}>
                         {product.title}
                       </div>
                       <div className={`template-desc ${type1}`}>
                         {product.desc}
                       </div>
-                      <div className={`template-button ${type1}`}>
+                      <div className={`template-button ${type1} ${special}`}>
                         {product.button}
                       </div>
                     </div>
@@ -115,7 +125,12 @@ function Products({
                                 src={image}
                                 alt="products"
                               />
-                              <div className={`template-name ${type2}`}>
+                              <div
+                                className={`template-name ${type2} ${font}`}
+                                style={{
+                                  "--border-font-color": `#${borderedFont}`,
+                                }}
+                              >
                                 {data.name}
                               </div>
                               <div className={`template-price ${type1}`}>
@@ -130,7 +145,6 @@ function Products({
               })}
           </>
         )}
-
         {typeProductsStyles.id === 3 && (
           <>
             {productSamples
@@ -139,7 +153,7 @@ function Products({
                 return (
                   <Fragment key={product.id}>
                     <div className="template-wrapper">
-                      <div className={`template-title ${type2}`}>
+                      <div className={`template-title ${type2} ${font}`}>
                         <p>Featured</p>
                         <p>Products</p>
                         <p aria-hidden="true">Featured</p>
@@ -165,7 +179,7 @@ function Products({
                       <div className={`template-desc ${type1}`}>
                         {product.desc}
                       </div>
-                      <div className={`template-button ${type1}`}>
+                      <div className={`template-button ${type1} ${special}`}>
                         {product.button}
                       </div>
                     </div>
@@ -174,19 +188,26 @@ function Products({
               })}
           </>
         )}
-
         {typeProductsStyles.id === 4 && (
           <>
             {productSamples
               .filter((product) => product.id === 4)
               .map((product) => {
+                const borderedSpecial = special.replace(/^color-special-/i, "");
+                const borderedFont = font.replace(/^color-font-/i, "");
+
                 return (
                   <Fragment key={product.id}>
                     <div className="template-wrapper-loan">
-                      <div className={`template-title ${type2}`}>
+                      <div className={`template-title ${type2} ${font}`}>
                         {product.title}
                       </div>
-                      <div className={`template-button ${type1}`}>
+                      <div
+                        className={`template-button ${type1} ${font}`}
+                        style={{
+                          "--border-special-color": `#${borderedSpecial}`,
+                        }}
+                      >
                         {product.button}
                       </div>
                     </div>
@@ -201,7 +222,12 @@ function Products({
                               src={image}
                               alt="products"
                             />
-                            <div className={`template-name ${type2}`}>
+                            <div
+                              className={`template-name ${type2} ${font}`}
+                              style={{
+                                "--border-font-color": `#${borderedFont}`,
+                              }}
+                            >
                               {data.name}
                             </div>
                             <div className={`template-price ${type1}`}>

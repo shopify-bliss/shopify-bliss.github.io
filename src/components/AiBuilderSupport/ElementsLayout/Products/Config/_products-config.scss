@@ -4,37 +4,11 @@
 @use "../../../ai-builder-support" as support;
 @use "../../ExpalotComponents/expalot-title" as title;
 @use "../../ExpalotComponents/expalot-desc" as desc;
+@use "../../ExpalotComponents/expalot-button" as button;
 
 $fs-text: 4px;
 $fs-title-marquee: 22px;
 $py-layout: 0.45rem;
-
-@mixin button(
-  $bordered: false,
-  $fs: $fs-text,
-  $m-top: 0,
-  $p: 0.22rem 0.62rem,
-  $bg: transparent,
-  $color: #000,
-  $color-border: #000
-) {
-  border-radius: 50vw;
-  @include m.flex();
-  width: fit-content;
-  line-height: 100%;
-  cursor: pointer;
-  font-size: $fs;
-  padding: $p;
-  margin-top: $m-top;
-  background-color: $bg;
-  color: $color;
-  border: 1px solid transparent;
-  text-transform: uppercase;
-
-  @if $bordered {
-    box-shadow: 0 0 0 0.3px inset $color-border;
-  }
-}
 
 @mixin container-product(
   $size-image: 2.6rem,
@@ -47,12 +21,17 @@ $py-layout: 0.45rem;
   $align: flex-start,
   $gap: 2px,
   $isCircle: false,
-  $mt-name: 0.2rem,
-  $object-position: center
+  $m-name: 0.2rem 0 0,
+  $object-position: center,
+  $b-weight: 0.2px,
+  $b-clr: #000,
+  $b-pb: 0.1px,
+  $fw-name: 400,
+  $events: none
 ) {
   @include m.flex($direction: $direction, $justify: $justify, $align: $align);
   gap: $gap;
-  pointer-events: none;
+  pointer-events: $events;
 
   .template-image {
     object-fit: cover;
@@ -72,9 +51,12 @@ $py-layout: 0.45rem;
   }
 
   .template-name {
-    margin-top: $mt-name;
+    margin: $m-name;
     font-size: $fs;
-    text-decoration: underline;
+    padding-bottom: $b-pb;
+    box-shadow: 0 $b-weight 0 $b-clr;
+    font-weight: $fw-name;
+    background-color: transparent;
   }
 
   .template-price {
@@ -87,8 +69,8 @@ $py-layout: 0.45rem;
   gap: $gap;
 }
 
-@mixin style-2($gap: 0.45rem) {
-  @include m.flex();
+@mixin style-2($gap: 0.45rem, $justify: center) {
+  @include m.flex($justify: $justify);
   gap: $gap;
 }
 
@@ -151,12 +133,9 @@ $py-layout: 0.45rem;
         }
 
         .template-button {
-          @include button(
-            $bg: #000,
-            $color: #fff,
-            $color-border: #000,
-            $m-top: 0.1rem
-          );
+          @include button.button($m: 0.25rem 0 0);
+          background-color: #000;
+          color: #fff;
         }
       }
 
@@ -192,7 +171,7 @@ $py-layout: 0.45rem;
         .template-wrapper-loan {
           pointer-events: none;
           @include m.flex($direction: column);
-          gap: 0.6rem;
+          gap: 0.55rem;
           margin-top: 1.9rem;
 
           .template-desc {
@@ -200,7 +179,9 @@ $py-layout: 0.45rem;
           }
 
           .template-button {
-            @include button($bg: #000, $color: #fff, $color-border: #000);
+            @include button.button($p: 0.25rem 0.65rem);
+            background-color: #000;
+            color: #fff;
           }
         }
       }
@@ -235,26 +216,23 @@ $py-layout: 0.45rem;
           }
 
           .template-desc {
-            @include desc.desc($w: 85%, $m: 0.08rem 0 0);
+            @include desc.desc($w: 85%, $m: 0.08rem 0 0, $ln-h: 115%);
           }
 
           .template-button {
-            @include button(
-              $bg: #000,
-              $color: #fff,
-              $color-border: #000,
-              $m-top: 0.8rem
-            );
+            @include button.button($m: 0.85rem 0 0, $p: 0.25rem 0.85rem);
+            background-color: #000;
+            color: #fff;
           }
         }
 
         .template-wrapper {
           pointer-events: none;
           @include m.flex();
-          gap: 0.3rem;
+          gap: 0.25rem;
 
           .container-product {
-            @include container-product();
+            @include container-product($size-image: 2.9rem);
           }
         }
       }
@@ -274,7 +252,8 @@ $py-layout: 0.45rem;
           }
 
           .template-button {
-            @include button($bordered: true);
+            @include button.button($bordered: true);
+            color: #000;
           }
         }
 

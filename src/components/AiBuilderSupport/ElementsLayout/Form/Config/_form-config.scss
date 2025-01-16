@@ -3,6 +3,7 @@
 @use "../../../ai-builder-support" as support;
 @use "../../ExpalotComponents/expalot-title" as title;
 @use "../../ExpalotComponents/expalot-desc" as desc;
+@use "../../ExpalotComponents/expalot-button" as button;
 
 $fs-title: 7.5px;
 $fs-desc: 3px;
@@ -16,7 +17,9 @@ $px-layout: 0.5rem;
   $radius-input-textarea: true,
   $size-radius: 0.4rem,
   $border-color: #000,
-  $border-input: 0 0 0 0.3px $border-color,
+  $bw-input-textarea: 0.3px,
+  $b-clr-textarea: #000,
+  $border-input: 0 0 0 $bw-input-textarea $border-color,
   $p-input-textarea: 0.21rem 0.28rem,
   $h-textarea: 1.7rem,
   $w-group: 100%,
@@ -26,7 +29,10 @@ $px-layout: 0.5rem;
   $align-form: flex-start,
   $form-parent: true,
   $m-parent: 0,
-  $overview: false
+  $overview: false,
+  $l-spacing: normal,
+  $diff-p: false,
+  $p-textarea: 0.21rem 0.28rem
 ) {
   @if $form-parent {
     @include m.flex($direction: column, $align: $align-form);
@@ -67,6 +73,7 @@ $px-layout: 0.5rem;
       @include m.flex();
       box-shadow: $border-input;
       background-color: transparent;
+      letter-spacing: $l-spacing;
 
       @if $radius-input-textarea {
         border-radius: 50rem;
@@ -74,8 +81,7 @@ $px-layout: 0.5rem;
     }
 
     textarea {
-      box-shadow: 0 0 0 0.3px #000;
-      padding: $p-input-textarea;
+      box-shadow: 0 0 0 $bw-input-textarea $b-clr-textarea;
       width: 100%;
       height: $h-textarea;
       border: none;
@@ -84,35 +90,19 @@ $px-layout: 0.5rem;
       resize: none;
       background-color: transparent;
       overflow-y: auto;
+      letter-spacing: $l-spacing;
+
+      @if $diff-p {
+        padding: $p-textarea;
+      } @else {
+        padding: $p-input-textarea;
+      }
 
       @if $radius-input-textarea {
         border-radius: $size-radius;
       }
     }
   }
-}
-
-@mixin button(
-  $fs: $fs-text,
-  $m: 0,
-  $p: 0.22rem 0.51rem,
-  $bg: transparent,
-  $color: #000,
-  $t-decor: none
-) {
-  font-size: $fs;
-  border-radius: 50vw;
-  @include m.flex();
-  width: fit-content;
-  line-height: 100%;
-  cursor: pointer;
-  padding: $p;
-  margin: $m;
-  background-color: $bg;
-  color: $color;
-  text-decoration: $t-decor;
-  border: none;
-  outline: none;
 }
 
 @mixin image($mb: 0.4rem, $h: 4rem, $w: 100%, $obj-pos: center) {
@@ -190,7 +180,10 @@ $px-layout: 0.5rem;
           @include form();
 
           .template-button {
-            @include button($bg: #000, $color: #fff);
+            @include button.button($p: 0.23rem 0.35rem, $l-spacing: 0.25px);
+            background-color: #000;
+            color: #fff;
+            // @include button($bg: #000, $color: #fff);
           }
         }
       }
@@ -220,7 +213,13 @@ $px-layout: 0.5rem;
             );
 
             .template-button {
-              @include button($bg: #000, $color: #fff, $m: 0.25rem 0 0);
+              @include button.button(
+                $p: 0.25rem 0.45rem,
+                $l-spacing: 0.25px,
+                $m: 0.25rem 0
+              );
+              background-color: #000;
+              color: #fff;
             }
           }
         }
@@ -266,7 +265,13 @@ $px-layout: 0.5rem;
           );
 
           .template-button {
-            @include button($bg: #000, $color: #fff);
+            @include button.button(
+              $p: 0.28rem 0.55rem,
+              $l-spacing: 0.25px,
+              $m: 0.05rem 0 0
+            );
+            background-color: #000;
+            color: #fff;
           }
         }
       }
@@ -302,7 +307,9 @@ $px-layout: 0.5rem;
           );
 
           .template-button {
-            @include button($bg: #000, $color: #fff);
+            @include button.button($p: 0.25rem 0.45rem, $l-spacing: 0.25px);
+            background-color: #000;
+            color: #fff;
           }
         }
       }

@@ -6,7 +6,7 @@ export function LoaderProgress({ isAi = false }) {
       <div className="loader-progress">
         <div className="loader"></div>
         {isAi ? (
-          <span>Ai Builder is working on it...</span>
+          <span>Website is being generated, please hold on...</span>
         ) : (
           <span>Setting things up...</span>
         )}

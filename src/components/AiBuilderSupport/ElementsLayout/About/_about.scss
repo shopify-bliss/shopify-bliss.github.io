@@ -4,6 +4,8 @@
 @use "./Config/about-config" as config;
 @use "../ExpalotComponents/expalot-title" as title;
 @use "../ExpalotComponents/expalot-desc" as desc;
+@use "../ExpalotComponents/expalot-button" as button;
+@use "./Config/about-preview" as preview;
 
 $fs-title: 1.5rem;
 $fs-desc: 8px;
@@ -11,13 +13,14 @@ $fs-text: 10px;
 $fs-name: 13px;
 $fs-preface: 6px;
 
-@mixin about($element: false) {
+@mixin about($element: false, $preview: false) {
   width: 100%;
   height: auto;
-  border: v.$border-hover;
   position: relative;
 
   @if $element {
+    border: v.$border-hover;
+
     .change-layout {
       display: none;
     }
@@ -30,187 +33,199 @@ $fs-preface: 6px;
     );
   }
 
-  &.style-1 {
-    @include config.style-1($gap: 3rem);
-    padding: v.$py-layout-section v.$p-navter;
+  @if $preview {
+    @include preview.about-preview();
+  } @else {
+    &.style-1 {
+      @include config.style-1($gap: 3rem);
+      padding: v.$py-layout-section v.$p-navter;
 
-    .template-wrapper {
-      @include m.flex(
-        $direction: column,
-        $justify: flex-start,
-        $align: flex-start
-      );
-
-      .template-title {
-        @include title.title($w: 60%, $fs: $fs-title, $ln-h: 100%);
-      }
-
-      .template-desc {
-        @include desc.desc(
-          $w: 75%,
-          $fs: $fs-desc,
-          $m: 0.55rem 0 0,
-          $ln-h: 135%
-        );
-      }
-
-      .template-button {
-        @include config.button(
-          $m: 1.9rem 0 1.7rem,
-          $fs: $fs-desc,
-          $p: 0.6rem 1.7rem
-        );
-      }
-
-      .template-image-1 {
-        @include config.image($h: 9rem, $mb: 0, $obj-pos: center 85%);
-      }
-    }
-
-    .template-image-2 {
-      @include config.image($w: 85%, $h: 14rem, $mb: 0);
-    }
-
-    &.first-about {
-      margin-top: 1.95rem;
-
-      &.navbar-2 {
-        margin-top: 3.05rem;
-      }
-
-      &.navbar-3 {
-        margin-top: 4.05rem;
-      }
-    }
-  }
-
-  &.style-2 {
-    @include config.style-2($gap: 0.9rem);
-
-    .template-wrapper {
-      padding: v.$py-layout-section v.$p-navter (v.$py-layout-section * 0.5);
-      @include m.flex($align: flex-start);
-      gap: 1.3rem;
-
-      .template-title {
-        @include title.title($w: 80%, $fs: $fs-title, $ln-h: 108%);
-      }
-
-      .template-desc {
-        @include desc.desc($fs: $fs-desc, $w: 85%, $ln-h: 135%);
-      }
-    }
-
-    .template-image {
-      height: 100%;
-      width: 100%;
-    }
-
-    &.first-about {
-      margin-top: 1.75rem;
-
-      &.navbar-2 {
-        margin-top: 2.72rem;
-      }
-
-      &.navbar-3 {
-        margin-top: 3.5rem;
-      }
-    }
-  }
-
-  &.style-3 {
-    @include config.style-3($p: 2.9rem 6.5rem);
-
-    .template-wrapper {
-      padding: 2.5rem;
-      @include m.flex($direction: column, $justify: flex-start);
-
-      .template-title {
-        @include title.title($t-align: center, $fs: $fs-title);
-      }
-
-      .template-desc {
-        @include desc.desc(
-          $t-align: center,
-          $fs: $fs-desc,
-          $m: 0.6rem 0 0,
-          $ln-h: 135%
-        );
-      }
-
-      .template-button {
-        @include config.button(
-          $m: 1.5rem 0 0,
-          $fs: $fs-desc,
-          $p: 0.6rem 1.7rem
-        );
-      }
-    }
-
-    &.first-about {
       .template-wrapper {
-        margin-top: 0.9rem;
-      }
+        @include m.flex(
+          $direction: column,
+          $justify: flex-start,
+          $align: flex-start
+        );
 
-      &.navbar-2 {
-        .template-wrapper {
-          margin-top: 1.75rem;
+        .template-title {
+          @include title.title($w: 60%, $fs: $fs-title, $ln-h: 100%);
         }
-      }
-
-      &.navbar-3 {
-        .template-wrapper {
-          margin-top: 2.85rem;
-        }
-      }
-    }
-  }
-
-  &.style-4 {
-    @include config.style-4($gap: 1.7rem);
-    padding: v.$py-layout-section v.$p-navter;
-
-    .template-image {
-      @include config.image($h: 38vh, $mb: 0);
-    }
-
-    .template-wrapper {
-      @include m.flex($direction: column, $align: flex-start);
-      gap: 0.15rem;
-
-      .template-title {
-        @include title.title($fs: $fs-title);
-      }
-
-      .template-loan {
-        @include m.flex($align: flex-start);
-        gap: 0.5rem;
 
         .template-desc {
-          @include desc.desc($fs: $fs-desc, $m: 0.6rem 0 0, $ln-h: 135%);
-          // @include config.desc($fs: $fs-desc, $mt: 0.5rem);
+          @include desc.desc(
+            $w: 75%,
+            $fs: $fs-desc,
+            $m: 0.55rem 0 0,
+            $ln-h: 135%
+          );
+        }
+
+        .template-button {
+          @include button.button(
+            $m: 1.9rem 0 1.8rem,
+            $fs: $fs-desc,
+            $p: 0.65rem 1.8rem,
+            $l-spacing: 0.6px
+          );
+        }
+
+        .template-image-1 {
+          @include config.image($h: 9rem, $mb: 0, $obj-pos: center 85%);
         }
       }
 
-      .template-button {
-        @include config.button(
-          $m: 1.6rem 0 0,
-          $fs: $fs-desc,
-          $p: 0.6rem 1.7rem
-        );
+      .template-image-2 {
+        @include config.image($w: 85%, $h: 14rem, $mb: 0);
+      }
+
+      &.first-about {
+        margin-top: 1.95rem;
+
+        &.navbar-2 {
+          margin-top: 3.05rem;
+        }
+
+        &.navbar-3 {
+          margin-top: 4.05rem;
+        }
       }
     }
 
-    &.first-about {
-      margin-top: 2.15rem;
+    &.style-2 {
+      @include config.style-2($gap: 0.9rem);
 
-      &.navbar-2 {
-        margin-top: 3.6rem;
+      .template-wrapper {
+        padding: v.$py-layout-section v.$p-navter (v.$py-layout-section * 0.5);
+        @include m.flex($align: flex-start);
+        gap: 1.6rem;
+
+        .template-title {
+          @include title.title($w: 80%, $fs: $fs-title - 0.1rem, $ln-h: 108%);
+        }
+
+        .template-desc {
+          @include desc.desc($fs: $fs-desc, $w: 85%, $ln-h: 135%);
+        }
       }
 
-      &.navbar-3 {
-        margin-top: 4.65rem;
+      .template-image {
+        height: 100%;
+        width: 100%;
+      }
+
+      &.first-about {
+        margin-top: 1.75rem;
+
+        &.navbar-2 {
+          margin-top: 2.72rem;
+        }
+
+        &.navbar-3 {
+          margin-top: 3.5rem;
+        }
+      }
+    }
+
+    &.style-3 {
+      @include config.style-3($p: 2.9rem 6.5rem);
+
+      .template-wrapper {
+        padding: 2.5rem;
+        @include m.flex($direction: column, $justify: flex-start);
+
+        .template-title {
+          @include title.title($t-align: center, $fs: $fs-title);
+        }
+
+        .template-desc {
+          @include desc.desc(
+            $t-align: center,
+            $fs: $fs-desc,
+            $m: 0.6rem 0 0,
+            $ln-h: 135%
+          );
+        }
+
+        .template-button {
+          @include button.button(
+            $m: 1.5rem 0 0,
+            $fs: $fs-desc,
+            $p: 0.7rem 1.2rem,
+            $l-spacing: 0.6px
+          );
+        }
+      }
+
+      &.first-about {
+        .template-wrapper {
+          margin-top: 0.9rem;
+        }
+
+        &.navbar-2 {
+          .template-wrapper {
+            margin-top: 1.75rem;
+          }
+        }
+
+        &.navbar-3 {
+          .template-wrapper {
+            margin-top: 2.85rem;
+          }
+        }
+      }
+    }
+
+    &.style-4 {
+      @include config.style-4($gap: 1.7rem);
+      padding: v.$py-layout-section v.$p-navter;
+
+      .template-image {
+        @include config.image($h: 38vh, $mb: 0);
+      }
+
+      .template-wrapper {
+        @include m.flex($direction: column, $align: flex-start);
+        gap: 0.15rem;
+
+        .template-title {
+          @include title.title($fs: $fs-title);
+        }
+
+        .template-loan {
+          @include m.flex($align: flex-start);
+          gap: 0.5rem;
+
+          .template-desc {
+            @include desc.desc($fs: $fs-desc, $m: 0.6rem 0 0, $ln-h: 135%);
+            // @include config.desc($fs: $fs-desc, $mt: 0.5rem);
+          }
+        }
+
+        .template-button {
+          @include button.button(
+            $m: 1.7rem 0 0,
+            $fs: $fs-desc,
+            $p: 0.65rem 1.7rem,
+            $l-spacing: 0.6px
+          );
+          // @include config.button(
+          //   $m: 1.6rem 0 0,
+          //   $fs: $fs-desc,
+          //   $p: 0.6rem 1.7rem
+          // );
+        }
+      }
+
+      &.first-about {
+        margin-top: 2.15rem;
+
+        &.navbar-2 {
+          margin-top: 3.6rem;
+        }
+
+        &.navbar-3 {
+          margin-top: 4.65rem;
+        }
       }
     }
   }

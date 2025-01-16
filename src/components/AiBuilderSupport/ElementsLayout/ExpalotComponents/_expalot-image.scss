@@ -1,0 +1,27 @@
+@use "../../../../helpers/mixins" as m;
+@use "../../../../helpers/variables" as v;
+
+$size-image: 2.6rem;
+$h-custom: 2.6rem * 1.5;
+
+@mixin image(
+  $o-fit: cover,
+  $o-position: center,
+  $isCircle: false,
+  $h-default: true
+) {
+  object-fit: $o-fit;
+  object-position: $o-position;
+
+  @if $isCircle {
+    @include m.circle($size: $size-image);
+  } @else {
+    width: $size-image;
+
+    @if $h-default {
+      height: $size-image * 1.5;
+    } @else {
+      height: $h-custom;
+    }
+  }
+}

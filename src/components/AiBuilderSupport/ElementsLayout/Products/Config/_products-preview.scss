@@ -1,0 +1,291 @@
+@use "../../../../../helpers/mixins" as m;
+@use "../../../../../helpers/variables" as v;
+@use "../../../../../helpers/animation";
+@use "../../../ai-builder-support" as support;
+@use "./products-config" as config;
+@use "../../ExpalotComponents/expalot-title" as title;
+@use "../../ExpalotComponents/expalot-desc" as desc;
+@use "../../ExpalotComponents/expalot-button" as button;
+
+@mixin products-preview() {
+  $fs-title: 3.1rem;
+  $fs-title-marquee: 6.8rem;
+  $fs-name: 1.5rem;
+  $fs-price: 1.1rem;
+  $fs-desc: 1.3rem;
+  $fs-button: 0.9rem;
+  $size-image: 18rem;
+
+  &.style-1 {
+    @include config.style-1($gap: 2.9rem);
+    padding: v.$p-preview 0;
+
+    .template-title {
+      @include title.title(
+        $fs: $fs-title,
+        $t-align: center,
+        $events: all,
+        $ln-h: 110%
+      );
+    }
+
+    .template-wrapper {
+      @include m.flex($justify: space-evenly);
+      width: 100%;
+
+      .container-product {
+        @include config.container-product(
+          $events: all,
+          $align: center,
+          $size-image: $size-image,
+          $isCircle: true,
+          $object-position: 50% 100%,
+          $fs: $fs-name,
+          $m-name: 1.9rem 0 0,
+          $fs-price: $fs-price,
+          $gap: 0.6rem,
+          $b-pb: 0.15rem,
+          $b-weight: 1.5px,
+          $fw-name: 500
+        );
+      }
+    }
+
+    .template-button {
+      @include button.button(
+        $fs: $fs-button,
+        $m: 0.3rem 0 0,
+        $p: 0.85rem 1.8rem,
+        $l-spacing: 1px,
+        $events: all
+      );
+    }
+
+    &.first-product {
+      margin-top: 1.55rem;
+
+      &.navbar-2 {
+        margin-top: 2.5rem;
+      }
+
+      &.navbar-3 {
+        margin-top: 3.6rem;
+      }
+    }
+  }
+
+  &.style-2 {
+    @include config.style-2($gap: 4rem, $justify: space-between);
+    padding: v.$p-preview;
+
+    .template-wrapper-loan {
+      @include m.flex(
+        $direction: column,
+        $justify: flex-start,
+        $align: flex-start
+      );
+      gap: 0.1rem;
+
+      .template-title {
+        @include title.title(
+          $fs: (
+            $fs-title,
+          ),
+          $fw: 500,
+          $events: all
+        );
+      }
+
+      .template-desc {
+        @include desc.desc(
+          $w: 75%,
+          $m: 0.4rem 0 0,
+          $fs: $fs-desc,
+          $ln-h: 125%,
+          $events: all
+        );
+      }
+
+      .template-button {
+        @include button.button(
+          $fs: $fs-button,
+          $m: 3.4rem 0 0,
+          $p: 1rem 4.7rem,
+          $l-spacing: 0.9px,
+          $events: all
+        );
+      }
+    }
+
+    .template-wrapper {
+      pointer-events: none;
+      @include m.flex();
+      gap: 0.8em;
+
+      .container-product {
+        @include config.container-product(
+          $size-image: $size-image - 0.2rem,
+          $object-position: 50% 100%,
+          $fs: $fs-name,
+          $m-name: 1.9rem 0 0,
+          $fs-price: $fs-price,
+          $gap: 0.6rem,
+          $b-pb: 0.15rem,
+          $b-weight: 1.5px,
+          $fw-name: 500,
+          $events: all
+        );
+      }
+    }
+
+    &.first-product {
+      margin-top: 1.75rem;
+
+      &.navbar-2 {
+        margin-top: 2.5rem;
+      }
+
+      &.navbar-3 {
+        margin-top: 3.6rem;
+      }
+    }
+  }
+
+  &.style-3 {
+    @include config.style-3($gap: 1.7rem);
+    padding: v.$p-preview;
+
+    .template-wrapper {
+      overflow: clip;
+
+      .template-title {
+        @include title.title(
+          $pos: absolute,
+          $marquee: true,
+          $distance: 2rem,
+          $fs: $fs-title-marquee,
+          $fw: 500
+        );
+        top: 5.1rem;
+      }
+    }
+
+    .container-product {
+      @include config.container-product(
+        $h-default: false,
+        $h-custom: 30rem,
+        $size-image: 100%
+      );
+      z-index: 3;
+      @include m.flex();
+    }
+
+    .template-wrapper-loan {
+      margin-bottom: -14.5rem;
+      @include m.flex($direction: column, $justify: flex-end);
+      gap: 0.6rem;
+
+      .template-desc {
+        @include desc.desc(
+          $fs: $fs-desc,
+          $t-align: center,
+          $w: 60%,
+          $ln-h: 130%,
+          $events: all
+        );
+      }
+
+      .template-button {
+        @include button.button(
+          $fs: $fs-button,
+          $m: 1.5rem 0 0,
+          $p: 1rem 2.6rem,
+          $l-spacing: 1px,
+          $events: all
+        );
+      }
+    }
+
+    &.first-product {
+      margin-top: 1.9rem;
+
+      &.navbar-2 {
+        margin-top: 3.05rem;
+      }
+
+      &.navbar-3 {
+        margin-top: 4.2rem;
+      }
+    }
+  }
+
+  &.style-4 {
+    @include config.style-4($gap: 2.1rem);
+    padding: v.$p-preview;
+
+    .template-wrapper-loan {
+      width: 100%;
+      @include m.flex($justify: space-between);
+
+      .template-title {
+        @include title.title(
+          $fs: $fs-title,
+          $w: fit-content,
+          $ln-h: 110%,
+          $events: all
+        );
+      }
+
+      .template-button {
+        @include button.button(
+          $fs: (
+            $fs-button * 0.95,
+          ),
+          $p: 0.7rem 1.65rem,
+          $l-spacing: 1px,
+          $events: all,
+          $bordered: true,
+          $b-weight: 0.3px,
+          $b-clr: var(--border-special-color)
+        );
+      }
+    }
+
+    .template-wrapper {
+      pointer-events: none;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.05rem;
+      width: 100%;
+
+      .container-product {
+        @include config.container-product(
+          $size-image: 100%,
+          $h-default: false,
+          $h-custom: 26rem,
+          $fs: $fs-name,
+          $m-name: 1.9rem 0 0,
+          $fs-price: $fs-price,
+          $gap: 0.6rem,
+          $b-pb: 0.15rem,
+          $b-weight: 1.5px,
+          $fw-name: 500,
+          $object-position: 50% 100%,
+          $events: all
+        );
+      }
+    }
+
+    &.first-product {
+      margin-top: 1.35rem;
+
+      &.navbar-2 {
+        margin-top: 2.3rem;
+      }
+
+      &.navbar-3 {
+        margin-top: 3.4rem;
+      }
+    }
+  }
+}

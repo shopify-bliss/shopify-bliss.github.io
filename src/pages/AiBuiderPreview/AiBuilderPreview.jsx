@@ -20,10 +20,11 @@ import Services from "../../components/AiBuilderSupport/ElementsLayout/Services/
 import About from "../../components/AiBuilderSupport/ElementsLayout/About/About";
 import Form from "../../components/AiBuilderSupport/ElementsLayout/Form/Form";
 import { BgColors } from "../../components/AiBuilderSupport/ColorsSupport";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { toastMessage } from "../../helpers/AlertMessage";
 import { ToastContainer } from "react-toastify";
 import { LoaderProgress } from "../../components/LoaderProgress/LoaderProgress";
+import FirstComponent from "../../components/AiBuilderSupport/FirstComponent";
 
 function AiBuilderPreview() {
   axios.defaults.withCredentials = true;
@@ -44,18 +45,23 @@ function AiBuilderPreview() {
     dataPages,
   } = useAiBuilder();
 
-  const bg = BgColors({ activeColors: color });
   const navigate = useNavigate();
+  const location = useLocation();
 
   const fetchAiBuilder = useCallback(async () => {
     try {
       setAiBuilderLoader(true);
+      // const getAiBuiderId = location.state.aiBuilderId;
+      const getAiBuiderId = "e64c22e7-c694-4eb3-a719-9adff242a33a";
 
-      const aiBuilderPromise = await axios.get(urlEndpoint.aiBuilderId, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const aiBuilderPromise = await axios.get(
+        `${urlEndpoint.aiBuilderId}?id=${getAiBuiderId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const aiBuilderId = aiBuilderPromise.data.data[0].ai_builder_id;
 
@@ -128,7 +134,7 @@ function AiBuilderPreview() {
     } finally {
       setAiBuilderLoader(false);
     }
-  }, [token]);
+  }, [token, navigate, location.state]);
 
   useEffect(() => {
     if (token) {
@@ -144,116 +150,133 @@ function AiBuilderPreview() {
     return styles[currentPageId] || {};
   }, [styles, currentPageId]);
 
-  useEffect(() => {
-    console.log(activeSections);
-    console.log(styles);
+  const { firstProduct, firstService, firstAbout, firstForm } = FirstComponent({
+    activeSections: activeSections,
+    currentPageId: currentPageId,
+  });
 
-    console.log(activeSections[currentPageId]);
-  }, [currentPageId, activeSections, styles]);
+  useEffect(() => {
+    if (location.state?.messageAiBuilder) {
+      toastMessage("success", location.state.messageAiBuilder);
+      navigate(location.pathname, {
+        state: { ...location.state, messageAiBuilder: undefined },
+        replace: true,
+      });
+    }
+  }, [navigate, location.state, location.pathname]);
 
   return (
     <>
-      {isLoadingAiBuilder && <LoaderProgress />}
-      <div className={`aibuilder-preview`}>
-        <NavbarLayout
-          activePages={truePages}
-          dataPages={dataPages}
-          activeSections={activeSections}
-          siteTitle={siteTitle}
-          currentPageId={currentPageId}
-          setCurrentPageId={setCurrentPageId}
-          activeNavbar={pageStyles["2bff7888-e861-4341-869b-189af29ad3f8"]}
-          activeIntro={pageStyles["798f1ce0-b732-45a6-838e-f28e137243f7"]}
-          toastMessage={toastMessage}
-          activeFonts={font}
-          activeColors={color}
-          isPreview={true}
-        />
-        {currentPageId !== null && (
-          <div className="aibuilder-preview-section">
-            {dataElements
-              .filter((section) =>
-                activeSections[currentPageId]?.includes(section.section_id)
-              )
-              .map((section) => (
-                <Fragment key={section.section_id}>
-                  {section.section_id ===
-                  "798f1ce0-b732-45a6-838e-f28e137243f7" ? (
-                    <Intro
-                      activeSections={activeSections}
-                      currentPageId={currentPageId}
-                      activeIntro={
-                        pageStyles["798f1ce0-b732-45a6-838e-f28e137243f7"]
-                      }
-                      activeNavbar={
-                        pageStyles["2bff7888-e861-4341-869b-189af29ad3f8"]
-                      }
-                      toastMessage={toastMessage}
-                      activeColors={color}
-                      activeFonts={font}
-                    />
-                  ) : section.section_id ===
-                    "b42d4d56-d411-4aa8-ae01-52f0c406328a" ? (
-                    <Products
-                      activeProducts={
-                        pageStyles["b42d4d56-d411-4aa8-ae01-52f0c406328a"]
-                      }
-                      activeNavbar={
-                        pageStyles["2bff7888-e861-4341-869b-189af29ad3f8"]
-                      }
-                      toastMessage={toastMessage}
-                      activeColors={color}
-                      activeFonts={font}
-                    />
-                  ) : section.section_id ===
-                    "4fd1e0cc-06f3-4554-9f79-ce8e02db03c8" ? (
-                    <Services
-                      activeServices={
-                        pageStyles["4fd1e0cc-06f3-4554-9f79-ce8e02db03c8"]
-                      }
-                      activeNavbar={
-                        pageStyles["2bff7888-e861-4341-869b-189af29ad3f8"]
-                      }
-                      toastMessage={toastMessage}
-                      activeColors={color}
-                      activeFonts={font}
-                    />
-                  ) : section.section_id ===
-                    "1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed" ? (
-                    <About
-                      activeAbout={
-                        pageStyles["1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed"]
-                      }
-                      activeNavbar={
-                        pageStyles["2bff7888-e861-4341-869b-189af29ad3f8"]
-                      }
-                      toastMessage={toastMessage}
-                      activeColors={color}
-                      activeFonts={font}
-                    />
-                  ) : section.section_id ===
-                    "2089ce88-93a7-4555-8d0d-7f88f1dc3a7e" ? (
-                    <Form
-                      activeForm={
-                        pageStyles["2089ce88-93a7-4555-8d0d-7f88f1dc3a7e"]
-                      }
-                      activeNavbar={
-                        pageStyles["2bff7888-e861-4341-869b-189af29ad3f8"]
-                      }
-                      toastMessage={toastMessage}
-                      activeColors={color}
-                      activeFonts={font}
-                    />
-                  ) : (
-                    <div className="no-element">{section.name}</div>
-                  )}
-                </Fragment>
-              ))}
+      {isLoadingAiBuilder ? (
+        <LoaderProgress />
+      ) : (
+        <>
+          <div className={`aibuilder-preview`}>
+            <NavbarLayout
+              activePages={truePages}
+              dataPages={dataPages}
+              activeSections={activeSections}
+              siteTitle={siteTitle}
+              currentPageId={currentPageId}
+              setCurrentPageId={setCurrentPageId}
+              activeNavbar={pageStyles["2bff7888-e861-4341-869b-189af29ad3f8"]}
+              activeIntro={pageStyles["798f1ce0-b732-45a6-838e-f28e137243f7"]}
+              toastMessage={toastMessage}
+              activeFonts={font}
+              activeColors={color}
+              isPreview={true}
+            />
+            {currentPageId !== null && (
+              <div className="aibuilder-preview-section">
+                {dataElements
+                  .filter((section) =>
+                    activeSections[currentPageId]?.includes(section.section_id)
+                  )
+                  .map((section) => (
+                    <Fragment key={section.section_id}>
+                      {section.section_id ===
+                      "798f1ce0-b732-45a6-838e-f28e137243f7" ? (
+                        <Intro
+                          activeSections={activeSections}
+                          currentPageId={currentPageId}
+                          activeIntro={
+                            pageStyles["798f1ce0-b732-45a6-838e-f28e137243f7"]
+                          }
+                          activeNavbar={
+                            pageStyles["2bff7888-e861-4341-869b-189af29ad3f8"]
+                          }
+                          toastMessage={toastMessage}
+                          activeColors={color}
+                          activeFonts={font}
+                        />
+                      ) : section.section_id ===
+                        "b42d4d56-d411-4aa8-ae01-52f0c406328a" ? (
+                        <Products
+                          activeProducts={
+                            pageStyles["b42d4d56-d411-4aa8-ae01-52f0c406328a"]
+                          }
+                          activeNavbar={
+                            pageStyles["2bff7888-e861-4341-869b-189af29ad3f8"]
+                          }
+                          toastMessage={toastMessage}
+                          activeColors={color}
+                          activeFonts={font}
+                          firstProduct={firstProduct}
+                        />
+                      ) : section.section_id ===
+                        "4fd1e0cc-06f3-4554-9f79-ce8e02db03c8" ? (
+                        <Services
+                          activeServices={
+                            pageStyles["4fd1e0cc-06f3-4554-9f79-ce8e02db03c8"]
+                          }
+                          activeNavbar={
+                            pageStyles["2bff7888-e861-4341-869b-189af29ad3f8"]
+                          }
+                          toastMessage={toastMessage}
+                          activeColors={color}
+                          activeFonts={font}
+                          firstService={firstService}
+                        />
+                      ) : section.section_id ===
+                        "1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed" ? (
+                        <About
+                          activeAbout={
+                            pageStyles["1a988ed7-6ddb-44c1-8a9e-2dca26ebb0ed"]
+                          }
+                          activeNavbar={
+                            pageStyles["2bff7888-e861-4341-869b-189af29ad3f8"]
+                          }
+                          toastMessage={toastMessage}
+                          activeColors={color}
+                          activeFonts={font}
+                          firstAbout={firstAbout}
+                        />
+                      ) : section.section_id ===
+                        "2089ce88-93a7-4555-8d0d-7f88f1dc3a7e" ? (
+                        <Form
+                          activeForm={
+                            pageStyles["2089ce88-93a7-4555-8d0d-7f88f1dc3a7e"]
+                          }
+                          activeNavbar={
+                            pageStyles["2bff7888-e861-4341-869b-189af29ad3f8"]
+                          }
+                          toastMessage={toastMessage}
+                          activeColors={color}
+                          activeFonts={font}
+                          firstForm={firstForm}
+                        />  
+                      ) : (
+                        <div className="no-element">{section.name}</div>
+                      )}
+                    </Fragment>
+                  ))}
+              </div>
+            )}
+            <DefaultFooter dataPages={dataPages} isPreview={true} />
           </div>
-        )}
-        <DefaultFooter dataPages={dataPages} isPreview={true} />
-      </div>
-      <ToastContainer />
+          <ToastContainer />
+        </>
+      )}
     </>
   );
 }

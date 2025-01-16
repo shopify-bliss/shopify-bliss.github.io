@@ -1,6 +1,8 @@
 import React, { Fragment } from "react";
 
-export const usernameField = (label, placeholder, type1, type2) => {
+export const usernameField = (label, placeholder, type1, type2, special) => {
+  const borderedSpecial = special?.replace(/^color-special-/, "");
+
   return (
     <div className="template-form-group">
       {label && (
@@ -15,12 +17,15 @@ export const usernameField = (label, placeholder, type1, type2) => {
         autoComplete="username"
         placeholder={placeholder}
         className={`${type1}`}
+        style={{ "--border-special-color": `#${borderedSpecial}` }}
       />
     </div>
   );
 };
 
-export const emailField = (label, placeholder, type1, type2) => {
+export const emailField = (label, placeholder, type1, type2, special) => {
+  const borderedSpecial = special?.replace(/^color-special-/, "");
+
   return (
     <div className="template-form-group">
       {label && (
@@ -35,12 +40,15 @@ export const emailField = (label, placeholder, type1, type2) => {
         autoComplete="email"
         placeholder={placeholder}
         className={`${type1}`}
+        style={{ "--border-special-color": `#${borderedSpecial}` }}
       />
     </div>
   );
 };
 
-export const phoneField = (label, placeholder, type1, type2) => {
+export const phoneField = (label, placeholder, type1, type2, special) => {
+  const borderedSpecial = special?.replace(/^color-special-/, "");
+
   return (
     <div className="template-form-group">
       {label && (
@@ -55,12 +63,15 @@ export const phoneField = (label, placeholder, type1, type2) => {
         autoComplete="tel"
         placeholder={placeholder}
         className={`${type1}`}
+        style={{ "--border-special-color": `#${borderedSpecial}` }}
       />
     </div>
   );
 };
 
-export const messageField = (label, placeholder, type1, type2) => {
+export const messageField = (label, placeholder, type1, type2, special) => {
+  const borderedSpecial = special?.replace(/^color-special-/, "");
+
   return (
     <div className="template-form-group">
       {label && (
@@ -73,6 +84,7 @@ export const messageField = (label, placeholder, type1, type2) => {
         id="message"
         placeholder={placeholder}
         className={`${type1}`}
+        style={{ "--border-special-color": `#${borderedSpecial}` }}
       ></textarea>
     </div>
   );

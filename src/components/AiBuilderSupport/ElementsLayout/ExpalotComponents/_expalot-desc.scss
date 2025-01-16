@@ -9,7 +9,8 @@ $fs-desc: 4px;
   $t-align: left,
   $ln-h: normal,
   $events: none,
-  $m: 0
+  $m: 0,
+  $pos: static
 ) {
   width: $w;
   font-size: $fs;
@@ -17,4 +18,5 @@ $fs-desc: 4px;
   text-align: $t-align;
   pointer-events: $events;
   line-height: $ln-h;
+  position: $pos;
 }

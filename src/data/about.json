@@ -6,7 +6,7 @@
     "desc_2": null,
     "image_1": "pexels-frostroomhead-7897470.jpg",
     "image_2": "pexels-anna-nekrashevich-8516697.jpg",
-    "button": "learn more"
+    "button": "Learn more"
   },
   {
     "id": 2,
@@ -24,7 +24,7 @@
     "desc_2": "Don't worry about expressing yourself—just be yourself.",
     "image_1": "pexels-n-voitkevich-8100405.jpg",
     "image_2": null,
-    "button": "learn more"
+    "button": "Learn more"
   },
   {
     "id": 4,
@@ -33,6 +33,6 @@
     "desc_2": "Don't worry about expressing yourself—just be yourself. Among over 1.5 billion websites, your unique story will make this one stand out.",
     "image_1": "pexels-mikhail-nilov-7828070.jpg",
     "image_2": null,
-    "button": "learn more"
+    "button": "Learn more"
   }
 ]

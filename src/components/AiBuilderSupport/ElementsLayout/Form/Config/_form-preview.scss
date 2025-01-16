@@ -1,0 +1,274 @@
+@use "../../../../../helpers/mixins" as m;
+@use "../../../../../helpers/variables" as v;
+@use "../../../../../helpers/animation";
+@use "../../../ai-builder-support" as support;
+@use "./form-config" as config;
+@use "../../ExpalotComponents/expalot-title" as title;
+@use "../../ExpalotComponents/expalot-desc" as desc;
+@use "../../ExpalotComponents/expalot-button" as button;
+
+@mixin form-preview() {
+  $fs-title: 3.1rem;
+  $fs-text: 1.1rem;
+  $fs-button: 0.85rem;
+
+  &.style-1 {
+    @include config.style-1($gap: 6.3rem);
+    padding: v.$p-preview;
+    grid-template-columns: 1fr 1fr;
+
+    .template-wrapper {
+      .template-title {
+        @include title.title($fs: $fs-title, $ln-h: 80%, $events: all);
+      }
+
+      .template-desc {
+        @include desc.desc(
+          $fs: $fs-text + 0.1rem,
+          $m: 1.1rem 0 0,
+          $ln-h: 135%,
+          $events: all
+        );
+      }
+    }
+
+    .template-form {
+      @include config.form(
+        $overview: true,
+        $fs: $fs-text,
+        $p-input-textarea: 0.9rem 1.15rem,
+        $p-textarea: 1rem 1.15rem,
+        $fs-input: $fs-text - 0.12rem,
+        $h-textarea: 13rem,
+        $size-radius: 1.6rem,
+        $gap-group: 0.45rem,
+        $gap-parent: 1.15rem,
+        $l-spacing: 0.8px,
+        $diff-p: true,
+        $border-color: var(--border-special-color),
+        $b-clr-textarea: var(--border-special-color),
+        $bw-input-textarea: 0.7px
+      );
+
+      .template-button {
+        @include button.button(
+          $fs: $fs-button,
+          $p: 0.8rem 1.6rem,
+          $l-spacing: 0.9px,
+          $events: all,
+          $m: 0.8rem 0 0
+        );
+      }
+    }
+
+    &.first-form {
+      margin-top: 2rem;
+
+      &.navbar-2 {
+        margin-top: 3.25rem;
+      }
+
+      &.navbar-3 {
+        margin-top: 4.3rem;
+      }
+    }
+  }
+
+  &.style-2 {
+    @include config.style-2($gap: 3.4rem);
+    padding: v.$p-preview;
+
+    .template-wrapper {
+      @include m.flex($direction: column);
+
+      .template-title {
+        @include title.title($t-align: center, $fs: $fs-title, $events: all);
+      }
+
+      .template-desc {
+        @include desc.desc(
+          $t-align: center,
+          $w: 75%,
+          $fs: $fs-text + 0.1rem,
+          $m: 0.18rem 0 0,
+          $ln-h: 135%,
+          $events: all
+        );
+      }
+    }
+
+    .template-form {
+      @include config.form(
+        $w-parent: 50%,
+        $align-form: center,
+        $border-color: var(--border-special-color),
+        $b-clr-textarea: var(--border-special-color),
+        $bw-input-textarea: 0.7px,
+        $border-input: 0 0 0 0.7px var(--border-special-color),
+        $overview: true,
+        $fs: $fs-text,
+        $p-input-textarea: 0.9rem 1.15rem,
+        $p-textarea: 1rem 1.15rem,
+        $fs-input: $fs-text - 0.12rem,
+        $h-textarea: 13rem,
+        $size-radius: 1.6rem,
+        $gap-group: 0.45rem,
+        $gap-parent: 1.15rem,
+        $diff-p: true,
+        $l-spacing: 0.8px
+      );
+
+      .template-button {
+        @include button.button(
+          $fs: $fs-button,
+          $p: 1rem 2.4rem,
+          $l-spacing: 0.9px,
+          $events: all,
+          $m: 1.35rem 0 0
+        );
+      }
+    }
+
+    &.first-form {
+      margin-top: 1.85rem;
+
+      &.navbar-2 {
+        margin-top: 2.65rem;
+      }
+
+      &.navbar-3 {
+        margin-top: 3.75rem;
+      }
+    }
+  }
+
+  &.style-3 {
+    @include config.style-3($gap: 6.9rem);
+    padding: v.$p-preview;
+
+    .template-wrapper {
+      @include m.flex($direction: column);
+      height: 100%;
+
+      .template-title {
+        @include title.title($fs: $fs-title * 2, $ln-h: 85%, $events: all);
+      }
+
+      .template-desc {
+        @include desc.desc(
+          $fs: $fs-text + 0.1rem,
+          $m: 0.85rem 0 0,
+          $ln-h: 135%,
+          $events: all
+        );
+      }
+
+      .template-form {
+        @include config.form(
+          $radius-input-textarea: false,
+          $m-parent: auto 0 0,
+          $border-color: var(--border-special-color),
+          $b-clr-textarea: var(--border-special-color),
+          $bw-input-textarea: 0.7px,
+          $overview: true,
+          $fs: $fs-text,
+          $p-input-textarea: 1.2rem 1.15rem,
+          $fs-input: $fs-text,
+          $gap-parent: 0.6rem,
+          $l-spacing: 0.8px
+        );
+
+        .template-button {
+          @include button.button(
+            $fs: $fs-button,
+            $p: 0.9rem 2.6rem,
+            $l-spacing: 0.9px,
+            $m: 2.3rem 0 0
+          );
+        }
+      }
+    }
+
+    .template-image {
+      @include config.image($h: 35rem, $mb: 0);
+    }
+
+    &.first-form {
+      margin-top: 2rem;
+
+      &.navbar-2 {
+        margin-top: 3.2rem;
+      }
+
+      &.navbar-3 {
+        margin-top: 4.35rem;
+      }
+    }
+  }
+
+  &.style-4 {
+    @include config.style-4($p: 5.6rem 0);
+
+    .template-wrapper {
+      background-color: #fff;
+      padding: 3.4rem 0 4.6rem;
+      @include m.flex($direction: column);
+      gap: 0.6rem;
+      width: 50%;
+
+      .template-title {
+        @include title.title($t-align: center, $fs: $fs-title, $events: all);
+      }
+
+      .template-desc {
+        @include desc.desc(
+          $t-align: center,
+          $m: -0.25rem 0 3.4rem,
+          $fs: $fs-text + 0.1rem,
+          $ln-h: 135%,
+          $w: 75%,
+          $events: all
+        );
+      }
+
+      @include config.form(
+        $form-parent: false,
+        $radius-input-textarea: false,
+        $w-group: 65%,
+        $b-clr-textarea: var(--border-special-color),
+        $bw-input-textarea: 0.7px,
+        $overview: true,
+        $fs: $fs-text,
+        $p-input-textarea: 1.2rem 1.15rem,
+        $fs-input: $fs-text
+      );
+
+      .template-button {
+        @include button.button(
+          $fs: $fs-button,
+          $p: 0.9rem 1.8rem,
+          $l-spacing: 0.9px,
+          $m: 0.9rem 0 0
+        );
+      }
+    }
+
+    &.first-form {
+      .template-wrapper {
+        margin-top: 3.65rem;
+      }
+
+      &.navbar-2 {
+        .template-wrapper {
+          margin-top: 4.7rem;
+        }
+      }
+
+      &.navbar-3 {
+        .template-wrapper {
+          margin-top: 5.55rem;
+        }
+      }
+    }
+  }
+}

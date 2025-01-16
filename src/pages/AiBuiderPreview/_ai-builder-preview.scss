@@ -41,19 +41,19 @@
     }
 
     .products {
-      @include products.products();
+      @include products.products($preview: true);
     }
 
     .services {
-      @include services.services();
+      @include services.services($preview: true);
     }
 
     .about {
-      @include about.about();
+      @include about.about($preview: true);
     }
 
     .form {
-      @include form.form();
+      @include form.form($preview: true);
     }
 
     .no-element {

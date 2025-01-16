@@ -14,202 +14,204 @@ $fs-button: 9px;
 @mixin intro($element: false, $preview: false) {
   width: 100%;
   height: auto;
-  min-height: 52vh;
-  border: v.$border-hover;
   position: relative;
-  padding: $pt-overview v.$p-navter v.$p-navter;
 
   .change-layout {
     display: none;
   }
 
-  &.style-1 {
-    @include config.style-1();
+  @if $preview {
+    @include preview.intro-preview();
+    min-height: 100vh;
+    padding: (v.$p-preview * 1.225) v.$p-preview v.$p-preview;
+  } @else {
+    min-height: 52vh;
+    padding: $pt-overview v.$p-navter v.$p-navter;
+    border: v.$border-hover;
 
-    @if $element {
-      @include support.change-layout(
-        $bg-color: adjust-color($color: #fff, $blackness: 90%),
-        $border-color: adjust-color($color: #fff, $blackness: 90%),
-        $color: #fff
-      );
-    }
+    &.style-1 {
+      @include config.style-1();
 
-    .template-brand {
-      @include config.brand($fs: $fs-brand);
-    }
+      @if $element {
+        @include support.change-layout(
+          $bg-color: adjust-color($color: #fff, $blackness: 90%),
+          $border-color: adjust-color($color: #fff, $blackness: 90%),
+          $color: #fff
+        );
+      }
 
-    .template-desc {
-      @include config.desc(
-        $position: true,
-        $white-theme: true,
-        $w: 40%,
-        $fs: $fs-desc
-      );
-      bottom: 11.5%;
-      left: 6.5%;
-    }
-
-    .template-image {
-      @include config.image($height: $h-image);
-    }
-
-    &.navbar-2 {
-      padding-top: $pt-overview * 1.25;
-    }
-
-    &.navbar-3 {
-      padding-top: $pt-overview * 1.65;
-    }
-  }
-
-  &.style-2 {
-    @include config.style-2($gap: 2.4rem);
-
-    @if $element {
-      @include support.change-layout(
-        $bg-color: adjust-color($color: #fff, $blackness: 90%),
-        $border-color: adjust-color($color: #fff, $blackness: 90%),
-        $color: #fff
-      );
-    }
-
-    .template-wrapper {
-      @include m.flex($direction: column, $align: flex-start);
-      gap: 0.7rem;
-
-      .template-preface {
-        @include config.preface($w: 60%, $fs: $fs-preface);
+      .template-brand {
+        @include config.brand($fs: $fs-brand);
       }
 
       .template-desc {
-        @include config.desc($w: 100%, $fs: $fs-desc);
+        @include config.desc(
+          $position: true,
+          $white-theme: true,
+          $w: 40%,
+          $fs: $fs-desc
+        );
+        bottom: 11.5%;
+        left: 6.5%;
+      }
+
+      .template-image {
+        @include config.image($height: $h-image);
+      }
+
+      &.navbar-2 {
+        padding-top: $pt-overview * 1.25;
+      }
+
+      &.navbar-3 {
+        padding-top: $pt-overview * 1.65;
+      }
+    }
+
+    &.style-2 {
+      @include config.style-2($gap: 2.4rem);
+
+      @if $element {
+        @include support.change-layout(
+          $bg-color: adjust-color($color: #fff, $blackness: 90%),
+          $border-color: adjust-color($color: #fff, $blackness: 90%),
+          $color: #fff
+        );
+      }
+
+      .template-wrapper {
+        @include m.flex($direction: column, $align: flex-start);
+        gap: 0.7rem;
+
+        .template-preface {
+          @include config.preface($w: 60%, $fs: $fs-preface);
+        }
+
+        .template-desc {
+          @include config.desc($w: 100%, $fs: $fs-desc);
+        }
+
+        .template-button {
+          @include config.button(
+            $fs: $fs-button,
+            $p: 0.5rem 0.9rem,
+            $m-top: 1rem
+          );
+        }
+      }
+
+      .template-image {
+        @include config.image($height: $h-image * 1.1);
+      }
+
+      &.navbar-1,
+      &.navbar-4 {
+        padding-top: $pt-overview * 1.15;
+      }
+
+      &.navbar-2 {
+        padding-top: $pt-overview * 1.48;
+      }
+
+      &.navbar-3 {
+        padding-top: $pt-overview * 1.95;
+      }
+    }
+
+    &.style-3 {
+      @include config.style-3();
+      gap: 0.9rem;
+      padding-top: v.$p-navter * 3;
+
+      @if $element {
+        @include support.change-layout(
+          $bg-color: adjust-color($color: #fff, $blackness: 90%),
+          $border-color: adjust-color($color: #fff, $blackness: 90%),
+          $color: #fff
+        );
+      }
+
+      .template-preface {
+        @include config.preface(
+          $white-theme: true,
+          $align-center: true,
+          $fs: $fs-preface
+        );
+      }
+
+      .template-desc {
+        @include config.desc(
+          $align-center: true,
+          $w: 70%,
+          $white-theme: true,
+          $fs: $fs-desc
+        );
       }
 
       .template-button {
         @include config.button(
           $fs: $fs-button,
           $p: 0.5rem 0.9rem,
-          $m-top: 1rem
+          $m-top: 0.8rem
         );
       }
     }
 
-    .template-image {
-      @include config.image($height: $h-image * 1.1);
-    }
+    &.style-4 {
+      @include config.style-4();
+      gap: 0.7rem;
+      padding-left: 0;
+      padding-top: $pt-overview * 1.45;
+      padding-bottom: v.$p-navter * 0.6;
 
-    &.navbar-1,
-    &.navbar-4 {
-      padding-top: $pt-overview * 1.15;
-    }
-
-    &.navbar-2 {
-      padding-top: $pt-overview * 1.48;
-    }
-
-    &.navbar-3 {
-      padding-top: $pt-overview * 1.95;
-    }
-  }
-
-  &.style-3 {
-    @include config.style-3();
-    gap: 0.9rem;
-    padding-top: v.$p-navter * 3;
-
-    @if $element {
-      @include support.change-layout(
-        $bg-color: adjust-color($color: #fff, $blackness: 90%),
-        $border-color: adjust-color($color: #fff, $blackness: 90%),
-        $color: #fff
-      );
-    }
-
-    .template-preface {
-      @include config.preface(
-        $white-theme: true,
-        $align-center: true,
-        $fs: $fs-preface
-      );
-    }
-
-    .template-desc {
-      @include config.desc(
-        $align-center: true,
-        $w: 70%,
-        $white-theme: true,
-        $fs: $fs-desc
-      );
-    }
-
-    .template-button {
-      @include config.button(
-        $fs: $fs-button,
-        $p: 0.5rem 0.9rem,
-        $m-top: 0.8rem
-      );
-    }
-  }
-
-  &.style-4 {
-    @include config.style-4();
-    gap: 0.7rem;
-    padding-left: 0;
-    padding-top: $pt-overview * 1.45;
-    padding-bottom: v.$p-navter * 0.6;
-
-    @if $element {
-      @include support.change-layout(
-        $bg-color: adjust-color($color: #fff, $blackness: 90%),
-        $border-color: adjust-color($color: #fff, $blackness: 90%),
-        $color: #fff
-      );
-    }
-
-    .template-desc {
-      @include config.desc($w: 45%, $white-theme: true, $fs: $fs-desc);
-      margin-left: v.$p-navter;
-    }
-
-    .template-button {
-      @include config.button(
-        $bordered: true,
-        $color-border: #fff,
-        $fs: $fs-button,
-        $p: 0.5rem 0.9rem,
-        $m-top: 0.3rem
-      );
-      margin-left: v.$p-navter;
-      background-color: transparent;
-    }
-
-    .template-wrapper {
-      margin-top: auto;
-      overflow: clip;
-
-      .template-brand {
-        @include config.brand(
-          $fs: $fs-brand,
-          $fs-marquee: $fs-brand + 0.4rem,
-          $white-theme: true,
-          $marquee: true,
-          $distance: 1.05rem
+      @if $element {
+        @include support.change-layout(
+          $bg-color: adjust-color($color: #fff, $blackness: 90%),
+          $border-color: adjust-color($color: #fff, $blackness: 90%),
+          $color: #fff
         );
       }
-    }
 
-    &.navbar-2 {
-      padding-top: $pt-overview * 1.6;
-    }
+      .template-desc {
+        @include config.desc($w: 45%, $white-theme: true, $fs: $fs-desc);
+        margin-left: v.$p-navter;
+      }
 
-    &.navbar-3 {
-      padding-top: $pt-overview * 1.95;
-    }
-  }
+      .template-button {
+        @include config.button(
+          $bordered: true,
+          $color-border: #fff,
+          $fs: $fs-button,
+          $p: 0.5rem 0.9rem,
+          $m-top: 0.3rem
+        );
+        margin-left: v.$p-navter;
+        background-color: transparent;
+      }
 
-  @if $preview {
-    @include preview.intro-preview();
-    min-height: 100vh;
+      .template-wrapper {
+        margin-top: auto;
+        overflow: clip;
+
+        .template-brand {
+          @include config.brand(
+            $fs: $fs-brand,
+            $fs-marquee: $fs-brand + 0.4rem,
+            $white-theme: true,
+            $marquee: true,
+            $distance: 1.05rem
+          );
+        }
+      }
+
+      &.navbar-2 {
+        padding-top: $pt-overview * 1.6;
+      }
+
+      &.navbar-3 {
+        padding-top: $pt-overview * 1.95;
+      }
+    }
   }
 }
 

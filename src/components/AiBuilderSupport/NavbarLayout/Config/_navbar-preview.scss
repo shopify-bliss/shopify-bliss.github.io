@@ -3,19 +3,21 @@
 @use "../../ai-builder-support" as support;
 @use "./navbar-config" as config;
 
-$fs-logo-text: 1.5rem;
-$fs-logo-icon: 2.1rem;
+$fs-logo: 2rem;
+$fs-links: 0.85rem;
 
 @mixin navbar-preview() {
   &.style-1,
   &.style-2,
   &.style-3,
   &.style-4 {
-    padding: v.$py-preview v.$px-preview;
+    padding: v.$py-preview-navter v.$p-preview;
 
     .template-logo {
-      cursor: pointer;
-      pointer-events: all;
+      .title {
+        cursor: pointer;
+        pointer-events: all;
+      }
     }
 
     .template-links {
@@ -29,16 +31,96 @@ $fs-logo-icon: 2.1rem;
     @include config.style-1();
 
     .template-logo {
-      @include config.logo(
-        $gap: 0.2rem,
-        $fs-title: $fs-logo-text,
-        $fs-icon: $fs-logo-icon,
-        $line-height: 120%
-      );
+      @include config.logo($fs-title: $fs-logo, $line-height: 120%);
     }
 
     .template-links {
-      @include config.links($gap: 1.5rem, $fs-text: 0.85rem, $m-right: 0.1rem);
+      @include config.links(
+        $gap: 1.5rem,
+        $fs-text: $fs-links,
+        $m-right: 0.1rem
+      );
+    }
+  }
+
+  &.style-2 {
+    @include config.style-2($row-gap: 0.8rem);
+
+    .template-logo {
+      @include config.logo($fs-title: $fs-logo, $line-height: 120%);
+    }
+
+    .template-links {
+      @include config.links($gap: 1.5rem, $fs-text: $fs-links, $end: false);
+    }
+  }
+
+  &.style-3 {
+    @include config.style-3($row-gap: 1.1rem);
+
+    .template-logo {
+      @include config.logo(
+        $fs-title: $fs-logo,
+        $line-height: 120%,
+        $start: false
+      );
+    }
+
+    .template-features {
+      @include config.features(
+        $fs-text: $fs-links,
+        $fs-icon: 1.35rem,
+        $gap: 0.4rem
+      );
+    }
+
+    .template-wrapper {
+      .template-links {
+        @include config.links(
+          $gap: 1.5rem,
+          $fs-text: $fs-links,
+          $m-right: 0.1rem,
+          $end: false
+        );
+      }
+
+      .template-search {
+        @include config.search(
+          $fs-icon: 12px,
+          $fs-icon-warn: 1.35rem,
+          $gap: 0.4rem,
+          $fs-text: $fs-links,
+          $m: auto,
+          $p: 0.35rem 0.4rem,
+          $height: 1.5vh,
+          $width: 13vw
+        );
+      }
+    }
+  }
+
+  &.style-4 {
+    @include config.style-4();
+
+    .template-logo {
+      @include config.logo($fs-title: $fs-logo, $line-height: 120%);
+    }
+
+    .template-links {
+      @include config.links(
+        $gap: 1.5rem,
+        $fs-text: $fs-links,
+        $m-right: 0.1rem,
+        $end: false
+      );
+    }
+
+    .template-features {
+      @include config.features(
+        $fs-text: $fs-links,
+        $fs-icon: 1.35rem,
+        $gap: 0.4rem
+      );
     }
   }
 }

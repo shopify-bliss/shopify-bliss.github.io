@@ -3,6 +3,7 @@
 @use "../../../ai-builder-support" as support;
 @use "../../ExpalotComponents/expalot-title" as title;
 @use "../../ExpalotComponents/expalot-desc" as desc;
+@use "../../ExpalotComponents/expalot-button" as button;
 
 $fs-desc: 3px;
 $fs-text: 4px;
@@ -10,41 +11,29 @@ $fs-name: 5px;
 $py-layout: 0.45rem;
 $px-layout: 0.5rem;
 
-@mixin name($fs: $fs-name, $t-decor: false, $fw: 600) {
+@mixin name(
+  $fs: $fs-name,
+  $t-decor: false,
+  $fw: 600,
+  $b-pb: 0.1px,
+  $b-weight: 0.2px,
+  $b-clr: #000
+) {
   font-size: $fs;
   font-weight: $fw;
   line-height: 100%;
   pointer-events: none;
 
   @if $t-decor {
-    text-decoration: underline;
+    padding-bottom: $b-pb;
+    background-color: transparent;
+    box-shadow: 0 $b-weight 0 $b-clr;
   }
 }
 
 @mixin price($fs: $fs-text) {
   font-size: $fs;
   pointer-events: none;
-}
-
-@mixin button(
-  $fs: $fs-text,
-  $mt: 0,
-  $p: 0.22rem 0.62rem,
-  $bg: transparent,
-  $color: #000,
-  $t-decor: none
-) {
-  font-size: $fs;
-  border-radius: 50vw;
-  @include m.flex();
-  width: fit-content;
-  line-height: 100%;
-  cursor: pointer;
-  padding: $p;
-  margin-top: $mt;
-  background-color: $bg;
-  color: $color;
-  text-decoration: $t-decor;
 }
 
 @mixin image($mb: 0.4rem, $h: 4rem) {
@@ -56,7 +45,7 @@ $px-layout: 0.5rem;
   pointer-events: none;
 }
 
-@mixin container-item($gap: 0.05rem) {
+@mixin container-item($gap: 0.1rem) {
   @include m.flex($direction: column, $align: flex-start);
   gap: $gap;
 }
@@ -66,7 +55,7 @@ $px-layout: 0.5rem;
   gap: $gap;
 }
 
-@mixin style-2($gap: 0.4rem) {
+@mixin style-2($gap: 0.6rem) {
   @include m.flex($direction: column, $align: flex-start, $justify: flex-start);
   gap: $gap;
 }
@@ -237,11 +226,19 @@ $px-layout: 0.5rem;
             }
 
             .template-desc {
-              @include desc.desc($fs: $fs-desc, $m: 0.18rem 0 0, $ln-h: 135%);
+              @include desc.desc($fs: $fs-desc, $m: 0.24rem 0 0, $ln-h: 135%);
             }
 
             .template-button {
-              @include button($p: 0, $t-decor: underline, $mt: 0.025rem);
+              @include button.button(
+                $underline: true,
+                $b-weight: 0.2px,
+                $m: 0.15rem 0 0,
+                $p: 0 0 0.01rem,
+                $b-radius: 0,
+                $t-transform: none,
+                $l-spacing: 0.1px
+              );
             }
           }
         }
@@ -319,12 +316,13 @@ $px-layout: 0.5rem;
           }
 
           .template-button {
-            @include button(
-              $bg: #000,
-              $color: #fff,
-              $mt: 0.65rem,
-              $p: 0.22rem 0.7rem
+            @include button.button(
+              $fs: $fs-text,
+              $m: 0.65rem 0 0,
+              $p: 0.3rem 0.6rem
             );
+            background-color: #000;
+            color: #fff;
           }
         }
 

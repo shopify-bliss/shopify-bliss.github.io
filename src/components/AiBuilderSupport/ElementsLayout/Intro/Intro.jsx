@@ -5,7 +5,7 @@ import IntroConfig from "./Config/IntroConfig";
 import {
   OtherColors,
   SpecialColors,
-  OtherColorsWhite,
+  IntroColorsWhite,
 } from "../../ColorsSupport";
 import { FontType1, FontType2 } from "../../FontsSupport";
 import introSample from "../../../../data/intro.json";
@@ -27,7 +27,7 @@ function Intro({
   const expandLayoutRef = useRef(null);
 
   const others = OtherColors({ activeColors });
-  const colorStyle = OtherColorsWhite({
+  const colorStyle = IntroColorsWhite({
     others,
     activeSections: activeSections[currentPageId],
   });

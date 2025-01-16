@@ -3,6 +3,7 @@
 @use "../../../ai-builder-support" as support;
 @use "../../ExpalotComponents/expalot-title" as title;
 @use "../../ExpalotComponents/expalot-desc" as desc;
+@use "../../ExpalotComponents/expalot-button" as button;
 
 $fs-desc: 3px;
 $fs-text: 4px;
@@ -38,7 +39,7 @@ $fs-text: 4px;
   gap: $gap;
 }
 
-@mixin style-3($p: 0 2.9rem) {
+@mixin style-3($p: 0 2.6rem) {
   @include m.flex();
   padding: $p;
 }
@@ -99,7 +100,11 @@ $fs-text: 4px;
           }
 
           .template-button {
-            @include button($m: 0.75rem 0);
+            @include button.button(
+              $m: 0.7rem 0,
+              $p: 0.25rem 0.6rem,
+              $l-spacing: 0.2px
+            );
             background-color: #000;
             color: #fff;
           }
@@ -133,12 +138,16 @@ $fs-text: 4px;
               $fs: $fs-desc,
               $m: 0.18rem 0 0,
               $ln-h: 135%,
-              $w: 80%
+              $w: 90%
             );
           }
 
           .template-button {
-            @include button($m: 0.6rem 0 0.25rem);
+            @include button.button(
+              $m: 0.6rem 0 0,
+              $p: 0.25rem 0.4rem,
+              $l-spacing: 0.2px
+            );
             background-color: #000;
             color: #fff;
           }
@@ -207,7 +216,11 @@ $fs-text: 4px;
           }
 
           .template-button {
-            @include button($m: 0.65rem 0 0);
+            @include button.button(
+              $m: 0.6rem 0 0,
+              $p: 0.25rem 0.6rem,
+              $l-spacing: 0.2px
+            );
             background-color: #000;
             color: #fff;
           }

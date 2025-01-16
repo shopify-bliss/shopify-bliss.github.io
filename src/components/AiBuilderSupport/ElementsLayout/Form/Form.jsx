@@ -8,7 +8,7 @@ import FormConfig, {
   phoneField,
   messageField,
 } from "./Config/FormConfig";
-import { BgColors, OtherColors } from "../../ColorsSupport";
+import { BgColors, OtherColors, SpecialColors } from "../../ColorsSupport";
 import { FontType1, FontType2 } from "../../FontsSupport";
 
 function Form({
@@ -27,6 +27,7 @@ function Form({
 
   const bg = BgColors({ activeColors });
   const others = OtherColors({ activeColors });
+  const special = SpecialColors({ activeColors });
   const type1 = FontType1({ activeFonts });
   const type2 = FontType2({ activeFonts });
 
@@ -82,26 +83,40 @@ function Form({
                           true,
                           data.username.placeholder,
                           type1,
-                          type2
+                          type2,
+                          special
                         )}
 
                       {data.email.required === true &&
-                        emailField(true, data.email.placeholder, type1, type2)}
+                        emailField(
+                          true,
+                          data.email.placeholder,
+                          type1,
+                          type2,
+                          special
+                        )}
 
                       {data.phone.required === true &&
-                        phoneField(true, data.phone.placeholder, type1, type2)}
+                        phoneField(
+                          true,
+                          data.phone.placeholder,
+                          type1,
+                          type2,
+                          special
+                        )}
 
                       {data.message.required === true &&
                         messageField(
                           true,
                           data.message.placeholder,
                           type1,
-                          type2
+                          type2,
+                          special
                         )}
 
                       <button
                         type="submit"
-                        className={`template-button ${type1}`}
+                        className={`template-button ${type1} ${special}`}
                       >
                         {data.button}
                       </button>
@@ -133,26 +148,40 @@ function Form({
                           true,
                           data.username.placeholder,
                           type1,
-                          type2
+                          type2,
+                          special
                         )}
 
                       {data.email.required === true &&
-                        emailField(true, data.email.placeholder, type1, type2)}
+                        emailField(
+                          true,
+                          data.email.placeholder,
+                          type1,
+                          type2,
+                          special
+                        )}
 
                       {data.phone.required === true &&
-                        phoneField(true, data.phone.placeholder, type1, type2)}
+                        phoneField(
+                          true,
+                          data.phone.placeholder,
+                          type1,
+                          type2,
+                          special
+                        )}
 
                       {data.message.required === true &&
                         messageField(
                           true,
                           data.message.placeholder,
                           type1,
-                          type2
+                          type2,
+                          special
                         )}
 
                       <button
                         type="submit"
-                        className={`template-button ${type1}`}
+                        className={`template-button ${type1} ${special}`}
                       >
                         {data.button}
                       </button>
@@ -184,7 +213,9 @@ function Form({
                           usernameField(
                             false,
                             data.username.placeholder,
-                            type1
+                            type1,
+                            type2,
+                            special
                           )}
 
                         {data.email.required === true &&
@@ -192,7 +223,8 @@ function Form({
                             false,
                             data.email.placeholder,
                             type1,
-                            type2
+                            type2,
+                            special
                           )}
 
                         {data.phone.required === true &&
@@ -200,12 +232,13 @@ function Form({
                             false,
                             data.phone.placeholder,
                             type1,
-                            type2
+                            type2,
+                            special
                           )}
 
                         <button
                           type="submit"
-                          className={`template-button ${type1}`}
+                          className={`template-button ${type1} ${special}`}
                         >
                           {data.button}
                         </button>
@@ -242,18 +275,31 @@ function Form({
                           false,
                           data.username.placeholder,
                           type1,
-                          type2
+                          type2,
+                          special
                         )}
 
                       {data.email.required === true &&
-                        emailField(false, data.email.placeholder, type1, type2)}
+                        emailField(
+                          false,
+                          data.email.placeholder,
+                          type1,
+                          type2,
+                          special
+                        )}
 
                       {data.phone.required === true &&
-                        phoneField(false, data.phone.placeholder, type1, type2)}
+                        phoneField(
+                          false,
+                          data.phone.placeholder,
+                          type1,
+                          type2,
+                          special
+                        )}
 
                       <button
                         type="submit"
-                        className={`template-button ${type1}`}
+                        className={`template-button ${type1} ${special}`}
                       >
                         {data.button}
                       </button>

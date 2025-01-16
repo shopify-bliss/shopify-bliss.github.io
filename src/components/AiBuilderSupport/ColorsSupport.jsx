@@ -122,7 +122,7 @@ export const SpecialColors = ({ activeColors }) => {
   return special;
 };
 
-export const OtherColorsWhite = ({ others, activeSections }) => {
+export const IntroColorsWhite = ({ others, activeSections }) => {
   return (others === "color-other-3A6F77" ||
     others === "color-other-A97142" ||
     others === "color-other-014421") &&

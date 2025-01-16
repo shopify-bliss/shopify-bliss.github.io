@@ -11,7 +11,7 @@ import {
 import navbarFeatures from "../../../data/navbarFeature.json";
 import navbarOptionLayout from "../../../data/navbarOptionLayout.json";
 import { ChangeLayout } from "../AiBuilderSupport";
-import { OtherColors, OtherColorsWhite } from "../ColorsSupport";
+import { OtherColors, IntroColorsWhite } from "../ColorsSupport";
 import { FontType1, FontType2 } from "../FontsSupport";
 
 function NavbarLayout({
@@ -38,7 +38,7 @@ function NavbarLayout({
   const colorStyle =
     typeMain === "page"
       ? null
-      : OtherColorsWhite({
+      : IntroColorsWhite({
           others,
           activeSections: activeSections[currentPageId],
         });
@@ -46,7 +46,12 @@ function NavbarLayout({
   const type2 = FontType2({ activeFonts });
 
   const displaySiteTitle = useDisplaySiteTitle({ siteTitle });
-  const displayLogo = useDisplayLogo({ dataPages, displaySiteTitle });
+  const displayLogo = useDisplayLogo({
+    dataPages,
+    displaySiteTitle,
+    isPreview,
+    setCurrentPageId,
+  });
   const displayActivePages = useDisplayActivePages({
     activePages,
     dataPages,

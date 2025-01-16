@@ -9,7 +9,12 @@ export function useDisplaySiteTitle({ siteTitle }) {
   return displaySiteTitle;
 }
 
-export function useDisplayLogo({ dataPages, displaySiteTitle }) {
+export function useDisplayLogo({
+  dataPages,
+  displaySiteTitle,
+  isPreview,
+  setCurrentPageId,
+}) {
   const displayLogo = useMemo(() => {
     const logo = dataPages.find(
       (page) =>
@@ -18,11 +23,22 @@ export function useDisplayLogo({ dataPages, displaySiteTitle }) {
 
     return (
       <>
-        <span className="material-symbols-outlined">{logo?.icon}</span>
-        <div className="title">{displaySiteTitle}</div>
+        {!isPreview ? (
+          <span className="material-symbols-outlined">{logo?.icon}</span>
+        ) : null}
+        <div
+          className="title"
+          onClick={() =>
+            isPreview
+              ? setCurrentPageId("a2d56bd2-c5fc-4404-9c3f-5977a88a6625")
+              : null
+          }
+        >
+          {displaySiteTitle}
+        </div>
       </>
     );
-  }, [dataPages, displaySiteTitle]);
+  }, [dataPages, displaySiteTitle, isPreview, setCurrentPageId]);
 
   return displayLogo;
 }

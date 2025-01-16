@@ -1,0 +1,21 @@
+@use "../../../../helpers/mixins" as m;
+@use "../../../../helpers/variables" as v;
+
+@mixin item-name(
+  $fs: 4px,
+  $f-weight: normal,
+  $m: 0.2rem 0 0,
+  $p: 0 0 0.1rem,
+  $b-weight: 0.9px,
+  $b-clr: #000
+) {
+  margin-top: $m;
+  font-size: $fs;
+  padding: $p;
+  box-shadow: 0 $b-weight 0 $b-clr;
+  font-weight: $f-weight;
+}
+
+@mixin price($fs) {
+  font-size: $fs;
+}

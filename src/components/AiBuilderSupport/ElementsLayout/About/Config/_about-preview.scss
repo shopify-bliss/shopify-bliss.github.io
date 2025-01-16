@@ -1,0 +1,223 @@
+@use "../../../../../helpers/mixins" as m;
+@use "../../../../../helpers/variables" as v;
+@use "../../../../../helpers/animation";
+@use "../../../ai-builder-support" as support;
+@use "./about-config" as config;
+@use "../../ExpalotComponents/expalot-title" as title;
+@use "../../ExpalotComponents/expalot-desc" as desc;
+@use "../../ExpalotComponents/expalot-button" as button;
+
+@mixin about-preview() {
+  $fs-title: 3.1rem;
+  $fs-name: 1.6rem;
+  $fs-desc: 1.1rem;
+  $fs-button: 0.85rem;
+  $size-image: 18rem;
+
+  &.style-1 {
+    @include config.style-1($gap: 3rem);
+    padding: v.$p-preview;
+
+    .template-wrapper {
+      @include m.flex(
+        $direction: column,
+        $justify: flex-start,
+        $align: flex-start
+      );
+
+      .template-title {
+        @include title.title(
+          $w: 55%,
+          $fs: $fs-title,
+          $ln-h: 102%,
+          $events: all
+        );
+      }
+
+      .template-desc {
+        @include desc.desc(
+          $w: 60%,
+          $fs: $fs-desc,
+          $m: 1.2rem 0 0,
+          $ln-h: 135%,
+          $events: all
+        );
+      }
+
+      .template-button {
+        @include button.button(
+          $m: 3.6rem 0,
+          $fs: $fs-button,
+          $p: 0.95rem 3rem,
+          $l-spacing: 0.9px,
+          $events: all
+        );
+      }
+
+      .template-image-1 {
+        @include config.image($w: 85%, $h: 20rem, $mb: 0, $obj-pos: center 90%);
+      }
+    }
+
+    .template-image-2 {
+      @include config.image($w: 65%, $h: 32rem, $mb: 0, $obj-pos: center 100%);
+    }
+
+    &.first-about {
+      margin-top: 1.95rem;
+
+      &.navbar-2 {
+        margin-top: 3.05rem;
+      }
+
+      &.navbar-3 {
+        margin-top: 4.05rem;
+      }
+    }
+  }
+
+  &.style-2 {
+    @include config.style-2($gap: 0.9rem);
+
+    .template-wrapper {
+      padding: v.$p-preview v.$p-preview (v.$p-preview * 0.6);
+      @include m.flex($align: flex-start);
+      gap: 4.7rem;
+
+      .template-title {
+        @include title.title(
+          $w: 80%,
+          $fs: $fs-title,
+          $ln-h: 102%,
+          $events: all
+        );
+      }
+
+      .template-desc {
+        @include desc.desc($fs: $fs-desc, $w: 85%, $ln-h: 135%, $events: all);
+      }
+    }
+
+    .template-image {
+      height: 35rem;
+      width: 100%;
+    }
+
+    &.first-about {
+      margin-top: 1.75rem;
+
+      &.navbar-2 {
+        margin-top: 2.72rem;
+      }
+
+      &.navbar-3 {
+        margin-top: 3.5rem;
+      }
+    }
+  }
+
+  &.style-3 {
+    @include config.style-3($p: 6rem 19rem);
+
+    .template-wrapper {
+      padding: 4.5rem 5.7rem;
+      @include m.flex($direction: column, $justify: flex-start);
+
+      .template-title {
+        @include title.title($t-align: center, $fs: $fs-title, $events: all);
+      }
+
+      .template-desc {
+        @include desc.desc(
+          $t-align: center,
+          $fs: $fs-desc,
+          $m: 0.6rem 0 0,
+          $ln-h: 135%,
+          $events: all
+        );
+      }
+
+      .template-button {
+        @include button.button(
+          $m: 2.7rem 0 0,
+          $fs: $fs-button,
+          $p: 0.9rem 1.7rem,
+          $l-spacing: 0.9px,
+          $events: all
+        );
+      }
+    }
+
+    &.first-about {
+      .template-wrapper {
+        margin-top: 0.9rem;
+      }
+
+      &.navbar-2 {
+        .template-wrapper {
+          margin-top: 1.75rem;
+        }
+      }
+
+      &.navbar-3 {
+        .template-wrapper {
+          margin-top: 2.85rem;
+        }
+      }
+    }
+  }
+
+  &.style-4 {
+    @include config.style-4($gap: 4.7rem);
+    padding: v.$p-preview;
+
+    .template-image {
+      @include config.image($h: 30rem, $mb: 0);
+    }
+
+    .template-wrapper {
+      @include m.flex($direction: column, $align: flex-start);
+      gap: 0.4rem;
+
+      .template-title {
+        @include title.title($fs: $fs-title, $events: all);
+      }
+
+      .template-loan {
+        @include m.flex($align: flex-start);
+        gap: 2.6rem;
+
+        .template-desc {
+          @include desc.desc(
+            $fs: $fs-desc,
+            $m: 0.6rem 0 0,
+            $ln-h: 135%,
+            $events: all
+          );
+        }
+      }
+
+      .template-button {
+        @include button.button(
+          $m: 3.2rem 0 0,
+          $fs: $fs-button,
+          $p: 0.9rem 3.3rem,
+          $l-spacing: 0.9px,
+          $events: all
+        );
+      }
+    }
+
+    &.first-about {
+      margin-top: 2.15rem;
+
+      &.navbar-2 {
+        margin-top: 3.6rem;
+      }
+
+      &.navbar-3 {
+        margin-top: 4.65rem;
+      }
+    }
+  }
+}

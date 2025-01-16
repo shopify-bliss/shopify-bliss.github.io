@@ -143,7 +143,7 @@ function About({
               .map((data, index) => {
                 return (
                   <>
-                    <div className="template-wrapper" key={index}>
+                    <div className={`template-wrapper ${bg}`} key={index}>
                       <div className={`template-title ${type2} ${font}`}>
                         {data.title}
                       </div>

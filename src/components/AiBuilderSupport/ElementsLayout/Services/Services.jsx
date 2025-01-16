@@ -12,7 +12,7 @@ import { FormatCurrencyIDR } from "../../../../helpers/FormatCurrencyIDR";
 import serviceSamples from "../../../../data/services.json";
 import image from "/products/pexels-anna-nekrashevich-8516697.jpg";
 import ServicesConfig from "./Config/ServicesConfig";
-import { BgColors } from "../../ColorsSupport";
+import { BgColors, SpecialColors, FontColors } from "../../ColorsSupport";
 import { FontType1, FontType2 } from "../../FontsSupport";
 
 function Services({
@@ -30,7 +30,9 @@ function Services({
   const [activeDescIds3, setActiveDescIds3] = useState([1]);
   const [activeDescIds4, setActiveDescIds4] = useState([1]);
 
+  const font = FontColors({ activeColors });
   const bg = BgColors({ activeColors });
+  const special = SpecialColors({ activeColors });
   const type1 = FontType1({ activeFonts });
   const type2 = FontType2({ activeFonts });
 
@@ -71,9 +73,11 @@ function Services({
             {serviceSamples
               .filter((service) => service.id === 1)
               .map((service) => {
+                const borderedFont = font.replace(/^color-font-/i, "");
+
                 return (
                   <Fragment key={service.id}>
-                    <div className={`template-title ${type2}`}>
+                    <div className={`template-title ${type2} ${font}`}>
                       {service.title}
                     </div>
                     <div className="template-wrapper">
@@ -84,7 +88,12 @@ function Services({
                           <>
                             <div className="container-item" key={data.id}>
                               <img className="template-image" src={image} />
-                              <div className={`template-name ${type2}`}>
+                              <div
+                                className={`template-name ${type2} ${font}`}
+                                style={{
+                                  "--border-font-color": `#${borderedFont}`,
+                                }}
+                              >
                                 {data.name} Service
                               </div>
                               <div className={`template-price ${type1}`}>
@@ -109,22 +118,35 @@ function Services({
             {serviceSamples
               .filter((service) => service.id === 2)
               .map((service) => {
+                const borderedSpecial = special.replace(/^color-special-/i, "");
+                const borderedFont = font.replace(/^color-font-/i, "");
+
                 return (
                   <Fragment key={service.id}>
-                    <div className={`template-title ${type2}`}>
+                    <div className={`template-title ${type2} ${font}`}>
                       {service.title}
                     </div>
                     <div className="template-wrapper">
                       {service.services.map((data) => {
                         return (
                           <div className="container-item" key={data.id}>
-                            <div className={`template-name ${type2}`}>
+                            <div
+                              className={`template-name ${type2} ${font}`}
+                              style={{
+                                "--border-font-color": `#${borderedFont}`,
+                              }}
+                            >
                               {data.name}
                             </div>
                             <div className={`template-desc ${type1}`}>
                               {data.desc}
                             </div>
-                            <div className={`template-button ${type1}`}>
+                            <div
+                              className={`template-button ${type1} ${font}`}
+                              style={{
+                                "--border-special-color": `#${borderedSpecial}`,
+                              }}
+                            >
                               {service.button}
                             </div>
                           </div>
@@ -141,9 +163,11 @@ function Services({
             {serviceSamples
               .filter((service) => service.id === 3)
               .map((service) => {
+                const borderedFont = font.replace(/^color-font-/i, "");
+
                 return (
                   <Fragment key={service.id}>
-                    <div className={`template-title ${type2}`}>
+                    <div className={`template-title ${type2} ${font}`}>
                       {service.title}
                     </div>
                     <div className="template-wrapper">
@@ -160,7 +184,12 @@ function Services({
                               ? "remove"
                               : "add"}
                           </span>
-                          <div className={`template-name ${type2}`}>
+                          <div
+                            className={`template-name ${type2} ${font}`}
+                            style={{
+                              "--border-font-color": `#${borderedFont}`,
+                            }}
+                          >
                             {data.name}
                           </div>
                           {activeDescIds3.includes(data.id) && (
@@ -184,10 +213,12 @@ function Services({
             {serviceSamples
               .filter((service) => service.id === 4)
               .map((service) => {
+                const borderedFont = font.replace(/^color-font-/i, "");
+
                 return (
                   <Fragment key={service.id}>
                     <div className="template-wrapper">
-                      <div className={`template-title ${type2}`}>
+                      <div className={`template-title ${type2} ${font}`}>
                         {service.title}
                       </div>
                       <div className={`template-preface ${type2}`}>
@@ -208,7 +239,12 @@ function Services({
                                   ? "remove"
                                   : "add"}
                               </span>
-                              <div className={`template-name ${type2}`}>
+                              <div
+                                className={`template-name ${type2} ${font}`}
+                                style={{
+                                  "--border-font-color": `#${borderedFont}`,
+                                }}
+                              >
                                 {data.name}
                               </div>
                               {activeDescIds4.includes(data.id) && (
@@ -223,7 +259,7 @@ function Services({
                           </>
                         );
                       })}
-                      <div className={`template-button ${type1}`}>
+                      <div className={`template-button ${type1} ${special}`}>
                         {service.button}
                       </div>
                     </div>
