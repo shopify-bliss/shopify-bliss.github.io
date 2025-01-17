@@ -307,7 +307,7 @@ function AiBuilder() {
     activeColors,
     activeFonts,
     mergedPageStyles,
-    user.user_id,
+    user,
     navigate,
   ]);
 
