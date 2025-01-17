@@ -13,6 +13,7 @@ import navbarOptionLayout from "../../../data/navbarOptionLayout.json";
 import { ChangeLayout } from "../AiBuilderSupport";
 import { OtherColors, IntroColorsWhite } from "../ColorsSupport";
 import { FontType1, FontType2 } from "../FontsSupport";
+import PropTypes from "prop-types";
 
 function NavbarLayout({
   dataPages,
@@ -75,7 +76,7 @@ function NavbarLayout({
     if (!typeNavbarStyles) {
       toastMessage("warn", "Navbar layout not found");
     }
-  }, [typeNavbarStyles]);
+  }, [typeNavbarStyles, toastMessage]);
 
   return (
     <>
@@ -142,7 +143,7 @@ function NavbarLayout({
               />
             </div>
           </div>
-          <div div className="expalot-navbar-styles">
+          <div className="expalot-navbar-styles">
             <div className="title">Choose a layout option</div>
             <div className="wrapper-left">
               <ExpalotNavbarStyles
@@ -174,5 +175,23 @@ function NavbarLayout({
     </>
   );
 }
+
+NavbarLayout.propTypes = {
+  expandLayout: PropTypes.bool,
+  dataPages: PropTypes.array,
+  siteTitle: PropTypes.string,
+  activePages: PropTypes.array,
+  currentPageId: PropTypes.number,
+  setCurrentPageId: PropTypes.func,
+  activeSections: PropTypes.array,
+  activeIntro: PropTypes.number,
+  activeNavbar: PropTypes.number,
+  handleActiveNavbar: PropTypes.func,
+  toastMessage: PropTypes.func,
+  typeMain: PropTypes.string,
+  activeColors: PropTypes.array,
+  activeFonts: PropTypes.array,
+  isPreview: PropTypes.bool,
+};
 
 export default NavbarLayout;

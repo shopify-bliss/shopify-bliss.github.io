@@ -15,11 +15,12 @@ export default function SmoothScroll() {
       return 1 - (1 - x) * (1 - x);
     }
 
-    function easeOutSine(x) {
-      return Math.sin((x * Math.PI) / 2);
-    }
+    // function easeOutSine(x) {
+    //   return Math.sin((x * Math.PI) / 2);
+    // }
 
-    lenis.on("scroll", (e) => {});
+    // lenis.on("scroll", (e) => {});
+    lenis.on("scroll", () => {});
 
     function raf(time) {
       lenis.raf(time);

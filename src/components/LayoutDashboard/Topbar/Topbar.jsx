@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Logo } from "../../AiBuilderSupport/AiBuilderSupport";
 import { useDashboard } from "../DashboardContext";
 import { useNavigate, Link } from "react-router-dom";
@@ -42,14 +42,14 @@ function Topbar() {
     return () => {
       document.removeEventListener("mousedown", handleOutsideModal);
     };
-  }, [isAccountModal]);
+  }, [isAccountModal, handleOutsideModal]);
 
   const handleLogout = useCallback(() => {
     if (token) {
       Cookies.remove("shopify-bliss");
       navigate("/login", { state: { messageLogout: "Logout successfully!" } });
     }
-  }, [token]);
+  }, [token, navigate]);
 
   return (
     <>

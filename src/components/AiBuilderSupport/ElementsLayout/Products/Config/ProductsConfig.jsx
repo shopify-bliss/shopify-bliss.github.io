@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
+import PropTypes from "prop-types";
 
 function ProductsConfig({
   layoutIds,
@@ -184,5 +185,14 @@ function ProductsConfig({
     </>
   );
 }
+
+ProductsConfig.propTypes = {
+  layoutIds: PropTypes.array,
+  activeProducts: PropTypes.number,
+  handleActiveProducts: PropTypes.func,
+  sectionsElOptionLayout: PropTypes.array,
+  FormatCurrencyIDR: PropTypes.func,
+  productSamples: PropTypes.array,
+};
 
 export default ProductsConfig;

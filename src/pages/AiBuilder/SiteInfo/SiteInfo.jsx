@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import horizontalLoop from "../../../helpers/horizontalLoop";
@@ -12,6 +6,7 @@ import {
   Logo,
   Quit,
 } from "../../../components/AiBuilderSupport/AiBuilderSupport";
+import PropTypes from "prop-types";
 
 gsap.registerPlugin(useGSAP);
 
@@ -135,5 +130,14 @@ function SiteInfo({
     </>
   );
 }
+
+SiteInfo.propTypes = {
+  siteTitle: PropTypes.string,
+  handleSiteTitleInput: PropTypes.func,
+  maxChars: PropTypes.number,
+  dataBrands: PropTypes.array,
+  activeBrand: PropTypes.object,
+  handleBrandClick: PropTypes.func,
+};
 
 export default SiteInfo;

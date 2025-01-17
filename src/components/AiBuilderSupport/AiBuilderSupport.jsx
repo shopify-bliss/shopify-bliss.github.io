@@ -2,6 +2,7 @@ import { useEffect, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { SocialIcon } from "react-social-icons";
 import logo from "../../assets/logo/black-logo.png";
+import PropTypes from "prop-types";
 
 export function Logo() {
   return (
@@ -54,6 +55,12 @@ export function ControllingOverviews({
   };
 }
 
+ControllingOverviews.propTypes = {
+  activePages: PropTypes.array,
+  currentPageId: PropTypes.string,
+  setCurrentPageId: PropTypes.func,
+};
+
 export function ChangeLayout({
   isExpandLayout,
   setIsExpandLayout,
@@ -79,7 +86,7 @@ export function ChangeLayout({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [onCollapse]);
+  }, [onCollapse, expandLayoutRef, setIsExpandLayout]);
 
   const handleExpand = useCallback(
     (e) => {
@@ -102,13 +109,13 @@ export function ChangeLayout({
   );
 }
 
-export function useHandleActiveEl({ setActiveEl }) {
-  const handleActiveEl = useCallback((elId) => {
-    setActiveEl(elId);
-  }, []);
-
-  return handleActiveEl;
-}
+ChangeLayout.propTypes = {
+  isExpandLayout: PropTypes.bool,
+  setIsExpandLayout: PropTypes.func,
+  expandLayoutRef: PropTypes.object,
+  onCollapse: PropTypes.func,
+  onExpand: PropTypes.func,
+};
 
 export function DefaultFooter({ dataPages = null, isPreview = false }) {
   const icon = useMemo(
@@ -151,3 +158,8 @@ export function DefaultFooter({ dataPages = null, isPreview = false }) {
     </div>
   );
 }
+
+DefaultFooter.propTypes = {
+  dataPages: PropTypes.array,
+  isPreview: PropTypes.bool,
+};

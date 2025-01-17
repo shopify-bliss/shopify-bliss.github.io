@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
@@ -6,8 +6,9 @@ import urlEndpoint from "../../../helpers/urlEndpoint";
 import {
   userSchema,
   updateUserRoleSchema,
-} from "../../../helpers/ValidationSchema";
+} from "../../../helpers/ValidationSchema.js";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
+import PropTypes from "prop-types";
 
 function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
   axios.defaults.withCredentials = true;
@@ -42,7 +43,7 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
       .catch((error) => {
         console.error("Error fetching roles:", error);
       });
-  }, [urlEndpoint.role, token]);
+  }, [token]);
 
   const clickOutside = useCallback(
     (e) => {
@@ -63,7 +64,7 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
     return () => {
       document.removeEventListener("mousedown", clickOutside);
     };
-  }, [openRole]);
+  }, [openRole, clickOutside]);
 
   useEffect(() => {
     if (onOpen && type === "update") {
@@ -83,7 +84,7 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
           console.error("Error fetching user data:", error);
         });
     }
-  }, [onOpen, type, urlEndpoint.userId, userId, token]);
+  }, [onOpen, userId, token, type]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -135,7 +136,7 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
             });
           });
       } else {
-        console.log(updateData);
+        // console.log(updateData);
 
         updateUserRoleSchema
           .validate(updateData, { abortEarly: false })
@@ -179,16 +180,14 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
       }
     },
     [
-      userSchema,
+      type,
       data,
       updateData,
       onClose,
       refreshData,
       toastMessage,
       toastPromise,
-      userId,
       token,
-      urlEndpoint,
     ]
   );
 
@@ -226,7 +225,7 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
         console.error("Error deleting user data:", error);
       });
     },
-    [userId, token, onClose, refreshData]
+    [userId, token, onClose, refreshData, toastPromise]
   );
 
   return (
@@ -362,5 +361,13 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
     </>
   );
 }
+
+DisplayUsersModal.propTypes = {
+  type: PropTypes.string,
+  onOpen: PropTypes.bool,
+  onClose: PropTypes.func,
+  refreshData: PropTypes.func,
+  userId: PropTypes.string,
+};
 
 export default DisplayUsersModal;

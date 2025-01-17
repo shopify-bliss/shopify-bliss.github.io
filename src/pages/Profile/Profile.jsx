@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import { useState, useCallback } from "react";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
 import Password from "./Password";
 import Bio from "./Bio";
@@ -6,12 +6,10 @@ import Modal from "../../components/LayoutDashboard/Modal/Modal";
 import VerifyDashboard from "./VerifyDashboard";
 import axios from "axios";
 import urlEndpoint from "../../helpers/urlEndpoint";
+import PropTypes from "prop-types";
 
 function Profile({ onClose, onOpen }) {
-  if (!onOpen) return null;
   axios.defaults.withCredentials = true;
-
-  const { submenus, toastPromise, token, user } = useDashboard();
 
   const [currentSubmenu, setCurrentSubmenu] = useState(
     submenus.filter(
@@ -22,6 +20,8 @@ function Profile({ onClose, onOpen }) {
   );
   const [openConfirm, setOpenConfirm] = useState(false);
   const [resetPassword, setResetPassword] = useState(false);
+
+  const { submenus, toastPromise, user } = useDashboard();
 
   const handleCurrentSubmenu = useCallback(
     (submenuId) => {
@@ -76,8 +76,10 @@ function Profile({ onClose, onOpen }) {
           console.error(err);
         });
     },
-    [urlEndpoint.sendOtpPassword, token, toastPromise]
+    [toastPromise, user.email]
   );
+
+  if (!onOpen) return null;
 
   return (
     <>
@@ -204,5 +206,10 @@ function Profile({ onClose, onOpen }) {
     </>
   );
 }
+
+Profile.propTypes = {
+  onClose: PropTypes.func,
+  onOpen: PropTypes.bool,
+};
 
 export default Profile;

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo, Fragment } from "react";
+import { useRef, useState, useEffect, useMemo, Fragment } from "react";
 import { ChangeLayout } from "../../AiBuilderSupport";
 import sectionsElOptionLayout from "../../../../data/sectionsElOptionLayout.json";
 import form from "../../../../data/form.json";
@@ -10,6 +10,7 @@ import FormConfig, {
 } from "./Config/FormConfig";
 import { BgColors, OtherColors, SpecialColors } from "../../ColorsSupport";
 import { FontType1, FontType2 } from "../../FontsSupport";
+import PropTypes from "prop-types";
 
 function Form({
   toastMessage,
@@ -40,7 +41,7 @@ function Form({
     if (!typeFormStyles) {
       toastMessage("warn", "Form layout not found");
     }
-  }, [typeFormStyles]);
+  }, [typeFormStyles, toastMessage]);
 
   useEffect(() => {
     const getId4 = form.filter((item) => item.id === 4);
@@ -323,7 +324,7 @@ function Form({
 
       {isExpandLayout && (
         <div ref={expandLayoutRef} className="expalot-form">
-          <div div className="expalot-form-styles">
+          <div className="expalot-form-styles">
             <div className="title">Choose a layout option</div>
             <div className="wrapper-left">
               <FormConfig
@@ -351,5 +352,16 @@ function Form({
     </>
   );
 }
+
+Form.propTypes = {
+  toastMessage: PropTypes.func,
+  activeForm: PropTypes.number,
+  activeNavbar: PropTypes.number,
+  handleActiveForm: PropTypes.func,
+  activeColors: PropTypes.string,
+  activeFonts: PropTypes.string,
+  firstForm: PropTypes.bool,
+  typeMain: PropTypes.string,
+};
 
 export default Form;

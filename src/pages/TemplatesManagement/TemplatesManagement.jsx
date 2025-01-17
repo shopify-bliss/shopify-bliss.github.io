@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
 import TempPages from "./TempPages/TempPages";
 import TempSections from "./TempSections/TempSections";

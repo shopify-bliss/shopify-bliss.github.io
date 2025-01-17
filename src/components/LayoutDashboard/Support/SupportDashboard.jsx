@@ -1,5 +1,5 @@
-import React from "react";
 import { useSearch } from "../../../helpers/SearchContext";
+import PropTypes from "prop-types";
 
 export function Header({
   className,
@@ -52,3 +52,11 @@ export function Header({
     </div>
   );
 }
+
+Header.propTypes = {
+  className: PropTypes.string,
+  title: PropTypes.string,
+  activeDisplay: PropTypes.string,
+  handleDisplayChange: PropTypes.func,
+  setIsCreateModalOpen: PropTypes.func,
+};

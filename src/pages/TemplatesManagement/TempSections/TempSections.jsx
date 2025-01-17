@@ -1,10 +1,11 @@
-import React, { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Header } from "../../../components/LayoutDashboard/Support/SupportDashboard";
 import axios from "axios";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import TempPagesModal from "./TempSectionsModal";
 import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
 import { useSearch } from "../../../helpers/SearchContext";
+import PropTypes from "prop-types";
 
 function DisplayView({
   isLoadingTempSections,
@@ -126,11 +127,11 @@ function TempSections() {
     } finally {
       setIsLoadingTempSections(false);
     }
-  }, [urlEndpoint.elementsAi]);
+  }, []);
 
   useEffect(() => {
     fetchSections();
-  }, []);
+  }, [fetchSections]);
 
   return (
     <>
@@ -185,5 +186,14 @@ function TempSections() {
     </>
   );
 }
+
+DisplayView.propTypes = {
+  isLoadingTempSections: PropTypes.bool,
+  sections: PropTypes.array,
+  setSectionId: PropTypes.func,
+  setIsUpdateModalOpen: PropTypes.func,
+  setIsDeleteModalOpen: PropTypes.func,
+  type: PropTypes.string,
+};
 
 export default TempSections;

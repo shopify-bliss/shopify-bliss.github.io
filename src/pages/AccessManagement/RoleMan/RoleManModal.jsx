@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { RoleManSchema } from "../../../helpers/ValidationSchema";
+import { RoleManSchema } from "../../../helpers/ValidationSchema.js";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
+import PropTypes from "prop-types";
 
 function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
   axios.defaults.withCredentials = true;
@@ -38,7 +39,7 @@ function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
           console.error("Error fetching role data:", error);
         });
     }
-  }, [onOpen, type, roleId, token, urlEndpoint]);
+  }, [onOpen, type, roleId, token]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -130,7 +131,7 @@ function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
       }
     },
     [
-      RoleManSchema,
+      type,
       data,
       token,
       onClose,
@@ -138,7 +139,6 @@ function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
       toastMessage,
       toastPromise,
       roleId,
-      urlEndpoint,
     ]
   );
 
@@ -173,7 +173,7 @@ function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
         console.error("Error deleting role data:", error);
       });
     },
-    [roleId, token, onClose, refreshData, toastPromise, urlEndpoint]
+    [roleId, token, onClose, refreshData, toastPromise]
   );
 
   return (
@@ -226,5 +226,13 @@ function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
     </>
   );
 }
+
+RoleManModal.propTypes = {
+  type: PropTypes.string,
+  onOpen: PropTypes.bool,
+  onClose: PropTypes.func,
+  refreshData: PropTypes.func,
+  roleId: PropTypes.number,
+};
 
 export default RoleManModal;

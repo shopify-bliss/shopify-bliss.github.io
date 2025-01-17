@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import avatar from "../../data/avatar.json";
 import axios from "axios";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../helpers/urlEndpoint";
-import { userSchema } from "../../helpers/ValidationSchema";
+import { userSchema } from "../../helpers/ValidationSchema.js";
+import PropTypes from "prop-types";
 
 function Bio({ onClose }) {
   axios.defaults.withCredentials = true;
@@ -39,7 +40,7 @@ function Bio({ onClose }) {
     return () => {
       document.removeEventListener("mousedown", clickOutisde);
     };
-  }, [showAvatar]);
+  }, [showAvatar, clickOutisde]);
 
   useEffect(() => {
     if (user) {
@@ -106,10 +107,8 @@ function Bio({ onClose }) {
         });
     },
     [
-      userSchema,
       activeAvatar,
       data,
-      urlEndpoint.userId,
       token,
       toastPromise,
       onClose,
@@ -176,5 +175,9 @@ function Bio({ onClose }) {
     </form>
   );
 }
+
+Bio.propTypes = {
+  onClose: PropTypes.func,
+};
 
 export default Bio;

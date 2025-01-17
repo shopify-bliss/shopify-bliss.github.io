@@ -1,11 +1,4 @@
-import React, {
-  useState,
-  Fragment,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-} from "react";
+import { useState, Fragment, useCallback, useEffect, useMemo } from "react";
 import SiteInfo from "./SiteInfo/SiteInfo";
 import PagesAi from "./PagesAi/PagesAi";
 import ElementPages from "./ElementPages/ElementPages";
@@ -166,23 +159,22 @@ function AiBuilder() {
     });
   }, [pageStyles, activeSections]);
 
-  const aiBuilderElements = useMemo(
-    () => ({
-      siteTitle: siteTitle,
-      Brand: activeBrand.brand_id,
-      Color: activeColors,
-      Font: activeFonts,
-      Styles: mergedPageStyles,
-    }),
-    [
-      siteTitle,
-      activeBrand,
-      activePages,
-      activeColors,
-      activeFonts,
-      mergedPageStyles,
-    ]
-  );
+  // const aiBuilderElements = useMemo(
+  //   () => ({
+  //     siteTitle: siteTitle,
+  //     Brand: activeBrand.brand_id,
+  //     Color: activeColors,
+  //     Font: activeFonts,
+  //     Styles: mergedPageStyles,
+  //   }),
+  //   [
+  //     siteTitle,
+  //     activeBrand,
+  //     activeColors,
+  //     activeFonts,
+  //     mergedPageStyles,
+  //   ]
+  // );
 
   // Debugging log
   // useEffect(() => {
@@ -308,11 +300,20 @@ function AiBuilder() {
     } else {
       setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
     }
-  }, [currentStep, siteTitle]);
+  }, [
+    currentStep,
+    siteTitle,
+    activeBrand.brand_id,
+    activeColors,
+    activeFonts,
+    mergedPageStyles,
+    user.user_id,
+    navigate,
+  ]);
 
-  useEffect(() => {
-    console.log(activeSections[currentPageId]);
-  }, [activeSections, currentPageId]);
+  // useEffect(() => {
+  //   console.log(activeSections[currentPageId]);
+  // }, [activeSections, currentPageId]);
 
   const handlePrev = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 0));

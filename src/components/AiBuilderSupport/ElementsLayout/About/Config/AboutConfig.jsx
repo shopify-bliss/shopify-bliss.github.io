@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
+import PropTypes from "prop-types";
 
 function AboutConfig({
   layoutIds,
@@ -138,5 +139,15 @@ function AboutConfig({
     </>
   );
 }
+
+AboutConfig.propTypes = {
+  layoutIds: PropTypes.array,
+  activeAbout: PropTypes.number,
+  handleActiveAbout: PropTypes.func,
+  imageStyle2: PropTypes.string,
+  imageStyle3: PropTypes.string,
+  about: PropTypes.array,
+  sectionsElOptionLayout: PropTypes.array,
+};
 
 export default AboutConfig;

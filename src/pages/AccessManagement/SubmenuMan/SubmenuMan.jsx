@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { Header } from "../../../components/LayoutDashboard/Support/SupportDashboard";
 import axios from "axios";
 import SubmenuManModal from "./SubmenuManModal";
@@ -6,6 +6,7 @@ import { useDashboard } from "../../../components/LayoutDashboard/DashboardConte
 import { Link } from "react-router-dom";
 import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
 import { useSearch } from "../../../helpers/SearchContext";
+import PropTypes from "prop-types";
 
 function DisplayView({
   isLoadingDashboard,
@@ -197,5 +198,14 @@ function SubmenuMan() {
     </>
   );
 }
+
+DisplayView.propTypes = {
+  isLoadingDashboard: PropTypes.bool,
+  submenus: PropTypes.array,
+  setSubmenuId: PropTypes.func,
+  setIsUpdateModalOpen: PropTypes.func,
+  setIsDeleteModalOpen: PropTypes.func,
+  type: PropTypes.string,
+};
 
 export default SubmenuMan;

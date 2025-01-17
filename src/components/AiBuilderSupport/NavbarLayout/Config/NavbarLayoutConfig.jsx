@@ -1,4 +1,6 @@
-import React, { useCallback, useMemo, Fragment } from "react";
+/* eslint-disable react-refresh/only-export-components */
+
+import { useCallback, useMemo, Fragment } from "react";
 
 export function useDisplaySiteTitle({ siteTitle }) {
   const displaySiteTitle = useMemo(
@@ -79,13 +81,16 @@ export function useDisplayActivePages({
 }
 
 export function useHandleActiveFeatures({ setActiveFeatures }) {
-  const handleActiveFeatures = useCallback((featureId) => {
-    setActiveFeatures((prevActiveFeatures) => {
-      return prevActiveFeatures.includes(featureId)
-        ? prevActiveFeatures.filter((id) => id !== featureId)
-        : [...prevActiveFeatures, featureId];
-    });
-  }, []);
+  const handleActiveFeatures = useCallback(
+    (featureId) => {
+      setActiveFeatures((prevActiveFeatures) => {
+        return prevActiveFeatures.includes(featureId)
+          ? prevActiveFeatures.filter((id) => id !== featureId)
+          : [...prevActiveFeatures, featureId];
+      });
+    },
+    [setActiveFeatures]
+  );
 
   return handleActiveFeatures;
 }

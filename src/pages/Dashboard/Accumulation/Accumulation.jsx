@@ -1,4 +1,3 @@
-import React from "react";
 import dashboardAccumulation from "../../../data/dashboardAccumulation.json";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 

@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
+import PropTypes from "prop-types";
 
 function ServicesConfig({
   layoutIds,
@@ -197,5 +198,17 @@ function ServicesConfig({
     </>
   );
 }
+
+ServicesConfig.propTypes = {
+  layoutIds: PropTypes.array,
+  activeServices: PropTypes.number,
+  handleActiveServices: PropTypes.func,
+  activeDescIds4: PropTypes.array,
+  activeDescIds3: PropTypes.array,
+  serviceSamples: PropTypes.array,
+  sectionsElOptionLayout: PropTypes.array,
+  FormatCurrencyIDR: PropTypes.func,
+  image: PropTypes.string,
+};
 
 export default ServicesConfig;

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo, Fragment } from "react";
+import { useRef, useState, useEffect, useMemo, Fragment } from "react";
 import { ChangeLayout } from "../../AiBuilderSupport";
 import sectionsElOptionLayout from "../../../../data/sectionsElOptionLayout.json";
 import about from "../../../../data/about.json";
@@ -10,6 +10,7 @@ import {
   OtherColors,
 } from "../../ColorsSupport";
 import { FontType1, FontType2 } from "../../FontsSupport";
+import PropTypes from "prop-types";
 
 function About({
   toastMessage,
@@ -42,7 +43,7 @@ function About({
     if (!typeAboutStyles) {
       toastMessage("warn", "About layout not found");
     }
-  }, [typeAboutStyles]);
+  }, [typeAboutStyles, toastMessage]);
 
   useEffect(() => {
     const getId2 = about.filter((option) => option.id === 2);
@@ -50,7 +51,7 @@ function About({
 
     setImageStyle2(getId2.length > 0 ? `products/${getId2[0].image_1}` : null);
     setImageStyle3(getId3.length > 0 ? `products/${getId3[0].image_1}` : null);
-  }, [about]);
+  }, []);
 
   return (
     <>
@@ -209,7 +210,7 @@ function About({
 
       {isExpandLayout && (
         <div ref={expandLayoutRef} className="expalot-about">
-          <div div className="expalot-about-styles">
+          <div className="expalot-about-styles">
             <div className="title">Choose a layout option</div>
             <div className="wrapper-left">
               <AboutConfig
@@ -239,5 +240,16 @@ function About({
     </>
   );
 }
+
+About.propTypes = {
+  toastMessage: PropTypes.func,
+  handleActiveAbout: PropTypes.func,
+  activeNavbar: PropTypes.number,
+  activeAbout: PropTypes.number,
+  activeColors: PropTypes.object,
+  activeFonts: PropTypes.object,
+  firstAbout: PropTypes.bool,
+  typeMain: PropTypes.string,
+};
 
 export default About;

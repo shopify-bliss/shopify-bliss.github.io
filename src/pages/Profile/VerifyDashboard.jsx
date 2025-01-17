@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import axios from "axios";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
+import PropTypes from "prop-types";
 
 function VerifyDashboard({ setCurrentSubmenu }) {
   axios.defaults.withCredentials = true;
@@ -84,7 +85,7 @@ function VerifyDashboard({ setCurrentSubmenu }) {
         toastMessage("error", "Please enter all 6 digits.");
       }
     },
-    [code, setCurrentSubmenu, toastPromise, toastMessage]
+    [code, setCurrentSubmenu, toastPromise, toastMessage, user.email]
   );
 
   return (
@@ -118,5 +119,9 @@ function VerifyDashboard({ setCurrentSubmenu }) {
     </form>
   );
 }
+
+VerifyDashboard.propTypes = {
+  setCurrentSubmenu: PropTypes.func,
+};
 
 export default VerifyDashboard;

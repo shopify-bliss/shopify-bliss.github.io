@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { Header } from "../../../components/LayoutDashboard/Support/SupportDashboard";
 import axios from "axios";
 import MenuManModal from "./MenuManModal";
@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
 import { useSearch } from "../../../helpers/SearchContext";
+import PropTypes from "prop-types";
 
 function DisplayView({
   isLoadingDashboard,
@@ -179,5 +180,14 @@ function MenuMan() {
     </>
   );
 }
+
+DisplayView.propTypes = {
+  type: PropTypes.string,
+  menus: PropTypes.array,
+  setMenuId: PropTypes.func,
+  isLoadingDashboard: PropTypes.bool,
+  setIsUpdateModalOpen: PropTypes.func,
+  setIsDeleteModalOpen: PropTypes.func,
+};
 
 export default MenuMan;

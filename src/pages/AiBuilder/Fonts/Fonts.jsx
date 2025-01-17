@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  Fragment,
-  useMemo,
-  useState,
-  useCallback,
-} from "react";
+import { Fragment } from "react";
 import {
   Quit,
   Logo,
@@ -22,6 +16,7 @@ import {
 } from "../../../components/AiBuilderSupport/FontsSupport";
 import FirstComponent from "../../../components/AiBuilderSupport/FirstComponent";
 import { BgColors } from "../../../components/AiBuilderSupport/ColorsSupport";
+import PropTypes from "prop-types";
 
 function Fonts({
   activePages,
@@ -226,5 +221,27 @@ function Fonts({
     </>
   );
 }
+
+Fonts.propTypes = {
+  dataFonts: PropTypes.array,
+  activeFonts: PropTypes.string,
+  handleactiveFonts: PropTypes.func,
+  activeColors: PropTypes.string,
+  activePages: PropTypes.array,
+  activeSections: PropTypes.object,
+  siteTitle: PropTypes.string,
+  dataBrands: PropTypes.array,
+  dataPages: PropTypes.array,
+  currentPageId: PropTypes.string,
+  setCurrentPageId: PropTypes.func,
+  toastMessage: PropTypes.func,
+  dataElements: PropTypes.array,
+  activeNavbar: PropTypes.string,
+  activeIntro: PropTypes.string,
+  activeProducts: PropTypes.string,
+  activeServices: PropTypes.string,
+  activeAbout: PropTypes.string,
+  activeForm: PropTypes.string,
+};
 
 export default Fonts;

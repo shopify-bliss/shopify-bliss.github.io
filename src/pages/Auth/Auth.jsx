@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import {
   Link,
   useNavigate,
@@ -8,7 +8,7 @@ import {
 import logo from "../../assets/logo/black-logo.png";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import axios from "axios";
-import { signupSchema } from "../../helpers/ValidationSchema";
+import { signupSchema } from "../../helpers/ValidationSchema.js";
 import {
   AuthHeader,
   AuthTitle,
@@ -22,6 +22,7 @@ import {
   toastDevelop,
 } from "../../helpers/AlertMessage";
 import Cookies from "js-cookie";
+import PropTypes from "prop-types";
 
 function Auth({ typeMain }) {
   axios.defaults.withCredentials = true;
@@ -267,7 +268,7 @@ function Auth({ typeMain }) {
           });
       }
     },
-    [values, typeMain]
+    [values, typeMain, selectedCode, navigate]
   );
 
   useEffect(() => {
@@ -302,6 +303,15 @@ function Auth({ typeMain }) {
       });
       navigate(location.pathname, {
         state: { ...location.state, messageSessionExpired: undefined },
+        replace: true,
+      });
+    } else if (location.state?.messageNoToken) {
+      toastMessage("info", location.state.messageNoToken, {
+        position: "top-center",
+        autoClose: 3500,
+      });
+      navigate(location.pathname, {
+        state: { ...location.state, messageNoToken: undefined },
         replace: true,
       });
     }
@@ -342,7 +352,7 @@ function Auth({ typeMain }) {
           </div>
           {typeMain === "login" ? (
             <Link to="/recovery" className="auth-content-problems">
-              Can't Log In
+              Can&apos;t Log In
             </Link>
           ) : (
             ""
@@ -353,5 +363,9 @@ function Auth({ typeMain }) {
     </>
   );
 }
+
+Auth.propTypes = {
+  typeMain: PropTypes.string,
+};
 
 export default Auth;

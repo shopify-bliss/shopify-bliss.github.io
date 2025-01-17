@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
-
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { AccessManSchema } from "../../../helpers/ValidationSchema";
+import { AccessManSchema } from "../../../helpers/ValidationSchema.js";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
+import PropTypes from "prop-types";
 
 function AccessManModal({
   type,
   onOpen,
   onClose,
-  refreshData,
+  // refreshData,
   accessId,
   roles,
 }) {
@@ -107,13 +107,11 @@ function AccessManModal({
         });
     },
     [
-      AccessManSchema,
       valueRole,
       valueMenu,
       onClose,
       fetchDashboardData,
       token,
-      accessId,
       toastMessage,
       toastPromise,
     ]
@@ -273,5 +271,14 @@ function AccessManModal({
     </>
   );
 }
+
+AccessManModal.propTypes = {
+  type: PropTypes.string,
+  onOpen: PropTypes.bool,
+  onClose: PropTypes.func,
+  refreshData: PropTypes.func,
+  accessId: PropTypes.number,
+  roles: PropTypes.array,
+};
 
 export default AccessManModal;

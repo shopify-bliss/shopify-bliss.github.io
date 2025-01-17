@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo, Fragment } from "react";
+import { useRef, useState, useEffect, useMemo, Fragment } from "react";
 import { ChangeLayout } from "../../AiBuilderSupport";
 import sectionsElOptionLayout from "../../../../data/sectionsElOptionLayout.json";
 import IntroConfig from "./Config/IntroConfig";
@@ -9,6 +9,7 @@ import {
 } from "../../ColorsSupport";
 import { FontType1, FontType2 } from "../../FontsSupport";
 import introSample from "../../../../data/intro.json";
+import PropTypes from "prop-types";
 
 function Intro({
   handleActiveIntro = null,
@@ -203,7 +204,7 @@ function Intro({
 
       {isExpandLayout && (
         <div ref={expandLayoutRef} className="expalot-intro">
-          <div div className="expalot-intro-styles">
+          <div className="expalot-intro-styles">
             <div className="title">Choose a layout option</div>
             <div className="wrapper-left">
               <IntroConfig
@@ -235,5 +236,17 @@ function Intro({
     </>
   );
 }
+
+Intro.propTypes = {
+  handleActiveIntro: PropTypes.func,
+  activeSections: PropTypes.object,
+  currentPageId: PropTypes.number,
+  activeIntro: PropTypes.number,
+  activeNavbar: PropTypes.number,
+  toastMessage: PropTypes.func,
+  activeColors: PropTypes.object,
+  activeFonts: PropTypes.object,
+  typeMain: PropTypes.string,
+};
 
 export default Intro;

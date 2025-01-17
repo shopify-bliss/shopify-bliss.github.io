@@ -1,17 +1,12 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
-import {
-  Link,
-  useNavigate,
-  useSearchParams,
-  useLocation,
-} from "react-router-dom";
+import { useState, useCallback, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/logo/black-logo.png";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import axios from "axios";
 import {
   recoverySchema,
   resetPasswordSchema,
-} from "../../helpers/ValidationSchema";
+} from "../../helpers/ValidationSchema.js";
 import {
   AuthHeader,
   AuthTitle,
@@ -19,6 +14,7 @@ import {
 } from "../../components/AuthSupport/AuthSupport";
 import { ToastContainer } from "react-toastify";
 import { toastMessage, toastPromise } from "../../helpers/AlertMessage";
+import PropTypes from "prop-types";
 
 function Recovery({ typeMain }) {
   axios.defaults.withCredentials = true;
@@ -174,7 +170,7 @@ function Recovery({ typeMain }) {
           });
       }
     },
-    [recoverySchema, urlEndpoint.sendOtpPassword, values, typeMain]
+    [values, typeMain, navigate]
   );
 
   useEffect(() => {
@@ -293,5 +289,9 @@ function Recovery({ typeMain }) {
     </>
   );
 }
+
+Recovery.propTypes = {
+  typeMain: PropTypes.string,
+};
 
 export default Recovery;

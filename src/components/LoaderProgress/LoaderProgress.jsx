@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 
 export function LoaderProgress({ isAi = false }) {
   return (
@@ -14,6 +14,10 @@ export function LoaderProgress({ isAi = false }) {
     </>
   );
 }
+
+LoaderProgress.propTypes = {
+  isAi: PropTypes.bool,
+};
 
 export const LoaderPages = () => {
   return (

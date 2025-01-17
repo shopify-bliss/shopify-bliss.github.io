@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { SubmenuManSchema } from "../../../helpers/ValidationSchema";
+import { SubmenuManSchema } from "../../../helpers/ValidationSchema.js";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
+import PropTypes from "prop-types";
 
 function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
   axios.defaults.withCredentials = true;
@@ -37,7 +38,7 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [openMenu]);
+  }, [openMenu, handleClickOutside]);
 
   useEffect(() => {
     if (onOpen && type === "create") {
@@ -60,7 +61,7 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
           console.error("Error fetching submenu data:", error);
         });
     }
-  }, [onOpen, type, submenuId, token, urlEndpoint.submenusId]);
+  }, [onOpen, type, submenuId, token]);
 
   const handleSubmit = useCallback(
     (e) => {
@@ -147,7 +148,7 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
       }
     },
     [
-      SubmenuManSchema,
+      type,
       submenuName,
       defaultMenu,
       defaultValue,
@@ -157,7 +158,6 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
       toastPromise,
       token,
       submenuId,
-      urlEndpoint.submenus,
     ]
   );
 
@@ -195,7 +195,7 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
         console.error("Error deleting submenu data:", error);
       });
     },
-    [token, submenuId, onClose, refreshData, urlEndpoint.submenus, toastPromise]
+    [token, submenuId, onClose, refreshData, toastPromise]
   );
 
   return (
@@ -290,7 +290,7 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
                 className="check-default"
                 onClick={() => setDefaultValue(!defaultValue)}
               >
-                <span class="material-symbols-outlined">
+                <span className="material-symbols-outlined">
                   {defaultValue ? "task_alt" : "circle"}
                 </span>
                 <div className="text">{defaultValue ? "True" : "Null"}</div>
@@ -303,5 +303,13 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
     </>
   );
 }
+
+SubmenuManModal.propTypes = {
+  type: PropTypes.string,
+  onOpen: PropTypes.bool,
+  onClose: PropTypes.func,
+  refreshData: PropTypes.func,
+  submenuId: PropTypes.number,
+};
 
 export default SubmenuManModal;

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { MenuManSchema } from "../../../helpers/ValidationSchema";
+import { MenuManSchema } from "../../../helpers/ValidationSchema.js";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
+import PropTypes from "prop-types";
 
 function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
   axios.defaults.withCredentials = true;
@@ -32,7 +32,7 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
           console.error("Error fetching menu data:", error);
         });
     }
-  }, [onOpen, type, menuId, urlEndpoint]);
+  }, [onOpen, type, menuId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -124,7 +124,6 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
       }
     },
     [
-      MenuManSchema,
       data,
       onClose,
       refreshData,
@@ -132,7 +131,7 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
       toastPromise,
       menuId,
       token,
-      urlEndpoint,
+      type,
     ]
   );
 
@@ -167,7 +166,7 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
         console.error("Error deleting menu data:", error);
       });
     },
-    [menuId, token, onClose, refreshData]
+    [menuId, token, onClose, refreshData, toastPromise]
   );
 
   return (
@@ -233,5 +232,13 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
     </>
   );
 }
+
+MenuManModal.propTypes = {
+  type: PropTypes.string,
+  onOpen: PropTypes.bool,
+  onClose: PropTypes.func,
+  refreshData: PropTypes.func,
+  menuId: PropTypes.number,
+};
 
 export default MenuManModal;

@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 function ErrorParent({ typeMain }) {
   const visualRef = useRef(null);
@@ -69,6 +70,10 @@ function ErrorParent({ typeMain }) {
     </div>
   );
 }
+
+ErrorParent.propTypes = {
+  typeMain: PropTypes.string,
+};
 
 export default ErrorParent;
 

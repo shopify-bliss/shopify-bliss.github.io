@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { TempSectionsSchema } from "../../../helpers/ValidationSchema";
+import { TempSectionsSchema } from "../../../helpers/ValidationSchema.js";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
+import PropTypes from "prop-types";
 
 function TempSectionsModal({ type, onOpen, onClose, refreshData, sectionId }) {
   axios.defaults.withCredentials = true;
@@ -30,7 +31,7 @@ function TempSectionsModal({ type, onOpen, onClose, refreshData, sectionId }) {
           console.error("Error fetching section data:", error);
         });
     }
-  }, [onOpen, type, sectionId, urlEndpoint]);
+  }, [onOpen, type, sectionId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -122,7 +123,7 @@ function TempSectionsModal({ type, onOpen, onClose, refreshData, sectionId }) {
       }
     },
     [
-      TempSectionsSchema,
+      type,
       data,
       onClose,
       refreshData,
@@ -130,7 +131,6 @@ function TempSectionsModal({ type, onOpen, onClose, refreshData, sectionId }) {
       toastPromise,
       sectionId,
       token,
-      urlEndpoint,
     ]
   );
 
@@ -168,7 +168,7 @@ function TempSectionsModal({ type, onOpen, onClose, refreshData, sectionId }) {
         console.error("Error deleting section data:", error);
       });
     },
-    [sectionId, token, onClose, refreshData]
+    [sectionId, token, onClose, refreshData, toastPromise]
   );
 
   return (
@@ -221,5 +221,13 @@ function TempSectionsModal({ type, onOpen, onClose, refreshData, sectionId }) {
     </>
   );
 }
+
+TempSectionsModal.propTypes = {
+  type: PropTypes.string.isRequired,
+  onOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  refreshData: PropTypes.func.isRequired,
+  sectionId: PropTypes.string,
+};
 
 export default TempSectionsModal;

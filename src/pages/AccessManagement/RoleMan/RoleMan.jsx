@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Header } from "../../../components/LayoutDashboard/Support/SupportDashboard";
 import axios from "axios";
 import RoleManModal from "./RoleManModal";
@@ -6,6 +6,7 @@ import { useDashboard } from "../../../components/LayoutDashboard/DashboardConte
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
 import { useSearch } from "../../../helpers/SearchContext";
+import PropTypes from "prop-types";
 
 function DisplayView({
   isLoadingDashboard,
@@ -131,7 +132,7 @@ function RoleMan() {
     } finally {
       setDashboardLoader(false);
     }
-  }, [token]);
+  }, [token, setDashboardLoader]);
 
   useEffect(() => {
     fetchRoles();
@@ -190,5 +191,14 @@ function RoleMan() {
     </>
   );
 }
+
+DisplayView.propTypes = {
+  isLoadingDashboard: PropTypes.bool,
+  roles: PropTypes.array,
+  setRoleId: PropTypes.func,
+  setIsUpdateModalOpen: PropTypes.func,
+  setIsDeleteModalOpen: PropTypes.func,
+  type: PropTypes.string,
+};
 
 export default RoleMan;

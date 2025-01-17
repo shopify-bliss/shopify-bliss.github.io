@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import  { lazy } from "react";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { SearchProvider } from "./helpers/SearchContext";
 import { DashboardProvider } from "./components/LayoutDashboard/DashboardContext";

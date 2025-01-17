@@ -1,16 +1,11 @@
-import React, {
-  useState,
-  Fragment,
-  useRef,
-  useEffect,
-  useCallback,
-} from "react";
+import { useState, Fragment, useRef, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import google from "../../assets/login/google.png";
 import facebook from "../../assets/login/facebook.png";
 import whatsapp from "../../assets/login/whatsapp (1).png";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import { useSearch } from "../../helpers/SearchContext";
+import PropTypes from "prop-types";
 
 export function AuthHeader({ type, classDiff = "auth" }) {
   return (
@@ -48,6 +43,11 @@ export function AuthHeader({ type, classDiff = "auth" }) {
     </>
   );
 }
+
+AuthHeader.propTypes = {
+  type: PropTypes.string,
+  classDiff: PropTypes.string,
+};
 
 export function AuthTitle({ logo, type, classDiff = "auth", email = null }) {
   return (
@@ -87,8 +87,8 @@ export function AuthTitle({ logo, type, classDiff = "auth", email = null }) {
         <>
           <div className="text">Recovery Your Account</div>
           <div className="desc">
-            Enter your account's email and we'll send you an otp code in the
-            email to reset the password.
+            Enter your account&apos;s email and we&apos;ll send you an otp code
+            in the email to reset the password.
           </div>
         </>
       ) : type === "reset-password" ? (
@@ -103,6 +103,13 @@ export function AuthTitle({ logo, type, classDiff = "auth", email = null }) {
     </div>
   );
 }
+
+AuthTitle.propTypes = {
+  logo: PropTypes.string,
+  type: PropTypes.string,
+  classDiff: PropTypes.string,
+  email: PropTypes.string,
+};
 
 export function AuthValidationPassword({ validationPassword }) {
   return (
@@ -139,6 +146,10 @@ export function AuthValidationPassword({ validationPassword }) {
   );
 }
 
+AuthValidationPassword.propTypes = {
+  validationPassword: PropTypes.object,
+};
+
 export function AuthForm({
   handleForm,
   handleChange,
@@ -174,16 +185,22 @@ export function AuthForm({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [openPhoneCodes]);
+  }, [openPhoneCodes, handleClickOutside]);
 
-  const handleCodeSelect = useCallback((code) => {
-    setSelectedCode(code);
-    setOpenPhoneCodes(false);
-  }, []);
+  const handleCodeSelect = useCallback(
+    (code) => {
+      setSelectedCode(code);
+      setOpenPhoneCodes(false);
+    },
+    [setSelectedCode, setOpenPhoneCodes]
+  );
 
-  const handleSearchCountry = useCallback((e) => {
-    setSearch(e.target.value);
-  }, []);
+  const handleSearchCountry = useCallback(
+    (e) => {
+      setSearch(e.target.value);
+    },
+    [setSearch]
+  );
 
   return (
     <form className="form" onSubmit={handleForm}>
@@ -346,6 +363,19 @@ export function AuthForm({
   );
 }
 
+AuthForm.propTypes = {
+  type: PropTypes.string,
+  handleForm: PropTypes.func,
+  handleChange: PropTypes.func,
+  values: PropTypes.object,
+  hidePassword: PropTypes.bool,
+  setHidePassword: PropTypes.func,
+  validationPassword: PropTypes.object,
+  phoneCodes: PropTypes.array,
+  selectedCode: PropTypes.string,
+  setSelectedCode: PropTypes.func,
+};
+
 export function AuthIntegration({ toastDevelop }) {
   return (
     <div className="integration">
@@ -374,3 +404,7 @@ export function AuthIntegration({ toastDevelop }) {
     </div>
   );
 }
+
+AuthIntegration.propTypes = {
+  toastDevelop: PropTypes.func,
+};

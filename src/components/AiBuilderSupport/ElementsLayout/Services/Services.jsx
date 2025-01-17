@@ -1,4 +1,4 @@
-import React, {
+import {
   useRef,
   useState,
   useEffect,
@@ -14,6 +14,7 @@ import image from "/products/pexels-anna-nekrashevich-8516697.jpg";
 import ServicesConfig from "./Config/ServicesConfig";
 import { BgColors, SpecialColors, FontColors } from "../../ColorsSupport";
 import { FontType1, FontType2 } from "../../FontsSupport";
+import PropTypes from "prop-types";
 
 function Services({
   handleActiveServices,
@@ -45,7 +46,7 @@ function Services({
     if (!typeServicesElStyles) {
       toastMessage("warn", "Services layout not found");
     }
-  }, [typeServicesElStyles]);
+  }, [typeServicesElStyles, toastMessage]);
 
   const handleOpenDesc3 = useCallback((id) => {
     setActiveDescIds3((prev) =>
@@ -283,7 +284,7 @@ function Services({
 
       {isExpandLayout && (
         <div ref={expandLayoutRef} className="expalot-services">
-          <div div className="expalot-services-styles">
+          <div className="expalot-services-styles">
             <div className="title">Choose a layout option</div>
             <div className="wrapper-left">
               <ServicesConfig
@@ -317,5 +318,16 @@ function Services({
     </>
   );
 }
+
+Services.propTypes = {
+  handleActiveServices: PropTypes.func,
+  activeServices: PropTypes.number,
+  activeNavbar: PropTypes.number,
+  toastMessage: PropTypes.func,
+  activeColors: PropTypes.string,
+  activeFonts: PropTypes.string,
+  firstService: PropTypes.bool,
+  typeMain: PropTypes.string,
+};
 
 export default Services;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 function SiteInfoLogics({ dataBrands }) {
   const [activeBrand, setActiveBrand] = useState({});

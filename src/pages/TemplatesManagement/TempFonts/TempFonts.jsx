@@ -1,9 +1,15 @@
-import React from "react";
+import { useState, useEffect } from "react";
 
 function TempFonts() {
+  const [fonts, setFonts] = useState("");
+
+  useEffect(() => {
+    setFonts("Fonts");
+  }, []);
+
   return (
     <>
-      <div>Fonts</div>
+      <div>{fonts}</div>
     </>
   );
 }

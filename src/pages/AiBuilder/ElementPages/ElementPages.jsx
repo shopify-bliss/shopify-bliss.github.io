@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  Fragment,
-  useMemo,
-  useState,
-  useCallback,
-} from "react";
+import { useEffect, Fragment } from "react";
 import {
   Quit,
   Logo,
@@ -19,6 +13,7 @@ import About from "../../../components/AiBuilderSupport/ElementsLayout/About/Abo
 import Form from "../../../components/AiBuilderSupport/ElementsLayout/Form/Form";
 import FirstComponent from "../../../components/AiBuilderSupport/FirstComponent";
 import { BgColors } from "../../../components/AiBuilderSupport/ColorsSupport";
+import PropTypes from "prop-types";
 
 function ElementPages({
   activePages,
@@ -220,5 +215,31 @@ function ElementPages({
     </>
   );
 }
+
+ElementPages.propTypes = {
+  activePages: PropTypes.array,
+  activeSections: PropTypes.object,
+  siteTitle: PropTypes.string,
+  dataPages: PropTypes.array,
+  currentPageId: PropTypes.string,
+  setCurrentPageId: PropTypes.func,
+  toastMessage: PropTypes.func,
+  activeNavbar: PropTypes.bool,
+  handleActiveIntro: PropTypes.func,
+  handleActiveProducts: PropTypes.func,
+  handleActiveServices: PropTypes.func,
+  handleActiveAbout: PropTypes.func,
+  handleActiveForm: PropTypes.func,
+  handleActiveNavbar: PropTypes.func,
+  dataElements: PropTypes.array,
+  activeIntro: PropTypes.string,
+  activeProducts: PropTypes.string,
+  activeServices: PropTypes.string,
+  activeAbout: PropTypes.string,
+  activeForm: PropTypes.string,
+  activeColors: PropTypes.string,
+  activeFonts: PropTypes.string,
+  handleActiveSection: PropTypes.func,
+};
 
 export default ElementPages;

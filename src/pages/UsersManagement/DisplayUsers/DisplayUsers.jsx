@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Header } from "../../../components/LayoutDashboard/Support/SupportDashboard";
 import axios from "axios";
 import urlEndpoint from "../../../helpers/urlEndpoint";
@@ -6,6 +6,7 @@ import { useDashboard } from "../../../components/LayoutDashboard/DashboardConte
 import DisplayUsersModal from "./DisplayUsersModal";
 import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
 import { useSearch } from "../../../helpers/SearchContext";
+import PropTypes from "prop-types";
 
 function DisplayView({
   isLoadingDashboard,
@@ -252,11 +253,11 @@ function DisplayUsers() {
     } finally {
       setDashboardLoader(false);
     }
-  }, [urlEndpoint.allusers, token]);
+  }, [token, setDashboardLoader]);
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [fetchUsers]);
 
   return (
     <>
@@ -313,5 +314,15 @@ function DisplayUsers() {
     </>
   );
 }
+
+DisplayView.propTypes = {
+  isLoadingDashboard: PropTypes.bool,
+  users: PropTypes.array,
+  user: PropTypes.object,
+  setUserId: PropTypes.func,
+  setIsUpdateModalOpen: PropTypes.func,
+  setIsDeleteModalOpen: PropTypes.func,
+  type: PropTypes.string,
+};
 
 export default DisplayUsers;

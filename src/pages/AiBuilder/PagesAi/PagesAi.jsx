@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import {
   Logo,
   Quit,
@@ -6,6 +5,7 @@ import {
 } from "../../../components/AiBuilderSupport/AiBuilderSupport";
 import { ControllingOverviews } from "../../../components/AiBuilderSupport/AiBuilderSupport";
 import NavbarLayout from "../../../components/AiBuilderSupport/NavbarLayout/NavbarLayout";
+import PropTypes from "prop-types";
 
 function PagesAi({
   siteTitle,
@@ -137,5 +137,16 @@ function PagesAi({
     </>
   );
 }
+
+PagesAi.propTypes = {
+  siteTitle: PropTypes.string,
+  activePages: PropTypes.array,
+  currentPageId: PropTypes.string,
+  setCurrentPageId: PropTypes.func,
+  initialPageId: PropTypes.string,
+  handleActivePage: PropTypes.func,
+  dataPages: PropTypes.array,
+  activeNavbar: PropTypes.bool,
+};
 
 export default PagesAi;

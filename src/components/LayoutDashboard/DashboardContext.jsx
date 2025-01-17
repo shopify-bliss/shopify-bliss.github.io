@@ -1,4 +1,6 @@
-import React, {
+/* eslint-disable react-refresh/only-export-components */
+
+import {
   createContext,
   useContext,
   useState,
@@ -18,6 +20,7 @@ import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import { LoaderPages } from "../LoaderProgress/LoaderProgress";
+import PropTypes from "prop-types";
 
 const DashboardContext = createContext({
   activeMenu: null,
@@ -135,7 +138,7 @@ export const DashboardProvider = ({ children }) => {
     } finally {
       setDashboardLoader(false);
     }
-  }, [token, location.pathname, navigate]);
+  }, [token, location.pathname, navigate, setDashboardLoader]);
 
   useEffect(() => {
     if (token) {
@@ -176,13 +179,11 @@ export const DashboardProvider = ({ children }) => {
       submenuPage,
       handleSubmenuPage,
       accessMenus,
-      toastMessage,
-      toastDevelop,
-      toastPromise,
       fetchDashboardData,
       user,
       token,
       isLoadingDashboard,
+      setDashboardLoader,
     ]
   );
 
@@ -193,6 +194,10 @@ export const DashboardProvider = ({ children }) => {
       <ToastContainer />
     </DashboardContext.Provider>
   );
+};
+
+DashboardProvider.propTypes = {
+  children: PropTypes.node,
 };
 
 export const useDashboard = () => useContext(DashboardContext);

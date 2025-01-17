@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo, Fragment } from "react";
+import { useRef, useState, useEffect, useMemo, Fragment } from "react";
 import { ChangeLayout } from "../../AiBuilderSupport";
 import sectionsElOptionLayout from "../../../../data/sectionsElOptionLayout.json";
 import { FormatCurrencyIDR } from "../../../../helpers/FormatCurrencyIDR";
@@ -6,6 +6,7 @@ import productSamples from "../../../../data/products.json";
 import ProductsConfig from "./Config/ProductsConfig";
 import { BgColors, SpecialColors, FontColors } from "../../ColorsSupport";
 import { FontType1, FontType2 } from "../../FontsSupport";
+import PropTypes from "prop-types";
 
 function Products({
   handleActiveProducts,
@@ -256,7 +257,7 @@ function Products({
 
       {isExpandLayout && (
         <div ref={expandLayoutRef} className="expalot-products">
-          <div div className="expalot-products-styles">
+          <div className="expalot-products-styles">
             <div className="title">Choose a layout option</div>
             <div className="wrapper-left">
               <ProductsConfig
@@ -284,5 +285,16 @@ function Products({
     </>
   );
 }
+
+Products.propTypes = {
+  handleActiveProducts: PropTypes.func,
+  activeNavbar: PropTypes.number,
+  activeProducts: PropTypes.number,
+  toastMessage: PropTypes.func,
+  activeColors: PropTypes.object,
+  activeFonts: PropTypes.object,
+  firstProduct: PropTypes.bool,
+  typeMain: PropTypes.string,
+};
 
 export default Products;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import ReactApexChart from "react-apexcharts";
 import axios from "axios";
 import urlEndpoint from "../../../helpers/urlEndpoint";
@@ -53,7 +53,7 @@ function UserRoles() {
     } finally {
       setDashboardLoader(false);
     }
-  }, [token]);
+  }, [token, setDashboardLoader]);
 
   useEffect(() => {
     fetchUsers();
@@ -77,7 +77,7 @@ function UserRoles() {
           type: "bar",
           events: {
             click: function (chart, w, e) {
-              // console.log(chart, w, e)
+              console.log(chart, w, e)
             },
           },
         },

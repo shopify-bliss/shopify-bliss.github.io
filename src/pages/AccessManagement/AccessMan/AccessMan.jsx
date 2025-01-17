@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Header } from "../../../components/LayoutDashboard/Support/SupportDashboard";
 import axios from "axios";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
@@ -6,6 +6,7 @@ import AccessManModal from "./AccessManModal";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
 import { useSearch } from "../../../helpers/SearchContext";
+import PropTypes from "prop-types";
 
 function DisplayView({
   accessMenus,
@@ -224,5 +225,17 @@ function AccessMan() {
     </>
   );
 }
+
+DisplayView.propTypes = {
+  accessMenus: PropTypes.array,
+  setAccessId: PropTypes.func,
+  setIsDeleteModalOpen: PropTypes.func,
+  type: PropTypes.string,
+  menus: PropTypes.array,
+  activeRole: PropTypes.string,
+  handleActiveRole: PropTypes.func,
+  roles: PropTypes.array,
+  isLoadingDashboard: PropTypes.bool,
+};
 
 export default AccessMan;

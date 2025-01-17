@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from "prop-types";
 
 function Modal({
   type = "form",
@@ -45,5 +45,14 @@ function Modal({
     </>
   );
 }
+
+Modal.propTypes = {
+  type: PropTypes.string,
+  titleModal: PropTypes.string,
+  descModal: PropTypes.string,
+  children: PropTypes.node,
+  onClose: PropTypes.func,
+  onOpen: PropTypes.func,
+};
 
 export default Modal;

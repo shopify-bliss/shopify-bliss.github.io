@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
-
+import { useState, useEffect, useCallback } from "react";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { tempPagesSchema } from "../../../helpers/ValidationSchema";
+import { tempPagesSchema } from "../../../helpers/ValidationSchema.js";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
 import axios from "axios";
+import PropTypes from "prop-types";
 
 function TempPagesModal({ type, onOpen, onClose, refreshData, pageId }) {
   axios.defaults.withCredentials = true;
@@ -34,7 +34,7 @@ function TempPagesModal({ type, onOpen, onClose, refreshData, pageId }) {
           console.error("Error fetching page data:", error);
         });
     }
-  }, [onOpen, type, pageId, urlEndpoint]);
+  }, [onOpen, type, pageId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -128,7 +128,7 @@ function TempPagesModal({ type, onOpen, onClose, refreshData, pageId }) {
       }
     },
     [
-      tempPagesSchema,
+      type,
       data,
       onClose,
       refreshData,
@@ -136,7 +136,6 @@ function TempPagesModal({ type, onOpen, onClose, refreshData, pageId }) {
       toastPromise,
       pageId,
       token,
-      urlEndpoint,
     ]
   );
 
@@ -174,7 +173,7 @@ function TempPagesModal({ type, onOpen, onClose, refreshData, pageId }) {
         console.error("Error deleting page data:", error);
       });
     },
-    [pageId, token, onClose, refreshData]
+    [pageId, token, onClose, refreshData, toastPromise]
   );
 
   return (
@@ -240,5 +239,13 @@ function TempPagesModal({ type, onOpen, onClose, refreshData, pageId }) {
     </>
   );
 }
+
+TempPagesModal.propTypes = {
+  type: PropTypes.string,
+  onOpen: PropTypes.bool,
+  onClose: PropTypes.func,
+  refreshData: PropTypes.func,
+  pageId: PropTypes.string,
+};
 
 export default TempPagesModal;

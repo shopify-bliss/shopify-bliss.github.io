@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import { Fragment } from "react";
+import PropTypes from "prop-types";
 
 function IntroConfig({
   layoutIds,
@@ -127,5 +128,16 @@ function IntroConfig({
     </>
   );
 }
+
+IntroConfig.propTypes = {
+  layoutIds: PropTypes.array,
+  activeIntro: PropTypes.number,
+  handleActiveIntro: PropTypes.func,
+  sectionsElOptionLayout: PropTypes.array,
+  introSample: PropTypes.array,
+  imageStyle3: PropTypes.string,
+  imageStyle4: PropTypes.string,
+  imageIntro: PropTypes.func,
+};
 
 export default IntroConfig;

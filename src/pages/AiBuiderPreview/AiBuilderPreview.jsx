@@ -1,25 +1,14 @@
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  Fragment,
-  useMemo,
-} from "react";
+import { useEffect, useState, useCallback, Fragment, useMemo } from "react";
 import axios from "axios";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import { useAiBuilder } from "../../components/AiBuilderSupport/AiBuilderContext";
-import {
-  Quit,
-  Logo,
-  DefaultFooter,
-} from "../../components/AiBuilderSupport/AiBuilderSupport";
+import { DefaultFooter } from "../../components/AiBuilderSupport/AiBuilderSupport";
 import NavbarLayout from "../../components/AiBuilderSupport/NavbarLayout/NavbarLayout";
 import Intro from "../../components/AiBuilderSupport/ElementsLayout/Intro/Intro";
 import Products from "../../components/AiBuilderSupport/ElementsLayout/Products/Products";
 import Services from "../../components/AiBuilderSupport/ElementsLayout/Services/Services";
 import About from "../../components/AiBuilderSupport/ElementsLayout/About/About";
 import Form from "../../components/AiBuilderSupport/ElementsLayout/Form/Form";
-import { BgColors } from "../../components/AiBuilderSupport/ColorsSupport";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toastMessage } from "../../helpers/AlertMessage";
 import { ToastContainer } from "react-toastify";
@@ -134,7 +123,7 @@ function AiBuilderPreview() {
     } finally {
       setAiBuilderLoader(false);
     }
-  }, [token, navigate, location.state]);
+  }, [token, navigate, setAiBuilderLoader]);
 
   useEffect(() => {
     if (token) {
@@ -264,7 +253,7 @@ function AiBuilderPreview() {
                           activeColors={color}
                           activeFonts={font}
                           firstForm={firstForm}
-                        />  
+                        />
                       ) : (
                         <div className="no-element">{section.name}</div>
                       )}

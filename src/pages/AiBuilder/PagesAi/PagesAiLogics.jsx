@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useCallback } from "react";
 import { useAiBuilder } from "../../../components/AiBuilderSupport/AiBuilderContext";
 
 function PagesAiLogics() {
@@ -52,7 +52,7 @@ function PagesAiLogics() {
         return updatedPages.sort((a, b) => a - b);
       });
     },
-    [currentPageId]
+    [currentPageId, initialPageId, setCurrentPageId]
   );
 
   return { activePages, handleActivePage };

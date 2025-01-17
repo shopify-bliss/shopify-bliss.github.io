@@ -1,4 +1,6 @@
-import React, {
+/* eslint-disable react-refresh/only-export-components */
+
+import {
   createContext,
   useContext,
   useState,
@@ -12,6 +14,7 @@ import { LoaderProgress } from "../LoaderProgress/LoaderProgress";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import PropTypes from "prop-types";
 
 const AiBuilderContext = createContext({
   dataBrands: [],
@@ -55,13 +58,17 @@ export const AiBuilderProvider = ({ children }) => {
 
   useEffect(() => {
     const tokenFromCookies = Cookies.get("shopify-bliss");
-    const decodedToken = jwtDecode(tokenFromCookies);
 
     if (tokenFromCookies) {
+      const decodedToken = jwtDecode(tokenFromCookies);
+
       setToken(tokenFromCookies);
       setUser(decodedToken);
     } else {
-      navigate("/login", { replace: true });
+      navigate("/login", {
+        replace: true,
+        state: { messageNoToken: "You need to sign in to proceed" },
+      });
     }
   }, [navigate]);
 
@@ -144,6 +151,10 @@ export const AiBuilderProvider = ({ children }) => {
       {children}
     </AiBuilderContext.Provider>
   );
+};
+
+AiBuilderProvider.propTypes = {
+  children: PropTypes.node,
 };
 
 export const useAiBuilder = () => {

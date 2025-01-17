@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/logo/black-logo.png";
 import urlEndpoint from "../../helpers/urlEndpoint";
@@ -9,8 +9,9 @@ import {
 } from "../../components/AuthSupport/AuthSupport";
 import { ToastContainer } from "react-toastify";
 import { toastMessage, toastPromise } from "../../helpers/AlertMessage";
+import PropTypes from "prop-types";
 
-function Verify({ typeMain }) {
+function Verify({ typeMain = null }) {
   axios.defaults.withCredentials = true;
 
   const [code, setCode] = useState(new Array(6).fill(""));
@@ -155,7 +156,7 @@ function Verify({ typeMain }) {
         },
       });
     }
-  }, [navigate, location.state]);
+  }, [navigate, location.state, typeMain]);
 
   return (
     <>
@@ -196,5 +197,9 @@ function Verify({ typeMain }) {
     </>
   );
 }
+
+Verify.propTypes = {
+  typeMain: PropTypes.string,
+};
 
 export default Verify;

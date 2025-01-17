@@ -1,9 +1,15 @@
-import React from "react";
+import { useState, useEffect } from "react";
 
 function TempColors() {
+  const [colors, setColors] = useState("");
+
+  useEffect(() => {
+    setColors("Colors");
+  }, []);
+
   return (
     <>
-      <div>Colors</div>
+      <div>{colors}</div>
     </>
   );
 }

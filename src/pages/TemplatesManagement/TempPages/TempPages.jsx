@@ -1,10 +1,11 @@
-import React, { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Header } from "../../../components/LayoutDashboard/Support/SupportDashboard";
 import axios from "axios";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import TempPagesModal from "./TempPagesModal";
 import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
 import { useSearch } from "../../../helpers/SearchContext";
+import PropTypes from "prop-types";
 
 function DisplayView({
   isLoadingTempPages,
@@ -141,7 +142,7 @@ function TempPages() {
     } finally {
       setIsLoadingTempPages(false);
     }
-  }, [urlEndpoint.pagesAi]);
+  }, []);
 
   useEffect(() => {
     fetchPages();
@@ -200,5 +201,14 @@ function TempPages() {
     </>
   );
 }
+
+DisplayView.propTypes = {
+  isLoadingTempPages: PropTypes.bool,
+  pages: PropTypes.array,
+  setPageId: PropTypes.func,
+  setIsUpdateModalOpen: PropTypes.func,
+  setIsDeleteModalOpen: PropTypes.func,
+  type: PropTypes.string,
+};
 
 export default TempPages;

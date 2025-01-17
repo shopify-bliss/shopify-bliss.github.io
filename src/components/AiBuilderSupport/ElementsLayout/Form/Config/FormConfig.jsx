@@ -1,4 +1,7 @@
-import React, { Fragment } from "react";
+/* eslint-disable react-refresh/only-export-components */
+
+import { Fragment } from "react";
+import PropTypes from "prop-types";
 
 export const usernameField = (label, placeholder, type1, type2, special) => {
   const borderedSpecial = special?.replace(/^color-special-/, "");
@@ -21,6 +24,14 @@ export const usernameField = (label, placeholder, type1, type2, special) => {
       />
     </div>
   );
+};
+
+usernameField.propTypes = {
+  label: PropTypes.bool,
+  placeholder: PropTypes.string,
+  type1: PropTypes.string,
+  type2: PropTypes.string,
+  special: PropTypes.string,
 };
 
 export const emailField = (label, placeholder, type1, type2, special) => {
@@ -46,6 +57,14 @@ export const emailField = (label, placeholder, type1, type2, special) => {
   );
 };
 
+emailField.propTypes = {
+  label: PropTypes.bool,
+  placeholder: PropTypes.string,
+  type1: PropTypes.string,
+  type2: PropTypes.string,
+  special: PropTypes.string,
+};
+
 export const phoneField = (label, placeholder, type1, type2, special) => {
   const borderedSpecial = special?.replace(/^color-special-/, "");
 
@@ -69,6 +88,14 @@ export const phoneField = (label, placeholder, type1, type2, special) => {
   );
 };
 
+phoneField.propTypes = {
+  label: PropTypes.bool,
+  placeholder: PropTypes.string,
+  type1: PropTypes.string,
+  type2: PropTypes.string,
+  special: PropTypes.string,
+};
+
 export const messageField = (label, placeholder, type1, type2, special) => {
   const borderedSpecial = special?.replace(/^color-special-/, "");
 
@@ -88,6 +115,14 @@ export const messageField = (label, placeholder, type1, type2, special) => {
       ></textarea>
     </div>
   );
+};
+
+messageField.propTypes = {
+  label: PropTypes.bool,
+  placeholder: PropTypes.string,
+  type1: PropTypes.string,
+  type2: PropTypes.string,
+  special: PropTypes.string,
 };
 
 function FormConfig({
@@ -259,5 +294,14 @@ function FormConfig({
     </>
   );
 }
+
+FormConfig.propTypes = {
+  layoutIds: PropTypes.array,
+  activeForm: PropTypes.number,
+  handleActiveForm: PropTypes.func,
+  imageStyle4: PropTypes.string,
+  form: PropTypes.array,
+  sectionsElOptionLayout: PropTypes.array,
+};
 
 export default FormConfig;

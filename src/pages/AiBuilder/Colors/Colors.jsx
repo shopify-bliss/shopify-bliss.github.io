@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  Fragment,
-  useMemo,
-  useState,
-  useCallback,
-} from "react";
+import { Fragment } from "react";
 import {
   Quit,
   Logo,
@@ -18,6 +12,7 @@ import About from "../../../components/AiBuilderSupport/ElementsLayout/About/Abo
 import Form from "../../../components/AiBuilderSupport/ElementsLayout/Form/Form";
 import FirstComponent from "../../../components/AiBuilderSupport/FirstComponent";
 import { BgColors } from "../../../components/AiBuilderSupport/ColorsSupport";
+import PropTypes from "prop-types";
 
 function Colors({
   activePages,
@@ -213,5 +208,27 @@ function Colors({
     </>
   );
 }
+
+Colors.propTypes = {
+  activePages: PropTypes.array,
+  activeSections: PropTypes.object,
+  siteTitle: PropTypes.string,
+  dataBrands: PropTypes.array,
+  dataPages: PropTypes.array,
+  currentPageId: PropTypes.number,
+  setCurrentPageId: PropTypes.func,
+  toastMessage: PropTypes.func,
+  dataElements: PropTypes.array,
+  activeNavbar: PropTypes.bool,
+  activeIntro: PropTypes.bool,
+  activeProducts: PropTypes.bool,
+  activeServices: PropTypes.bool,
+  activeAbout: PropTypes.bool,
+  activeForm: PropTypes.bool,
+  activeColors: PropTypes.number,
+  dataColors: PropTypes.array,
+  handleactiveColors: PropTypes.func,
+  activeFonts: PropTypes.number,
+};
 
 export default Colors;
