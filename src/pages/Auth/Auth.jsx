@@ -54,7 +54,6 @@ function Auth({ typeMain }) {
   useEffect(() => {
     const verifyEmail = searchParams.get("message");
     const getTokenParams = searchParams.get("shopify-bliss");
-    const getRoleParams = searchParams.get("role");
 
     const params = new URLSearchParams(window.location.search);
 
@@ -69,7 +68,7 @@ function Auth({ typeMain }) {
         : window.location.pathname;
 
       window.history.replaceState({}, document.title, newUrl);
-    } else if (getTokenParams && getRoleParams) {
+    } else if (getTokenParams) {
       Cookies.set("shopify-bliss", getTokenParams, {
         path: "/",
         secure: true,
@@ -77,7 +76,6 @@ function Auth({ typeMain }) {
       });
 
       params.delete("shopify-bliss");
-      params.delete("role");
       const newUrl = params.toString()
         ? `${window.location.pathname}?${params.toString()}`
         : window.location.pathname;
