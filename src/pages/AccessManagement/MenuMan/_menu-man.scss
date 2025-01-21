@@ -45,6 +45,10 @@
         @include m.flex();
         gap: 0.25rem;
 
+        &-progress {
+          @include support.component-action(support.$purple);
+        }
+
         &-edit {
           @include support.icon-action(support.$yellow);
         }
@@ -75,7 +79,7 @@
 
     .head {
       display: grid;
-      grid-template-columns: auto 1fr 1fr 0.5fr;
+      grid-template-columns: auto 1fr 1fr 0.8fr 0.5fr;
 
       &-col {
         padding: 1.1rem 1rem;
@@ -89,6 +93,10 @@
           @include m.flex();
         }
 
+        &:nth-child(4) {
+          @include m.flex();
+        }
+
         &:last-child {
           @include m.flex();
           border-right: #fff solid 1px;
@@ -98,7 +106,7 @@
 
     .body {
       display: grid;
-      grid-template-columns: auto 1fr 1fr 0.5fr;
+      grid-template-columns: auto 1fr 1fr 0.8fr 0.5fr;
 
       &-col {
         padding: 1.75rem 0.9rem 0;
@@ -116,6 +124,26 @@
         &:nth-child(3) {
           color: #000;
           font-weight: 500;
+        }
+
+        &:nth-child(4) {
+          @include m.flex();
+
+          .progress {
+            @include support.set-default(
+              $bg: support.$purple,
+              $color: #fff,
+              $p: 0.4rem 0.8rem
+            );
+          }
+
+          .done {
+            @include support.set-default(
+              $bg: support.$teal,
+              $color: #fff,
+              $p: 0.4rem 0.8rem
+            );
+          }
         }
 
         &:last-child {

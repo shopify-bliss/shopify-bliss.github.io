@@ -30,10 +30,14 @@ function AccessManagement() {
   return (
     <>
       <LayoutDashboard>
-        {submenuPage === "access" && <AccessMan />}
-        {submenuPage === "menu" && <MenuMan />}
-        {submenuPage === "submenu" && <SubmenuMan />}
-        {submenuPage === "role" && <RoleMan />}
+        {submenuPage === "f38556ea-5da9-4eb2-8b8b-dd72b073aba4" && (
+          <AccessMan />
+        )}
+        {submenuPage === "0349079b-d986-43f3-962b-6510c2c8772a" && <MenuMan />}
+        {submenuPage === "d06c3224-d2c3-4122-89cc-6c8b42043fb3" && (
+          <SubmenuMan />
+        )}
+        {submenuPage === "2d529de1-847f-493a-b2cf-672eca925729" && <RoleMan />}
       </LayoutDashboard>
     </>
   );

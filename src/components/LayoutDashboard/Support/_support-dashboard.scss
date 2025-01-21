@@ -237,8 +237,44 @@ $cyan: #0dcaf0;
   }
 }
 
+@mixin component-action($clr: $cyan) {
+  @include m.flex();
+  border: $clr solid 1px;
+  transition: all 0.3s ease-in;
+  cursor: default;
+
+  .item-action-icon {
+    @include icon-action($clr, $default: true);
+  }
+
+  .text {
+    margin-left: -0.1rem;
+    font-size: 0.8rem;
+    font-family: v.$raleway;
+    transition: all 0.3s ease-in;
+    padding-right: 0.33rem;
+    color: $clr;
+  }
+
+  &:hover {
+    background-color: $clr;
+    transition: all 0.3s ease-out;
+
+    .item-action-icon {
+      font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
+      transition: all 0.3s ease-out;
+    }
+
+    .text,
+    .item-action-icon {
+      color: #fff;
+      transition: all 0.3s ease-out;
+    }
+  }
+}
+
 @mixin set-default(
-  $bg: $blue,
+  $bg: $cyan,
   $color: #fff,
   $p: 0.4rem 0,
   $radius: true,
@@ -255,7 +291,7 @@ $cyan: #0dcaf0;
   pointer-events: none;
 
   @if $static {
-    width: $w;
+    min-width: $w;
   }
 
   @if $radius {

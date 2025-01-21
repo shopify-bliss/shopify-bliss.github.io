@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Header } from "../../../components/LayoutDashboard/Support/SupportDashboard";
 import axios from "axios";
 import MenuManModal from "./MenuManModal";
@@ -39,6 +39,14 @@ function DisplayView({
                   {data.url}
                 </Link>
                 <div className="item-action">
+                  {data.is_develope === true ? (
+                    <span className="item-action-progress">
+                      <span className="material-symbols-outlined item-action-icon">
+                        sync
+                      </span>
+                      <div className="text">Progress</div>
+                    </span>
+                  ) : null}
                   <span
                     className="material-symbols-rounded item-action-edit"
                     onClick={() => {
@@ -67,6 +75,7 @@ function DisplayView({
             <div className="head-col">No</div>
             <div className="head-col">Name</div>
             <div className="head-col">Url</div>
+            <div className="head-col">Develope</div>
             <div className="head-col">Action</div>
           </div>
           {menus
@@ -85,6 +94,13 @@ function DisplayView({
                 <Link to={`/${data.url}`} className="body-col">
                   {data.url}
                 </Link>
+                <div className="body-col">
+                  {data.is_develope === true ? (
+                    <span className="progress">Progress</span>
+                  ) : (
+                    <span className="done">Done</span>
+                  )}
+                </div>
                 <div className="body-col">
                   <span
                     className="material-symbols-rounded edit"

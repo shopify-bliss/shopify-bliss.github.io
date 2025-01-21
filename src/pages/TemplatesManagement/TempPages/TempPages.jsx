@@ -135,10 +135,8 @@ function TempPages() {
       const response = await axios.get(urlEndpoint.pagesAi);
 
       setPages(response.data.data);
-      setIsLoadingTempPages(false);
     } catch (error) {
       console.error(error);
-      setIsLoadingTempPages(false);
     } finally {
       setIsLoadingTempPages(false);
     }

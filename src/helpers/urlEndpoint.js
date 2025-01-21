@@ -12,6 +12,9 @@ const urlEndpoint = {
   elementsAiId: `${baseUrl}/api/section-templates-id`,
   colorsAi: `${baseUrl}/api/color-design`,
   fontsAi: `${baseUrl}/api/font-design`,
+  fontsAiId: `${baseUrl}/api/font-design-id`,
+  fonts: `${baseUrl}/api/fonts`,
+  font: `${baseUrl}/api/font`,
   aiBuilder: `${baseUrl}/api/ai-builder`,
   aiBuilderUser: `${baseUrl}/api/ai-builder-id`, // by user_id
   aiBuilderId: `${baseUrl}/api/ai-builder-id-builder`, // by ai_builder_id

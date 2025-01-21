@@ -1,8 +1,8 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { MenuManSchema } from "../../../helpers/ValidationSchema.js";
+import { MenuManSchema } from "../../../helpers/ValidationSchema";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
 import PropTypes from "prop-types";
 
@@ -13,8 +13,12 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
     name: "",
     url: "",
   });
+  const [isDevelopValue, setIsDevelopValue] = useState(true);
 
   const { toastMessage, toastPromise, token } = useDashboard();
+
+  const statusInsert = useRef(false);
+  const statusUpdate = useRef(false);
 
   useEffect(() => {
     if (onOpen && type === "create") {
@@ -22,11 +26,13 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
         name: "",
         url: "",
       });
+      setIsDevelopValue(true);
     } else if (onOpen && type === "update") {
       axios
         .get(`${urlEndpoint.menusId}?id=${menuId}`)
         .then((res) => {
           setData(res.data.data[0]);
+          setIsDevelopValue(res.data.data[0].is_develope);
         })
         .catch((error) => {
           console.error("Error fetching menu data:", error);
@@ -48,16 +54,26 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
       e.preventDefault();
 
       if (type === "create") {
-        MenuManSchema.validate(data, { abortEarly: false })
+        const insertData = {
+          name: data.name,
+          url: data.url,
+          isDevelope: isDevelopValue,
+        };
+
+        MenuManSchema.validate(insertData, { abortEarly: false })
           .then(() => {
-            const elementsAiPromise = axios.post(urlEndpoint.menus, data, {
+            const menuManPromise = axios.post(urlEndpoint.menus, insertData, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
             });
 
+            menuManPromise.then((res) => {
+              statusInsert.current = res.data.success;
+            });
+
             toastPromise(
-              elementsAiPromise,
+              menuManPromise,
               {
                 pending: "Adding menu data on progress, please wait..!",
                 success: "Data has been successfully added!",
@@ -68,12 +84,14 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
                 position: "top-center",
               },
               () => {
-                onClose();
-                refreshData();
+                if (statusInsert.current === true) {
+                  onClose();
+                  refreshData();
+                }
               }
             );
 
-            elementsAiPromise.catch((error) => {
+            menuManPromise.catch((error) => {
               console.error("Error adding menu data:", error);
             });
           })
@@ -83,11 +101,17 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
             });
           });
       } else {
-        MenuManSchema.validate(data, { abortEarly: false })
+        const updateData = {
+          name: data.name,
+          url: data.url,
+          isDevelope: isDevelopValue,
+        };
+
+        MenuManSchema.validate(updateData, { abortEarly: false })
           .then(() => {
-            const elementsAiPromise = axios.put(
+            const menuManPromise = axios.put(
               `${urlEndpoint.menus}?id=${menuId}`,
-              data,
+              updateData,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -95,8 +119,12 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
               }
             );
 
+            menuManPromise.then((res) => {
+              statusUpdate.current = res.data.success;
+            });
+
             toastPromise(
-              elementsAiPromise,
+              menuManPromise,
               {
                 pending: "Updating menu data on progress, please wait..!",
                 success: "Data has been successfully updated!",
@@ -107,12 +135,14 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
                 position: "top-center",
               },
               () => {
-                onClose();
-                refreshData();
+                if (statusUpdate.current === true) {
+                  onClose();
+                  refreshData();
+                }
               }
             );
 
-            elementsAiPromise.catch((error) => {
+            menuManPromise.catch((error) => {
               console.error("Error updating menu data:", error);
             });
           })
@@ -125,6 +155,7 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
     },
     [
       data,
+      isDevelopValue,
       onClose,
       refreshData,
       toastMessage,
@@ -225,6 +256,22 @@ function MenuManModal({ type, onOpen, onClose, refreshData, menuId }) {
                 onChange={handleChange}
               />
             </div>
+            <div className="modal-dashboard-form-group">
+              <div className="label">
+                Setting Is Develope <span>(Required)</span>
+              </div>
+              <div
+                className="check-option"
+                onClick={() => setIsDevelopValue(!isDevelopValue)}
+              >
+                <span className="material-symbols-outlined">
+                  {isDevelopValue ? "circle" : "task_alt"}
+                </span>
+                <div className="text">
+                  {isDevelopValue ? "Progress" : "Done"}
+                </div>
+              </div>
+            </div>
             <button type="submit">Submit</button>
           </form>
         </Modal>
@@ -238,7 +285,7 @@ MenuManModal.propTypes = {
   onOpen: PropTypes.bool,
   onClose: PropTypes.func,
   refreshData: PropTypes.func,
-  menuId: PropTypes.number,
+  menuId: PropTypes.string,
 };
 
 export default MenuManModal;

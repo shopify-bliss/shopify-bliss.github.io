@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import axios from "axios";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import { AuthValidationPassword } from "../../components/AuthSupport/AuthSupport";
-import { resetPasswordSchema } from "../../helpers/ValidationSchema.js";
+import { resetPasswordSchema } from "../../helpers/ValidationSchema";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
 
 function Password() {

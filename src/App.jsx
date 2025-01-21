@@ -1,4 +1,4 @@
-import  { lazy } from "react";
+import { lazy } from "react";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { SearchProvider } from "./helpers/SearchContext";
 import { DashboardProvider } from "./components/LayoutDashboard/DashboardContext";
@@ -21,6 +21,9 @@ const TemplatesManagement = Loadable(
 );
 const AccessManagement = Loadable(
   lazy(() => import("./pages/AccessManagement/AccessManagement"))
+);
+const FontsManagement = Loadable(
+  lazy(() => import("./pages/FontsManagement/FontsManagement"))
 );
 const AiBuilder = Loadable(lazy(() => import("./pages/AiBuilder/AiBuilder")));
 const AiBuilderPreview = Loadable(
@@ -85,6 +88,7 @@ function App() {
               path="/templates-management"
               element={<TemplatesManagement />}
             />
+            <Route path="/fonts-management" element={<FontsManagement />} />
           </Route>
         </Routes>
       </SearchProvider>

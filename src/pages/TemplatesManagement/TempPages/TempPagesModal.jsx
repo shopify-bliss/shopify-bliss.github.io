@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { tempPagesSchema } from "../../../helpers/ValidationSchema.js";
+import { tempPagesSchema } from "../../../helpers/ValidationSchema";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
 import axios from "axios";
 import PropTypes from "prop-types";

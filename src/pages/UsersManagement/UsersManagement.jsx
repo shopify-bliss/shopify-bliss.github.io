@@ -27,7 +27,9 @@ function UsersManagement() {
   return (
     <>
       <LayoutDashboard>
-        {submenuPage === "display data" && <DisplayUsers />}
+        {submenuPage === "c4f884b7-f98a-40a9-a436-ad293b13d565" && (
+          <DisplayUsers />
+        )}
       </LayoutDashboard>
     </>
   );

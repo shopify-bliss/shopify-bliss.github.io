@@ -48,37 +48,39 @@ function DisplayView({
         </div>
         {type === "grid" ? (
           <div className="access-man-grid">
-            {menus.map((menu) => {
-              const matchedAccess = accessMenus.find(
-                (access) =>
-                  access.menu_id === menu.menu_id &&
-                  access.role_id === activeRole
-              );
+            {menus
+              .filter((menu) => menu.is_develope === false)
+              .map((menu) => {
+                const matchedAccess = accessMenus.find(
+                  (access) =>
+                    access.menu_id === menu.menu_id &&
+                    access.role_id === activeRole
+                );
 
-              const hasAccess = !!matchedAccess;
+                const hasAccess = !!matchedAccess;
 
-              return (
-                <div className="item" key={menu.menu_id}>
-                  <div className="item-name">{menu.name}</div>
-                  <span className="material-symbols-outlined item-check">
-                    {hasAccess ? "task_alt" : "circle"}
-                  </span>
-                  <div className="item-action">
-                    {hasAccess && (
-                      <span
-                        className="material-symbols-rounded item-action-delete"
-                        onClick={() => {
-                          setIsDeleteModalOpen(true);
-                          setAccessId(matchedAccess.access_id);
-                        }}
-                      >
-                        delete
-                      </span>
-                    )}
+                return (
+                  <div className="item" key={menu.menu_id}>
+                    <div className="item-name">{menu.name}</div>
+                    <span className="material-symbols-outlined item-check">
+                      {hasAccess ? "task_alt" : "circle"}
+                    </span>
+                    <div className="item-action">
+                      {hasAccess && (
+                        <span
+                          className="material-symbols-rounded item-action-delete"
+                          onClick={() => {
+                            setIsDeleteModalOpen(true);
+                            setAccessId(matchedAccess.access_id);
+                          }}
+                        >
+                          delete
+                        </span>
+                      )}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         ) : (
           <div className="access-man-list">
@@ -88,38 +90,40 @@ function DisplayView({
               <div className="head-col">Access</div>
               <div className="head-col">Action</div>
             </div>
-            {menus.map((menu, index) => {
-              const matchedAccess = accessMenus.find(
-                (access) =>
-                  access.menu_id === menu.menu_id &&
-                  access.role_id === activeRole
-              );
+            {menus
+              .filter((menu) => menu.is_develope === false)
+              .map((menu, index) => {
+                const matchedAccess = accessMenus.find(
+                  (access) =>
+                    access.menu_id === menu.menu_id &&
+                    access.role_id === activeRole
+                );
 
-              const hasAccess = !!matchedAccess;
+                const hasAccess = !!matchedAccess;
 
-              return (
-                <div className="body" key={menu.menu_id}>
-                  <div className="body-col">{index + 1}</div>
-                  <div className="body-col">{menu.name}</div>
-                  <div className="body-col material-symbols-outlined">
-                    {hasAccess ? "task_alt" : "circle"}
+                return (
+                  <div className="body" key={menu.menu_id}>
+                    <div className="body-col">{index + 1}</div>
+                    <div className="body-col">{menu.name}</div>
+                    <div className="body-col material-symbols-outlined">
+                      {hasAccess ? "task_alt" : "circle"}
+                    </div>
+                    <div className="body-col">
+                      {hasAccess && (
+                        <span
+                          className="material-symbols-rounded delete"
+                          onClick={() => {
+                            setIsDeleteModalOpen(true);
+                            setAccessId(matchedAccess.access_id);
+                          }}
+                        >
+                          delete
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <div className="body-col">
-                    {hasAccess && (
-                      <span
-                        className="material-symbols-rounded delete"
-                        onClick={() => {
-                          setIsDeleteModalOpen(true);
-                          setAccessId(matchedAccess.access_id);
-                        }}
-                      >
-                        delete
-                      </span>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         )}
       </div>

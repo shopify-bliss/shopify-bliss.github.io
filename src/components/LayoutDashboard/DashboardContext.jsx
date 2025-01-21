@@ -125,7 +125,7 @@ export const DashboardProvider = ({ children }) => {
         setActiveSubmenu(filteredSubmenu);
 
         const defaultSubmenu = filteredSubmenu.find((data) => data.default);
-        setSubmenuPage(defaultSubmenu ? defaultSubmenu.name : null);
+        setSubmenuPage(defaultSubmenu ? defaultSubmenu.sub_menu_id : null);
       }
     } catch (err) {
       console.error("Error fetching dashboard data:", err);
@@ -147,8 +147,8 @@ export const DashboardProvider = ({ children }) => {
   }, [token, fetchDashboardData]);
 
   const handleSubmenuPage = useCallback(
-    (submenuName) => {
-      setSubmenuPage(submenuName);
+    (submenuId) => {
+      setSubmenuPage(submenuId);
     },
     [setSubmenuPage]
   );

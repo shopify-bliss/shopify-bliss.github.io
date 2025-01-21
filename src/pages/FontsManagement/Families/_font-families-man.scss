@@ -3,7 +3,7 @@
 @use "../../../components/LayoutDashboard/Support/support-dashboard.scss" as
   support;
 
-.submenu-man {
+.fonts-man {
   @include support.wrapper-parent();
 
   @include support.header();
@@ -11,7 +11,7 @@
   &-grid {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
     gap: 0.3rem;
 
     .item {
@@ -24,33 +24,32 @@
         text-align: center;
         font-family: v.$raleway;
         transition: all 0.3s ease-in;
-        color: #000;
+        pointer-events: none;
       }
 
       &-name {
         @include text();
         text-transform: capitalize;
-        cursor: default;
+        margin-bottom: 0.1rem;
       }
 
-      &-menu {
-        @include text();
-        font-size: 0.8rem;
-        font-weight: 500;
+      &-samples {
+        width: 170px;
+        letter-spacing: 0.5px;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        white-space: normal;
+        text-align: center;
+        font-size: 0.75rem;
       }
 
       &-action {
         margin-top: 1.1rem;
         @include m.flex();
         gap: 0.25rem;
-        flex-wrap: wrap;
 
         &-progress {
           @include support.component-action(support.$purple);
-        }
-
-        &-default {
-          @include support.component-action();
         }
 
         &-edit {
@@ -67,9 +66,7 @@
         transition: all 0.6s ease-out;
 
         .item-name,
-        .item-menu,
-        .item-url,
-        .item-url-link {
+        .item-samples {
           color: #fff;
           transition: all 0.3s ease-out;
         }
@@ -84,7 +81,7 @@
 
     .head {
       display: grid;
-      grid-template-columns: auto 1fr 1.2fr 0.6fr 1fr 0.8fr;
+      grid-template-columns: auto 1fr 1.6fr 0.8fr 0.5fr;
 
       &-col {
         padding: 1.1rem 1rem;
@@ -98,8 +95,7 @@
           @include m.flex();
         }
 
-        &:nth-child(4),
-        &:nth-child(5) {
+        &:nth-child(4) {
           @include m.flex();
         }
 
@@ -112,38 +108,38 @@
 
     .body {
       display: grid;
-      grid-template-columns: auto 1fr 1.2fr 0.6fr 1fr 0.8fr;
+      grid-template-columns: auto 1fr 1.6fr 0.8fr 0.5fr;
 
       &-col {
         padding: 1.75rem 0.9rem 0;
-        @include m.flex($justify: flex-start);
 
         &:first-child {
           width: 4.4rem;
           @include m.flex();
         }
 
-        &:nth-child(2),
-        &:nth-child(3) {
+        &:nth-child(2) {
+          @include m.flex($justify: flex-start);
           text-transform: capitalize;
         }
 
-        &:nth-child(4) {
-          @include m.flex();
+        &:nth-child(3) {
+          max-width: 346.49px;
+          letter-spacing: 0.5px;
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          white-space: normal;
 
-          .default {
-            @include support.set-default();
+          .uppercase {
+            text-transform: uppercase;
           }
 
-          .nope {
-            @include support.set-default(
-              $bg: adjust-color($color: #fff, $blackness: 10%),
-              $color: #000
-            );
+          .lowercase {
+            text-transform: lowercase;
           }
         }
 
-        &:nth-child(5) {
+        &:nth-child(4) {
           @include m.flex();
 
           .progress {

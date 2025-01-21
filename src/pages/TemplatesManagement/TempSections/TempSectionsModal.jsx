@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { TempSectionsSchema } from "../../../helpers/ValidationSchema.js";
+import { TempSectionsSchema } from "../../../helpers/ValidationSchema";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
 import PropTypes from "prop-types";
 

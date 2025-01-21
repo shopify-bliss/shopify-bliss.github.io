@@ -215,7 +215,7 @@ Colors.propTypes = {
   siteTitle: PropTypes.string,
   dataBrands: PropTypes.array,
   dataPages: PropTypes.array,
-  currentPageId: PropTypes.number,
+  currentPageId: PropTypes.string,
   setCurrentPageId: PropTypes.func,
   toastMessage: PropTypes.func,
   dataElements: PropTypes.array,

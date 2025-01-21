@@ -39,17 +39,21 @@ function DisplayView({
                   {data.menus.url}
                 </Link>
                 <div className="item-action">
+                  {data.is_develope === true ? (
+                    <span className="item-action-progress">
+                      <span className="material-symbols-outlined item-action-icon">
+                        sync
+                      </span>
+                      <div className="text">Progress</div>
+                    </span>
+                  ) : null}
                   {data.default === true ? (
-                    <>
-                      <div className="item-action-default">
-                        <span className="material-symbols-outlined item-action-default-icon">
-                          settings
-                        </span>
-                        <span className="item-action-default-text">
-                          Default
-                        </span>
-                      </div>
-                    </>
+                    <div className="item-action-default">
+                      <span className="material-symbols-outlined item-action-icon">
+                        settings
+                      </span>
+                      <span className="text">Default</span>
+                    </div>
                   ) : null}
                   <span
                     className="material-symbols-rounded item-action-edit"
@@ -80,6 +84,7 @@ function DisplayView({
             <div className="head-col">Name</div>
             <div className="head-col">Menu</div>
             <div className="head-col">Default</div>
+            <div className="head-col">Develope</div>
             <div className="head-col">Action</div>
           </div>
           {submenus
@@ -101,6 +106,13 @@ function DisplayView({
                     <span className="default">Default</span>
                   ) : (
                     <span className="nope">-</span>
+                  )}
+                </div>
+                <div className="body-col">
+                  {data.is_develope === true ? (
+                    <span className="progress">Progress</span>
+                  ) : (
+                    <span className="done">Done</span>
                   )}
                 </div>
                 <div className="body-col">

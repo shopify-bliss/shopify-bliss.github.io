@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { AccessManSchema } from "../../../helpers/ValidationSchema.js";
+import { AccessManSchema } from "../../../helpers/ValidationSchema";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
 import PropTypes from "prop-types";
 
@@ -277,7 +277,7 @@ AccessManModal.propTypes = {
   onOpen: PropTypes.bool,
   onClose: PropTypes.func,
   refreshData: PropTypes.func,
-  accessId: PropTypes.number,
+  accessId: PropTypes.string,
   roles: PropTypes.array,
 };
 

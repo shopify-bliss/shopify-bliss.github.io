@@ -63,9 +63,9 @@ function Topbar() {
                 <div
                   key={submenu.sub_menu_id}
                   className={`links-item ${
-                    submenu.name === submenuPage ? "active" : ""
+                    submenu.sub_menu_id === submenuPage ? "active" : ""
                   }`}
-                  onClick={() => handleSubmenuPage(submenu.name)}
+                  onClick={() => handleSubmenuPage(submenu.sub_menu_id)}
                 >
                   {submenu.name}
                 </div>

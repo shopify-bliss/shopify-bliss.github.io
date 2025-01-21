@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { SubmenuManSchema } from "../../../helpers/ValidationSchema.js";
+import { SubmenuManSchema } from "../../../helpers/ValidationSchema";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
 import PropTypes from "prop-types";
 
@@ -13,9 +13,12 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
   const [openMenu, setOpenMenu] = useState(false);
   const [defaultMenu, setDefaultMenu] = useState("");
   const [defaultValue, setDefaultValue] = useState(false);
+  const [isDevelopValue, setIsDevelopValue] = useState(true);
   const [submenuName, setSubmenuName] = useState("");
 
   const listMenuRef = useRef(null);
+  const statusInsert = useRef(false);
+  const statusUpdate = useRef(false);
 
   const { toastMessage, toastPromise, menus, token } = useDashboard();
 
@@ -45,6 +48,7 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
       setSubmenuName("");
       setDefaultMenu("");
       setDefaultValue(false);
+      setIsDevelopValue(true);
     } else if (onOpen && type === "update") {
       axios
         .get(`${urlEndpoint.submenusId}?id=${submenuId}`, {
@@ -56,6 +60,7 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
           setSubmenuName(res.data.data.name);
           setDefaultMenu(res.data.data.menu_id);
           setDefaultValue(res.data.data.default);
+          setIsDevelopValue(res.data.data.is_develope);
         })
         .catch((error) => {
           console.error("Error fetching submenu data:", error);
@@ -71,6 +76,7 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
         menuID: defaultMenu,
         name: submenuName,
         defaults: defaultValue,
+        isDevelope: isDevelopValue,
       };
 
       if (type === "create") {
@@ -81,6 +87,10 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
                 Authorization: `Bearer ${token}`,
               },
             });
+            elementsAiPromise.then((res) => {
+              statusInsert.current = res.data.success;
+            });
+
             toastPromise(
               elementsAiPromise,
               {
@@ -93,8 +103,10 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
                 position: "top-center",
               },
               () => {
-                onClose();
-                refreshData();
+                if (statusInsert.current === true) {
+                  onClose();
+                  refreshData();
+                }
               }
             );
             elementsAiPromise.catch((error) => {
@@ -119,6 +131,10 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
               }
             );
 
+            elementsAiPromise.then((res) => {
+              statusUpdate.current = res.data.success;
+            });
+
             toastPromise(
               elementsAiPromise,
               {
@@ -131,11 +147,12 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
                 position: "top-center",
               },
               () => {
-                onClose();
-                refreshData();
+                if (statusUpdate.current === true) {
+                  onClose();
+                  refreshData();
+                }
               }
             );
-
             elementsAiPromise.catch((error) => {
               console.error("Error updating submenu data:", error);
             });
@@ -152,6 +169,7 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
       submenuName,
       defaultMenu,
       defaultValue,
+      isDevelopValue,
       onClose,
       refreshData,
       toastMessage,
@@ -251,7 +269,11 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
               {openMenu && (
                 <div className="select-list" ref={listMenuRef}>
                   {menus
-                    .filter((item) => item.menu_id !== defaultMenu)
+                    .filter(
+                      (item) =>
+                        item.menu_id !== defaultMenu &&
+                        item.is_develope === false
+                    )
                     .map((data) => {
                       return (
                         <div
@@ -287,13 +309,29 @@ function SubmenuManModal({ type, onOpen, onClose, refreshData, submenuId }) {
                 Setting Default <span>(Required)</span>
               </div>
               <div
-                className="check-default"
+                className="check-option"
                 onClick={() => setDefaultValue(!defaultValue)}
               >
                 <span className="material-symbols-outlined">
                   {defaultValue ? "task_alt" : "circle"}
                 </span>
-                <div className="text">{defaultValue ? "True" : "Null"}</div>
+                <div className="text">{defaultValue ? "True" : "False"}</div>
+              </div>
+            </div>
+            <div className="modal-dashboard-form-group">
+              <div className="label">
+                Setting Is Develope <span>(Required)</span>
+              </div>
+              <div
+                className="check-option"
+                onClick={() => setIsDevelopValue(!isDevelopValue)}
+              >
+                <span className="material-symbols-outlined">
+                  {isDevelopValue ? "circle" : "task_alt"}
+                </span>
+                <div className="text">
+                  {isDevelopValue ? "Progress" : "Done"}
+                </div>
               </div>
             </div>
             <button type="submit">Submit</button>
@@ -309,7 +347,7 @@ SubmenuManModal.propTypes = {
   onOpen: PropTypes.bool,
   onClose: PropTypes.func,
   refreshData: PropTypes.func,
-  submenuId: PropTypes.number,
+  submenuId: PropTypes.string,
 };
 
 export default SubmenuManModal;

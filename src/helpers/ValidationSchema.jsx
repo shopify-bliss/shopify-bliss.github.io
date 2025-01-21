@@ -48,12 +48,14 @@ export const resetPasswordSchema = yup.object().shape({
 export const MenuManSchema = yup.object().shape({
   name: yup.string().required("Menu name is required"),
   url: yup.string().required("Menu url is required"),
+  isDevelope: yup.bool().required("Development setting is required"),
 });
 
 export const SubmenuManSchema = yup.object().shape({
   name: yup.string().required("Submenu name is required"),
   menuID: yup.string().required("Menu Parent id is required"),
   defaults: yup.bool().required("Default setting is required"),
+  isDevelope: yup.bool().required("Development setting is required"),
 });
 
 export const AccessManSchema = yup.object().shape({
@@ -78,4 +80,9 @@ export const tempPagesSchema = yup.object().shape({
 
 export const TempSectionsSchema = yup.object().shape({
   name: yup.string().required("Section name is required"),
+});
+
+export const NameDevelopeSchema = yup.object().shape({
+  name: yup.string().required("Name is required"),
+  isDevelope: yup.bool().required("Development setting is required"),
 });

@@ -6,7 +6,7 @@ import axios from "axios";
 import {
   recoverySchema,
   resetPasswordSchema,
-} from "../../helpers/ValidationSchema.js";
+} from "../../helpers/ValidationSchema";
 import {
   AuthHeader,
   AuthTitle,

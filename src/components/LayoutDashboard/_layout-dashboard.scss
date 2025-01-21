@@ -2,12 +2,13 @@
 @use "../../helpers/variables" as v;
 @use "./Sidebar/sidebar" as sidebar;
 @use "./Topbar/topbar" as topbar;
-@use "../Pagination/pagination";
 @use "./Modal/modal";
 @use "../../pages/Profile/profile";
 @use "../../pages/UsersManagement/DisplayUsers/display-users";
 @use "../../pages/TemplatesManagement/TempPages/temp-pages";
 @use "../../pages/TemplatesManagement/TempSections/temp-sections";
+@use "../../pages/FontsManagement/Families/font-families-man";
+@use "../../pages/FontsManagement/Designs/font-designs-man";
 @use "../../pages/AccessManagement/MenuMan/menu-man";
 @use "../../pages/AccessManagement/SubmenuMan/submenu-man";
 @use "../../pages/AccessManagement/AccessMan/access-man";

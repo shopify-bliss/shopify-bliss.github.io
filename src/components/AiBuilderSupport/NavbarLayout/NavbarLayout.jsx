@@ -181,7 +181,7 @@ NavbarLayout.propTypes = {
   dataPages: PropTypes.array,
   siteTitle: PropTypes.string,
   activePages: PropTypes.array,
-  currentPageId: PropTypes.number,
+  currentPageId: PropTypes.string,
   setCurrentPageId: PropTypes.func,
   activeSections: PropTypes.array,
   activeIntro: PropTypes.number,

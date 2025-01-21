@@ -8,7 +8,7 @@ import {
 import logo from "../../assets/logo/black-logo.png";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import axios from "axios";
-import { signupSchema } from "../../helpers/ValidationSchema.js";
+import { signupSchema } from "../../helpers/ValidationSchema";
 import {
   AuthHeader,
   AuthTitle,

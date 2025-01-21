@@ -3,7 +3,7 @@ import avatar from "../../data/avatar.json";
 import axios from "axios";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../helpers/urlEndpoint";
-import { userSchema } from "../../helpers/ValidationSchema.js";
+import { userSchema } from "../../helpers/ValidationSchema";
 import PropTypes from "prop-types";
 
 function Bio({ onClose }) {

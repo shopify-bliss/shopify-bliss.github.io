@@ -6,7 +6,7 @@ import urlEndpoint from "../../../helpers/urlEndpoint";
 import {
   userSchema,
   updateUserRoleSchema,
-} from "../../../helpers/ValidationSchema.js";
+} from "../../../helpers/ValidationSchema";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
 import PropTypes from "prop-types";
 

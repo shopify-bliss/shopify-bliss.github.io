@@ -121,3 +121,58 @@ export const FontType2 = ({ activeFonts }) => {
 
   return type2;
 };
+
+export const AllFonts = ({ fontId }) => {
+  const fontFamily =
+    fontId === "c7c5f0f2-e829-46b2-963e-e42158e4a36d"
+      ? "merriweather"
+      : fontId === "71377880-c0e8-4da9-87e2-9d58a2b4097e"
+      ? "libre-baskerville"
+      : fontId === "bd2da241-45e9-4f79-bc94-3239180665e0"
+      ? "poppins"
+      : fontId === "422389f6-6998-4635-ab52-6ef9afda52a8"
+      ? "quicksand"
+      : fontId === "820987ee-a4dc-43b0-8f79-03830e1be866"
+      ? "playfair-display"
+      : fontId === "85883042-6eea-4cb9-9bff-e324901b9bbb"
+      ? "cormorant-garamond"
+      : fontId === "bb640f97-e54e-4799-8579-c400872d09bd"
+      ? "raleway"
+      : fontId === "0107e1ef-e412-40cc-8f7a-d92f48aedaf3"
+      ? "exo-2"
+      : fontId === "a60d0b12-d5df-416f-81e2-65ed6edc462f"
+      ? "eb-garamond"
+      : fontId === "e5b5e95f-26bc-4e00-bebc-2757b3d6bc31"
+      ? "crimson-text"
+      : fontId === "30d9ec00-d0a4-4046-acd9-aa31d3065696"
+      ? "amatic-sc"
+      : fontId === "80decc82-f7a2-4efd-b702-f8e071a6dc1b"
+      ? "gloria-hallelujah"
+      : fontId === "6935ba3e-e5af-4eec-887e-05a24367f16b"
+      ? "roboto"
+      : fontId === "cab69ce3-377a-4f88-9b83-ac36c4213f8c"
+      ? "work-sans"
+      : fontId === "052cf742-79b0-4057-94e3-08126ec32c8c"
+      ? "patrick-hand"
+      : fontId === "a0a57ad8-ea49-43ce-b37f-45a873f591dc"
+      ? "caveat"
+      : fontId === "854cb94a-34f9-4ebb-b052-e360375a8019"
+      ? "lora"
+      : fontId === "d050d941-499f-4eb7-b8fa-662f5c7f0e9f"
+      ? "dm-sans"
+      : fontId === "f9c8e695-17ec-48b0-834f-82b61aeeac1a"
+      ? "montserrat"
+      : fontId === "c9be8d19-4f6d-4579-9e38-2705e3ba6017"
+      ? "bebas-neue"
+      : fontId === "58ec129b-3e39-4033-a474-5e279cd5b46d"
+      ? "open-sans"
+      : fontId === "6f8967f4-42cc-46ac-9caf-4a59952e5b34"
+      ? "josefin-sans"
+      : fontId === "cb27eccc-0072-41f0-b535-ec2ee4bee963"
+      ? "chewy"
+      : fontId === "414dd255-a77f-4f01-a97d-9560d08ab1e8"
+      ? "fredoka"
+      : "";
+
+  return fontFamily;
+};

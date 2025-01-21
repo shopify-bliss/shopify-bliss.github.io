@@ -240,7 +240,7 @@ function Intro({
 Intro.propTypes = {
   handleActiveIntro: PropTypes.func,
   activeSections: PropTypes.object,
-  currentPageId: PropTypes.number,
+  currentPageId: PropTypes.string,
   activeIntro: PropTypes.number,
   activeNavbar: PropTypes.number,
   toastMessage: PropTypes.func,

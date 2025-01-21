@@ -120,10 +120,8 @@ function TempSections() {
       const response = await axios.get(urlEndpoint.elementsAi);
 
       setSections(response.data.data);
-      setIsLoadingTempSections(false);
     } catch (error) {
       console.error(error);
-      setIsLoadingTempSections(false);
     } finally {
       setIsLoadingTempSections(false);
     }

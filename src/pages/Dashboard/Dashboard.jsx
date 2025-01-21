@@ -40,7 +40,7 @@ function Dashboard() {
   return (
     <>
       <LayoutDashboard>
-        {submenuPage === "analytics 1" &&
+        {submenuPage === "09e64f50-c6c3-4366-9d31-6d8e16f6a54f" &&
           (user?.roles?.role_name === "super admin" ? (
             <>
               <Accumulation />
@@ -56,7 +56,9 @@ function Dashboard() {
           ) : (
             <div>Dashboard Customer</div>
           ))}
-        {submenuPage === "analytics 2" && <Analytics />}
+        {submenuPage === "b8b986b7-46e2-4127-97f8-f3ffae7c7180" && (
+          <Analytics />
+        )}
       </LayoutDashboard>
     </>
   );

@@ -11,6 +11,8 @@ import PropTypes from "prop-types";
 function Profile({ onClose, onOpen }) {
   axios.defaults.withCredentials = true;
 
+  const { submenus, toastPromise, user } = useDashboard();
+
   const [currentSubmenu, setCurrentSubmenu] = useState(
     submenus.filter(
       (submenu) =>
@@ -20,8 +22,6 @@ function Profile({ onClose, onOpen }) {
   );
   const [openConfirm, setOpenConfirm] = useState(false);
   const [resetPassword, setResetPassword] = useState(false);
-
-  const { submenus, toastPromise, user } = useDashboard();
 
   const handleCurrentSubmenu = useCallback(
     (submenuId) => {

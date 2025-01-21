@@ -1,72 +1,66 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
-
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { RoleManSchema } from "../../../helpers/ValidationSchema";
+import { NameDevelopeSchema } from "../../../helpers/ValidationSchema";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
 import PropTypes from "prop-types";
+import FontDesigns from "./FontDesigns";
 
-function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
+function FontDesignsModal({ type, onOpen, onClose, refreshData, fontId }) {
   axios.defaults.withCredentials = true;
 
-  const [data, setData] = useState({
-    roleName: "",
-  });
+  const [nameValue, setNameValue] = useState("");
+  const [isDevelopValue, setIsDevelopValue] = useState(true);
 
   const { toastMessage, toastPromise, token } = useDashboard();
 
+  const statusInsert = useRef(false);
+  const statusUpdate = useRef(false);
+
   useEffect(() => {
     if (onOpen && type === "create") {
-      setData({
-        roleName: "",
-      });
+      setNameValue("");
+      setIsDevelopValue(true);
     } else if (onOpen && type === "update") {
       axios
-        .get(`${urlEndpoint.roleId}?id=${roleId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        .get(`${urlEndpoint.font}?id=${fontId}`)
         .then((res) => {
-          console.log(res.data.data);
-
-          setData({
-            roleName: res.data.data.role_name,
-          });
+          setNameValue(res.data.data.name);
+          setIsDevelopValue(res.data.data.is_develope);
         })
         .catch((error) => {
-          console.error("Error fetching role data:", error);
+          console.error("Error fetching menu data:", error);
         });
     }
-  }, [onOpen, type, roleId, token]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setData({
-      ...data,
-      [name]: value,
-    });
-  };
+  }, [onOpen, type, fontId]);
 
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
 
       if (type === "create") {
-        RoleManSchema.validate(data, { abortEarly: false })
+        const insertData = {
+          name: nameValue,
+          isDevelope: isDevelopValue,
+        };
+
+        NameDevelopeSchema.validate(insertData, { abortEarly: false })
           .then(() => {
-            const elementsAiPromise = axios.post(urlEndpoint.role, data, {
+            const menuManPromise = axios.post(urlEndpoint.font, insertData, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
             });
 
+            menuManPromise.then((res) => {
+              statusInsert.current = res.data.success;
+            });
+
             toastPromise(
-              elementsAiPromise,
+              menuManPromise,
               {
-                pending: "Adding role data on progress, please wait..!",
+                pending: "Adding menu data on progress, please wait..!",
                 success: "Data has been successfully added!",
                 error: "Failed to add data!",
               },
@@ -75,13 +69,15 @@ function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
                 position: "top-center",
               },
               () => {
-                onClose();
-                refreshData();
+                if (statusInsert.current === true) {
+                  onClose();
+                  refreshData();
+                }
               }
             );
 
-            elementsAiPromise.catch((error) => {
-              console.error("Error adding role data:", error);
+            menuManPromise.catch((error) => {
+              console.error("Error adding menu data:", error);
             });
           })
           .catch((errors) => {
@@ -90,11 +86,18 @@ function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
             });
           });
       } else {
-        RoleManSchema.validate(data, { abortEarly: false })
+        const updateData = {
+          name: nameValue,
+          isDevelope: isDevelopValue,
+        };
+
+        console.log(updateData);
+
+        NameDevelopeSchema.validate(updateData, { abortEarly: false })
           .then(() => {
-            const elementsAiPromise = axios.put(
-              `${urlEndpoint.role}?id=${roleId}`,
-              data,
+            const menuManPromise = axios.put(
+              `${urlEndpoint.font}?id=${fontId}`,
+              updateData,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -102,10 +105,14 @@ function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
               }
             );
 
+            menuManPromise.then((res) => {
+              statusUpdate.current = res.data.success;
+            });
+
             toastPromise(
-              elementsAiPromise,
+              menuManPromise,
               {
-                pending: "Updating role data on progress, please wait..!",
+                pending: "Updating menu data on progress, please wait..!",
                 success: "Data has been successfully updated!",
                 error: "Failed to update data!",
               },
@@ -114,13 +121,15 @@ function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
                 position: "top-center",
               },
               () => {
-                onClose();
-                refreshData();
+                if (statusUpdate.current === true) {
+                  onClose();
+                  refreshData();
+                }
               }
             );
 
-            elementsAiPromise.catch((error) => {
-              console.error("Error updating role data:", error);
+            menuManPromise.catch((error) => {
+              console.error("Error updating menu data:", error);
             });
           })
           .catch((errors) => {
@@ -131,14 +140,15 @@ function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
       }
     },
     [
-      type,
-      data,
-      token,
+      nameValue,
+      isDevelopValue,
       onClose,
       refreshData,
       toastMessage,
       toastPromise,
-      roleId,
+      fontId,
+      token,
+      type,
     ]
   );
 
@@ -146,7 +156,7 @@ function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
     (e) => {
       e.preventDefault();
 
-      const deletePromise = axios.delete(`${urlEndpoint.role}?id=${roleId}`, {
+      const deletePromise = axios.delete(`${urlEndpoint.font}?id=${fontId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -155,7 +165,7 @@ function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
       toastPromise(
         deletePromise,
         {
-          pending: "deleting role data on progress, please wait..!",
+          pending: "deleting menu data on progress, please wait..!",
           success: "Data has been successfully deleted!",
           error: "Failed to delete data!",
         },
@@ -170,10 +180,10 @@ function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
       );
 
       deletePromise.catch((error) => {
-        console.error("Error deleting role data:", error);
+        console.error("Error deleting menu data:", error);
       });
     },
-    [roleId, token, onClose, refreshData, toastPromise]
+    [fontId, token, onClose, refreshData, toastPromise]
   );
 
   return (
@@ -200,24 +210,40 @@ function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
       ) : (
         <Modal
           titleModal={
-            type === "create" ? "Insert Role Data" : "Update Role Data"
+            type === "create" ? "Insert Font Data" : "Update Font Data"
           }
           onOpen={onOpen}
           onClose={onClose}
         >
           <form className="modal-dashboard-form" onSubmit={handleSubmit}>
             <div className="modal-dashboard-form-group">
-              <label htmlFor="roleName">
-                Role name <span>(Required)</span>
+              <label htmlFor="name">
+                Font name <span>(Required)</span>
               </label>
               <input
                 type="text"
-                id="roleName"
-                name="roleName"
-                placeholder="Admin"
-                value={data.roleName}
-                onChange={handleChange}
+                id="name"
+                name="name"
+                placeholder="Access Management"
+                value={nameValue}
+                onChange={(e) => setNameValue(e.target.value)}
               />
+            </div>
+            <div className="modal-dashboard-form-group">
+              <div className="label">
+                Setting Is Develope <span>(Required)</span>
+              </div>
+              <div
+                className="check-option"
+                onClick={() => setIsDevelopValue(!isDevelopValue)}
+              >
+                <span className="material-symbols-outlined">
+                  {isDevelopValue ? "circle" : "task_alt"}
+                </span>
+                <div className="text">
+                  {isDevelopValue ? "Progress" : "Done"}
+                </div>
+              </div>
             </div>
             <button type="submit">Submit</button>
           </form>
@@ -227,12 +253,12 @@ function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
   );
 }
 
-RoleManModal.propTypes = {
+FontDesignsModal.propTypes = {
   type: PropTypes.string,
   onOpen: PropTypes.bool,
   onClose: PropTypes.func,
   refreshData: PropTypes.func,
-  roleId: PropTypes.string,
+  fontId: PropTypes.string,
 };
 
-export default RoleManModal;
+export default FontDesignsModal;
