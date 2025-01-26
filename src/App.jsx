@@ -25,6 +25,12 @@ const AccessManagement = Loadable(
 const FontsManagement = Loadable(
   lazy(() => import("./pages/FontsManagement/FontsManagement"))
 );
+const ColorsManagement = Loadable(
+  lazy(() => import("./pages/ColorsManagement/ColorsManagement"))
+);
+const MyWebsites = Loadable(
+  lazy(() => import("./pages/MyWebsites/MyWebsites"))
+);
 const AiBuilder = Loadable(lazy(() => import("./pages/AiBuilder/AiBuilder")));
 const AiBuilderPreview = Loadable(
   lazy(() => import("./pages/AiBuiderPreview/AiBuilderPreview"))
@@ -53,7 +59,8 @@ function App() {
         <Routes>
           <Route element={<AiBuilderCore />}>
             <Route path="/" element={<AiBuilder />} />
-            <Route path="/preview" element={<AiBuilderPreview />} />
+            <Route path="/preview/:slug" element={<AiBuilderPreview />} />
+            {/* <Route path="/preview/:slug" element={<AiBuilderPreview />} /> */}
           </Route>
           <Route path="/loader" element={<LoaderProgress />} />
 
@@ -89,6 +96,8 @@ function App() {
               element={<TemplatesManagement />}
             />
             <Route path="/fonts-management" element={<FontsManagement />} />
+            <Route path="/colors-management" element={<ColorsManagement />} />
+            <Route path="/my-websites" element={<MyWebsites />} />
           </Route>
         </Routes>
       </SearchProvider>

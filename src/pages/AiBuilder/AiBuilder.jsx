@@ -206,6 +206,8 @@ function AiBuilder() {
           userID: user.user_id,
         });
 
+        const slug = siteTitle.toLowerCase().replace(/ /g, "-");
+
         // Tunggu hasil AI Builder utama
         const aiBuilderResponse = await aiBuilderPromise;
         const aiBuilderId = aiBuilderResponse.data.data[0].ai_builder_id;
@@ -273,7 +275,7 @@ function AiBuilder() {
           aiBuilderSupportsPromise,
         ])
           .then(() => {
-            navigate("/preview", {
+            navigate(`/preview/${slug}`, {
               state: {
                 aiBuilderId: aiBuilderId,
                 messageAiBuilder:

@@ -215,10 +215,16 @@ $cyan: #0dcaf0;
   }
 }
 
-@mixin icon-action($color, $size: 1rem, $weight: 200, $default: false) {
+@mixin icon-action(
+  $color,
+  $size: 1rem,
+  $weight: 200,
+  $default: false,
+  $p: 0.22rem
+) {
   font-size: $size;
   @include m.flex();
-  padding: 0.22rem;
+  padding: $p;
   transition: all 0.3s ease-in;
   background-color: transparent;
   color: $color;

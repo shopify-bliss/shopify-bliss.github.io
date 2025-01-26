@@ -2,14 +2,14 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { NameDevelopeSchema } from "../../../helpers/ValidationSchema";
+import { ColorSchema } from "../../../helpers/ValidationSchema";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
 import PropTypes from "prop-types";
 
-function FontFamiliesModal({ type, onOpen, onClose, refreshData, fontId }) {
+function ColorHexsModal({ type, onOpen, onClose, refreshData, colorId }) {
   axios.defaults.withCredentials = true;
 
-  const [nameValue, setNameValue] = useState("");
+  const [hexValue, setHexValue] = useState("");
   const [isDevelopValue, setIsDevelopValue] = useState(true);
 
   const { toastMessage, toastPromise, token } = useDashboard();
@@ -19,20 +19,24 @@ function FontFamiliesModal({ type, onOpen, onClose, refreshData, fontId }) {
 
   useEffect(() => {
     if (onOpen && type === "create") {
-      setNameValue("");
+      setHexValue("");
       setIsDevelopValue(true);
     } else if (onOpen && type === "update") {
       axios
-        .get(`${urlEndpoint.font}?id=${fontId}`)
+        .get(`${urlEndpoint.colorId}?id=${colorId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((res) => {
-          setNameValue(res.data.data.name);
+          setHexValue(res.data.data.color);
           setIsDevelopValue(res.data.data.is_develope);
         })
         .catch((error) => {
-          console.error("Error fetching menu data:", error);
+          console.error("Error fetching color data:", error);
         });
     }
-  }, [onOpen, type, fontId]);
+  }, [onOpen, type, colorId, token]);
 
   const handleSubmit = useCallback(
     (e) => {
@@ -40,30 +44,26 @@ function FontFamiliesModal({ type, onOpen, onClose, refreshData, fontId }) {
 
       if (type === "create") {
         const insertData = {
-          name: nameValue,
+          color: hexValue,
           isDevelope: isDevelopValue,
         };
 
-        NameDevelopeSchema.validate(insertData, { abortEarly: false })
+        ColorSchema.validate(insertData, { abortEarly: false })
           .then(() => {
-            const FontFamiliesPromise = axios.post(
-              urlEndpoint.font,
-              insertData,
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            );
+            const colorPromise = axios.post(urlEndpoint.colors, insertData, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
 
-            FontFamiliesPromise.then((res) => {
+            colorPromise.then((res) => {
               statusInsert.current = res.data.success;
             });
 
             toastPromise(
-              FontFamiliesPromise,
+              colorPromise,
               {
-                pending: "Adding menu data on progress, please wait..!",
+                pending: "Adding color data on progress, please wait..!",
                 success: "Data has been successfully added!",
                 error: "Failed to add data!",
               },
@@ -79,8 +79,8 @@ function FontFamiliesModal({ type, onOpen, onClose, refreshData, fontId }) {
               }
             );
 
-            FontFamiliesPromise.catch((error) => {
-              console.error("Error adding menu data:", error);
+            colorPromise.catch((error) => {
+              console.error("Error adding color data:", error);
             });
           })
           .catch((errors) => {
@@ -90,16 +90,16 @@ function FontFamiliesModal({ type, onOpen, onClose, refreshData, fontId }) {
           });
       } else {
         const updateData = {
-          name: nameValue,
+          color: hexValue,
           isDevelope: isDevelopValue,
         };
 
-        // console.log(updateData);
+        console.log(updateData);
 
-        NameDevelopeSchema.validate(updateData, { abortEarly: false })
+        ColorSchema.validate(updateData, { abortEarly: false })
           .then(() => {
-            const FontFamiliesPromise = axios.put(
-              `${urlEndpoint.font}?id=${fontId}`,
+            const colorPromise = axios.put(
+              `${urlEndpoint.colors}?id=${colorId}`,
               updateData,
               {
                 headers: {
@@ -108,14 +108,14 @@ function FontFamiliesModal({ type, onOpen, onClose, refreshData, fontId }) {
               }
             );
 
-            FontFamiliesPromise.then((res) => {
+            colorPromise.then((res) => {
               statusUpdate.current = res.data.success;
             });
 
             toastPromise(
-              FontFamiliesPromise,
+              colorPromise,
               {
-                pending: "Updating menu data on progress, please wait..!",
+                pending: "Updating color data on progress, please wait..!",
                 success: "Data has been successfully updated!",
                 error: "Failed to update data!",
               },
@@ -131,8 +131,8 @@ function FontFamiliesModal({ type, onOpen, onClose, refreshData, fontId }) {
               }
             );
 
-            FontFamiliesPromise.catch((error) => {
-              console.error("Error updating menu data:", error);
+            colorPromise.catch((error) => {
+              console.error("Error updating color data:", error);
             });
           })
           .catch((errors) => {
@@ -143,13 +143,13 @@ function FontFamiliesModal({ type, onOpen, onClose, refreshData, fontId }) {
       }
     },
     [
-      nameValue,
+      hexValue,
       isDevelopValue,
       onClose,
       refreshData,
       toastMessage,
       toastPromise,
-      fontId,
+      colorId,
       token,
       type,
     ]
@@ -159,16 +159,19 @@ function FontFamiliesModal({ type, onOpen, onClose, refreshData, fontId }) {
     (e) => {
       e.preventDefault();
 
-      const deletePromise = axios.delete(`${urlEndpoint.font}?id=${fontId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const deletePromise = axios.delete(
+        `${urlEndpoint.colors}?id=${colorId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       toastPromise(
         deletePromise,
         {
-          pending: "deleting menu data on progress, please wait..!",
+          pending: "deleting color data on progress, please wait..!",
           success: "Data has been successfully deleted!",
           error: "Failed to delete data!",
         },
@@ -183,10 +186,10 @@ function FontFamiliesModal({ type, onOpen, onClose, refreshData, fontId }) {
       );
 
       deletePromise.catch((error) => {
-        console.error("Error deleting menu data:", error);
+        console.error("Error deleting color data:", error);
       });
     },
-    [fontId, token, onClose, refreshData, toastPromise]
+    [colorId, token, onClose, refreshData, toastPromise]
   );
 
   return (
@@ -220,16 +223,16 @@ function FontFamiliesModal({ type, onOpen, onClose, refreshData, fontId }) {
         >
           <form className="modal-dashboard-form" onSubmit={handleSubmit}>
             <div className="modal-dashboard-form-group">
-              <label htmlFor="name">
-                Font name <span>(Required)</span>
+              <label htmlFor="color">
+                Color <span>(Required)</span>
               </label>
               <input
                 type="text"
-                id="name"
-                name="name"
-                placeholder="Raleway"
-                value={nameValue}
-                onChange={(e) => setNameValue(e.target.value)}
+                id="color"
+                name="color"
+                placeholder="f0f0f0"
+                value={hexValue}
+                onChange={(e) => setHexValue(e.target.value)}
               />
             </div>
             <div className="modal-dashboard-form-group">
@@ -256,12 +259,12 @@ function FontFamiliesModal({ type, onOpen, onClose, refreshData, fontId }) {
   );
 }
 
-FontFamiliesModal.propTypes = {
+ColorHexsModal.propTypes = {
   type: PropTypes.string,
   onOpen: PropTypes.bool,
   onClose: PropTypes.func,
   refreshData: PropTypes.func,
-  fontId: PropTypes.string,
+  colorId: PropTypes.string,
 };
 
-export default FontFamiliesModal;
+export default ColorHexsModal;

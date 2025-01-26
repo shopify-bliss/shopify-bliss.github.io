@@ -83,7 +83,7 @@ function Services({
                     </div>
                     <div className="template-wrapper">
                       {service.services.map((data) => {
-                        const image = `products/${data.image}`;
+                        const image = `/products/${data.image}`;
 
                         return (
                           <>

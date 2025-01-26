@@ -2,8 +2,6 @@ import { useEffect } from "react";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
 import TempPages from "./TempPages/TempPages";
 import TempSections from "./TempSections/TempSections";
-import TempColors from "./TempColors/TempColors";
-import TempFonts from "./TempFonts/TempFonts";
 import LayoutDashboard from "../../components/LayoutDashboard/LayoutDashboard";
 import { useNavigate } from "react-router-dom";
 
@@ -30,17 +28,12 @@ function TemplatesManagement() {
   return (
     <>
       <LayoutDashboard>
-        {submenuPage === "e3655a61-e8cd-41e6-a86b-56ec0dcfb6f3" && (
-          <span>test</span>
-        )}
         {submenuPage === "20c608ac-921c-47a3-955f-913949074a8d" && (
           <TempPages />
         )}
         {submenuPage === "cb84354f-a64a-48a7-98e4-198a932beed2" && (
           <TempSections />
         )}
-        {submenuPage === "colors" && <TempColors />}
-        {submenuPage === "fonts" && <TempFonts />}
       </LayoutDashboard>
     </>
   );

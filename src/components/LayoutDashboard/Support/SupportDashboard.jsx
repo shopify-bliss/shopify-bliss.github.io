@@ -7,6 +7,7 @@ export function Header({
   activeDisplay,
   handleDisplayChange,
   setIsCreateModalOpen,
+  forClient = null,
 }) {
   const { setSearch } = useSearch();
 
@@ -28,26 +29,32 @@ export function Header({
           </div>
         </div>
         <div className="new-data" onClick={() => setIsCreateModalOpen(true)}>
-          Add new data
+          {forClient === null
+            ? "Add new data"
+            : forClient === "website"
+            ? "create website"
+            : "who are you?"}
         </div>
-        <div className="header-wrapper-loan">
-          <span
-            className={`material-symbols-outlined ${
-              activeDisplay === "list" ? "active" : ""
-            }`}
-            onClick={() => handleDisplayChange("list")}
-          >
-            lists
-          </span>
-          <span
-            className={`material-symbols-outlined ${
-              activeDisplay === "grid" ? "active" : ""
-            }`}
-            onClick={() => handleDisplayChange("grid")}
-          >
-            grid_view
-          </span>
-        </div>
+        {forClient === null && (
+          <div className="header-wrapper-loan">
+            <span
+              className={`material-symbols-outlined ${
+                activeDisplay === "list" ? "active" : ""
+              }`}
+              onClick={() => handleDisplayChange("list")}
+            >
+              lists
+            </span>
+            <span
+              className={`material-symbols-outlined ${
+                activeDisplay === "grid" ? "active" : ""
+              }`}
+              onClick={() => handleDisplayChange("grid")}
+            >
+              grid_view
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -59,4 +66,5 @@ Header.propTypes = {
   activeDisplay: PropTypes.string,
   handleDisplayChange: PropTypes.func,
   setIsCreateModalOpen: PropTypes.func,
+  forClient: PropTypes.string,
 };

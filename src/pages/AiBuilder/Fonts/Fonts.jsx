@@ -176,7 +176,11 @@ function Fonts({
                   <div className="content-item-title">{brand.name}</div>
                   <div className="content-item-list">
                     {dataFonts
-                      .filter((font) => font.brand_id === brand.brand_id)
+                      .filter(
+                        (font) =>
+                          font.brand_id === brand.brand_id &&
+                          font.is_develope === false
+                      )
                       .map((font) => {
                         const getBrand = font.brand_id;
                         const getGroup = font.group;

@@ -82,7 +82,20 @@ export const TempSectionsSchema = yup.object().shape({
   name: yup.string().required("Section name is required"),
 });
 
+export const ColorSchema = yup.object().shape({
+  color: yup.string().required("Color is required"),
+  isDevelope: yup.bool().required("Development setting is required"),
+});
+
 export const NameDevelopeSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
+  isDevelope: yup.bool().required("Development setting is required"),
+});
+
+export const FontDesignsSchema = yup.object().shape({
+  brand_id: yup.string().required("Brand is required"),
+  font1_id: yup.string().required("Font 1 is required"),
+  font2_id: yup.string().required("Font 2 is required"),
+  group: yup.number().required("Group is required"),
   isDevelope: yup.bool().required("Development setting is required"),
 });

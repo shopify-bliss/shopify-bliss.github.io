@@ -57,7 +57,10 @@ function Topbar() {
         <Logo />
         <div className="links">
           {submenus
-            .filter((submenu) => submenu.menu_id === activeMenu)
+            .filter(
+              (submenu) =>
+                submenu.menu_id === activeMenu && submenu.is_develope === false
+            )
             .map((submenu) => {
               return (
                 <div

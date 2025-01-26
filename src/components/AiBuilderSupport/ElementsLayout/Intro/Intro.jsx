@@ -51,12 +51,12 @@ function Intro({
     const getId3 = introSample.filter((intro) => intro.id === 3);
     const getId4 = introSample.filter((intro) => intro.id === 4);
 
-    setImageStyle3(getId3.length > 0 ? `intro/${getId3[0].image}` : null);
-    setImageStyle4(getId4.length > 0 ? `intro/${getId4[0].image}` : null);
+    setImageStyle3(getId3.length > 0 ? `/intro/${getId3[0].image}` : null);
+    setImageStyle4(getId4.length > 0 ? `/intro/${getId4[0].image}` : null);
   }, []);
 
   const imageIntro = (intro) =>
-    `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(intro/${intro.image}) no-repeat center / cover`;
+    `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/intro/${intro.image}) no-repeat center / cover`;
 
   const styleParent = () => {
     const backgroundStyle =

@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { Header } from "../../../components/LayoutDashboard/Support/SupportDashboard";
 import axios from "axios";
-// import FontFamiliesModal from "./FontDesignsModal";
+import FontDesignsModal from "./FontDesignsModal";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
 import { useSearch } from "../../../helpers/SearchContext";
@@ -77,16 +77,32 @@ function DisplayView({
                               {data.font2.name}
                             </div>
                             <div className="item-action">
+                              {data.is_develope === true ? (
+                                <span className="item-action-progress">
+                                  <span className="material-symbols-outlined item-action-icon">
+                                    sync
+                                  </span>
+                                  <div className="text">Progress</div>
+                                </span>
+                              ) : null}
                               <span
                                 className={`item-action-group ${
-                                  data.group === 1 ? "one" : "two"
+                                  data.group === 1
+                                    ? "one"
+                                    : data.group === 2
+                                    ? "two"
+                                    : "before"
                                 }`}
                               >
                                 <span className="material-symbols-outlined item-action-icon">
                                   format_size
                                 </span>
                                 <div className="text">
-                                  {data.group === 1 ? "Alpha" : "Beta"}
+                                  {data.group === 1
+                                    ? "Alpha"
+                                    : data.group === 2
+                                    ? "Beta"
+                                    : "Before"}
                                 </div>
                               </span>
                               <span
@@ -124,6 +140,7 @@ function DisplayView({
             <div className="head-col">Font 1</div>
             <div className="head-col">Font 2</div>
             <div className="head-col">Group</div>
+            <div className="head-col">Develope</div>
             <div className="head-col">Action</div>
           </div>
           {fontDesigns
@@ -161,8 +178,17 @@ function DisplayView({
                   <div className="body-col">
                     {data.group === 1 ? (
                       <div className="one">Alpha</div>
-                    ) : (
+                    ) : data.group === 2 ? (
                       <div className="two">Beta</div>
+                    ) : (
+                      <div className="before">Before</div>
+                    )}
+                  </div>
+                  <div className="body-col">
+                    {data.is_develope === true ? (
+                      <span className="progress">Progress</span>
+                    ) : (
+                      <span className="done">Done</span>
                     )}
                   </div>
                   <div className="body-col">
@@ -202,6 +228,7 @@ function FontDesigns() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [fontDesignId, setFontDesignId] = useState(null);
   const [fontDesigns, setFontDesigns] = useState([]);
+  const [fonts, setFonts] = useState([]);
   const [brands, setBrands] = useState([]);
 
   const { isLoadingDashboard, setDashboardLoader, token } = useDashboard();
@@ -210,11 +237,15 @@ function FontDesigns() {
     setActiveDisplay(display);
   }, []);
 
-  const fetchFontsData = useCallback(async () => {
+  const fetchFontDesignsData = useCallback(async () => {
     setDashboardLoader(true);
 
     try {
-      const response = await axios.get(urlEndpoint.fontsAi);
+      const response = await axios.get(urlEndpoint.fontsAi, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       console.log(response.data.data);
 
@@ -224,13 +255,37 @@ function FontDesigns() {
     } finally {
       setDashboardLoader(false);
     }
-  }, []);
+  }, [token]);
+
+  const fetchFontsData = useCallback(async () => {
+    setDashboardLoader(true);
+
+    try {
+      const response = await axios.get(urlEndpoint.fonts, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(response.data.data);
+
+      setFonts(response.data.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setDashboardLoader(false);
+    }
+  }, [token]);
 
   const fetchBrandsData = useCallback(async () => {
     setDashboardLoader(true);
 
     try {
-      const response = await axios.get(urlEndpoint.brandsAi);
+      const response = await axios.get(urlEndpoint.brandsAi, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       console.log(response.data.data);
 
@@ -240,12 +295,13 @@ function FontDesigns() {
     } finally {
       setDashboardLoader(false);
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     fetchFontsData();
     fetchBrandsData();
-  }, [fetchFontsData, fetchBrandsData]);
+    fetchFontDesignsData();
+  }, [fetchFontDesignsData, fetchBrandsData, fetchFontsData]);
 
   return (
     <>
@@ -278,26 +334,30 @@ function FontDesigns() {
             type="list"
           />
         )}
-        {/* <FontFamiliesModal
+        <FontDesignsModal
           type="create"
           onOpen={isCreateModalOpen}
           onClose={() => setIsCreateModalOpen(false)}
-          refreshData={fetchFontsData}
+          refreshData={fetchFontDesignsData}
+          brands={brands}
+          fonts={fonts}
         />
-        <FontFamiliesModal
+        <FontDesignsModal
           type="update"
           onOpen={isUpdateModalOpen}
           onClose={() => setIsUpdateModalOpen(false)}
-          refreshData={fetchFontsData}
+          refreshData={fetchFontDesignsData}
           fontDesignId={fontDesignId}
+          brands={brands}
+          fonts={fonts}
         />
-        <FontFamiliesModal
+        <FontDesignsModal
           type="delete"
           onOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
-          refreshData={fetchFontsData}
+          refreshData={fetchFontDesignsData}
           fontDesignId={fontDesignId}
-        /> */}
+        />
       </div>
     </>
   );

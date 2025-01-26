@@ -40,8 +40,8 @@ function AiBuilderPreview() {
   const fetchAiBuilder = useCallback(async () => {
     try {
       setAiBuilderLoader(true);
-      // const getAiBuiderId = location.state.aiBuilderId;
-      const getAiBuiderId = "e64c22e7-c694-4eb3-a719-9adff242a33a";
+      const getAiBuiderId = location.state.aiBuilderId;
+      // const getAiBuiderId = "e64c22e7-c694-4eb3-a719-9adff242a33a";
 
       const aiBuilderPromise = await axios.get(
         `${urlEndpoint.aiBuilderId}?id=${getAiBuiderId}`,
@@ -123,13 +123,15 @@ function AiBuilderPreview() {
     } finally {
       setAiBuilderLoader(false);
     }
-  }, [token, navigate, setAiBuilderLoader]);
+  }, [token, navigate, setAiBuilderLoader, location.state]);
 
   useEffect(() => {
-    if (token) {
-      fetchAiBuilder();
+    if (location.state) {
+      if (token) {
+        fetchAiBuilder();
+      }
     }
-  }, [token, fetchAiBuilder, navigate]);
+  }, [token, fetchAiBuilder, navigate, location.state]);
 
   useEffect(() => {
     setCurrentPageId(truePages[0]);

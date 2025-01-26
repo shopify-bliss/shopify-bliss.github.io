@@ -76,11 +76,31 @@ export const AiBuilderProvider = ({ children }) => {
     setIsLoadingAiBuilder(true);
 
     try {
-      const brandPromise = axios.get(urlEndpoint.brandsAi);
-      const pagesPromise = axios.get(urlEndpoint.pagesAi);
-      const elementsPromise = axios.get(urlEndpoint.elementsAi);
-      const colorsPromise = axios.get(urlEndpoint.colorsAi);
-      const fontsPromise = axios.get(urlEndpoint.fontsAi);
+      const brandPromise = axios.get(urlEndpoint.brandsAi, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const pagesPromise = axios.get(urlEndpoint.pagesAi, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const elementsPromise = axios.get(urlEndpoint.elementsAi, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const colorsPromise = axios.get(urlEndpoint.colorsAi, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const fontsPromise = axios.get(urlEndpoint.fontsAi, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       const [
         brandResponse,
@@ -103,10 +123,11 @@ export const AiBuilderProvider = ({ children }) => {
       setDataFonts(fontsResponse.data.data);
     } catch (err) {
       console.error(err);
+      navigate("/403", { replace: true });
     } finally {
       setIsLoadingAiBuilder(false);
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     if (token) {

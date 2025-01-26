@@ -54,13 +54,21 @@
             @include m.flex();
             gap: 0.25rem;
 
+            &-progress {
+              @include support.component-action(support.$purple);
+            }
+
             &-group {
               &.one {
-                @include support.component-action(support.$teal);
+                @include support.component-action(support.$pink);
               }
 
               &.two {
                 @include support.component-action(support.$cyan);
+              }
+
+              &.before {
+                @include support.component-action(support.$orange);
               }
             }
 
@@ -94,7 +102,7 @@
 
     .head {
       display: grid;
-      grid-template-columns: auto 1fr 1fr 1fr 0.5fr 0.8fr;
+      grid-template-columns: auto 1fr 1fr 1fr 0.6fr 0.6fr 0.6fr;
 
       &-col {
         padding: 1.1rem 1rem;
@@ -121,7 +129,7 @@
 
     .body {
       display: grid;
-      grid-template-columns: auto 1fr 1fr 1fr 0.5fr 0.8fr;
+      grid-template-columns: auto 1fr 1fr 1fr 0.6fr 0.6fr 0.6fr;
 
       &-col {
         padding: 1.75rem 0.9rem 0;
@@ -142,7 +150,7 @@
 
           .one {
             @include support.set-default(
-              $bg: support.$teal,
+              $bg: support.$pink,
               $color: #fff,
               $p: 0.4rem 0.8rem
             );
@@ -151,6 +159,34 @@
           .two {
             @include support.set-default(
               $bg: support.$cyan,
+              $color: #fff,
+              $p: 0.4rem 0.8rem
+            );
+          }
+
+          .before {
+            @include support.set-default(
+              $bg: support.$orange,
+              $color: #fff,
+              $p: 0.4rem 0.8rem
+            );
+          }
+        }
+
+        &:nth-child(6) {
+          @include m.flex();
+
+          .progress {
+            @include support.set-default(
+              $bg: support.$purple,
+              $color: #fff,
+              $p: 0.4rem 0.8rem
+            );
+          }
+
+          .done {
+            @include support.set-default(
+              $bg: support.$teal,
               $color: #fff,
               $p: 0.4rem 0.8rem
             );

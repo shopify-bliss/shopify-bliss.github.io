@@ -163,7 +163,7 @@ function AccessMan() {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data.data);
+      // console.log(response.data.data);
 
       setRoles(response.data.data);
     } catch (error) {

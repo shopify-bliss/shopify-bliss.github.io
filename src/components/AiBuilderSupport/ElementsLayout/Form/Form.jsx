@@ -46,7 +46,7 @@ function Form({
   useEffect(() => {
     const getId4 = form.filter((item) => item.id === 4);
 
-    setImageStyle4(getId4.length > 0 ? `products/${getId4[0].image}` : null);
+    setImageStyle4(getId4.length > 0 ? `/products/${getId4[0].image}` : null);
   }, []);
 
   return (

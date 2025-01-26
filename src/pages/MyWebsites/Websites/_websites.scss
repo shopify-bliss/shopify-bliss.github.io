@@ -1,0 +1,75 @@
+@use "../../../helpers/mixins" as m;
+@use "../../../helpers/variables" as v;
+@use "../../../components/LayoutDashboard/Support/support-dashboard.scss" as
+  support;
+
+.websites {
+  @include support.wrapper-parent();
+
+  @include support.header();
+
+  &-list {
+    width: 100%;
+    @include m.flex($direction: column, $start: true);
+
+    .websites-item {
+      width: 100%;
+      @include m.flex($justify: flex-start);
+      padding: 1rem 0.8rem;
+      border-bottom: 1px solid adjust-color($color: #fff, $blackness: 20%);
+      gap: 1.1rem;
+
+      &:first-child {
+        border-top: 1px solid adjust-color($color: #fff, $blackness: 20%);
+      }
+
+      &-image {
+        width: 7.6rem;
+        height: 4.4rem;
+        object-fit: cover;
+      }
+
+      &-wrapper {
+        @include m.flex($direction: column, $start: true);
+
+        &-name {
+          font-size: 1.2rem;
+          font-family: v.$raleway;
+          letter-spacing: 0.5px;
+        }
+
+        &-time {
+          font-size: 0.88rem;
+          font-family: v.$raleway;
+        }
+      }
+
+      &-slug {
+        min-width: 8rem;
+        font-family: v.$raleway;
+        margin: 0 4.5rem 0 auto;
+      }
+
+      &-actions {
+        @include m.flex();
+        gap: 0.3rem;
+
+        &-edit {
+          @include support.icon-action(
+            $color: support.$cyan,
+            $size: 1.25rem,
+            $p: 0.35rem
+          );
+        }
+
+        &-delete {
+          @include support.icon-action(
+            $color: support.$red,
+            $size: 1.25rem,
+            $p: 0.35rem
+          );
+        }
+      }
+    }
+  }
+}

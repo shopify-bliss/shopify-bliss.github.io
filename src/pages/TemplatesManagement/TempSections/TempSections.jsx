@@ -6,6 +6,7 @@ import TempPagesModal from "./TempSectionsModal";
 import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
 import { useSearch } from "../../../helpers/SearchContext";
 import PropTypes from "prop-types";
+import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 
 function DisplayView({
   isLoadingTempSections,
@@ -109,6 +110,8 @@ function TempSections() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [sectionId, setSectionId] = useState(null);
 
+  const { token } = useDashboard();
+
   const handleDisplayChange = useCallback((display) => {
     setActiveDisplay(display);
   }, []);
@@ -117,7 +120,14 @@ function TempSections() {
     setIsLoadingTempSections(true);
 
     try {
-      const response = await axios.get(urlEndpoint.elementsAi);
+      const response = await axios.get(urlEndpoint.elementsAi, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(response.data.data);
+      
 
       setSections(response.data.data);
     } catch (error) {
@@ -125,7 +135,7 @@ function TempSections() {
     } finally {
       setIsLoadingTempSections(false);
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     fetchSections();

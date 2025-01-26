@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
 import LayoutDashboard from "../../components/LayoutDashboard/LayoutDashboard";
 import { useNavigate } from "react-router-dom";
-import ColorHexs from "./Hexs/ColorHexs";
+import Websites from "./Websites/Websites";
 
-function ColorsManagement() {
+function MyWebsites() {
   const { submenuPage, accessMenus, user } = useDashboard();
   const navigate = useNavigate();
 
@@ -13,7 +13,7 @@ function ColorsManagement() {
       const hasAccess = accessMenus?.some(
         (data) =>
           data.role_id === user?.role_id &&
-          data.menu_id === "98e0bafb-3499-4123-954f-5dffbb42e80d"
+          data.menu_id === "995aeda4-773e-4ab1-a3c9-6d479b5faf72"
       );
 
       if (hasAccess === false) {
@@ -27,12 +27,10 @@ function ColorsManagement() {
   return (
     <>
       <LayoutDashboard>
-        {submenuPage === "3b37ca81-d163-442c-a445-099196844800" && (
-          <ColorHexs />
-        )}
+        {submenuPage === "c88bc748-957b-4aa3-b45c-ca704d9faf8b" && <Websites />}
       </LayoutDashboard>
     </>
   );
 }
 
-export default ColorsManagement;
+export default MyWebsites;

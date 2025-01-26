@@ -37,7 +37,7 @@ function DisplayView({
                 <div className="item" key={data.font_id}>
                   <div className="item-name">{data.name}</div>
                   <div className={`item-samples ${fontFamily}`}>
-                    AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz
+                    AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890
                   </div>
                   <div className="item-action">
                     {data.is_develope === true ? (
@@ -95,10 +95,10 @@ function DisplayView({
                   <div className="body-col">{data.name}</div>
                   <div className={`body-col`}>
                     <div className={`uppercase ${fontFamily}`}>
-                      abcdefghijklmnopqrstuvwxyz
+                      abcdefghijklmnopqrstuvwxyz12345
                     </div>
                     <div className={`lowercase ${fontFamily}`}>
-                      abcdefghijklmnopqrstuvwxyz
+                      abcdefghijklmnopqrstuvwxyz67890
                     </div>
                   </div>
                   <div className="body-col">
@@ -156,7 +156,11 @@ function FontFamilies() {
     setDashboardLoader(true);
 
     try {
-      const response = await axios.get(urlEndpoint.fonts);
+      const response = await axios.get(urlEndpoint.fonts, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       setFonts(response.data.data);
     } catch (error) {
@@ -164,7 +168,7 @@ function FontFamilies() {
     } finally {
       setDashboardLoader(false);
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     fetchFontsData();

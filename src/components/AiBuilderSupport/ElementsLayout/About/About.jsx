@@ -49,8 +49,8 @@ function About({
     const getId2 = about.filter((option) => option.id === 2);
     const getId3 = about.filter((option) => option.id === 3);
 
-    setImageStyle2(getId2.length > 0 ? `products/${getId2[0].image_1}` : null);
-    setImageStyle3(getId3.length > 0 ? `products/${getId3[0].image_1}` : null);
+    setImageStyle2(getId2.length > 0 ? `/products/${getId2[0].image_1}` : null);
+    setImageStyle3(getId3.length > 0 ? `/products/${getId3[0].image_1}` : null);
   }, []);
 
   return (

@@ -7,6 +7,7 @@
 @use "../../pages/UsersManagement/DisplayUsers/display-users";
 @use "../../pages/TemplatesManagement/TempPages/temp-pages";
 @use "../../pages/TemplatesManagement/TempSections/temp-sections";
+@use "../../pages/ColorsManagement/Hexs/color-hexs";
 @use "../../pages/FontsManagement/Families/font-families-man";
 @use "../../pages/FontsManagement/Designs/font-designs-man";
 @use "../../pages/AccessManagement/MenuMan/menu-man";
@@ -14,6 +15,7 @@
 @use "../../pages/AccessManagement/AccessMan/access-man";
 @use "../../pages/AccessManagement/RoleMan/role-man";
 @use "../../pages/Dashboard/Accumulation/accumulation";
+@use "../../pages/MyWebsites/Websites/websites";
 
 .layout-dashboard {
   width: 100%;

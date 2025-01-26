@@ -3,7 +3,7 @@
 @use "../../../components/LayoutDashboard/Support/support-dashboard.scss" as
   support;
 
-.fonts-man {
+.colors-man {
   @include support.wrapper-parent();
 
   @include support.header();
@@ -27,20 +27,15 @@
         pointer-events: none;
       }
 
-      &-name {
-        @include text();
-        text-transform: capitalize;
-        margin-bottom: 0.1rem;
+      &-samples {
+        width: 8rem;
+        height: 4rem;
       }
 
-      &-samples {
-        width: 170px;
-        letter-spacing: 0.5px;
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-        white-space: normal;
-        text-align: center;
-        font-size: 0.75rem;
+      &-hex {
+        @include text();
+        text-transform: uppercase;
+        margin: 0.3rem 0 0.1rem;
       }
 
       &-action {
@@ -81,7 +76,7 @@
 
     .head {
       display: grid;
-      grid-template-columns: auto 1fr 1.5fr 0.8fr 0.5fr;
+      grid-template-columns: auto 0.6fr 1fr 1fr 0.5fr;
 
       &-col {
         padding: 1.1rem 1rem;
@@ -95,6 +90,7 @@
           @include m.flex();
         }
 
+        &:nth-child(3),
         &:nth-child(4) {
           @include m.flex();
         }
@@ -108,7 +104,7 @@
 
     .body {
       display: grid;
-      grid-template-columns: auto 1fr 1.5fr 0.8fr 0.5fr;
+      grid-template-columns: auto 0.6fr 1fr 1fr 0.5fr;
 
       &-col {
         padding: 1.75rem 0.9rem 0;
@@ -120,22 +116,15 @@
 
         &:nth-child(2) {
           @include m.flex($justify: flex-start);
-          text-transform: capitalize;
+          text-transform: uppercase;
         }
 
         &:nth-child(3) {
-          max-width: 333.38px;
-          letter-spacing: 0.5px;
-          overflow-wrap: break-word;
-          word-wrap: break-word;
-          white-space: normal;
+          @include m.flex();
 
-          .uppercase {
-            text-transform: uppercase;
-          }
-
-          .lowercase {
-            text-transform: lowercase;
+          .body-col-box {
+            width: 8rem;
+            height: 4rem;
           }
         }
 

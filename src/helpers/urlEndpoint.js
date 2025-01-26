@@ -11,6 +11,8 @@ const urlEndpoint = {
   elementsAi: `${baseUrl}/api/section-templates`,
   elementsAiId: `${baseUrl}/api/section-templates-id`,
   colorsAi: `${baseUrl}/api/color-design`,
+  colors: `${baseUrl}/api/color`,
+  colorId: `${baseUrl}/api/color-id`,
   fontsAi: `${baseUrl}/api/font-design`,
   fontsAiId: `${baseUrl}/api/font-design-id`,
   fonts: `${baseUrl}/api/fonts`,

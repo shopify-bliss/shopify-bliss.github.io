@@ -6,6 +6,7 @@ import TempPagesModal from "./TempPagesModal";
 import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
 import { useSearch } from "../../../helpers/SearchContext";
 import PropTypes from "prop-types";
+import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 
 function DisplayView({
   isLoadingTempPages,
@@ -124,6 +125,8 @@ function TempPages() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [pageId, setPageId] = useState(null);
 
+  const { token } = useDashboard();
+
   const handleDisplayChange = useCallback((display) => {
     setActiveDisplay(display);
   }, []);
@@ -132,7 +135,11 @@ function TempPages() {
     setIsLoadingTempPages(true);
 
     try {
-      const response = await axios.get(urlEndpoint.pagesAi);
+      const response = await axios.get(urlEndpoint.pagesAi, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       setPages(response.data.data);
     } catch (error) {
@@ -140,7 +147,7 @@ function TempPages() {
     } finally {
       setIsLoadingTempPages(false);
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     fetchPages();
