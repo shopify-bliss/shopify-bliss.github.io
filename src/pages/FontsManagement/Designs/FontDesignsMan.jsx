@@ -247,8 +247,6 @@ function FontDesigns() {
         },
       });
 
-      console.log(response.data.data);
-
       setFontDesigns(response.data.data);
     } catch (error) {
       console.error(error);
@@ -267,8 +265,6 @@ function FontDesigns() {
         },
       });
 
-      console.log(response.data.data);
-
       setFonts(response.data.data);
     } catch (error) {
       console.error(error);
@@ -286,8 +282,6 @@ function FontDesigns() {
           Authorization: `Bearer ${token}`,
         },
       });
-
-      console.log(response.data.data);
 
       setBrands(response.data.data);
     } catch (error) {
@@ -308,7 +302,7 @@ function FontDesigns() {
       <div className="font-designs-man">
         <Header
           className="font-designs-man"
-          title="Font Designs Management — Fonts"
+          title="Fonts Management — Font Designs"
           activeDisplay={activeDisplay}
           handleDisplayChange={handleDisplayChange}
           setIsCreateModalOpen={setIsCreateModalOpen}

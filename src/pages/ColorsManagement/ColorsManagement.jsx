@@ -3,6 +3,7 @@ import { useDashboard } from "../../components/LayoutDashboard/DashboardContext"
 import LayoutDashboard from "../../components/LayoutDashboard/LayoutDashboard";
 import { useNavigate } from "react-router-dom";
 import ColorHexs from "./Hexs/ColorHexs";
+import ColorDesigns from "./Designs/ColorDesigns";
 
 function ColorsManagement() {
   const { submenuPage, accessMenus, user } = useDashboard();
@@ -29,6 +30,9 @@ function ColorsManagement() {
       <LayoutDashboard>
         {submenuPage === "3b37ca81-d163-442c-a445-099196844800" && (
           <ColorHexs />
+        )}
+        {submenuPage === "09fff991-2791-49ee-9fab-b1675e3fb5e5" && (
+          <ColorDesigns />
         )}
       </LayoutDashboard>
     </>

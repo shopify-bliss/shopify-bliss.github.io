@@ -1,0 +1,211 @@
+@use "../../../helpers/mixins" as m;
+@use "../../../helpers/variables" as v;
+@use "../../../components/LayoutDashboard/Support/support-dashboard.scss" as
+  support;
+
+.color-designs-man {
+  @include support.wrapper-parent();
+
+  @include support.header();
+
+  &-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.2rem 1.5rem;
+
+    .color-brands {
+      @include m.flex($direction: column, $start: true);
+      gap: 0.35rem;
+
+      &-text {
+        font-size: 1.25rem;
+        font-family: v.$raleway;
+        font-weight: 600;
+        text-transform: capitalize;
+      }
+
+      &-item {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+        gap: 0.3rem;
+
+        .item {
+          @include m.flex($direction: column, $justify: flex-start);
+          padding: 1.4rem 1.25rem 1.5rem;
+          gap: 0.1rem;
+          transition: all 0.3s ease-in;
+
+          @mixin text() {
+            text-align: center;
+            transition: all 0.3s ease-in;
+            pointer-events: none;
+          }
+
+          &-name {
+            @include text();
+            text-transform: capitalize;
+            margin-bottom: 0.1rem;
+            @include m.flex();
+
+            span {
+              width: 5rem;
+              height: 3rem;
+            }
+          }
+
+          &-action {
+            margin-top: 1.1rem;
+            @include m.flex();
+            gap: 0.25rem;
+
+            &-progress {
+              @include support.component-action(support.$purple);
+            }
+
+            &-edit {
+              @include support.icon-action(support.$yellow);
+            }
+
+            &-delete {
+              @include support.icon-action(support.$red);
+            }
+          }
+
+          &:hover {
+            background-color: #000;
+            transition: all 0.6s ease-out;
+
+            .item-name {
+              color: #fff;
+              transition: all 0.3s ease-out;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-list {
+    width: 100%;
+    display: grid;
+    font-family: v.$raleway;
+
+    .head {
+      display: grid;
+      grid-template-columns: auto 1fr 0.8fr 0.8fr 0.8fr 0.8fr 0.6fr;
+
+      &-col {
+        padding: 1.1rem 1rem;
+        border-right: 0;
+        background-color: #000;
+        color: #fff;
+        font-weight: 600;
+
+        &:first-child {
+          width: 4.4rem;
+          @include m.flex();
+        }
+
+        &:nth-child(3),
+        &:nth-child(4),
+        &:nth-child(5),
+        &:nth-child(6) {
+          @include m.flex();
+        }
+
+        &:last-child {
+          @include m.flex();
+          border-right: #fff solid 1px;
+        }
+      }
+    }
+
+    .body {
+      display: grid;
+      grid-template-columns: auto 1fr 0.8fr 0.8fr 0.8fr 0.8fr 0.6fr;
+
+      &-col {
+        padding: 1.75rem 0.9rem 0;
+
+        &:first-child {
+          width: 4.4rem;
+          @include m.flex();
+        }
+
+        &:nth-child(3),
+        &:nth-child(4),
+        &:nth-child(5) {
+          @include m.flex();
+
+          span {
+            width: 5rem;
+            height: 3rem;
+          }
+        }
+
+        &:nth-child(6) {
+          @include m.flex();
+
+          .one {
+            @include support.set-default(
+              $bg: support.$pink,
+              $color: #fff,
+              $p: 0.4rem 0.8rem
+            );
+          }
+
+          .two {
+            @include support.set-default(
+              $bg: support.$cyan,
+              $color: #fff,
+              $p: 0.4rem 0.8rem
+            );
+          }
+
+          .before {
+            @include support.set-default(
+              $bg: support.$orange,
+              $color: #fff,
+              $p: 0.4rem 0.8rem
+            );
+          }
+        }
+
+        &:nth-child(6) {
+          @include m.flex();
+
+          .progress {
+            @include support.set-default(
+              $bg: support.$purple,
+              $color: #fff,
+              $p: 0.4rem 0.8rem
+            );
+          }
+
+          .done {
+            @include support.set-default(
+              $bg: support.$teal,
+              $color: #fff,
+              $p: 0.4rem 0.8rem
+            );
+          }
+        }
+
+        &:last-child {
+          @include m.flex();
+          gap: 0.35rem;
+
+          .edit {
+            @include support.icon-action(support.$yellow, 1.05rem, 100);
+          }
+
+          .delete {
+            @include support.icon-action(support.$red, 1.05rem, 100);
+          }
+        }
+      }
+    }
+  }
+}

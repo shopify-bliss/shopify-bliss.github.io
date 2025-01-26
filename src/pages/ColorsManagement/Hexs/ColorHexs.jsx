@@ -175,7 +175,7 @@ function ColorHexs() {
       <div className="colors-man">
         <Header
           className="colors-man"
-          title="Color Hexs Management — Colors"
+          title="Colors Management — Color Hexs"
           activeDisplay={activeDisplay}
           handleDisplayChange={handleDisplayChange}
           setIsCreateModalOpen={setIsCreateModalOpen}

@@ -179,7 +179,7 @@ function FontFamilies() {
       <div className="fonts-man">
         <Header
           className="fonts-man"
-          title="Font Families Management — Fonts"
+          title="Fonts Management — Font Families"
           activeDisplay={activeDisplay}
           handleDisplayChange={handleDisplayChange}
           setIsCreateModalOpen={setIsCreateModalOpen}
