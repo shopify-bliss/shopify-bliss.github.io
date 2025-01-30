@@ -99,3 +99,11 @@ export const FontDesignsSchema = yup.object().shape({
   group: yup.number().required("Group is required"),
   isDevelope: yup.bool().required("Development setting is required"),
 });
+
+export const ColorDesignsSchema = yup.object().shape({
+  brand_id: yup.string().required("Brand is required"),
+  color1_id: yup.string().required("Color 1 is required"),
+  color2_id: yup.string().required("Color 2 is required"),
+  color3_id: yup.string().required("Color 3 is required"),
+  isDevelope: yup.bool().required("Development setting is required"),
+});

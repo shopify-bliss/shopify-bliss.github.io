@@ -8,7 +8,6 @@ import { useSearch } from "../../../helpers/SearchContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import PropTypes from "prop-types";
 import {
-  AllFonts,
   AllFontType1,
   AllFontType2,
 } from "../../../components/AiBuilderSupport/FontsSupport";
@@ -253,7 +252,7 @@ function FontDesigns() {
     } finally {
       setDashboardLoader(false);
     }
-  }, [token]);
+  }, [token, setDashboardLoader]);
 
   const fetchFontsData = useCallback(async () => {
     setDashboardLoader(true);
@@ -271,7 +270,7 @@ function FontDesigns() {
     } finally {
       setDashboardLoader(false);
     }
-  }, [token]);
+  }, [token, setDashboardLoader]);
 
   const fetchBrandsData = useCallback(async () => {
     setDashboardLoader(true);
@@ -289,7 +288,7 @@ function FontDesigns() {
     } finally {
       setDashboardLoader(false);
     }
-  }, [token]);
+  }, [token, setDashboardLoader]);
 
   useEffect(() => {
     fetchFontsData();

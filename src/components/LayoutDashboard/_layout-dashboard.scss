@@ -4,6 +4,8 @@
 @use "./Topbar/topbar" as topbar;
 @use "./Modal/modal";
 @use "../../pages/Profile/profile";
+@use "../../pages/Dashboard/Analytics/analystics";
+@use "../../pages/Dashboard/Accumulation/accumulation";
 @use "../../pages/UsersManagement/DisplayUsers/display-users";
 @use "../../pages/TemplatesManagement/TempPages/temp-pages";
 @use "../../pages/TemplatesManagement/TempSections/temp-sections";
@@ -15,7 +17,6 @@
 @use "../../pages/AccessManagement/SubmenuMan/submenu-man";
 @use "../../pages/AccessManagement/AccessMan/access-man";
 @use "../../pages/AccessManagement/RoleMan/role-man";
-@use "../../pages/Dashboard/Accumulation/accumulation";
 @use "../../pages/MyWebsites/Websites/websites";
 
 .layout-dashboard {

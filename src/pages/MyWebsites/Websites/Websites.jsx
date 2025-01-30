@@ -5,15 +5,12 @@ import { useDashboard } from "../../../components/LayoutDashboard/DashboardConte
 import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
 import { useSearch } from "../../../helpers/SearchContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import PropTypes from "prop-types";
 import { indonesianTime } from "../../../helpers/IndonesianTime";
 import { useNavigate } from "react-router-dom";
 
 function Websites() {
   axios.defaults.withCredentials = true;
   const [activeDisplay, setActiveDisplay] = useState("grid");
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [fontId, setFontId] = useState(null);
   const [websites, setWebsites] = useState([]);
 
   const { isLoadingDashboard, setDashboardLoader, token } = useDashboard();
@@ -44,7 +41,7 @@ function Websites() {
     } finally {
       setDashboardLoader(false);
     }
-  }, [token]);
+  }, [token, setDashboardLoader]);
 
   useEffect(() => {
     fetchFontsData();
@@ -114,14 +111,6 @@ function Websites() {
               );
             })}
         </div>
-
-        {/* <FontFamiliesModal
-          type="delete"
-          onOpen={isDeleteModalOpen}
-          onClose={() => setIsDeleteModalOpen(false)}
-          refreshData={fetchFontsData}
-          fontId={fontId}
-        /> */}
       </div>
     </>
   );

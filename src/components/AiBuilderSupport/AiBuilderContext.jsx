@@ -127,7 +127,7 @@ export const AiBuilderProvider = ({ children }) => {
     } finally {
       setIsLoadingAiBuilder(false);
     }
-  }, [token]);
+  }, [token, navigate]);
 
   useEffect(() => {
     if (token) {

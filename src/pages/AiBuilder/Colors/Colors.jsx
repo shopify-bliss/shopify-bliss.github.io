@@ -187,13 +187,19 @@ function Colors({
                             }
                           >
                             <span
-                              className={`color-special-${color.color1.color}`}
+                              style={{
+                                backgroundColor: `#${color.color1.color}`,
+                              }}
                             ></span>
                             <span
-                              className={`color-other-${color.color2.color}`}
+                              style={{
+                                backgroundColor: `#${color.color2.color}`,
+                              }}
                             ></span>
                             <span
-                              className={`color-bg-${color.color3.color}`}
+                              style={{
+                                backgroundColor: `#${color.color3.color}`,
+                              }}
                             ></span>
                           </div>
                         );

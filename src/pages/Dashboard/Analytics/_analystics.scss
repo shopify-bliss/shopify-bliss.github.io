@@ -1,0 +1,7 @@
+@use "../../../helpers/mixins" as m;
+@use "../../../helpers/variables" as v;
+
+.analystics {
+  @include m.flex($start: true, $direction: column);
+  width: 100%;
+}

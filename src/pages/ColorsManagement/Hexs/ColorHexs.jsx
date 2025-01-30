@@ -164,7 +164,7 @@ function ColorHexs() {
     } finally {
       setDashboardLoader(false);
     }
-  }, [token]);
+  }, [token, setDashboardLoader]);
 
   useEffect(() => {
     fetchColorsData();

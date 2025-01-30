@@ -6,17 +6,13 @@ import { LoaderPages } from "../../../components/LoaderProgress/LoaderProgress";
 import { useSearch } from "../../../helpers/SearchContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import PropTypes from "prop-types";
-import {
-  AllFonts,
-  AllFontType1,
-  AllFontType2,
-} from "../../../components/AiBuilderSupport/FontsSupport";
+import ColorDesignsModal from "./ColorDesignsModal";
 
 function DisplayView({
   isLoadingDashboard,
   colorDesigns,
   brands,
-  setFontDesignId,
+  setColorDesignId,
   setIsUpdateModalOpen,
   setIsDeleteModalOpen,
   type,
@@ -53,24 +49,27 @@ function DisplayView({
                             .includes(searchLowerCase) ||
                           data.color3.color
                             .toLowerCase()
-                            .includes(searchLowerCase) ||
-                          data.brands.name
-                            .toLowerCase()
                             .includes(searchLowerCase)
                         );
                       })
                       .map((data) => {
                         return (
-                          <div className="item" key={data.color_designs_id}>
+                          <div className="item" key={data.color_design_id}>
                             <span className="item-name">
                               <span
-                                className={`color-special-${data.color1.color}`}
+                                style={{
+                                  backgroundColor: `#${data.color1.color}`,
+                                }}
                               ></span>
                               <span
-                                className={`color-other-${data.color2.color}`}
+                                style={{
+                                  backgroundColor: `#${data.color2.color}`,
+                                }}
                               ></span>
                               <span
-                                className={`color-bg-${data.color3.color}`}
+                                style={{
+                                  backgroundColor: `#${data.color3.color}`,
+                                }}
                               ></span>
                             </span>
                             <div className="item-action">
@@ -86,7 +85,7 @@ function DisplayView({
                                 className="material-symbols-rounded item-action-edit"
                                 onClick={() => {
                                   setIsUpdateModalOpen(true);
-                                  setFontDesignId(data.color_designs_id);
+                                  setColorDesignId(data.color_design_id);
                                 }}
                               >
                                 edit_square
@@ -95,7 +94,7 @@ function DisplayView({
                                 className="material-symbols-rounded item-action-delete"
                                 onClick={() => {
                                   setIsDeleteModalOpen(true);
-                                  setFontDesignId(data.color_designs_id);
+                                  setColorDesignId(data.color_design_id);
                                 }}
                               >
                                 delete
@@ -121,32 +120,42 @@ function DisplayView({
             <div className="head-col">Action</div>
           </div>
           {colorDesigns
-            // .filter((data) => {
-            //   const searchLowerCase = search.toLowerCase();
+            .filter((data) => {
+              const searchLowerCase = search.toLowerCase();
 
-            //   return (
-            //     data.brands.name.toLowerCase().includes(searchLowerCase) ||
-            //     data.color1.name.toLowerCase().includes(searchLowerCase) ||
-            //     data.color2.name.toLowerCase().includes(searchLowerCase) ||
-            //     data.group.toLowerCase().includes(searchLowerCase)
-            //   );
-            // })
+              return (
+                data.brands.name.toLowerCase().includes(searchLowerCase) ||
+                data.color1.color.toLowerCase().includes(searchLowerCase) ||
+                data.color2.color.toLowerCase().includes(searchLowerCase) ||
+                data.color3.color.toLowerCase().includes(searchLowerCase)
+              );
+            })
             .map((data, index) => {
               return (
-                <div className="body" key={data.color_designs_id}>
+                <div className="body" key={data.color_design_id}>
                   <div className="body-col">{index + 1}</div>
 
                   <div className="body-col">{data.brands.name}</div>
                   <div className={`body-col`}>
                     <span
-                      className={`color-special-${data.color1.color}`}
+                      style={{
+                        backgroundColor: `#${data.color1.color}`,
+                      }}
                     ></span>
                   </div>
                   <div className={`body-col`}>
-                    <span className={`color-other-${data.color2.color}`}></span>
+                    <span
+                      style={{
+                        backgroundColor: `#${data.color2.color}`,
+                      }}
+                    ></span>
                   </div>
                   <div className={`body-col`}>
-                    <span className={`color-bg-${data.color3.color}`}></span>
+                    <span
+                      style={{
+                        backgroundColor: `#${data.color3.color}`,
+                      }}
+                    ></span>
                   </div>
                   <div className="body-col">
                     {data.is_develope === true ? (
@@ -160,7 +169,7 @@ function DisplayView({
                       className="material-symbols-rounded edit"
                       onClick={() => {
                         setIsUpdateModalOpen(true);
-                        setFontDesignId(data.color_designs_id);
+                        setColorDesignId(data.color_design_id);
                       }}
                     >
                       edit_square
@@ -169,7 +178,7 @@ function DisplayView({
                       className="material-symbols-rounded delete"
                       onClick={() => {
                         setIsDeleteModalOpen(true);
-                        setFontDesignId(data.color_designs_id);
+                        setColorDesignId(data.color_design_id);
                       }}
                     >
                       delete
@@ -190,9 +199,9 @@ function ColorDesigns() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [colorDesignId, setFontDesignId] = useState(null);
-  const [colorDesigns, setFontDesigns] = useState([]);
-  const [colors, setFonts] = useState([]);
+  const [colorDesignId, setColorDesignId] = useState(null);
+  const [colorDesigns, setColorDesigns] = useState([]);
+  const [colors, setColors] = useState([]);
   const [brands, setBrands] = useState([]);
 
   const { isLoadingDashboard, setDashboardLoader, token } = useDashboard();
@@ -201,7 +210,7 @@ function ColorDesigns() {
     setActiveDisplay(display);
   }, []);
 
-  const fetchFontDesignsData = useCallback(async () => {
+  const fetchColorDesignsData = useCallback(async () => {
     setDashboardLoader(true);
 
     try {
@@ -213,15 +222,15 @@ function ColorDesigns() {
 
       console.log(response.data.data);
 
-      setFontDesigns(response.data.data);
+      setColorDesigns(response.data.data);
     } catch (error) {
       console.error(error);
     } finally {
       setDashboardLoader(false);
     }
-  }, [token]);
+  }, [token, setDashboardLoader]);
 
-  const fetchFontsData = useCallback(async () => {
+  const fetchColorsData = useCallback(async () => {
     setDashboardLoader(true);
 
     try {
@@ -231,15 +240,13 @@ function ColorDesigns() {
         },
       });
 
-      console.log(response.data.data);
-
-      setFonts(response.data.data);
+      setColors(response.data.data);
     } catch (error) {
       console.error(error);
     } finally {
       setDashboardLoader(false);
     }
-  }, [token]);
+  }, [token, setDashboardLoader]);
 
   const fetchBrandsData = useCallback(async () => {
     setDashboardLoader(true);
@@ -251,21 +258,19 @@ function ColorDesigns() {
         },
       });
 
-      console.log(response.data.data);
-
       setBrands(response.data.data);
     } catch (error) {
       console.error(error);
     } finally {
       setDashboardLoader(false);
     }
-  }, [token]);
+  }, [token, setDashboardLoader]);
 
   useEffect(() => {
-    fetchFontsData();
+    fetchColorsData();
     fetchBrandsData();
-    fetchFontDesignsData();
-  }, [fetchFontDesignsData, fetchBrandsData, fetchFontsData]);
+    fetchColorDesignsData();
+  }, [fetchColorDesignsData, fetchBrandsData, fetchColorsData]);
 
   return (
     <>
@@ -282,7 +287,7 @@ function ColorDesigns() {
             isLoadingDashboard={isLoadingDashboard}
             colorDesigns={colorDesigns}
             brands={brands}
-            setFontDesignId={setFontDesignId}
+            setColorDesignId={setColorDesignId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}
             setIsDeleteModalOpen={setIsDeleteModalOpen}
             type="grid"
@@ -292,36 +297,36 @@ function ColorDesigns() {
             isLoadingDashboard={isLoadingDashboard}
             colorDesigns={colorDesigns}
             brands={brands}
-            setFontDesignId={setFontDesignId}
+            setColorDesignId={setColorDesignId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}
             setIsDeleteModalOpen={setIsDeleteModalOpen}
             type="list"
           />
         )}
-        {/* <FontDesignsModal
+        <ColorDesignsModal
           type="create"
           onOpen={isCreateModalOpen}
           onClose={() => setIsCreateModalOpen(false)}
-          refreshData={fetchFontDesignsData}
+          refreshData={fetchColorDesignsData}
           brands={brands}
           colors={colors}
         />
-        <FontDesignsModal
+        <ColorDesignsModal
           type="update"
           onOpen={isUpdateModalOpen}
           onClose={() => setIsUpdateModalOpen(false)}
-          refreshData={fetchFontDesignsData}
+          refreshData={fetchColorDesignsData}
           colorDesignId={colorDesignId}
           brands={brands}
           colors={colors}
         />
-        <FontDesignsModal
+        <ColorDesignsModal
           type="delete"
           onOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
-          refreshData={fetchFontDesignsData}
+          refreshData={fetchColorDesignsData}
           colorDesignId={colorDesignId}
-        /> */}
+        />
       </div>
     </>
   );
@@ -331,7 +336,7 @@ DisplayView.propTypes = {
   type: PropTypes.string,
   colorDesigns: PropTypes.array,
   brands: PropTypes.array,
-  setFontDesignId: PropTypes.func,
+  setColorDesignId: PropTypes.func,
   isLoadingDashboard: PropTypes.bool,
   setIsUpdateModalOpen: PropTypes.func,
   setIsDeleteModalOpen: PropTypes.func,

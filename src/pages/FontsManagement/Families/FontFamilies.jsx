@@ -168,7 +168,7 @@ function FontFamilies() {
     } finally {
       setDashboardLoader(false);
     }
-  }, [token]);
+  }, [token, setDashboardLoader]);
 
   useEffect(() => {
     fetchFontsData();
