@@ -134,7 +134,11 @@ function AiBuilderPreview() {
   }, [token, fetchAiBuilder, navigate, location.state]);
 
   useEffect(() => {
-    setCurrentPageId(truePages[0]);
+    if (truePages.includes("a2d56bd2-c5fc-4404-9c3f-5977a88a6625")) {
+      setCurrentPageId("a2d56bd2-c5fc-4404-9c3f-5977a88a6625");
+    } else {
+      setCurrentPageId(truePages[0]);
+    }
   }, [truePages]);
 
   const pageStyles = useMemo(() => {

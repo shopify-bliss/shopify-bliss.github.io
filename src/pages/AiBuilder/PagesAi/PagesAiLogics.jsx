@@ -49,7 +49,16 @@ function PagesAiLogics() {
           setCurrentPageId(pageId);
         }
 
-        return updatedPages.sort((a, b) => a - b);
+        // Pastikan "a2d56bd2-c5fc-4404-9c3f-5977a88a6625" selalu di index pertama
+        const specialId = "a2d56bd2-c5fc-4404-9c3f-5977a88a6625";
+        if (updatedPages.includes(specialId)) {
+          updatedPages = [
+            specialId,
+            ...updatedPages.filter((id) => id !== specialId),
+          ];
+        }
+
+        return updatedPages;
       });
     },
     [currentPageId, initialPageId, setCurrentPageId]
