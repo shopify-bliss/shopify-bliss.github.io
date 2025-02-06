@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 function DisplayView({
   isLoadingDashboard,
   submenus,
+  menus,
   setSubmenuId,
   setIsUpdateModalOpen,
   setIsDeleteModalOpen,
@@ -23,59 +24,93 @@ function DisplayView({
       {isLoadingDashboard && <LoaderPages />}
       {type === "grid" ? (
         <div className="submenu-man-grid">
-          {submenus
-            .filter((data) => {
+          {menus
+            .filter((menu) => menu.is_develope !== true)
+            .filter((menu) => {
               const searchLowerCase = search.toLowerCase();
 
-              return (
-                data.name.toLowerCase().includes(searchLowerCase) ||
-                data.menus.url.toLowerCase().includes(searchLowerCase)
-              );
+              const isMenuMatch =
+                menu.name.toLowerCase().includes(searchLowerCase) ||
+                menu.url.toLowerCase().includes(searchLowerCase);
+
+              const isSubmenuMatch = submenus
+                .filter((submenu) => submenu.menu_id === menu.menu_id)
+                .some((submenu) =>
+                  submenu.name.toLowerCase().includes(searchLowerCase)
+                );
+
+              return isMenuMatch || isSubmenuMatch;
             })
-            .map((data) => (
-              <div className="item" key={data.sub_menu_id}>
-                <div className="item-name">{data.name}</div>
-                <Link className="item-menu" to={`/${data.menus.url}`}>
-                  {data.menus.url}
-                </Link>
-                <div className="item-action">
-                  {data.is_develope === true ? (
-                    <span className="item-action-progress">
-                      <span className="material-symbols-outlined item-action-icon">
-                        sync
-                      </span>
-                      <div className="text">Progress</div>
-                    </span>
-                  ) : null}
-                  {data.default === true ? (
-                    <div className="item-action-default">
-                      <span className="material-symbols-outlined item-action-icon">
-                        settings
-                      </span>
-                      <span className="text">Default</span>
-                    </div>
-                  ) : null}
-                  <span
-                    className="material-symbols-rounded item-action-edit"
-                    onClick={() => {
-                      setIsUpdateModalOpen(true);
-                      setSubmenuId(data.sub_menu_id);
-                    }}
-                  >
-                    edit_square
-                  </span>
-                  <span
-                    className="material-symbols-rounded item-action-delete"
-                    onClick={() => {
-                      setIsDeleteModalOpen(true);
-                      setSubmenuId(data.sub_menu_id);
-                    }}
-                  >
-                    delete
-                  </span>
+            .map((menu) => {
+              return (
+                <div className="submenu-menus" key={menu.menu_id}>
+                  <div className="submenu-menus-text">{menu.name}</div>
+                  <div className="submenu-menus-item">
+                    {submenus
+                      .filter((submenu) => submenu.menu_id === menu.menu_id)
+                      .filter((submenu) => {
+                        const searchLowerCase = search.toLowerCase();
+
+                        return (
+                          submenu.name
+                            .toLowerCase()
+                            .includes(searchLowerCase) ||
+                          submenu.menus.url
+                            .toLowerCase()
+                            .includes(searchLowerCase)
+                        );
+                      })
+                      .map((submenu) => (
+                        <div className="item" key={submenu.sub_menu_id}>
+                          <div className="item-name">{submenu.name}</div>
+                          <Link
+                            className="item-menu"
+                            to={`/${submenu.menus.url}`}
+                          >
+                            {submenu.menus.url}
+                          </Link>
+                          <div className="item-action">
+                            {submenu.is_develope === true ? (
+                              <span className="item-action-progress">
+                                <span className="material-symbols-outlined item-action-icon">
+                                  sync
+                                </span>
+                                <div className="text">Progress</div>
+                              </span>
+                            ) : null}
+                            {submenu.default === true ? (
+                              <div className="item-action-default">
+                                <span className="material-symbols-outlined item-action-icon">
+                                  settings
+                                </span>
+                                <span className="text">Default</span>
+                              </div>
+                            ) : null}
+                            <span
+                              className="material-symbols-rounded item-action-edit"
+                              onClick={() => {
+                                setIsUpdateModalOpen(true);
+                                setSubmenuId(submenu.sub_menu_id);
+                              }}
+                            >
+                              edit_square
+                            </span>
+                            <span
+                              className="material-symbols-rounded item-action-delete"
+                              onClick={() => {
+                                setIsDeleteModalOpen(true);
+                                setSubmenuId(submenu.sub_menu_id);
+                              }}
+                            >
+                              delete
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
         </div>
       ) : (
         <div className="submenu-man-list">
@@ -151,7 +186,8 @@ function SubmenuMan() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [submenuId, setSubmenuId] = useState(null);
 
-  const { submenus, fetchDashboardData, isLoadingDashboard } = useDashboard();
+  const { submenus, menus, fetchDashboardData, isLoadingDashboard } =
+    useDashboard();
 
   const handleDisplayChange = useCallback((display) => {
     setActiveDisplay(display);
@@ -171,6 +207,7 @@ function SubmenuMan() {
           <DisplayView
             isLoadingDashboard={isLoadingDashboard}
             submenus={submenus}
+            menus={menus}
             setSubmenuId={setSubmenuId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}
             setIsDeleteModalOpen={setIsDeleteModalOpen}
@@ -180,6 +217,7 @@ function SubmenuMan() {
           <DisplayView
             isLoadingDashboard={isLoadingDashboard}
             submenus={submenus}
+            menus={menus}
             setSubmenuId={setSubmenuId}
             setIsUpdateModalOpen={setIsUpdateModalOpen}
             setIsDeleteModalOpen={setIsDeleteModalOpen}
@@ -214,6 +252,7 @@ function SubmenuMan() {
 DisplayView.propTypes = {
   isLoadingDashboard: PropTypes.bool,
   submenus: PropTypes.array,
+  menus: PropTypes.array,
   setSubmenuId: PropTypes.func,
   setIsUpdateModalOpen: PropTypes.func,
   setIsDeleteModalOpen: PropTypes.func,

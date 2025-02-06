@@ -3,7 +3,7 @@ import {
   Quit,
   Logo,
 } from "../../../components/AiBuilderSupport/AiBuilderSupport";
-import { ControllingOverviews } from "../../../components/AiBuilderSupport/AiBuilderSupport";
+import { ControllingOverviews, DefaultFooter } from "../../../components/AiBuilderSupport/AiBuilderSupport";
 import Navbar from "../../../components/AiBuilderSupport/NavbarLayout/NavbarLayout";
 import Intro from "../../../components/AiBuilderSupport/ElementsLayout/Intro/Intro";
 import Products from "../../../components/AiBuilderSupport/ElementsLayout/Products/Products";
@@ -143,7 +143,7 @@ function Colors({
                     ))}
                 </div>
               )}
-              {/* <DefaultFooter dataPages={dataPages} /> */}
+              <DefaultFooter dataPages={dataPages} />
             </div>
 
             <div
@@ -166,48 +166,54 @@ function Colors({
             the colors anytime.
           </div>
           <div className="content">
-            {dataBrands.map((brand) => {
-              return (
-                <div className={`content-item`} key={brand.brand_id}>
-                  <div className="content-item-title">{brand.name}</div>
-                  <div className="content-item-list">
-                    {dataColors
-                      .filter((color) => color.brand_id === brand.brand_id)
-                      .map((color) => {
-                        return (
-                          <div
-                            className={`content-item-list-color ${
-                              activeColors === color.color_design_id
-                                ? "active"
-                                : ""
-                            }`}
-                            key={color.color_design_id}
-                            onClick={() =>
-                              handleactiveColors(color.color_design_id)
-                            }
-                          >
-                            <span
-                              style={{
-                                backgroundColor: `#${color.color1.color}`,
-                              }}
-                            ></span>
-                            <span
-                              style={{
-                                backgroundColor: `#${color.color2.color}`,
-                              }}
-                            ></span>
-                            <span
-                              style={{
-                                backgroundColor: `#${color.color3.color}`,
-                              }}
-                            ></span>
-                          </div>
-                        );
-                      })}
+            {dataBrands
+              .filter((brand) => brand.is_develope !== true)
+              .map((brand) => {
+                return (
+                  <div className={`content-item`} key={brand.brand_id}>
+                    <div className="content-item-title">{brand.name}</div>
+                    <div className="content-item-list">
+                      {dataColors
+                        .filter(
+                          (color) =>
+                            color.is_develope !== true &&
+                            color.brand_id === brand.brand_id
+                        )
+                        .map((color) => {
+                          return (
+                            <div
+                              className={`content-item-list-color ${
+                                activeColors === color.color_design_id
+                                  ? "active"
+                                  : ""
+                              }`}
+                              key={color.color_design_id}
+                              onClick={() =>
+                                handleactiveColors(color.color_design_id)
+                              }
+                            >
+                              <span
+                                style={{
+                                  backgroundColor: `#${color.color1.color}`,
+                                }}
+                              ></span>
+                              <span
+                                style={{
+                                  backgroundColor: `#${color.color2.color}`,
+                                }}
+                              ></span>
+                              <span
+                                style={{
+                                  backgroundColor: `#${color.color3.color}`,
+                                }}
+                              ></span>
+                            </div>
+                          );
+                        })}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         </div>
       </div>

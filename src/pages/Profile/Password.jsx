@@ -1,11 +1,11 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useRef } from "react";
 import axios from "axios";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import { AuthValidationPassword } from "../../components/AuthSupport/AuthSupport";
 import { resetPasswordSchema } from "../../helpers/ValidationSchema";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
 
-function Password() {
+function Password({ onClose }) {
   axios.defaults.withCredentials = true;
 
   const [data, setData] = useState({
@@ -22,7 +22,10 @@ function Password() {
     special: false,
   });
 
-  const { toastPromise, toastMessage } = useDashboard();
+  const passwordStatus = useRef(null);
+
+  const { toastPromise, toastMessage, token, fetchDashboardData } =
+    useDashboard();
 
   const handleChange = useCallback(
     (e) => {
@@ -57,7 +60,12 @@ function Password() {
         .then(() => {
           const resetPasswordPromise = axios.put(
             urlEndpoint.updatePassword,
-            data
+            data,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
           );
 
           toastPromise(
@@ -67,12 +75,32 @@ function Password() {
               success: "Reset password has been successfully updated!",
               error: "Failed to reset password!",
             },
-            { autoClose: 2500, position: "top-center" }
+            { autoClose: 2500, position: "top-center" },
+            () => {
+              if (passwordStatus.current) {
+                setData({
+                  oldPassword: "",
+                  newPassword: "",
+                });
+                setValidationPassword({
+                  length: false,
+                  uppercase: false,
+                  lowercase: false,
+                  number: false,
+                  special: false,
+                });
+
+                onClose();
+                fetchDashboardData();
+              }
+            }
           );
 
           resetPasswordPromise
             .then((res) => {
-              console.log(res.data);
+              // console.log(res.data);
+
+              passwordStatus.current = res.data.success;
             })
             .catch((error) => {
               console.error("Error updating password:", error);
@@ -84,7 +112,7 @@ function Password() {
           });
         });
     },
-    [data, toastPromise, toastMessage]
+    [data, toastPromise, toastMessage, token]
   );
 
   return (
@@ -97,6 +125,7 @@ function Password() {
             id="oldPassword"
             name="oldPassword"
             autoComplete="off"
+            value={data.oldPassword}
             onChange={handleChange}
           />
           <span
@@ -114,6 +143,7 @@ function Password() {
             id="newPassword"
             name="newPassword"
             autoComplete="off"
+            value={data.newPassword}
             onChange={handleChange}
           />
           <span

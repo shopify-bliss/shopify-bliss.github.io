@@ -89,7 +89,7 @@ function Profile({ onClose, onOpen }) {
               <Bio onClose={onClose} />
             ) : currentSubmenu === "d86578b0-4497-4d43-bdad-0f50af1011aa" &&
               currentSubmenu === "d86578b0-4497-4d43-bdad-0f50af1011aa" ? (
-              <Password />
+              <Password onClose={onClose} />
             ) : null}
           </div>
         </div>

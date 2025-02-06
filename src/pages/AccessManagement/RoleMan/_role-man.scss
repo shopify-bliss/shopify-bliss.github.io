@@ -22,13 +22,19 @@
 
       @mixin text() {
         text-align: center;
-        font-family: v.$raleway;
         transition: all 0.3s ease-in;
         pointer-events: none;
       }
 
+      &-icon {
+        font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
+        font-size: 3.2rem;
+        @include text();
+      }
+
       &-name {
         @include text();
+        font-family: v.$raleway;
         text-transform: capitalize;
       }
 
@@ -51,8 +57,7 @@
         transition: all 0.6s ease-out;
 
         .item-name,
-        .item-url,
-        .item-url-link {
+        .item-icon {
           color: #fff;
           transition: all 0.3s ease-out;
         }
@@ -67,7 +72,7 @@
 
     .head {
       display: grid;
-      grid-template-columns: auto 1fr 0.3fr;
+      grid-template-columns: auto 1.2fr 2fr 1.8fr 1fr;
 
       &-col {
         padding: 1.1rem 1rem;
@@ -81,6 +86,10 @@
           @include m.flex();
         }
 
+        &:nth-child(2) {
+          @include m.flex();
+        }
+
         &:last-child {
           @include m.flex();
           border-right: #fff solid 1px;
@@ -90,7 +99,7 @@
 
     .body {
       display: grid;
-      grid-template-columns: auto 1fr 0.3fr;
+      grid-template-columns: auto 1.2fr 2fr 1.8fr 1fr;
 
       &-col {
         padding: 1.75rem 0.9rem 0;
@@ -102,6 +111,12 @@
         }
 
         &:nth-child(2) {
+          font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
+          font-size: 2.3rem;
+          @include m.flex();
+        }
+
+        &:nth-child(4) {
           text-transform: capitalize;
         }
 

@@ -3,7 +3,7 @@ import {
   Quit,
   Logo,
 } from "../../../components/AiBuilderSupport/AiBuilderSupport";
-import { ControllingOverviews } from "../../../components/AiBuilderSupport/AiBuilderSupport";
+import { ControllingOverviews, DefaultFooter } from "../../../components/AiBuilderSupport/AiBuilderSupport";
 import Navbar from "../../../components/AiBuilderSupport/NavbarLayout/NavbarLayout";
 import Intro from "../../../components/AiBuilderSupport/ElementsLayout/Intro/Intro";
 import Products from "../../../components/AiBuilderSupport/ElementsLayout/Products/Products";
@@ -147,7 +147,7 @@ function Fonts({
                     ))}
                 </div>
               )}
-              {/* <DefaultFooter dataPages={dataPages} /> */}
+              <DefaultFooter dataPages={dataPages} />
             </div>
 
             <div

@@ -71,8 +71,8 @@
           @include m.flex();
           transition: all 0.3s ease-in;
           cursor: default;
-          border: support.$pink solid 1px;
-          
+          border: support.$orange solid 1px;
+
           &.super-admin {
             border: support.$purple solid 1px;
           }
@@ -85,9 +85,13 @@
             border: support.$teal solid 1px;
           }
 
+          &.developer {
+            border: support.$pink solid 1px;
+          }
+
           &-icon {
-            @include support.icon-action(support.$pink, $default: true);
-            
+            @include support.icon-action(support.$orange, $default: true);
+
             &.super-admin {
               @include support.icon-action(support.$purple, $default: true);
             }
@@ -99,6 +103,10 @@
             &.customer {
               @include support.icon-action(support.$teal, $default: true);
             }
+
+            &.developer {
+              @include support.icon-action(support.$pink, $default: true);
+            }
           }
 
           &-text {
@@ -107,8 +115,8 @@
             font-family: v.$raleway;
             transition: all 0.3s ease-in;
             padding-right: 0.33rem;
-            color: support.$pink;
-            
+            color: support.$orange;
+
             &.super-admin {
               color: support.$purple;
             }
@@ -120,11 +128,15 @@
             &.customer {
               color: support.$teal;
             }
+
+            &.developer {
+              color: support.$pink;
+            }
           }
 
           &:hover {
             transition: all 0.3s ease-out;
-            background-color: support.$pink;
+            background-color: support.$orange;
 
             &.super-admin {
               background-color: support.$purple;
@@ -136,6 +148,10 @@
 
             &.customer {
               background-color: support.$teal;
+            }
+
+            &.developer {
+              background-color: support.$pink;
             }
 
             .item-action-role-icon {
@@ -245,11 +261,18 @@
           .body-col-role {
             text-transform: capitalize;
             @include support.set-default(
-              $bg: support.$pink,
+              $bg: support.$orange,
               $color: #fff,
               $static: false,
               $p: 0.45rem 0.7rem
             );
+            @include m.flex();
+            gap: 0.1rem;
+
+            .material-symbols-rounded {
+              font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+              font-size: 1.1rem;
+            }
 
             &.super-admin {
               @include support.set-default(
@@ -258,6 +281,14 @@
                 $static: false,
                 $p: 0.45rem 0.7rem
               );
+              @include m.flex();
+              gap: 0.2rem;
+
+              .material-symbols-rounded {
+                font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0,
+                  "opsz" 24;
+                font-size: 1.1rem;
+              }
             }
 
             &.admin {
@@ -267,6 +298,14 @@
                 $static: false,
                 $p: 0.45rem 0.7rem
               );
+              @include m.flex();
+              gap: 0.1rem;
+
+              .material-symbols-rounded {
+                font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0,
+                  "opsz" 24;
+                font-size: 1.1rem;
+              }
             }
 
             &.customer {
@@ -276,6 +315,31 @@
                 $static: false,
                 $p: 0.45rem 0.7rem
               );
+              @include m.flex();
+              gap: 0.1rem;
+
+              .material-symbols-rounded {
+                font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0,
+                  "opsz" 24;
+                font-size: 1.1rem;
+              }
+            }
+
+            &.developer {
+              @include support.set-default(
+                $bg: support.$pink,
+                $color: #fff,
+                $static: false,
+                $p: 0.45rem 0.7rem
+              );
+              @include m.flex();
+              gap: 0.1rem;
+
+              .material-symbols-rounded {
+                font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0,
+                  "opsz" 24;
+                font-size: 1.1rem;
+              }
             }
           }
         }

@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useMemo, useCallback, useState, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { SocialIcon } from "react-social-icons";
 import logo from "../../assets/logo/black-logo.png";
 import PropTypes from "prop-types";
+import Modal from "../LayoutDashboard/Modal/Modal";
 
 export function Logo() {
   return (
@@ -14,10 +15,35 @@ export function Logo() {
 }
 
 export function Quit() {
+  const [openQuit, setOpenQuit] = useState(false);
+
+  const navigate = useNavigate();
+
   return (
-    <Link to={"/dashboard"} className="ai-builder-quit">
-      <span className="material-symbols-outlined">close</span>
-    </Link>
+    <>
+      <div className="ai-builder-quit" onClick={() => setOpenQuit(true)}>
+        <span className="material-symbols-outlined">close</span>
+      </div>
+
+      <Modal
+        onClose={() => setOpenQuit(false)}
+        onOpen={openQuit}
+        type="confirm"
+        titleModal={"Are you sure you want to leave this page?"}
+        descModal={
+          "You will lose the components you have selected and will be redirected to the account dashboard."
+        }
+      >
+        <div className="confirm-dashboard-action">
+          <div className="cancel" onClick={() => setOpenQuit(false)}>
+            cancel
+          </div>
+          <div className="confirm" onClick={() => navigate("/dashboard")}>
+            leave
+          </div>
+        </div>
+      </Modal>
+    </>
   );
 }
 

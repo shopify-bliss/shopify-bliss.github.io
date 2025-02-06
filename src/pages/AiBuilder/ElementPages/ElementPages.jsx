@@ -189,26 +189,30 @@ function ElementPages({
             few sections as needed to achieve your desired structure.
           </div>
           <div className="content">
-            {dataElements.map((section) => (
-              <div
-                className={`content-item ${
-                  activeSections[currentPageId]?.includes(section.section_id)
-                    ? "active"
-                    : ""
-                }`}
-                key={section.section_id}
-                onClick={() => handleActiveSection(section.section_id)}
-              >
-                {activeSections[currentPageId]?.includes(section.section_id) ? (
-                  <span className="material-symbols-outlined">task_alt</span>
-                ) : (
-                  <span className="material-symbols-outlined">
-                    radio_button_unchecked
-                  </span>
-                )}
-                <div className="content-item-text">{section.name}</div>
-              </div>
-            ))}
+            {dataElements
+              .filter((section) => section.is_develope !== true)
+              .map((section) => (
+                <div
+                  className={`content-item ${
+                    activeSections[currentPageId]?.includes(section.section_id)
+                      ? "active"
+                      : ""
+                  }`}
+                  key={section.section_id}
+                  onClick={() => handleActiveSection(section.section_id)}
+                >
+                  {activeSections[currentPageId]?.includes(
+                    section.section_id
+                  ) ? (
+                    <span className="material-symbols-outlined">task_alt</span>
+                  ) : (
+                    <span className="material-symbols-outlined">
+                      radio_button_unchecked
+                    </span>
+                  )}
+                  <div className="content-item-text">{section.name}</div>
+                </div>
+              ))}
           </div>
         </div>
       </div>

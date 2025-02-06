@@ -25,10 +25,28 @@ function DisplayView({
       {type === "grid" ? (
         <div className="color-designs-man-grid">
           {brands
+            .filter((brand) => brand.is_develope !== true)
             .filter((data) => {
               const searchLowerCase = search.toLowerCase();
 
-              return data.name.toLowerCase().includes(searchLowerCase);
+              const isMatchBrand = data.name
+                .toLowerCase()
+                .includes(searchLowerCase);
+
+              const isMatchColor = colorDesigns
+                .filter((color) => color.brand_id === data.brand_id)
+                .some(
+                  (color) =>
+                    color.color1.color
+                      .toLowerCase()
+                      .includes(searchLowerCase) ||
+                    color.color2.color
+                      .toLowerCase()
+                      .includes(searchLowerCase) ||
+                    color.color3.color.toLowerCase().includes(searchLowerCase)
+                );
+
+              return isMatchBrand || isMatchColor;
             })
             .map((brand) => {
               return (
@@ -48,6 +66,9 @@ function DisplayView({
                             .toLowerCase()
                             .includes(searchLowerCase) ||
                           data.color3.color
+                            .toLowerCase()
+                            .includes(searchLowerCase) ||
+                          data.brands.name
                             .toLowerCase()
                             .includes(searchLowerCase)
                         );

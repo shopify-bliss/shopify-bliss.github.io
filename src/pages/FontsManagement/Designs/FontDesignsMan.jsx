@@ -29,10 +29,23 @@ function DisplayView({
       {type === "grid" ? (
         <div className="font-designs-man-grid">
           {brands
+            .filter((brand) => brand.is_develope !== true)
             .filter((data) => {
               const searchLowerCase = search.toLowerCase();
 
-              return data.name.toLowerCase().includes(searchLowerCase);
+              const isBrandMatch = data.name
+                .toLowerCase()
+                .includes(searchLowerCase);
+
+              const isFontMatch = fontDesigns
+                .filter((font) => font.brand_id === data.brand_id)
+                .some(
+                  (font) =>
+                    font.font1.name.toLowerCase().includes(searchLowerCase) ||
+                    font.font2.name.toLowerCase().includes(searchLowerCase)
+                );
+
+              return isBrandMatch || isFontMatch;
             })
             .map((brand) => {
               return (

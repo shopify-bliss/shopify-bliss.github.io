@@ -3450,7 +3450,9 @@
 }
 .ai-builder-overview .element-pages-core {
   width: 50vw;
-  height: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  max-height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -6180,7 +6182,9 @@
 }
 .ai-builder-overview .colors-core {
   width: 50vw;
-  height: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  max-height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -8261,7 +8265,9 @@
 }
 .ai-builder-overview .fonts-core {
   width: 50vw;
-  height: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  max-height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -10728,7 +10734,7 @@
   box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, 0.15);
   background-color: #fff;
   position: relative;
-  z-index: 41;
+  z-index: 29;
 }
 .ai-builder-steps .step-list {
   display: flex;
@@ -13379,7 +13385,7 @@
   justify-content: center;
   transition: all 0.3s ease-in;
   cursor: default;
-  border: #d63384 solid 1px;
+  border: #fd7e14 solid 1px;
 }
 .display-users-grid .item-action-role.super-admin {
   border: #6f42c1 solid 1px;
@@ -13390,6 +13396,9 @@
 .display-users-grid .item-action-role.customer {
   border: #20c997 solid 1px;
 }
+.display-users-grid .item-action-role.developer {
+  border: #d63384 solid 1px;
+}
 .display-users-grid .item-action-role-icon {
   font-size: 1rem;
   display: flex;
@@ -13399,7 +13408,7 @@
   padding: 0.22rem;
   transition: all 0.3s ease-in;
   background-color: transparent;
-  color: #d63384;
+  color: #fd7e14;
   font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
 }
 .display-users-grid .item-action-role-icon.super-admin {
@@ -13438,13 +13447,25 @@
   color: #20c997;
   font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
 }
+.display-users-grid .item-action-role-icon.developer {
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.22rem;
+  transition: all 0.3s ease-in;
+  background-color: transparent;
+  color: #d63384;
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+}
 .display-users-grid .item-action-role-text {
   margin-left: -0.1rem;
   font-size: 0.8rem;
   font-family: "Raleway", serif;
   transition: all 0.3s ease-in;
   padding-right: 0.33rem;
-  color: #d63384;
+  color: #fd7e14;
 }
 .display-users-grid .item-action-role-text.super-admin {
   color: #6f42c1;
@@ -13455,9 +13476,12 @@
 .display-users-grid .item-action-role-text.customer {
   color: #20c997;
 }
+.display-users-grid .item-action-role-text.developer {
+  color: #d63384;
+}
 .display-users-grid .item-action-role:hover {
   transition: all 0.3s ease-out;
-  background-color: #d63384;
+  background-color: #fd7e14;
 }
 .display-users-grid .item-action-role:hover.super-admin {
   background-color: #6f42c1;
@@ -13467,6 +13491,9 @@
 }
 .display-users-grid .item-action-role:hover.customer {
   background-color: #20c997;
+}
+.display-users-grid .item-action-role:hover.developer {
+  background-color: #d63384;
 }
 .display-users-grid .item-action-role:hover .item-action-role-icon {
   font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
@@ -13583,10 +13610,19 @@
   font-size: 0.73rem;
   font-weight: 500;
   text-align: center;
-  background-color: #d63384;
+  background-color: #fd7e14;
   color: #fff;
   pointer-events: none;
   border-radius: 50vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+}
+.display-users-list .body-col:nth-child(4) .body-col-role .material-symbols-rounded {
+  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+  font-size: 1.1rem;
 }
 .display-users-list .body-col:nth-child(4) .body-col-role.super-admin {
   padding: 0.45rem 0.7rem;
@@ -13597,6 +13633,15 @@
   color: #fff;
   pointer-events: none;
   border-radius: 50vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+}
+.display-users-list .body-col:nth-child(4) .body-col-role.super-admin .material-symbols-rounded {
+  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+  font-size: 1.1rem;
 }
 .display-users-list .body-col:nth-child(4) .body-col-role.admin {
   padding: 0.45rem 0.7rem;
@@ -13607,6 +13652,15 @@
   color: #fff;
   pointer-events: none;
   border-radius: 50vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+}
+.display-users-list .body-col:nth-child(4) .body-col-role.admin .material-symbols-rounded {
+  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+  font-size: 1.1rem;
 }
 .display-users-list .body-col:nth-child(4) .body-col-role.customer {
   padding: 0.45rem 0.7rem;
@@ -13617,6 +13671,34 @@
   color: #fff;
   pointer-events: none;
   border-radius: 50vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+}
+.display-users-list .body-col:nth-child(4) .body-col-role.customer .material-symbols-rounded {
+  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+  font-size: 1.1rem;
+}
+.display-users-list .body-col:nth-child(4) .body-col-role.developer {
+  padding: 0.45rem 0.7rem;
+  font-size: 0.73rem;
+  font-weight: 500;
+  text-align: center;
+  background-color: #d63384;
+  color: #fff;
+  pointer-events: none;
+  border-radius: 50vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+}
+.display-users-list .body-col:nth-child(4) .body-col-role.developer .material-symbols-rounded {
+  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24;
+  font-size: 1.1rem;
 }
 .display-users-list .body-col:last-child {
   display: flex;
@@ -17503,10 +17585,29 @@
 .submenu-man-grid {
   width: 100%;
   display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.2rem 1.5rem;
+}
+.submenu-man-grid .submenu-menus {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.35rem;
+}
+.submenu-man-grid .submenu-menus-text {
+  font-size: 1.25rem;
+  font-family: "Raleway", serif;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.submenu-man-grid .submenu-menus-item {
+  width: 100%;
+  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
   gap: 0.3rem;
 }
-.submenu-man-grid .item {
+.submenu-man-grid .submenu-menus-item .item {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17515,7 +17616,7 @@
   gap: 0.1rem;
   transition: all 0.3s ease-in;
 }
-.submenu-man-grid .item-name {
+.submenu-man-grid .submenu-menus-item .item-name {
   text-align: center;
   font-family: "Raleway", serif;
   transition: all 0.3s ease-in;
@@ -17523,7 +17624,7 @@
   text-transform: capitalize;
   cursor: default;
 }
-.submenu-man-grid .item-menu {
+.submenu-man-grid .submenu-menus-item .item-menu {
   text-align: center;
   font-family: "Raleway", serif;
   transition: all 0.3s ease-in;
@@ -17531,7 +17632,7 @@
   font-size: 0.8rem;
   font-weight: 500;
 }
-.submenu-man-grid .item-action {
+.submenu-man-grid .submenu-menus-item .item-action {
   margin-top: 1.1rem;
   display: flex;
   flex-direction: row;
@@ -17540,7 +17641,7 @@
   gap: 0.25rem;
   flex-wrap: wrap;
 }
-.submenu-man-grid .item-action-progress {
+.submenu-man-grid .submenu-menus-item .item-action-progress {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -17549,7 +17650,7 @@
   transition: all 0.3s ease-in;
   cursor: default;
 }
-.submenu-man-grid .item-action-progress .item-action-icon {
+.submenu-man-grid .submenu-menus-item .item-action-progress .item-action-icon {
   font-size: 1rem;
   display: flex;
   flex-direction: row;
@@ -17561,7 +17662,7 @@
   color: #6f42c1;
   font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
 }
-.submenu-man-grid .item-action-progress .text {
+.submenu-man-grid .submenu-menus-item .item-action-progress .text {
   margin-left: -0.1rem;
   font-size: 0.8rem;
   font-family: "Raleway", serif;
@@ -17569,20 +17670,20 @@
   padding-right: 0.33rem;
   color: #6f42c1;
 }
-.submenu-man-grid .item-action-progress:hover {
+.submenu-man-grid .submenu-menus-item .item-action-progress:hover {
   background-color: #6f42c1;
   transition: all 0.3s ease-out;
 }
-.submenu-man-grid .item-action-progress:hover .item-action-icon {
+.submenu-man-grid .submenu-menus-item .item-action-progress:hover .item-action-icon {
   font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
-.submenu-man-grid .item-action-progress:hover .text,
-.submenu-man-grid .item-action-progress:hover .item-action-icon {
+.submenu-man-grid .submenu-menus-item .item-action-progress:hover .text,
+.submenu-man-grid .submenu-menus-item .item-action-progress:hover .item-action-icon {
   color: #fff;
   transition: all 0.3s ease-out;
 }
-.submenu-man-grid .item-action-default {
+.submenu-man-grid .submenu-menus-item .item-action-default {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -17591,7 +17692,7 @@
   transition: all 0.3s ease-in;
   cursor: default;
 }
-.submenu-man-grid .item-action-default .item-action-icon {
+.submenu-man-grid .submenu-menus-item .item-action-default .item-action-icon {
   font-size: 1rem;
   display: flex;
   flex-direction: row;
@@ -17603,7 +17704,7 @@
   color: #0dcaf0;
   font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
 }
-.submenu-man-grid .item-action-default .text {
+.submenu-man-grid .submenu-menus-item .item-action-default .text {
   margin-left: -0.1rem;
   font-size: 0.8rem;
   font-family: "Raleway", serif;
@@ -17611,20 +17712,20 @@
   padding-right: 0.33rem;
   color: #0dcaf0;
 }
-.submenu-man-grid .item-action-default:hover {
+.submenu-man-grid .submenu-menus-item .item-action-default:hover {
   background-color: #0dcaf0;
   transition: all 0.3s ease-out;
 }
-.submenu-man-grid .item-action-default:hover .item-action-icon {
+.submenu-man-grid .submenu-menus-item .item-action-default:hover .item-action-icon {
   font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
-.submenu-man-grid .item-action-default:hover .text,
-.submenu-man-grid .item-action-default:hover .item-action-icon {
+.submenu-man-grid .submenu-menus-item .item-action-default:hover .text,
+.submenu-man-grid .submenu-menus-item .item-action-default:hover .item-action-icon {
   color: #fff;
   transition: all 0.3s ease-out;
 }
-.submenu-man-grid .item-action-edit {
+.submenu-man-grid .submenu-menus-item .item-action-edit {
   font-size: 1rem;
   display: flex;
   flex-direction: row;
@@ -17638,13 +17739,13 @@
   border: #ffc107 solid 1px;
   cursor: pointer;
 }
-.submenu-man-grid .item-action-edit:hover {
+.submenu-man-grid .submenu-menus-item .item-action-edit:hover {
   background-color: #ffc107;
   color: #fff;
   font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
-.submenu-man-grid .item-action-delete {
+.submenu-man-grid .submenu-menus-item .item-action-delete {
   font-size: 1rem;
   display: flex;
   flex-direction: row;
@@ -17658,20 +17759,20 @@
   border: #dc3545 solid 1px;
   cursor: pointer;
 }
-.submenu-man-grid .item-action-delete:hover {
+.submenu-man-grid .submenu-menus-item .item-action-delete:hover {
   background-color: #dc3545;
   color: #fff;
   font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
   transition: all 0.3s ease-out;
 }
-.submenu-man-grid .item:hover {
+.submenu-man-grid .submenu-menus-item .item:hover {
   background-color: #000;
   transition: all 0.6s ease-out;
 }
-.submenu-man-grid .item:hover .item-name,
-.submenu-man-grid .item:hover .item-menu,
-.submenu-man-grid .item:hover .item-url,
-.submenu-man-grid .item:hover .item-url-link {
+.submenu-man-grid .submenu-menus-item .item:hover .item-name,
+.submenu-man-grid .submenu-menus-item .item:hover .item-menu,
+.submenu-man-grid .submenu-menus-item .item:hover .item-url,
+.submenu-man-grid .submenu-menus-item .item:hover .item-url-link {
   color: #fff;
   transition: all 0.3s ease-out;
 }
@@ -18490,11 +18591,18 @@
   gap: 0.1rem;
   transition: all 0.3s ease-in;
 }
-.role-man-grid .item-name {
+.role-man-grid .item-icon {
+  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
+  font-size: 3.2rem;
   text-align: center;
-  font-family: "Raleway", serif;
   transition: all 0.3s ease-in;
   pointer-events: none;
+}
+.role-man-grid .item-name {
+  text-align: center;
+  transition: all 0.3s ease-in;
+  pointer-events: none;
+  font-family: "Raleway", serif;
   text-transform: capitalize;
 }
 .role-man-grid .item-action {
@@ -18550,8 +18658,7 @@
   transition: all 0.6s ease-out;
 }
 .role-man-grid .item:hover .item-name,
-.role-man-grid .item:hover .item-url,
-.role-man-grid .item:hover .item-url-link {
+.role-man-grid .item:hover .item-icon {
   color: #fff;
   transition: all 0.3s ease-out;
 }
@@ -18562,7 +18669,7 @@
 }
 .role-man-list .head {
   display: grid;
-  grid-template-columns: auto 1fr 0.3fr;
+  grid-template-columns: auto 1.2fr 2fr 1.8fr 1fr;
 }
 .role-man-list .head-col {
   padding: 1.1rem 1rem;
@@ -18578,6 +18685,12 @@
   align-items: center;
   justify-content: center;
 }
+.role-man-list .head-col:nth-child(2) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 .role-man-list .head-col:last-child {
   display: flex;
   flex-direction: row;
@@ -18587,7 +18700,7 @@
 }
 .role-man-list .body {
   display: grid;
-  grid-template-columns: auto 1fr 0.3fr;
+  grid-template-columns: auto 1.2fr 2fr 1.8fr 1fr;
 }
 .role-man-list .body-col {
   padding: 1.75rem 0.9rem 0;
@@ -18604,6 +18717,14 @@
   justify-content: center;
 }
 .role-man-list .body-col:nth-child(2) {
+  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
+  font-size: 2.3rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.role-man-list .body-col:nth-child(4) {
   text-transform: capitalize;
 }
 .role-man-list .body-col:last-child {

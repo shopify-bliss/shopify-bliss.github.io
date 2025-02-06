@@ -31,6 +31,9 @@ function DisplayView({
             })
             .map((data) => (
               <div className="item" key={data.role_id}>
+                <div className="item-icon material-symbols-rounded">
+                  {data.icon}
+                </div>
                 <div className="item-name">{data.role_name}</div>
                 <div className="item-action">
                   <span
@@ -59,6 +62,8 @@ function DisplayView({
         <div className="role-man-list">
           <div className="head">
             <div className="head-col">No</div>
+            <div className="head-col">Icon</div>
+            <div className="head-col">Google Material Icon</div>
             <div className="head-col">Name</div>
             <div className="head-col">Action</div>
           </div>
@@ -71,6 +76,10 @@ function DisplayView({
             .map((data, index) => (
               <div className="body" key={data.role_id}>
                 <div className="body-col">{index + 1}</div>
+                <span className="material-symbols-rounded body-col">
+                  {data.icon}
+                </span>
+                <div className="body-col">{data.icon}</div>
                 <div className="body-col">{data.role_name}</div>
                 <div className="body-col">
                   <span

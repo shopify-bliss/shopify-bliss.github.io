@@ -1,9 +1,12 @@
 - isdevelop (brand, section, font, color, role, menu, submenu) (⭐)
 - filter search (⭐)
 
-- isdevelop (section, font_design, color_design) 
-- icon di role
-- delete aibuilder
-- token di get brands, pages, section, colors, dan fonts (validasi user untuk ai builder)
+- isdevelop (section, font_design, color_design) (⭐) 
+- icon di role (be) (⭐)
+- delete aibuilder (⭐)
+- token di get brands, pages, section, colors, dan fonts (validasi user untuk ai builder) (⭐)
 
-- modal confirmation ai builder
+- modal confirmation ai builder (⭐)
+
+- style di submenu berdasarkan menu (⭐)
+- icon di role (fe) (⭐)

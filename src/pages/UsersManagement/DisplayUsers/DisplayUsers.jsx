@@ -56,42 +56,54 @@ function DisplayView({
                   <div className="item-action">
                     <div
                       className={`item-action-role ${
-                        data.roles.role_name === "super admin"
+                        data.roles.role_id ===
+                        "3de65f44-6341-4b4d-8d9f-c8ca3ea80b80"
                           ? "super-admin"
-                          : data.roles.role_name === "admin"
+                          : data.roles.role_id ===
+                            "0057ae60-509f-40de-a637-b2b6fdc1569e"
                           ? "admin"
-                          : data.roles.role_name === "customer"
+                          : data.roles.role_id ===
+                            "cebccb98-7ef0-4184-95b9-7320329f21d3"
                           ? "customer"
+                          : data.roles.role_id ===
+                            "5279bb16-d436-45a6-a42a-8f7b09809b2a"
+                          ? "developer"
                           : ""
                       }`}
                     >
                       <span
                         className={`material-symbols-outlined item-action-role-icon ${
-                          data.roles.role_name === "super admin"
+                          data.roles.role_id ===
+                          "3de65f44-6341-4b4d-8d9f-c8ca3ea80b80"
                             ? "super-admin"
-                            : data.roles.role_name === "admin"
+                            : data.roles.role_id ===
+                              "0057ae60-509f-40de-a637-b2b6fdc1569e"
                             ? "admin"
-                            : data.roles.role_name === "customer"
+                            : data.roles.role_id ===
+                              "cebccb98-7ef0-4184-95b9-7320329f21d3"
                             ? "customer"
+                            : data.roles.role_id ===
+                              "5279bb16-d436-45a6-a42a-8f7b09809b2a"
+                            ? "developer"
                             : ""
                         }`}
                       >
-                        {data.roles.role_name === "super admin"
-                          ? "admin_panel_settings"
-                          : data.roles.role_name === "admin"
-                          ? "manage_accounts"
-                          : data.roles.role_name === "customer"
-                          ? "person"
-                          : "deployed_code_account"}
+                        {data.roles.icon || "no_icon"}
                       </span>
                       <span
                         className={`item-action-role-text ${
-                          data.roles.role_name === "super admin"
+                          data.roles.role_id ===
+                          "3de65f44-6341-4b4d-8d9f-c8ca3ea80b80"
                             ? "super-admin"
-                            : data.roles.role_name === "admin"
+                            : data.roles.role_id ===
+                              "0057ae60-509f-40de-a637-b2b6fdc1569e"
                             ? "admin"
-                            : data.roles.role_name === "customer"
+                            : data.roles.role_id ===
+                              "cebccb98-7ef0-4184-95b9-7320329f21d3"
                             ? "customer"
+                            : data.roles.role_id ===
+                              "5279bb16-d436-45a6-a42a-8f7b09809b2a"
+                            ? "developer"
                             : ""
                         }`}
                       >
@@ -172,16 +184,25 @@ function DisplayView({
                   <div className="body-col">
                     <div
                       className={`body-col-role ${
-                        data.roles.role_name === "super admin"
+                        data.roles.role_id ===
+                        "3de65f44-6341-4b4d-8d9f-c8ca3ea80b80"
                           ? "super-admin"
-                          : data.roles.role_name === "admin"
+                          : data.roles.role_id ===
+                            "0057ae60-509f-40de-a637-b2b6fdc1569e"
                           ? "admin"
-                          : data.roles.role_name === "customer"
+                          : data.roles.role_id ===
+                            "cebccb98-7ef0-4184-95b9-7320329f21d3"
                           ? "customer"
+                          : data.roles.role_id ===
+                            "5279bb16-d436-45a6-a42a-8f7b09809b2a"
+                          ? "developer"
                           : ""
                       }`}
                     >
-                      {data.roles.role_name || "Super Whooo"}
+                      <span className="material-symbols-rounded">
+                        {data.roles.icon || "no-icon"}
+                      </span>
+                      <span>{data.roles.role_name || "Super Whooo"}</span>
                     </div>
                   </div>
                   <div className="body-col">
