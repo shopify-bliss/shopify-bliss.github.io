@@ -16,7 +16,7 @@ import urlEndpoint from "../../helpers/urlEndpoint";
 import { ToastContainer } from "react-toastify";
 import { toastMessage } from "../../helpers/AlertMessage";
 import { LoaderProgress } from "../../components/LoaderProgress/LoaderProgress";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function AiBuilder() {
   axios.defaults.withCredentials = true;
@@ -70,6 +70,7 @@ function AiBuilder() {
   const [mergedPageStyles, setMergedPageStyles] = useState({});
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Inisialisasi gaya halaman jika belum ada
   useEffect(() => {
@@ -320,6 +321,16 @@ function AiBuilder() {
   const handlePrev = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
+
+  useEffect(() => {
+    if (location.state?.messageLoginGoogle) {
+      toastMessage("success", location.state.messageLoginGoogle);
+      navigate(location.pathname, {
+        state: { ...location.state, messageLoginGoogle: undefined },
+        replace: true,
+      });
+    }
+  }, [location.state, navigate, location.pathname]);
 
   return (
     <>

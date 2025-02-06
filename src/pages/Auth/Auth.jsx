@@ -78,7 +78,7 @@ function Auth({ typeMain }) {
 
       window.history.replaceState({}, document.title, newUrl);
 
-      navigate("/dashboard", {
+      navigate("/", {
         state: { messageLoginGoogle: "Login successfully!" },
       });
     }

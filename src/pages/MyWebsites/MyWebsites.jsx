@@ -19,7 +19,7 @@ function MyWebsites() {
       if (hasAccess === false) {
         navigate("/403", { replace: true });
       }
-    }, 10000);
+    }, 5000);
 
     return () => clearTimeout(timeout);
   }, [accessMenus, user, navigate]);

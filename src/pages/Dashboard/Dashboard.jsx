@@ -2,13 +2,12 @@ import { useEffect } from "react";
 import LayoutDashboard from "../../components/LayoutDashboard/LayoutDashboard";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
 import Analytics from "./Analytics/Analytics";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Accumulation from "./Accumulation/Accumulation";
 
 function Dashboard() {
-  const { submenuPage, toastMessage, user, accessMenus } = useDashboard();
+  const { submenuPage, user, accessMenus } = useDashboard();
 
-  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,20 +21,10 @@ function Dashboard() {
       if (hasAccess === false) {
         navigate("/403", { replace: true });
       }
-    }, 10000);
+    }, 5000);
 
     return () => clearTimeout(timeout);
   }, [accessMenus, user, navigate]);
-
-  useEffect(() => {
-    if (location.state?.messageLoginGoogle) {
-      toastMessage("success", location.state.messageLoginGoogle);
-      navigate(location.pathname, {
-        state: { ...location.state, messageLoginGoogle: undefined },
-        replace: true,
-      });
-    }
-  }, [location.state, navigate, toastMessage, location.pathname]);
 
   return (
     <>
