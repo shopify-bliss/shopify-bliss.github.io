@@ -16,16 +16,17 @@
 
   &.style-1 {
     @include config.style-1($gap: 2.9rem);
+    padding: v.$p-preview;
 
     &.first-service {
-      margin-top: 1.55rem;
+      padding: (v.$p-preview * 1.7) v.$p-preview v.$p-preview;
 
       &.navbar-2 {
-        margin-top: 2.6rem;
+        padding: (v.$p-preview * 2.15) v.$p-preview v.$p-preview;
       }
 
       &.navbar-3 {
-        margin-top: 3.6rem;
+        padding: (v.$p-preview * 2.5) v.$p-preview v.$p-preview;
       }
     }
 
@@ -75,6 +76,7 @@
 
   &.style-2 {
     @include config.style-2($gap: 2.7rem);
+    padding: v.$p-preview;
 
     .template-title {
       @include title.title($fs: $fs-title);
@@ -119,20 +121,21 @@
     }
 
     &.first-service {
-      margin-top: 1.55rem;
+      padding: (v.$p-preview * 1.7) v.$p-preview v.$p-preview;
 
       &.navbar-2 {
-        margin-top: 2.6rem;
+        padding: (v.$p-preview * 2.45) v.$p-preview v.$p-preview;
       }
 
       &.navbar-3 {
-        margin-top: 3.6rem;
+        padding: (v.$p-preview * 2.6) v.$p-preview v.$p-preview;
       }
     }
   }
 
   &.style-3 {
     @include config.style-3($gap: 1.5rem);
+    padding: v.$p-preview;
 
     .template-title {
       @include title.title($fs: $fs-title, $ln-h: 80%, $events: all);
@@ -195,20 +198,21 @@
     }
 
     &.first-service {
-      margin-top: 1.8rem;
+      padding: (v.$p-preview * 2.25) v.$p-preview v.$p-preview;
 
       &.navbar-2 {
-        margin-top: 3rem;
+        padding: (v.$p-preview * 2.65) v.$p-preview v.$p-preview;
       }
 
       &.navbar-3 {
-        margin-top: 4.05rem;
+        padding: (v.$p-preview * 2.875) v.$p-preview v.$p-preview;
       }
     }
   }
 
   &.style-4 {
     @include config.style-4($gap: 5.2rem);
+    padding: v.$p-preview;
 
     .template-wrapper {
       @include m.flex(
@@ -289,14 +293,14 @@
     }
 
     &.first-service {
-      margin-top: 1.9rem;
+      padding: (v.$p-preview * 2.175) v.$p-preview v.$p-preview;
 
       &.navbar-2 {
-        margin-top: 3.05rem;
+        padding: (v.$p-preview * 2.75) v.$p-preview v.$p-preview;
       }
 
       &.navbar-3 {
-        margin-top: 4.05rem;
+        padding: (v.$p-preview * 2.8) v.$p-preview v.$p-preview;
       }
     }
   }

@@ -59,11 +59,20 @@ function TempBrandsModal({ type, onOpen, onClose, refreshData, brandId }) {
       if (type === "create") {
         NameDevelopeSchema.validate(data, { abortEarly: false })
           .then(() => {
-            const brandsAiPromise = axios.post(urlEndpoint.brandsAi, data, {
-              headers: {
-                Authorization: `Bearer ${token}`,
+            const brandsAiPromise = axios.post(
+              urlEndpoint.brandsAi,
+              {
+                name: data.name,
+                fontClass: `font-${data.name.toLowerCase()}`,
+                fontClassReverse: `font-${data.name.toLowerCase()}-reverse`,
+                isDevelope: data.isDevelope,
               },
-            });
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
 
             toastPromise(
               brandsAiPromise,

@@ -5,6 +5,7 @@ import urlEndpoint from "../../../helpers/urlEndpoint";
 import { FontDesignsSchema } from "../../../helpers/ValidationSchema";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
 import PropTypes from "prop-types";
+import { AllFonts } from "../../../components/AiBuilderSupport/FontsSupport";
 
 function FontDesignsModal({
   type,
@@ -385,6 +386,8 @@ function FontDesignsModal({
                         item.is_develope === false
                     )
                     .map((data) => {
+                      const fontFamily = AllFonts({ fontId: data.font_id });
+
                       return (
                         <div
                           className="select-list-item"
@@ -397,7 +400,9 @@ function FontDesignsModal({
                             setOpenFont1(false);
                           }}
                         >
-                          <div className="name">{data.name}</div>
+                          <div className={`name ${fontFamily}`}>
+                            {data.name}
+                          </div>
                         </div>
                       );
                     })}
@@ -437,6 +442,8 @@ function FontDesignsModal({
                         item.is_develope === false
                     )
                     .map((data) => {
+                      const fontFamily = AllFonts({ fontId: data.font_id });
+
                       return (
                         <div
                           className="select-list-item"
@@ -449,7 +456,9 @@ function FontDesignsModal({
                             setOpenFont2(false);
                           }}
                         >
-                          <div className="name">{data.name}</div>
+                          <div className={`name ${fontFamily}`}>
+                            {data.name}
+                          </div>
                         </div>
                       );
                     })}

@@ -11,5 +11,4 @@
 - style di submenu berdasarkan menu (⭐)
 - icon di role (fe) (⭐)
 
-- validasi cookie ()
-- parafrase recovery
+- parafrase recovery (⭐)

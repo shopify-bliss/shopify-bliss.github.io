@@ -418,6 +418,14 @@ function ColorDesignsModal({
                             setOpenColor1(false);
                           }}
                         >
+                          <span
+                            style={{
+                              background: `#${data.color}`,
+                              width: "1.5rem",
+                              height: "1.5rem",
+                              marginRight: "0.4rem",
+                            }}
+                          ></span>
                           <div className="name">{data.color}</div>
                         </div>
                       );
@@ -473,6 +481,14 @@ function ColorDesignsModal({
                             setOpenColor2(false);
                           }}
                         >
+                          <span
+                            style={{
+                              background: `#${data.color}`,
+                              width: "1.5rem",
+                              height: "1.5rem",
+                              marginRight: "0.4rem",
+                            }}
+                          ></span>
                           <div className="name">{data.color}</div>
                         </div>
                       );
@@ -528,6 +544,14 @@ function ColorDesignsModal({
                             setOpenColor3(false);
                           }}
                         >
+                          <span
+                            style={{
+                              background: `#${data.color}`,
+                              width: "1.5rem",
+                              height: "1.5rem",
+                              marginRight: "0.4rem",
+                            }}
+                          ></span>
                           <div className="name">{data.color}</div>
                         </div>
                       );

@@ -31,14 +31,14 @@ export function Quit() {
         type="confirm"
         titleModal={"Are you sure you want to leave this page?"}
         descModal={
-          "You will lose the components you have selected and will be redirected to the account dashboard."
+          "You will lose the components you have selected and will be redirected to the dashboard account."
         }
       >
         <div className="confirm-dashboard-action">
           <div className="cancel" onClick={() => setOpenQuit(false)}>
             cancel
           </div>
-          <div className="confirm" onClick={() => navigate("/dashboard")}>
+          <div className="confirm" onClick={() => navigate("/my-websites")}>
             leave
           </div>
         </div>

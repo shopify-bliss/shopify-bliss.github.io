@@ -35,7 +35,6 @@ $fs-name: 13px;
 
   @if $preview {
     @include preview.services-preview();
-    padding: v.$p-preview;
   } @else {
     &.style-1 {
       @include config.style-1($gap: 1.1rem);

@@ -151,28 +151,28 @@ function DevelopmentComponents() {
         (data) => data.is_develope === true
       ).length;
 
-      console.log(
-        "Done",
-        brandDone,
-        sectionDone,
-        fontDone,
-        fontDesignDone,
-        colorDone,
-        colorDesignDone,
-        menusDone,
-        submenusDone
-      );
-      console.log(
-        "Developement",
-        brandDevelopement,
-        sectionDevelopement,
-        fontDevelopement,
-        fontDesignDevelopement,
-        colorDevelopement,
-        colorDesignDevelopement,
-        menusDevelopement,
-        submenusDevelopement
-      );
+      // console.log(
+      //   "Done",
+      //   brandDone,
+      //   sectionDone,
+      //   fontDone,
+      //   fontDesignDone,
+      //   colorDone,
+      //   colorDesignDone,
+      //   menusDone,
+      //   submenusDone
+      // );
+      // console.log(
+      //   "Developement",
+      //   brandDevelopement,
+      //   sectionDevelopement,
+      //   fontDevelopement,
+      //   fontDesignDevelopement,
+      //   colorDevelopement,
+      //   colorDesignDevelopement,
+      //   menusDevelopement,
+      //   submenusDevelopement
+      // );
 
       setState((prevState) => ({
         ...prevState,

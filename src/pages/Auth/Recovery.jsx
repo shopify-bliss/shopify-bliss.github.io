@@ -135,9 +135,9 @@ function Recovery({ typeMain }) {
             toastPromise(
               resetPasswordPromise,
               {
-                pending: "Reset password on progress, please wait..!",
-                success: "Reset password has been successfully updated!",
-                error: "Failed to reset password!",
+                pending: "Recovery account on progress, please wait..!",
+                success: "Recovery account has been successfully!",
+                error: "Failed to recovery account!",
               },
               { autoClose: 2500, position: "top-center" },
               () => {

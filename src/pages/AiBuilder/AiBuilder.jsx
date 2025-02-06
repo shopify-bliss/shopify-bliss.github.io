@@ -177,13 +177,14 @@ function AiBuilder() {
   //   ]
   // );
 
-  // Debugging log
+  // // Debugging log
   // useEffect(() => {
   //   console.log(aiBuilderElements);
   // }, [aiBuilderElements]);
 
   useEffect(() => {
     if (
+      (currentStep === 0 && siteTitle === "") ||
       (currentStep === 1 && activePages.length < 3) ||
       (currentStep === 2 && activeSections[currentPageId]?.length < 1)
     ) {
@@ -191,7 +192,7 @@ function AiBuilder() {
     } else {
       setDisabledSteps(false);
     }
-  }, [currentStep, activePages, activeSections, currentPageId]);
+  }, [currentStep, activePages, activeSections, currentPageId, siteTitle]);
 
   const handleNext = useCallback(async () => {
     if (currentStep === 4) {

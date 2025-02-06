@@ -1,5 +1,6 @@
 import { useSearch } from "../../../helpers/SearchContext";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 export function Header({
   className,
@@ -10,6 +11,7 @@ export function Header({
   forClient = null,
 }) {
   const { setSearch } = useSearch();
+  const navigate = useNavigate();
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
@@ -28,7 +30,14 @@ export function Header({
             />
           </div>
         </div>
-        <div className="new-data" onClick={() => setIsCreateModalOpen(true)}>
+        <div
+          className="new-data"
+          onClick={
+            forClient === "website"
+              ? () => navigate("/")
+              : () => setIsCreateModalOpen(true)
+          }
+        >
           {forClient === null
             ? "Add new data"
             : forClient === "website"

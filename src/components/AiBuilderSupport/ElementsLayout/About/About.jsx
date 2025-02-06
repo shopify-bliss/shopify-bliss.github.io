@@ -74,8 +74,8 @@ function About({
             {about
               .filter((item) => item.id === 1)
               .map((data, index) => {
-                const image_1 = `products/${data.image_1}`;
-                const image_2 = `products/${data.image_2}`;
+                const image_1 = `/products/${data.image_1}`;
+                const image_2 = `/products/${data.image_2}`;
 
                 return (
                   <Fragment key={index}>
@@ -166,7 +166,7 @@ function About({
             {about
               .filter((item) => item.id === 4)
               .map((data, index) => {
-                const image_1 = `products/${data.image_1}`;
+                const image_1 = `/products/${data.image_1}`;
 
                 return (
                   <Fragment key={index}>

@@ -3,7 +3,10 @@ import {
   Quit,
   Logo,
 } from "../../../components/AiBuilderSupport/AiBuilderSupport";
-import { ControllingOverviews, DefaultFooter } from "../../../components/AiBuilderSupport/AiBuilderSupport";
+import {
+  ControllingOverviews,
+  DefaultFooter,
+} from "../../../components/AiBuilderSupport/AiBuilderSupport";
 import Navbar from "../../../components/AiBuilderSupport/NavbarLayout/NavbarLayout";
 import Intro from "../../../components/AiBuilderSupport/ElementsLayout/Intro/Intro";
 import Products from "../../../components/AiBuilderSupport/ElementsLayout/Products/Products";
@@ -170,55 +173,57 @@ function Fonts({
             explore other font options later.
           </div>
           <div className="content">
-            {dataBrands.map((brand) => {
-              return (
-                <div className={`content-item`} key={brand.brand_id}>
-                  <div className="content-item-title">{brand.name}</div>
-                  <div className="content-item-list">
-                    {dataFonts
-                      .filter(
-                        (font) =>
-                          font.brand_id === brand.brand_id &&
-                          font.is_develope === false
-                      )
-                      .map((font) => {
-                        const getBrand = font.brand_id;
-                        const getGroup = font.group;
+            {dataBrands
+              .filter((data) => data.is_develope !== true)
+              .map((brand) => {
+                return (
+                  <div className={`content-item`} key={brand.brand_id}>
+                    <div className="content-item-title">{brand.name}</div>
+                    <div className="content-item-list">
+                      {dataFonts
+                        .filter(
+                          (font) =>
+                            font.brand_id === brand.brand_id &&
+                            font.is_develope === false
+                        )
+                        .map((font) => {
+                          const getBrand = font.brand_id;
+                          const getGroup = font.group;
 
-                        const allType1 = AllFontType1({
-                          brand: getBrand,
-                          group: getGroup,
-                        });
-                        const allType2 = AllFontType2({
-                          brand: getBrand,
-                          group: getGroup,
-                        });
+                          const allType1 = AllFontType1({
+                            brand: getBrand,
+                            group: getGroup,
+                          });
+                          const allType2 = AllFontType2({
+                            brand: getBrand,
+                            group: getGroup,
+                          });
 
-                        return (
-                          <div
-                            className={`content-item-list-font ${
-                              activeFonts === font.font_designs_id
-                                ? "active"
-                                : ""
-                            }`}
-                            key={font.font_designs_id}
-                            onClick={() =>
-                              handleactiveFonts(font.font_designs_id)
-                            }
-                          >
-                            <span className={`${allType1}`}>
-                              {font.font1.name}
-                            </span>
-                            <span className={`${allType2}`}>
-                              {font.font2.name}
-                            </span>
-                          </div>
-                        );
-                      })}
+                          return (
+                            <div
+                              className={`content-item-list-font ${
+                                activeFonts === font.font_designs_id
+                                  ? "active"
+                                  : ""
+                              }`}
+                              key={font.font_designs_id}
+                              onClick={() =>
+                                handleactiveFonts(font.font_designs_id)
+                              }
+                            >
+                              <span className={`${allType1}`}>
+                                {font.font1.name}
+                              </span>
+                              <span className={`${allType2}`}>
+                                {font.font2.name}
+                              </span>
+                            </div>
+                          );
+                        })}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         </div>
       </div>

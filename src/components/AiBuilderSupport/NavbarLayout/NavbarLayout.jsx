@@ -73,9 +73,13 @@ function NavbarLayout({
   );
 
   useEffect(() => {
-    if (!typeNavbarStyles) {
-      toastMessage("warn", "Navbar layout not found");
-    }
+    const timeout = setTimeout(() => {
+      if (!typeNavbarStyles) {
+        toastMessage("warn", "Navbar layout not found");
+      }
+    }, 5000);
+
+    return () => clearTimeout(timeout);
   }, [typeNavbarStyles, toastMessage]);
 
   return (

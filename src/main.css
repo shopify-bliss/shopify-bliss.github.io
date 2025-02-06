@@ -3453,6 +3453,7 @@
   height: -moz-fit-content;
   height: fit-content;
   max-height: 100%;
+  min-height: 390.41px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -6185,6 +6186,7 @@
   height: -moz-fit-content;
   height: fit-content;
   max-height: 100%;
+  min-height: 390.41px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -8268,6 +8270,7 @@
   height: -moz-fit-content;
   height: fit-content;
   max-height: 100%;
+  min-height: 390.41px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -19822,7 +19825,7 @@
 }
 .layout-dashboard-topbar .config .account-modal {
   position: absolute;
-  z-index: 3;
+  z-index: 12;
   top: 85%;
   right: 0;
   width: auto;
@@ -20778,13 +20781,13 @@
   outline: none;
 }
 .aibuilder-preview-section .products.style-1.first-product {
-  margin-top: 1.55rem;
+  padding: 6.46rem 0 3.8rem;
 }
 .aibuilder-preview-section .products.style-1.first-product.navbar-2 {
-  margin-top: 2.5rem;
+  padding: 8.93rem 0 3.8rem;
 }
 .aibuilder-preview-section .products.style-1.first-product.navbar-3 {
-  margin-top: 3.6rem;
+  padding: 9.5rem 0 3.8rem;
 }
 .aibuilder-preview-section .products.style-2 {
   display: flex;
@@ -20875,13 +20878,13 @@
   font-size: 1.1rem;
 }
 .aibuilder-preview-section .products.style-2.first-product {
-  margin-top: 1.75rem;
+  padding: 7.03rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .products.style-2.first-product.navbar-2 {
-  margin-top: 2.5rem;
+  padding: 9.69rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .products.style-2.first-product.navbar-3 {
-  margin-top: 3.6rem;
+  padding: 10.07rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .products.style-3 {
   display: flex;
@@ -20908,7 +20911,7 @@
   width: max-content;
   padding-left: 2rem;
   animation: marquee-text 20s linear infinite forwards;
-  top: 5.1rem;
+  top: 8.15rem;
 }
 .aibuilder-preview-section .products.style-3 .container-product {
   display: flex;
@@ -20980,13 +20983,51 @@
   outline: none;
 }
 .aibuilder-preview-section .products.style-3.first-product {
-  margin-top: 1.9rem;
+  padding: 7.695rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .products.style-3.first-product.navbar-2 {
-  margin-top: 3.05rem;
+  padding: 10.07rem 3.8rem 3.8rem;
+}
+.aibuilder-preview-section .products.style-3.first-product.navbar-2 .template-wrapper {
+  overflow: clip;
+}
+.aibuilder-preview-section .products.style-3.first-product.navbar-2 .template-wrapper .template-title {
+  width: 100%;
+  font-size: 6.8rem;
+  font-weight: 500;
+  text-align: left;
+  line-height: normal;
+  position: absolute;
+  pointer-events: none;
+  display: flex;
+  gap: 2rem;
+  width: -moz-max-content;
+  width: max-content;
+  padding-left: 2rem;
+  animation: marquee-text 20s linear infinite forwards;
+  top: 10.5rem;
 }
 .aibuilder-preview-section .products.style-3.first-product.navbar-3 {
-  margin-top: 4.2rem;
+  padding: 10.26rem 3.8rem 3.8rem;
+}
+.aibuilder-preview-section .products.style-3.first-product.navbar-3 .template-wrapper {
+  overflow: clip;
+}
+.aibuilder-preview-section .products.style-3.first-product.navbar-3 .template-wrapper .template-title {
+  width: 100%;
+  font-size: 6.8rem;
+  font-weight: 500;
+  text-align: left;
+  line-height: normal;
+  position: absolute;
+  pointer-events: none;
+  display: flex;
+  gap: 2rem;
+  width: -moz-max-content;
+  width: max-content;
+  padding-left: 2rem;
+  animation: marquee-text 20s linear infinite forwards;
+  top: 10.75rem;
 }
 .aibuilder-preview-section .products.style-4 {
   display: flex;
@@ -21070,19 +21111,18 @@
   font-size: 1.1rem;
 }
 .aibuilder-preview-section .products.style-4.first-product {
-  margin-top: 1.35rem;
+  padding: 7.79rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .products.style-4.first-product.navbar-2 {
-  margin-top: 2.3rem;
+  padding: 10.165rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .products.style-4.first-product.navbar-3 {
-  margin-top: 3.4rem;
+  padding: 10.45rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .services {
   width: 100%;
   height: auto;
   position: relative;
-  padding: 3.8rem;
 }
 .aibuilder-preview-section .services.style-1 {
   display: flex;
@@ -21090,15 +21130,16 @@
   align-items: center;
   justify-content: flex-start;
   gap: 2.9rem;
+  padding: 3.8rem;
 }
 .aibuilder-preview-section .services.style-1.first-service {
-  margin-top: 1.55rem;
+  padding: 6.46rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .services.style-1.first-service.navbar-2 {
-  margin-top: 2.6rem;
+  padding: 8.17rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .services.style-1.first-service.navbar-3 {
-  margin-top: 3.6rem;
+  padding: 9.5rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .services.style-1 .template-title {
   width: 100%;
@@ -21160,6 +21201,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: 2.7rem;
+  padding: 3.8rem;
 }
 .aibuilder-preview-section .services.style-2 .template-title {
   width: 100%;
@@ -21222,13 +21264,13 @@
   background-color: transparent;
 }
 .aibuilder-preview-section .services.style-2.first-service {
-  margin-top: 1.55rem;
+  padding: 6.46rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .services.style-2.first-service.navbar-2 {
-  margin-top: 2.6rem;
+  padding: 9.31rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .services.style-2.first-service.navbar-3 {
-  margin-top: 3.6rem;
+  padding: 9.88rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .services.style-3 {
   display: flex;
@@ -21236,6 +21278,7 @@
   align-items: flex-start;
   justify-content: center;
   gap: 1.5rem;
+  padding: 3.8rem;
 }
 .aibuilder-preview-section .services.style-3 .template-title {
   width: 100%;
@@ -21301,18 +21344,19 @@
   margin-left: 1.2rem;
 }
 .aibuilder-preview-section .services.style-3.first-service {
-  margin-top: 1.8rem;
+  padding: 8.55rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .services.style-3.first-service.navbar-2 {
-  margin-top: 3rem;
+  padding: 10.07rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .services.style-3.first-service.navbar-3 {
-  margin-top: 4.05rem;
+  padding: 10.925rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .services.style-4 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 5.2rem;
+  padding: 3.8rem;
 }
 .aibuilder-preview-section .services.style-4 .template-wrapper {
   display: flex;
@@ -21412,13 +21456,13 @@
   pointer-events: none;
 }
 .aibuilder-preview-section .services.style-4.first-service {
-  margin-top: 1.9rem;
+  padding: 8.265rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .services.style-4.first-service.navbar-2 {
-  margin-top: 3.05rem;
+  padding: 10.45rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .services.style-4.first-service.navbar-3 {
-  margin-top: 4.05rem;
+  padding: 10.64rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .about {
   width: 100%;
@@ -21498,13 +21542,13 @@
   pointer-events: none;
 }
 .aibuilder-preview-section .about.style-1.first-about {
-  margin-top: 1.95rem;
+  padding: 7.22rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .about.style-1.first-about.navbar-2 {
-  margin-top: 3.05rem;
+  padding: 9.69rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .about.style-1.first-about.navbar-3 {
-  margin-top: 4.05rem;
+  padding: 10.83rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .about.style-2 {
   display: flex;
@@ -21544,13 +21588,13 @@
   width: 100%;
 }
 .aibuilder-preview-section .about.style-2.first-about {
-  margin-top: 1.75rem;
+  padding: 3.23rem 0 0;
 }
 .aibuilder-preview-section .about.style-2.first-about.navbar-2 {
-  margin-top: 2.72rem;
+  padding: 5.7rem 0 0;
 }
 .aibuilder-preview-section .about.style-2.first-about.navbar-3 {
-  margin-top: 3.5rem;
+  padding: 5.795rem 0 0;
 }
 .aibuilder-preview-section .about.style-3 {
   display: flex;
@@ -21605,13 +21649,13 @@
   outline: none;
 }
 .aibuilder-preview-section .about.style-3.first-about .template-wrapper {
-  margin-top: 0.9rem;
+  margin-top: 1.7rem;
 }
 .aibuilder-preview-section .about.style-3.first-about.navbar-2 .template-wrapper {
-  margin-top: 1.75rem;
+  margin-top: 3.9rem;
 }
 .aibuilder-preview-section .about.style-3.first-about.navbar-3 .template-wrapper {
-  margin-top: 2.85rem;
+  margin-top: 4.2rem;
 }
 .aibuilder-preview-section .about.style-4 {
   display: grid;
@@ -21682,13 +21726,13 @@
   outline: none;
 }
 .aibuilder-preview-section .about.style-4.first-about {
-  margin-top: 2.15rem;
+  padding: 8.74rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .about.style-4.first-about.navbar-2 {
-  margin-top: 3.6rem;
+  padding: 10.545rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .about.style-4.first-about.navbar-3 {
-  margin-top: 4.65rem;
+  padding: 10.735rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .form {
   width: 100%;
@@ -21800,13 +21844,13 @@
   outline: none;
 }
 .aibuilder-preview-section .form.style-1.first-form {
-  margin-top: 2rem;
+  padding: 7.03rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .form.style-1.first-form.navbar-2 {
-  margin-top: 3.25rem;
+  padding: 9.5rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .form.style-1.first-form.navbar-3 {
-  margin-top: 4.3rem;
+  padding: 11.02rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .form.style-2 {
   display: flex;
@@ -21918,13 +21962,13 @@
   outline: none;
 }
 .aibuilder-preview-section .form.style-2.first-form {
-  margin-top: 1.85rem;
+  padding: 7.22rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .form.style-2.first-form.navbar-2 {
-  margin-top: 2.65rem;
+  padding: 9.12rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .form.style-2.first-form.navbar-3 {
-  margin-top: 3.75rem;
+  padding: 9.31rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .form.style-3 {
   display: grid;
@@ -22043,13 +22087,13 @@
   pointer-events: none;
 }
 .aibuilder-preview-section .form.style-3.first-form {
-  margin-top: 2rem;
+  padding: 7.695rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .form.style-3.first-form.navbar-2 {
-  margin-top: 3.2rem;
+  padding: 10.26rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .form.style-3.first-form.navbar-3 {
-  margin-top: 4.35rem;
+  padding: 10.83rem 3.8rem 3.8rem;
 }
 .aibuilder-preview-section .form.style-4 {
   display: flex;
@@ -22153,13 +22197,13 @@
   outline: none;
 }
 .aibuilder-preview-section .form.style-4.first-form .template-wrapper {
-  margin-top: 3.65rem;
+  margin-top: 3.3rem;
 }
 .aibuilder-preview-section .form.style-4.first-form.navbar-2 .template-wrapper {
-  margin-top: 4.7rem;
+  margin-top: 4.8rem;
 }
 .aibuilder-preview-section .form.style-4.first-form.navbar-3 .template-wrapper {
-  margin-top: 5.55rem;
+  margin-top: 5.45rem;
 }
 .aibuilder-preview-section .no-element {
   font-size: 22px;

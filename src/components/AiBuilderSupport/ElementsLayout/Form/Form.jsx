@@ -198,7 +198,7 @@ function Form({
             {form
               .filter((item) => item.id === 3)
               .map((data, index) => {
-                const image = `products/${data.image}`;
+                const image = `/products/${data.image}`;
 
                 return (
                   <Fragment key={index}>
