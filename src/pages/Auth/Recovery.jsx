@@ -3,11 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../../assets/logo/black-logo.png";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import axios from "axios";
-import {
-  recoverySchema,
-  resetPasswordSchema,
-  forgotPwSchema,
-} from "../../helpers/ValidationSchema";
+import { recoverySchema, forgotPwSchema } from "../../helpers/ValidationSchema";
 import {
   AuthHeader,
   AuthTitle,

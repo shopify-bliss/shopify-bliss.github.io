@@ -52,13 +52,30 @@ function TimelineAiBuilder() {
 
   const { setDashboardLoader } = useDashboard();
 
-  const groupDataByWeeks = (data) => {
+  const getWeeksInMonth = (year, month) => {
+    const weeks = [];
+    let start = new Date(year, month, 1); // Tanggal 1 bulan ini
+    const end = new Date(year, month + 1, 0); // Hari terakhir bulan ini
+
+    while (start <= end) {
+      const weekStart = new Date(start);
+      const weekEnd = new Date(
+        Math.min(start.getTime() + 6 * 24 * 60 * 60 * 1000, end.getTime())
+      );
+      weeks.push({ start: weekStart, end: weekEnd });
+      start = new Date(weekEnd.getTime() + 1 * 24 * 60 * 60 * 1000); // Hari berikutnya
+    }
+
+    return weeks;
+  };
+
+  const groupDataByWeeks = useCallback((data) => {
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth(); // 0-based (Januari = 0)
     const weeks = getWeeksInMonth(year, month);
 
-    console.log("Weeks Data:", weeks);
+    // console.log("Weeks Data:", weeks);
 
     // Inisialisasi array untuk menghitung jumlah data per minggu
     const dataPerWeek = Array(weeks.length).fill(0);
@@ -86,24 +103,7 @@ function TimelineAiBuilder() {
 
       data: dataPerWeek,
     };
-  };
-
-  const getWeeksInMonth = (year, month) => {
-    const weeks = [];
-    let start = new Date(year, month, 1); // Tanggal 1 bulan ini
-    const end = new Date(year, month + 1, 0); // Hari terakhir bulan ini
-
-    while (start <= end) {
-      const weekStart = new Date(start);
-      const weekEnd = new Date(
-        Math.min(start.getTime() + 6 * 24 * 60 * 60 * 1000, end.getTime())
-      );
-      weeks.push({ start: weekStart, end: weekEnd });
-      start = new Date(weekEnd.getTime() + 1 * 24 * 60 * 60 * 1000); // Hari berikutnya
-    }
-
-    return weeks;
-  };
+  }, []);
 
   const fetchAiBuilder = useCallback(async () => {
     try {
@@ -115,7 +115,7 @@ function TimelineAiBuilder() {
       // Mengelompokkan data berdasarkan minggu
       const groupedData = groupDataByWeeks(logs);
 
-      console.log("groupedData", groupedData);
+      // console.log("groupedData", groupedData);
 
       // Memperbarui state dengan data yang dikelompokkan
       setState((prevState) => ({
@@ -138,7 +138,7 @@ function TimelineAiBuilder() {
     } finally {
       setDashboardLoader(false);
     }
-  }, [setDashboardLoader]);
+  }, [setDashboardLoader, groupDataByWeeks]);
 
   useEffect(() => {
     fetchAiBuilder();

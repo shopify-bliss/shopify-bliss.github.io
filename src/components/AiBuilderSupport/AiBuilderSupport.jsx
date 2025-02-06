@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useCallback, useState, useRef } from "react";
+import { useEffect, useMemo, useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SocialIcon } from "react-social-icons";
 import logo from "../../assets/logo/black-logo.png";

@@ -4,6 +4,7 @@ import urlEndpoint from "../../helpers/urlEndpoint";
 import { AuthValidationPassword } from "../../components/AuthSupport/AuthSupport";
 import { resetPasswordSchema } from "../../helpers/ValidationSchema";
 import { useDashboard } from "../../components/LayoutDashboard/DashboardContext";
+import PropTypes from "prop-types";
 
 function Password({ onClose }) {
   axios.defaults.withCredentials = true;
@@ -112,7 +113,7 @@ function Password({ onClose }) {
           });
         });
     },
-    [data, toastPromise, toastMessage, token]
+    [data, toastPromise, toastMessage, token, onClose, fetchDashboardData]
   );
 
   return (
@@ -162,5 +163,9 @@ function Password({ onClose }) {
     </form>
   );
 }
+
+Password.propTypes = {
+  onClose: PropTypes.func,
+};
 
 export default Password;

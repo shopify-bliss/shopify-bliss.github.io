@@ -13748,6 +13748,486 @@
   transition: all 0.3s ease-out;
 }
 
+.temp-brands {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 1.95rem;
+}
+.temp-brands-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.temp-brands-header .title {
+  font-size: 1.8rem;
+  color: #000;
+  font-family: "Bebas Neue", serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  line-height: 135%;
+  position: relative;
+}
+.temp-brands-header .title::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 0.12rem;
+  background-color: #000;
+  left: 0;
+  bottom: 0;
+  transform: scaleX(0);
+  transition: transform 1.1s ease-in;
+  transform-origin: left;
+}
+.temp-brands-header .title:hover::after {
+  transform: scaleX(1);
+  transition: transform 1.1s ease-out;
+}
+.temp-brands-header .header-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+}
+.temp-brands-header .header-wrapper .header-wrapper-search {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #000;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+  height: 2.9rem;
+  width: 3.05rem;
+  padding: 0 0.7rem;
+  transition: width 0.4s ease-in;
+}
+.temp-brands-header .header-wrapper .header-wrapper-search::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background-color: #333333;
+  bottom: 0;
+  left: 0;
+  transform: scale(0);
+  transform-origin: top right;
+  transition: transform 0.6s ease-in;
+}
+.temp-brands-header .header-wrapper .header-wrapper-search:hover::after {
+  transition: transform 0.6s ease-out;
+  transform: scale(1);
+}
+.temp-brands-header .header-wrapper .header-wrapper-search:focus-within {
+  width: 16rem;
+  transition: width 0.4s ease-out;
+}
+.temp-brands-header .header-wrapper .header-wrapper-search .search-loan {
+  border: #fff solid 1.5px;
+  width: 1.68rem;
+  height: 1.68rem;
+  border-radius: 50vw;
+  position: relative;
+  transition: width 0.4s ease-in;
+}
+.temp-brands-header .header-wrapper .header-wrapper-search .search-loan::after {
+  content: "";
+  position: absolute;
+  bottom: -0.28rem;
+  right: 0.06rem;
+  width: 0.1rem;
+  height: 0.5rem;
+  background-color: #fff;
+  transform: rotate(135deg);
+}
+.temp-brands-header .header-wrapper .header-wrapper-search .search-loan:focus-within {
+  width: 15rem;
+  transition: width 0.4s ease-out;
+}
+.temp-brands-header .header-wrapper .header-wrapper-search .search-loan input {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  height: 100%;
+  width: 100%;
+  padding: 0 0.65rem;
+  font-size: 11.5px;
+  letter-spacing: 0.6px;
+  font-family: "Raleway", serif;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  transition: color 0.4s ease-in;
+}
+.temp-brands-header .header-wrapper .header-wrapper-search .search-loan input::-moz-placeholder {
+  opacity: 0;
+  color: #fff;
+  -moz-transition: opacity 0.4s ease-in;
+  transition: opacity 0.4s ease-in;
+}
+.temp-brands-header .header-wrapper .header-wrapper-search .search-loan input::placeholder {
+  opacity: 0;
+  color: #fff;
+  transition: opacity 0.4s ease-in;
+}
+.temp-brands-header .header-wrapper .header-wrapper-search .search-loan input:focus {
+  color: #fff;
+  transition: color 0.4s ease-out;
+}
+.temp-brands-header .header-wrapper .header-wrapper-search .search-loan input:focus::-moz-placeholder {
+  opacity: 1;
+  -moz-transition: opacity 0.4s ease-out;
+  transition: opacity 0.4s ease-out;
+}
+.temp-brands-header .header-wrapper .header-wrapper-search .search-loan input:focus::placeholder {
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+}
+.temp-brands-header .header-wrapper .new-data {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.15rem;
+  height: 2.9rem;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: #000;
+  font-size: 0.75rem;
+  letter-spacing: 0.08rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+.temp-brands-header .header-wrapper .new-data::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background-color: #333333;
+  bottom: 0;
+  left: 0;
+  transform: scale(0);
+  transform-origin: top right;
+  transition: transform 0.6s ease-in;
+}
+.temp-brands-header .header-wrapper .new-data:hover::after {
+  transition: transform 0.6s ease-out;
+  transform: scale(1);
+}
+.temp-brands-header .header-wrapper .material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem;
+  height: 2.9rem;
+  background-color: #eeeeee;
+  position: relative;
+  cursor: pointer;
+  z-index: 2;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+.temp-brands-header .header-wrapper .material-symbols-outlined::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background-color: #e7e7e7;
+  bottom: 0;
+  left: 0;
+  transform: scale(0);
+  transform-origin: top left;
+  transition: transform 0.5s ease-in;
+}
+.temp-brands-header .header-wrapper .material-symbols-outlined:hover::after {
+  transition: transform 0.5s ease-out;
+  transform: scale(1);
+}
+.temp-brands-header .header-wrapper .material-symbols-outlined.active {
+  background-color: #cccccc;
+  color: #fff;
+}
+.temp-brands-header .header-wrapper .material-symbols-outlined.active::after {
+  background-color: #b9b9b9;
+  transform-origin: top right;
+}
+.temp-brands-header .header-wrapper-loan {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.temp-brands-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.3rem;
+}
+.temp-brands-grid .item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.8rem 1.25rem 1.5rem;
+  gap: 0.1rem;
+  transition: all 0.3s ease-in;
+}
+.temp-brands-grid .item-name {
+  text-align: center;
+  font-family: "Raleway", serif;
+  pointer-events: none;
+  transition: all 0.3s ease-in;
+  text-transform: capitalize;
+}
+.temp-brands-grid .item-action {
+  margin-top: 1.1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+.temp-brands-grid .item-action-progress {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: #6f42c1 solid 1px;
+  transition: all 0.3s ease-in;
+  cursor: default;
+}
+.temp-brands-grid .item-action-progress .item-action-icon {
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.22rem;
+  transition: all 0.3s ease-in;
+  background-color: transparent;
+  color: #6f42c1;
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+}
+.temp-brands-grid .item-action-progress .text {
+  margin-left: -0.1rem;
+  font-size: 0.8rem;
+  font-family: "Raleway", serif;
+  transition: all 0.3s ease-in;
+  padding-right: 0.33rem;
+  color: #6f42c1;
+}
+.temp-brands-grid .item-action-progress:hover {
+  background-color: #6f42c1;
+  transition: all 0.3s ease-out;
+}
+.temp-brands-grid .item-action-progress:hover .item-action-icon {
+  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
+  transition: all 0.3s ease-out;
+}
+.temp-brands-grid .item-action-progress:hover .text,
+.temp-brands-grid .item-action-progress:hover .item-action-icon {
+  color: #fff;
+  transition: all 0.3s ease-out;
+}
+.temp-brands-grid .item-action-edit {
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.22rem;
+  transition: all 0.3s ease-in;
+  background-color: transparent;
+  color: #ffc107;
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+  border: #ffc107 solid 1px;
+  cursor: pointer;
+}
+.temp-brands-grid .item-action-edit:hover {
+  background-color: #ffc107;
+  color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
+  transition: all 0.3s ease-out;
+}
+.temp-brands-grid .item-action-delete {
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.22rem;
+  transition: all 0.3s ease-in;
+  background-color: transparent;
+  color: #dc3545;
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+  border: #dc3545 solid 1px;
+  cursor: pointer;
+}
+.temp-brands-grid .item-action-delete:hover {
+  background-color: #dc3545;
+  color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
+  transition: all 0.3s ease-out;
+}
+.temp-brands-grid .item:hover {
+  background-color: #000;
+  transition: all 0.6s ease-out;
+}
+.temp-brands-grid .item:hover .item-name {
+  color: #fff;
+  transition: all 0.3s ease-out;
+}
+.temp-brands-list {
+  width: 100%;
+  display: grid;
+  font-family: "Raleway", serif;
+}
+.temp-brands-list .head {
+  display: grid;
+  grid-template-columns: auto 1fr 0.6fr 0.3fr;
+}
+.temp-brands-list .head-col {
+  padding: 1.1rem 1rem;
+  border-right: 0;
+  background-color: #000;
+  color: #fff;
+  font-weight: 600;
+}
+.temp-brands-list .head-col:first-child {
+  width: 4.4rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.temp-brands-list .head-col:nth-child(3) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.temp-brands-list .head-col:last-child {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-right: #fff solid 1px;
+}
+.temp-brands-list .body {
+  display: grid;
+  grid-template-columns: auto 1fr 0.6fr 0.3fr;
+}
+.temp-brands-list .body-col {
+  padding: 1.75rem 0.9rem 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.temp-brands-list .body-col:first-child {
+  width: 4.4rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.temp-brands-list .body-col:nth-child(2) {
+  text-transform: capitalize;
+}
+.temp-brands-list .body-col:nth-child(3) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.temp-brands-list .body-col:nth-child(3) .progress {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.73rem;
+  font-weight: 500;
+  text-align: center;
+  background-color: #6f42c1;
+  color: #fff;
+  pointer-events: none;
+  min-width: 4.6rem;
+  border-radius: 50vw;
+}
+.temp-brands-list .body-col:nth-child(3) .done {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.73rem;
+  font-weight: 500;
+  text-align: center;
+  background-color: #20c997;
+  color: #fff;
+  pointer-events: none;
+  min-width: 4.6rem;
+  border-radius: 50vw;
+}
+.temp-brands-list .body-col:last-child {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+}
+.temp-brands-list .body-col:last-child .edit {
+  font-size: 1.3rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.22rem;
+  transition: all 0.3s ease-in;
+  background-color: transparent;
+  color: #ffc107;
+  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
+  border: #ffc107 solid 1px;
+  cursor: pointer;
+}
+.temp-brands-list .body-col:last-child .edit:hover {
+  background-color: #ffc107;
+  color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
+  transition: all 0.3s ease-out;
+}
+.temp-brands-list .body-col:last-child .delete {
+  font-size: 1.3rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.22rem;
+  transition: all 0.3s ease-in;
+  background-color: transparent;
+  color: #dc3545;
+  font-variation-settings: "FILL" 0, "wght" 100, "GRAD" 0, "opsz" 24;
+  border: #dc3545 solid 1px;
+  cursor: pointer;
+}
+.temp-brands-list .body-col:last-child .delete:hover {
+  background-color: #dc3545;
+  color: #fff;
+  font-variation-settings: "FILL" 1, "wght" 100, "GRAD" 0, "opsz" 24;
+  transition: all 0.3s ease-out;
+}
+
 .temp-pages {
   width: 100%;
   display: flex;

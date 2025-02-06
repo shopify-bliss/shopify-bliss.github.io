@@ -16,11 +16,7 @@ import {
   AuthForm,
 } from "../../components/AuthSupport/AuthSupport";
 import { ToastContainer } from "react-toastify";
-import {
-  toastMessage,
-  toastPromise,
-  toastDevelop,
-} from "../../helpers/AlertMessage";
+import { toastMessage, toastPromise } from "../../helpers/AlertMessage";
 import Cookies from "js-cookie";
 import PropTypes from "prop-types";
 
@@ -344,7 +340,7 @@ function Auth({ typeMain }) {
             {typeMain === "login" && (
               <>
                 <div className="divider"></div>
-                <AuthIntegration type={typeMain} toastDevelop={toastDevelop} />
+                <AuthIntegration type={typeMain} />
               </>
             )}
           </div>

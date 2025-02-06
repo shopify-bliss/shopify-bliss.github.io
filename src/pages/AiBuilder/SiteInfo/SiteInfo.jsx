@@ -112,17 +112,19 @@ function SiteInfo({
               of colors, fonts, and tone for crafting AI-generated content.
             </div>
             <div className="content-list">
-              {dataBrands.map((brand) => (
-                <div
-                  key={brand.brand_id}
-                  className={`content-list-item ${
-                    activeBrand?.brand_id === brand.brand_id ? "active" : ""
-                  }`}
-                  onClick={() => handleBrandClick(brand.brand_id)}
-                >
-                  {brand.name}
-                </div>
-              ))}
+              {dataBrands
+                .filter((brand) => brand.is_develope !== true)
+                .map((brand) => (
+                  <div
+                    key={brand.brand_id}
+                    className={`content-list-item ${
+                      activeBrand?.brand_id === brand.brand_id ? "active" : ""
+                    }`}
+                    onClick={() => handleBrandClick(brand.brand_id)}
+                  >
+                    {brand.name}
+                  </div>
+                ))}
             </div>
           </div>
         </div>

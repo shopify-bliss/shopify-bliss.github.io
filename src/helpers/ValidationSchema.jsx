@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+
 import * as yup from "yup";
 
 export const signupSchema = yup.object().shape({
@@ -59,8 +61,6 @@ export const resetPasswordSchema = yup.object().shape({
       "Set password must not be the same as current password"
     ),
 });
-
-
 
 export const MenuManSchema = yup.object().shape({
   name: yup.string().required("Menu name is required"),

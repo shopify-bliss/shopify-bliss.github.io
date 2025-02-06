@@ -6,6 +6,7 @@ const urlEndpoint = {
   signupForm: `${baseUrl}/auth/registration`,
   verifyEmail: `${baseUrl}/auth/verify-email`,
   brandsAi: `${baseUrl}/api/brand`,
+  brandsAiId: `${baseUrl}/api/brand-id`,
   pagesAi: `${baseUrl}/api/type-templates`,
   pagesAiId: `${baseUrl}/api/type-templates-id`,
   elementsAi: `${baseUrl}/api/section-templates`,

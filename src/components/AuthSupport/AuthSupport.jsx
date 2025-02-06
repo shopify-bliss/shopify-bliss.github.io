@@ -1,8 +1,8 @@
 import { useState, Fragment, useRef, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import google from "../../assets/login/google.png";
-import facebook from "../../assets/login/facebook.png";
-import whatsapp from "../../assets/login/whatsapp (1).png";
+// import facebook from "../../assets/login/facebook.png";
+// import whatsapp from "../../assets/login/whatsapp (1).png";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import { useSearch } from "../../helpers/SearchContext";
 import PropTypes from "prop-types";
@@ -378,7 +378,8 @@ AuthForm.propTypes = {
   setSelectedCode: PropTypes.func,
 };
 
-export function AuthIntegration({ toastDevelop }) {
+// export function AuthIntegration({ toastDevelop }) {
+export function AuthIntegration() {
   return (
     <div className="integration">
       {/* <button
@@ -407,6 +408,6 @@ export function AuthIntegration({ toastDevelop }) {
   );
 }
 
-AuthIntegration.propTypes = {
-  toastDevelop: PropTypes.func,
-};
+// AuthIntegration.propTypes = {
+//   toastDevelop: PropTypes.func,
+// };
