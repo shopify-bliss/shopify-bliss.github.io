@@ -23,7 +23,11 @@ function FontFamiliesModal({ type, onOpen, onClose, refreshData, fontId }) {
       setIsDevelopValue(true);
     } else if (onOpen && type === "update") {
       axios
-        .get(`${urlEndpoint.font}?id=${fontId}`)
+        .get(`${urlEndpoint.font}?id=${fontId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((res) => {
           setNameValue(res.data.data.name);
           setIsDevelopValue(res.data.data.is_develope);
@@ -32,7 +36,7 @@ function FontFamiliesModal({ type, onOpen, onClose, refreshData, fontId }) {
           console.error("Error fetching menu data:", error);
         });
     }
-  }, [onOpen, type, fontId]);
+  }, [onOpen, type, fontId, token]);
 
   const handleSubmit = useCallback(
     (e) => {

@@ -63,7 +63,7 @@ function Verify({ typeMain = null }) {
         if (codeValue.length === 6) {
           const verifyPromise = axios.post(urlEndpoint.verifyEmail, {
             code: codeValue,
-            email: location.state.email,
+            email: location.state?.email,
           });
           toastPromise(
             verifyPromise,
@@ -116,7 +116,7 @@ function Verify({ typeMain = null }) {
               if (statusRecovery.current === true) {
                 navigate("/reset-password", {
                   state: {
-                    messageNoEmail: location.state?.email,
+                    email: location.state?.email,
                   },
                 });
               }

@@ -239,7 +239,7 @@ function FontDesignsModal({
       e.preventDefault();
 
       const deletePromise = axios.delete(
-        `${urlEndpoint.font}?id=${fontDesignId}`,
+        `${urlEndpoint.fontsAi}?id=${fontDesignId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

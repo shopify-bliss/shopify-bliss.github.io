@@ -17,6 +17,21 @@ export const signupSchema = yup.object().shape({
     ),
 });
 
+export const forgotPwSchema = yup.object().shape({
+  email: yup.string().email("Invalid email").required("Email is required"),
+  newPassword: yup
+    .string()
+    .required("Password is required")
+    .min(8, "Password is too short - should be 8 chars minimum.")
+    .matches(/[a-z]/, "Password must contain at least one lowercase letter.")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter.")
+    .matches(/[0-9]/, "Password must contain at least one number.")
+    .matches(
+      /[@$!%*?&#^()_\-+=]/,
+      "Password must contain at least one special character."
+    ),
+});
+
 export const recoverySchema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
 });
@@ -44,6 +59,8 @@ export const resetPasswordSchema = yup.object().shape({
       "Set password must not be the same as current password"
     ),
 });
+
+
 
 export const MenuManSchema = yup.object().shape({
   name: yup.string().required("Menu name is required"),
@@ -75,7 +92,6 @@ export const updateUserRoleSchema = yup.object().shape({
 export const tempPagesSchema = yup.object().shape({
   type: yup.string().required("Page name is required"),
   icon: yup.string().required("Page icon is required"),
-  name_class: yup.string().required("Page class is required"),
 });
 
 export const TempSectionsSchema = yup.object().shape({

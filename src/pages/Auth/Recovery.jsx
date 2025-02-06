@@ -6,6 +6,7 @@ import axios from "axios";
 import {
   recoverySchema,
   resetPasswordSchema,
+  forgotPwSchema,
 } from "../../helpers/ValidationSchema";
 import {
   AuthHeader,
@@ -21,10 +22,9 @@ function Recovery({ typeMain }) {
 
   const [values, setValues] = useState({
     email: "",
-    oldPassword: "",
     newPassword: "",
   });
-  const [hideCurrPassword, setHideCurrPassword] = useState(true);
+
   const [hideSetPassword, setHideSetPassword] = useState(true);
   const [validationPassword, setValidationPassword] = useState({
     length: false,
@@ -124,15 +124,15 @@ function Recovery({ typeMain }) {
           });
       } else {
         const data = {
-          oldPassword: values.oldPassword,
           newPassword: values.newPassword,
+          email: location.state?.email,
         };
 
-        resetPasswordSchema
+        forgotPwSchema
           .validate(data, { abortEarly: false })
           .then(() => {
             const resetPasswordPromise = axios.put(
-              urlEndpoint.updatePassword,
+              urlEndpoint.forgotPassword,
               data
             );
 
@@ -170,7 +170,7 @@ function Recovery({ typeMain }) {
           });
       }
     },
-    [values, typeMain, navigate]
+    [values, typeMain, navigate, location.state]
   );
 
   useEffect(() => {
@@ -226,26 +226,6 @@ function Recovery({ typeMain }) {
               ) : (
                 <>
                   <div className="form-group">
-                    <label htmlFor="oldPassword">Current Password</label>
-                    <input
-                      className="form-group-input"
-                      type={hideCurrPassword ? "password" : "text"}
-                      id="oldPassword"
-                      name="oldPassword"
-                      autoComplete="current-password"
-                      placeholder="oldPassword"
-                      onChange={handleChange}
-                      value={values.oldPassword || ""}
-                    />
-                    <span
-                      className="material-symbols-outlined"
-                      onClick={() => setHideCurrPassword(!hideCurrPassword)}
-                    >
-                      {hideCurrPassword ? "visibility_off" : "visibility"}
-                    </span>
-                    <div className="input-border"></div>
-                  </div>
-                  <div className="form-group">
                     <label htmlFor="newPassword">Set Password</label>
                     <input
                       className="form-group-input"
@@ -274,9 +254,7 @@ function Recovery({ typeMain }) {
                 type="submit"
                 className="form-submit"
                 disabled={
-                  typeMain === "recovery"
-                    ? !values.email
-                    : !values.oldPassword || !values.newPassword
+                  typeMain === "recovery" ? !values.email : !values.newPassword
                 }
               >
                 Submit

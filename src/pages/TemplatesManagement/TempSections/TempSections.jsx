@@ -33,6 +33,14 @@ function DisplayView({
               <div className="item" key={data.section_id}>
                 <div className="item-name">{data.name}</div>
                 <div className="item-action">
+                  {data.is_develope === true ? (
+                    <span className="item-action-progress">
+                      <span className="material-symbols-outlined item-action-icon">
+                        sync
+                      </span>
+                      <div className="text">Progress</div>
+                    </span>
+                  ) : null}
                   <span
                     className="material-symbols-rounded item-action-edit"
                     onClick={() => {
@@ -60,6 +68,7 @@ function DisplayView({
           <div className="head">
             <div className="head-col">No</div>
             <div className="head-col">Name</div>
+            <div className="head-col">Develope</div>
             <div className="head-col">Action</div>
           </div>
           {sections
@@ -72,6 +81,13 @@ function DisplayView({
               <div className="body" key={data.section_id}>
                 <div className="body-col">{index + 1}</div>
                 <div className="body-col">{data.name}</div>
+                <div className="body-col">
+                  {data.is_develope === true ? (
+                    <span className="progress">Progress</span>
+                  ) : (
+                    <span className="done">Done</span>
+                  )}
+                </div>
                 <div className="body-col">
                   <span
                     className="material-symbols-rounded edit"
@@ -127,7 +143,6 @@ function TempSections() {
       });
 
       console.log(response.data.data);
-      
 
       setSections(response.data.data);
     } catch (error) {

@@ -39,6 +39,7 @@ const urlEndpoint = {
   sendOtpPassword: `${baseUrl}/api/send-otp`,
   verifyOtpPassword: `${baseUrl}/api/otp-password`,
   updatePassword: `${baseUrl}/api/update-password`,
+  forgotPassword: `${baseUrl}/api/forgot-password`,
 };
 
 export default urlEndpoint;

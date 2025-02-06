@@ -36,7 +36,9 @@ export function AuthHeader({ type, classDiff = "auth" }) {
       ) : type === "verify-password" ? (
         <div className={`${classDiff}-header-link`}>Verify Password Code</div>
       ) : type === "recovery" ? (
-        <div className={`${classDiff}-header-link`}>Recovery Account</div>
+        <div className={`${classDiff}-header-link recovery`}>
+          Recovery Account
+        </div>
       ) : type === "reset-password" ? (
         <div className={`${classDiff}-header-link`}>Reset Password</div>
       ) : null}
@@ -379,7 +381,7 @@ AuthForm.propTypes = {
 export function AuthIntegration({ toastDevelop }) {
   return (
     <div className="integration">
-      <button
+      {/* <button
         className="integration-item"
         onClick={() => {
           toastDevelop("continue with WhatsApp");
@@ -387,12 +389,12 @@ export function AuthIntegration({ toastDevelop }) {
       >
         <img className="icon" src={whatsapp} alt="WhatsApp's Logo" />
         <span className="text">Continue with WhatsApp</span>
-      </button>
+      </button> */}
       <Link className="integration-item" to={urlEndpoint.loginGoogle}>
         <img className="icon" src={google} alt="Google's Logo" />
         <span className="text">Continue with Google</span>
       </Link>
-      <button
+      {/* <button
         className="integration-item"
         onClick={() => {
           toastDevelop("continue with Facebook");
@@ -400,7 +402,7 @@ export function AuthIntegration({ toastDevelop }) {
       >
         <img className="icon" src={facebook} alt="Facebook's Logo" />
         <span className="text">Continue with Facebook</span>
-      </button>
+      </button> */}
     </div>
   );
 }

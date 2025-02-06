@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
-import { TempSectionsSchema } from "../../../helpers/ValidationSchema";
+import { NameDevelopeSchema } from "../../../helpers/ValidationSchema";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
 import PropTypes from "prop-types";
 
@@ -12,6 +12,7 @@ function TempSectionsModal({ type, onOpen, onClose, refreshData, sectionId }) {
 
   const [data, setData] = useState({
     name: "",
+    isDevelope: true,
   });
 
   const { toastMessage, toastPromise, token } = useDashboard();
@@ -20,6 +21,7 @@ function TempSectionsModal({ type, onOpen, onClose, refreshData, sectionId }) {
     if (onOpen && type === "create") {
       setData({
         name: "",
+        isDevelope: true,
       });
     } else if (onOpen && type === "update") {
       axios
@@ -47,7 +49,7 @@ function TempSectionsModal({ type, onOpen, onClose, refreshData, sectionId }) {
       e.preventDefault();
 
       if (type === "create") {
-        TempSectionsSchema.validate(data, { abortEarly: false })
+        NameDevelopeSchema.validate(data, { abortEarly: false })
           .then(() => {
             const elementsAiPromise = axios.post(urlEndpoint.elementsAi, data, {
               headers: {
@@ -82,7 +84,7 @@ function TempSectionsModal({ type, onOpen, onClose, refreshData, sectionId }) {
             });
           });
       } else {
-        TempSectionsSchema.validate(data, { abortEarly: false })
+        NameDevelopeSchema.validate(data, { abortEarly: false })
           .then(() => {
             const elementsAiPromise = axios.put(
               `${urlEndpoint.elementsAi}?id=${sectionId}`,
@@ -213,6 +215,24 @@ function TempSectionsModal({ type, onOpen, onClose, refreshData, sectionId }) {
                 value={data.name}
                 onChange={handleChange}
               />
+            </div>
+            <div className="modal-dashboard-form-group">
+              <div className="label">
+                Setting Is Develope <span>(Required)</span>
+              </div>
+              <div
+                className="check-option"
+                onClick={() =>
+                  setData({ ...data, isDevelope: !data.isDevelope })
+                }
+              >
+                <span className="material-symbols-outlined">
+                  {data.isDevelope ? "circle" : "task_alt"}
+                </span>
+                <div className="text">
+                  {data.isDevelope ? "Progress" : "Done"}
+                </div>
+              </div>
             </div>
             <button type="submit">Submit</button>
           </form>

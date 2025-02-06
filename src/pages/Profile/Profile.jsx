@@ -3,15 +3,13 @@ import { useDashboard } from "../../components/LayoutDashboard/DashboardContext"
 import Password from "./Password";
 import Bio from "./Bio";
 import Modal from "../../components/LayoutDashboard/Modal/Modal";
-import VerifyDashboard from "./VerifyDashboard";
 import axios from "axios";
-import urlEndpoint from "../../helpers/urlEndpoint";
 import PropTypes from "prop-types";
 
 function Profile({ onClose, onOpen }) {
   axios.defaults.withCredentials = true;
 
-  const { submenus, toastPromise, user } = useDashboard();
+  const { submenus } = useDashboard();
 
   const [currentSubmenu, setCurrentSubmenu] = useState(
     submenus.filter(
@@ -21,63 +19,14 @@ function Profile({ onClose, onOpen }) {
     )[0].sub_menu_id
   );
   const [openConfirm, setOpenConfirm] = useState(false);
-  const [resetPassword, setResetPassword] = useState(false);
 
-  const handleCurrentSubmenu = useCallback(
-    (submenuId) => {
-      if (
-        submenuId === "d86578b0-4497-4d43-bdad-0f50af1011aa" &&
-        !resetPassword
-      ) {
-        setOpenConfirm(true);
-      } else {
-        setCurrentSubmenu(submenuId);
-      }
-    },
-    [resetPassword]
-  );
-
-  const handleConfirmReset = useCallback(
-    (e) => {
-      e.preventDefault();
-
-      setCurrentSubmenu("a14736d9-7bcc-4eef-9be3-2015223cc5ed");
-
-      const sendOtpPasswordPromise = axios.post(urlEndpoint.sendOtpPassword, {
-        email: user.email,
-      });
-
-      toastPromise(
-        sendOtpPasswordPromise,
-        {
-          pending: "Sending OTP password on progress, please wait..!",
-          success: "OTP password sent successfully.",
-          error: "Failed to send OTP password.",
-        },
-        {
-          position: "top-center",
-          autoClose: 2500,
-        },
-        () => {
-          setOpenConfirm(false);
-          setResetPassword(true);
-
-          setTimeout(() => {
-            setResetPassword(false);
-          }, 30000);
-        }
-      );
-
-      sendOtpPasswordPromise
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    },
-    [toastPromise, user.email]
-  );
+  const handleCurrentSubmenu = useCallback((submenuId) => {
+    if (submenuId === "d86578b0-4497-4d43-bdad-0f50af1011aa") {
+      setOpenConfirm(true);
+    } else {
+      setCurrentSubmenu(submenuId);
+    }
+  }, []);
 
   if (!onOpen) return null;
 
@@ -100,8 +49,7 @@ function Profile({ onClose, onOpen }) {
             {submenus
               .filter(
                 (submenu) =>
-                  submenu.menu_id === "6556df8f-7cd6-4848-b39f-1e6ab4973311" &&
-                  submenu.sub_menu_id !== "a14736d9-7bcc-4eef-9be3-2015223cc5ed"
+                  submenu.menu_id === "6556df8f-7cd6-4848-b39f-1e6ab4973311"
               )
               .map((submenu) => {
                 return (
@@ -119,38 +67,6 @@ function Profile({ onClose, onOpen }) {
                   </>
                 );
               })}
-            {resetPassword && (
-              <>
-                {submenus
-                  .filter(
-                    (submenu) =>
-                      submenu.menu_id ===
-                        "6556df8f-7cd6-4848-b39f-1e6ab4973311" &&
-                      submenu.sub_menu_id ===
-                        "a14736d9-7bcc-4eef-9be3-2015223cc5ed"
-                  )
-                  .map((submenu) => {
-                    return (
-                      <>
-                        <div
-                          key={submenu.sub_menu_id}
-                          className={`modal-menu-nav-item ${
-                            submenu.sub_menu_id === currentSubmenu
-                              ? "active"
-                              : ""
-                          }`}
-                          onClick={() =>
-                            handleCurrentSubmenu(submenu.sub_menu_id)
-                          }
-                        >
-                          <div className="name">{submenu.name}</div>
-                          <div className="border-effect"></div>
-                        </div>
-                      </>
-                    );
-                  })}
-              </>
-            )}
           </div>
           <div className="modal-menu-content">
             <div className="header">
@@ -160,7 +76,7 @@ function Profile({ onClose, onOpen }) {
                   ? "Bio"
                   : currentSubmenu === "d86578b0-4497-4d43-bdad-0f50af1011aa"
                   ? "Password"
-                  : "Verify OTP"}
+                  : "Submenu not found"}
               </span>
               <span
                 className="header-close material-symbols-outlined"
@@ -172,18 +88,16 @@ function Profile({ onClose, onOpen }) {
             {currentSubmenu === "0977a7d1-7ee9-4b68-8e3d-edad0ef87a56" ? (
               <Bio onClose={onClose} />
             ) : currentSubmenu === "d86578b0-4497-4d43-bdad-0f50af1011aa" &&
-              resetPassword ? (
+              currentSubmenu === "d86578b0-4497-4d43-bdad-0f50af1011aa" ? (
               <Password />
-            ) : (
-              <VerifyDashboard setCurrentSubmenu={setCurrentSubmenu} />
-            )}
+            ) : null}
           </div>
         </div>
       </div>
       <Modal
         type="confirm"
         titleModal="Are you sure you want to reset password?"
-        descModal="If you sure want to change your password, please check your email for a verification code."
+        descModal="Proceed to the next step to change your password."
         onClose={() => {
           setOpenConfirm(false);
         }}
@@ -198,7 +112,13 @@ function Profile({ onClose, onOpen }) {
           >
             cancel
           </div>
-          <div className="confirm" onClick={handleConfirmReset}>
+          <div
+            className="confirm"
+            onClick={() => {
+              setCurrentSubmenu("d86578b0-4497-4d43-bdad-0f50af1011aa");
+              setOpenConfirm(false);
+            }}
+          >
             reset
           </div>
         </div>

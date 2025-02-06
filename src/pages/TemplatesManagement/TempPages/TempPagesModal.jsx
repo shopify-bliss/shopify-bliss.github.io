@@ -12,7 +12,6 @@ function TempPagesModal({ type, onOpen, onClose, refreshData, pageId }) {
   const [data, setData] = useState({
     type: "",
     icon: "",
-    name_class: "",
   });
 
   const { toastMessage, toastPromise, token } = useDashboard();
@@ -22,11 +21,14 @@ function TempPagesModal({ type, onOpen, onClose, refreshData, pageId }) {
       setData({
         type: "",
         icon: "",
-        name_class: "",
       });
     } else if (onOpen && type === "update") {
       axios
-        .get(`${urlEndpoint.pagesAiId}?id=${pageId}`)
+        .get(`${urlEndpoint.pagesAiId}?id=${pageId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((res) => {
           setData(res.data.data);
         })
@@ -34,7 +36,7 @@ function TempPagesModal({ type, onOpen, onClose, refreshData, pageId }) {
           console.error("Error fetching page data:", error);
         });
     }
-  }, [onOpen, type, pageId]);
+  }, [onOpen, type, pageId, token]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

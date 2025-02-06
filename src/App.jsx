@@ -60,7 +60,6 @@ function App() {
           <Route element={<AiBuilderCore />}>
             <Route path="/" element={<AiBuilder />} />
             <Route path="/preview/:slug" element={<AiBuilderPreview />} />
-            {/* <Route path="/preview/:slug" element={<AiBuilderPreview />} /> */}
           </Route>
           <Route path="/loader" element={<LoaderProgress />} />
 
