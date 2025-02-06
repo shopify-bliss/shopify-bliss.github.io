@@ -241,7 +241,7 @@ function ColorDesigns() {
         },
       });
 
-      console.log(response.data.data);
+      // console.log(response.data.data);
 
       setColorDesigns(response.data.data);
     } catch (error) {

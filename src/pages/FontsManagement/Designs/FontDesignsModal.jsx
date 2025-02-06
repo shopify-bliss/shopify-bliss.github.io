@@ -110,7 +110,7 @@ function FontDesignsModal({
           },
         })
         .then((res) => {
-          console.log(res.data.data[0]);
+          // console.log(res.data.data[0]);
 
           setDataDesign({
             brand_id: res.data.data[0].brand_id,

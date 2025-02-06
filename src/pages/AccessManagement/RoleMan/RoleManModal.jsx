@@ -29,7 +29,7 @@ function RoleManModal({ type, onOpen, onClose, refreshData, roleId }) {
           },
         })
         .then((res) => {
-          console.log(res.data.data);
+          // console.log(res.data.data);
 
           setData({
             roleName: res.data.data.role_name,

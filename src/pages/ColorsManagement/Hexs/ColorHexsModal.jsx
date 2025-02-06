@@ -94,7 +94,7 @@ function ColorHexsModal({ type, onOpen, onClose, refreshData, colorId }) {
           isDevelope: isDevelopValue,
         };
 
-        console.log(updateData);
+        // console.log(updateData);
 
         ColorSchema.validate(updateData, { abortEarly: false })
           .then(() => {

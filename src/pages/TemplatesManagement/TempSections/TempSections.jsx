@@ -142,7 +142,7 @@ function TempSections() {
         },
       });
 
-      console.log(response.data.data);
+      // console.log(response.data.data);
 
       setSections(response.data.data);
     } catch (error) {

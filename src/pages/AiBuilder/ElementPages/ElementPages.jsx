@@ -52,11 +52,11 @@ function ElementPages({
 
   const bg = BgColors({ activeColors });
 
-  useEffect(() => {
-    console.log(activeSections);
+  // useEffect(() => {
+  //   console.log(activeSections);
 
-    console.log(activeSections[currentPageId]);
-  }, [activeSections, currentPageId]);
+  //   console.log(activeSections[currentPageId]);
+  // }, [activeSections, currentPageId]);
 
   return (
     <>

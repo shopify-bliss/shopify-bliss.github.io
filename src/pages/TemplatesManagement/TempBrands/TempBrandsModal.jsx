@@ -30,7 +30,7 @@ function TempBrandsModal({ type, onOpen, onClose, refreshData, brandId }) {
           },
         })
         .then((res) => {
-          console.log(res.data.data[0]);
+          // console.log(res.data.data[0]);
 
           setData({
             name: res.data.data[0].name,
