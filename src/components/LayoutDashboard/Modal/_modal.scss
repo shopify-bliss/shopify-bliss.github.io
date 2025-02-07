@@ -1,6 +1,7 @@
 @use "../../../helpers/mixins" as m;
 @use "../../../helpers/variables" as v;
 @use "../Support/support-dashboard" as support;
+@use "../../AuthSupport/auth-support" as auth;
 
 .overlay-modal-dashboard {
   position: fixed;
@@ -23,6 +24,8 @@
     height: auto;
     max-width: $max;
     display: grid;
+    max-height: 80vh;
+    overflow: hidden auto;
   }
 
   .modal-dashboard {
@@ -173,6 +176,16 @@
             letter-spacing: 0.05rem;
           }
         }
+
+        .hide-pw {
+          font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 24;
+          position: absolute;
+          top: 15.5%;
+          right: 4.5%;
+          cursor: pointer;
+        }
+
+        @include auth.validation-password($mt: 0.5rem);
       }
 
       button {

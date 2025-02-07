@@ -4,21 +4,35 @@ import axios from "axios";
 import { useDashboard } from "../../../components/LayoutDashboard/DashboardContext";
 import urlEndpoint from "../../../helpers/urlEndpoint";
 import {
-  userSchema,
+  adminSchema,
   updateUserRoleSchema,
 } from "../../../helpers/ValidationSchema";
 import Modal from "../../../components/LayoutDashboard/Modal/Modal";
 import PropTypes from "prop-types";
+import {
+  AuthPhoneCodes,
+  AuthValidationPassword,
+} from "../../../components/AuthSupport/AuthSupport";
 
 function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
   axios.defaults.withCredentials = true;
 
+  const [selectedCode, setSelectedCode] = useState(62);
   const [roles, setRoles] = useState([]);
-  const [data, setData] = useState({
+  const [values, setValues] = useState({
     email: "",
     username: "",
     phoneNumber: "",
+    password: "",
     roleID: "",
+  });
+  const [hidePassword, setHidePassword] = useState(true);
+  const [validationPassword, setValidationPassword] = useState({
+    length: false,
+    uppercase: false,
+    lowercase: false,
+    number: false,
+    special: false,
   });
   const [updateData, setUpdateData] = useState({
     userID: "",
@@ -27,6 +41,8 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
   const [openRole, setOpenRole] = useState(false);
 
   const listRoleRef = useRef(null);
+  const createStatus = useRef(null);
+  const updateStatus = useRef(null);
 
   const { toastMessage, toastPromise, token, user } = useDashboard();
 
@@ -83,16 +99,43 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
         .catch((error) => {
           console.error("Error fetching user data:", error);
         });
+    } else if (onOpen && type === "create") {
+      setValues({
+        email: "",
+        password: "",
+        username: "",
+        phoneNumber: "",
+        roleID: "",
+      });
+      setValidationPassword({
+        length: false,
+        lowercase: false,
+        uppercase: false,
+        number: false,
+        special: false,
+      });
+      setSelectedCode(62);
     }
   }, [onOpen, userId, token, type]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setData({
-      ...data,
+    setValues(({ roleID, ...rest }) => ({
+      ...rest,
       [name]: value,
-    });
+      roleID, // Tambahkan roleID agar tidak berubah
+    }));
+
+    if (name === "password") {
+      setValidationPassword({
+        length: value.length >= 8,
+        uppercase: /[A-Z]/.test(value),
+        lowercase: /[a-z]/.test(value),
+        number: /[0-9]/.test(value),
+        special: /[@$!%*?&#^()_\-+=]/.test(value),
+      });
+    }
   };
 
   const handleSubmit = useCallback(
@@ -100,15 +143,14 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
       e.preventDefault();
 
       if (type === "create") {
-        userSchema
-          .validate(data, { abortEarly: false })
+        adminSchema
+          .validate(values, { abortEarly: false })
           .then(() => {
-            const userPromise = axios.post(urlEndpoint.addAdmin, data, {
+            const userPromise = axios.post(urlEndpoint.addAdmin, values, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
             });
-
             toastPromise(
               userPromise,
               {
@@ -121,14 +163,20 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
                 position: "top-center",
               },
               () => {
-                onClose();
-                refreshData();
+                if (createStatus.current === true) {
+                  onClose();
+                  refreshData();
+                }
               }
             );
 
-            userPromise.catch((error) => {
-              console.error("Error adding user data:", error);
-            });
+            userPromise
+              .then((res) => {
+                createStatus.current = res.data.success;
+              })
+              .catch((error) => {
+                console.error("Error adding user data:", error);
+              });
           })
           .catch((errors) => {
             errors.inner.forEach((error) => {
@@ -163,14 +211,20 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
                 position: "top-center",
               },
               () => {
-                onClose();
-                refreshData();
+                if (updateStatus.current === true) {
+                  onClose();
+                  refreshData();
+                }
               }
             );
 
-            userPromise.catch((error) => {
-              console.error("Error updating user role data:", error);
-            });
+            userPromise
+              .then((res) => {
+                updateStatus.current = res.data.success;
+              })
+              .catch((error) => {
+                console.error("Error updating user role data:", error);
+              });
           })
           .catch((errors) => {
             errors.inner.forEach((error) => {
@@ -181,7 +235,7 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
     },
     [
       type,
-      data,
+      values,
       updateData,
       onClose,
       refreshData,
@@ -269,7 +323,7 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
                     id="username"
                     name="username"
                     placeholder="Example"
-                    value={data.username}
+                    value={values.username}
                     onChange={handleChange}
                   />
                 </div>
@@ -282,7 +336,7 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
                     id="email"
                     name="email"
                     placeholder="example@gmail.com"
-                    value={data.email}
+                    value={values.email}
                     onChange={handleChange}
                   />
                 </div>
@@ -290,13 +344,38 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
                   <label htmlFor="phoneNumber">
                     Phone Number <span>(Required)</span>
                   </label>
+                  <AuthPhoneCodes
+                    selectedCode={selectedCode}
+                    setSelectedCode={setSelectedCode}
+                  >
+                    <input
+                      type="text"
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      placeholder="628123456789"
+                      value={values.phoneNumber}
+                      onChange={handleChange}
+                    />
+                  </AuthPhoneCodes>
+                </div>
+                <div className="modal-dashboard-form-group">
+                  <label htmlFor="password">Password</label>
                   <input
-                    type="text"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    placeholder="628123456789"
-                    value={data.phoneNumber}
+                    type={`${hidePassword ? "password" : "text"}`}
+                    id="password"
+                    name="password"
+                    autoComplete="off"
+                    value={values.password}
                     onChange={handleChange}
+                  />
+                  <span
+                    className="material-symbols-outlined hide-pw"
+                    onClick={() => setHidePassword(!hidePassword)}
+                  >
+                    {hidePassword ? "visibility_off" : "visibility"}
+                  </span>
+                  <AuthValidationPassword
+                    validationPassword={validationPassword}
                   />
                 </div>
               </>
@@ -306,13 +385,23 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
                 Role <span>(Required)</span>
               </div>
               <div className="select-default" onClick={() => setOpenRole(true)}>
-                <div className="text">
-                  {updateData.role === ""
-                    ? "Choose Role"
-                    : roles
-                        .filter((item) => item.role_id === updateData.role)
-                        .map((data) => data.role_name)}
-                </div>
+                {type === "create" ? (
+                  <div className="text">
+                    {values.roleID === ""
+                      ? "Choose Role"
+                      : roles
+                          .filter((item) => item.role_id === values.roleID)
+                          .map((data) => data.role_name)}
+                  </div>
+                ) : (
+                  <div className="text">
+                    {updateData.role === ""
+                      ? "Choose Role"
+                      : roles
+                          .filter((item) => item.role_id === updateData.role)
+                          .map((data) => data.role_name)}
+                  </div>
+                )}
                 <span
                   className={`material-symbols-outlined ${
                     openRole ? "default-closed" : ""
@@ -339,13 +428,23 @@ function DisplayUsersModal({ type, onOpen, onClose, refreshData, userId }) {
                         <div
                           className="select-list-item"
                           key={data.role_id}
-                          onClick={() => {
-                            setUpdateData({
-                              ...updateData,
-                              role: data.role_id,
-                            });
-                            setOpenRole(false);
-                          }}
+                          onClick={
+                            type === "create"
+                              ? () => {
+                                  setValues({
+                                    ...values,
+                                    roleID: data.role_id,
+                                  });
+                                  setOpenRole(false);
+                                }
+                              : () => {
+                                  setUpdateData({
+                                    ...updateData,
+                                    role: data.role_id,
+                                  });
+                                  setOpenRole(false);
+                                }
+                          }
                         >
                           <div className="name">{data.role_name}</div>
                         </div>

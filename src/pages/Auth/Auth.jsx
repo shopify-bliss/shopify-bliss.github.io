@@ -27,9 +27,9 @@ function Auth({ typeMain }) {
     email: "",
     username: "",
     phoneNumber: "",
+    roleID: "",
     password: "",
   });
-  const [phoneCodes, setPhoneCodes] = useState([]);
   const [hidePassword, setHidePassword] = useState(true);
   const [validationPassword, setValidationPassword] = useState({
     length: false,
@@ -83,44 +83,6 @@ function Auth({ typeMain }) {
       });
     }
   }, [searchParams, navigate]);
-
-  useEffect(() => {
-    axios
-      .get("https://restcountries.com/v3.1/all")
-      .then((res) => {
-        const data = res.data;
-
-        // console.log(data);
-
-        const getCodes = data
-          .filter((item) => item.idd && item.idd.root)
-          .map((item) => {
-            const flag = item.flags.png;
-            const name = item.name.common;
-            const root = item.idd.root.replace("+", "");
-            const suffixes = item.idd.suffixes;
-
-            const codes = `+${root}${suffixes[0]}`;
-            const valueCodes = parseInt(`${root}${suffixes[0]}`);
-
-            return {
-              flag,
-              name,
-              codes,
-              valueCodes,
-            };
-          });
-
-        const sortedCodes = getCodes.sort((a, b) =>
-          a.name.localeCompare(b.name)
-        );
-
-        setPhoneCodes(sortedCodes);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
 
   const handleChange = useCallback(
     (e) => {
@@ -332,7 +294,6 @@ function Auth({ typeMain }) {
               handleChange={handleChange}
               handleForm={handleFormSubmit}
               type={typeMain}
-              phoneCodes={phoneCodes}
               selectedCode={selectedCode}
               setSelectedCode={setSelectedCode}
             />

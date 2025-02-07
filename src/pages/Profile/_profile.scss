@@ -247,8 +247,6 @@ $border-color: adjust-color(
               }
             }
           }
-
-          @include auth.validation-password($mt: 0.1rem);
         }
 
         &-button {
@@ -260,7 +258,7 @@ $border-color: adjust-color(
           @include text(0.82rem, 0.1rem, 1.2px);
         }
 
-        @include auth.validation-password();
+        @include auth.validation-password($mt: 0.01rem);
       }
 
       .recovery-dashboard {

@@ -6,6 +6,7 @@ import google from "../../assets/login/google.png";
 import urlEndpoint from "../../helpers/urlEndpoint";
 import { useSearch } from "../../helpers/SearchContext";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 export function AuthHeader({ type, classDiff = "auth" }) {
   return (
@@ -152,21 +153,51 @@ AuthValidationPassword.propTypes = {
   validationPassword: PropTypes.object,
 };
 
-export function AuthForm({
-  handleForm,
-  handleChange,
-  values,
-  hidePassword,
-  setHidePassword,
-  validationPassword,
-  type,
-  phoneCodes,
-  selectedCode,
-  setSelectedCode,
-}) {
+export function AuthPhoneCodes({ selectedCode, setSelectedCode, children }) {
+  axios.defaults.withCredentials = true;
+
+  const [phoneCodes, setPhoneCodes] = useState([]);
   const [openPhoneCodes, setOpenPhoneCodes] = useState(false);
   const phoneCodeModalRef = useRef(null);
   const { search, setSearch } = useSearch();
+
+  useEffect(() => {
+    axios
+      .get("https://restcountries.com/v3.1/all")
+      .then((res) => {
+        const data = res.data;
+
+        // console.log(data);
+
+        const getCodes = data
+          .filter((item) => item.idd && item.idd.root)
+          .map((item) => {
+            const flag = item.flags.png;
+            const name = item.name.common;
+            const root = item.idd.root.replace("+", "");
+            const suffixes = item.idd.suffixes;
+
+            const codes = `+${root}${suffixes[0]}`;
+            const valueCodes = parseInt(`${root}${suffixes[0]}`);
+
+            return {
+              flag,
+              name,
+              codes,
+              valueCodes,
+            };
+          });
+
+        const sortedCodes = getCodes.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+
+        setPhoneCodes(sortedCodes);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   const handleClickOutside = useCallback(
     (e) => {
@@ -205,6 +236,101 @@ export function AuthForm({
   );
 
   return (
+    <div className="phone-code-wrapper-loan">
+      <div className="phone-code">
+        <div
+          className="phone-code-default"
+          onClick={() => setOpenPhoneCodes(true)}
+        >
+          {phoneCodes
+            .filter((item) => item.valueCodes === selectedCode)
+            .map((data, index) => {
+              const flag = data.flag;
+
+              return (
+                <Fragment key={index}>
+                  <div className="image">
+                    <img src={flag} alt={data.name} />
+                  </div>
+                  <div className="code">{data.codes}</div>
+                  <span className="material-symbols-rounded">
+                    arrow_drop_down
+                  </span>
+                </Fragment>
+              );
+            })}
+        </div>
+        {openPhoneCodes ? (
+          <>
+            <div className="phone-code-list" ref={phoneCodeModalRef}>
+              <div className="phone-code-list-search">
+                <div className="search-country">
+                  <span className="material-symbols-rounded">search</span>
+                  <input
+                    className="search-country-input"
+                    type="text"
+                    onChange={handleSearchCountry}
+                    placeholder="Search country"
+                  />
+                </div>
+              </div>
+              {phoneCodes
+                .filter((item) => {
+                  const searchLower = search.toLowerCase();
+
+                  return (
+                    item.name.toLowerCase().includes(searchLower) ||
+                    item.codes.includes(searchLower)
+                  );
+                })
+                .map((data, index) => {
+                  const flag = data.flag;
+
+                  return (
+                    <div
+                      className="phone-code-list-item"
+                      key={index}
+                      onClick={() => handleCodeSelect(data.valueCodes)}
+                    >
+                      <div className="image">
+                        <img src={flag} alt={data.name} />
+                      </div>
+                      <div className="desc">
+                        <div className="desc-name">{data.name}</div>
+                        <div className="desc-code">({data.codes})</div>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </>
+        ) : (
+          ""
+        )}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+AuthPhoneCodes.propTypes = {
+  selectedCode: PropTypes.string,
+  setSelectedCode: PropTypes.func,
+  children: PropTypes.node,
+};
+
+export function AuthForm({
+  handleForm,
+  handleChange,
+  values,
+  hidePassword,
+  setHidePassword,
+  validationPassword,
+  type,
+  selectedCode,
+  setSelectedCode,
+}) {
+  return (
     <form className="form" onSubmit={handleForm}>
       <div className="form-group">
         <label htmlFor="email">Email Address</label>
@@ -238,80 +364,10 @@ export function AuthForm({
           </div>
           <div className="form-group">
             <label htmlFor="phoneNumber">Phone Number</label>
-            <div className="phone-wrapper-loan">
-              <div className="phone-code">
-                <div
-                  className="phone-code-default"
-                  onClick={() => setOpenPhoneCodes(true)}
-                >
-                  {phoneCodes
-                    .filter((item) => item.valueCodes === selectedCode)
-                    .map((data, index) => {
-                      const flag = data.flag;
-
-                      return (
-                        <Fragment key={index}>
-                          <div className="image">
-                            <img src={flag} alt={data.name} />
-                          </div>
-                          <div className="code">{data.codes}</div>
-                          <span className="material-symbols-rounded">
-                            arrow_drop_down
-                          </span>
-                        </Fragment>
-                      );
-                    })}
-                </div>
-                {openPhoneCodes ? (
-                  <>
-                    <div className="phone-code-list" ref={phoneCodeModalRef}>
-                      <div className="phone-code-list-search">
-                        <div className="search-country">
-                          <span className="material-symbols-rounded">
-                            search
-                          </span>
-                          <input
-                            className="search-country-input"
-                            type="text"
-                            onChange={handleSearchCountry}
-                            placeholder="Search country"
-                          />
-                        </div>
-                      </div>
-                      {phoneCodes
-                        .filter((item) => {
-                          const searchLower = search.toLowerCase();
-
-                          return (
-                            item.name.toLowerCase().includes(searchLower) ||
-                            item.codes.includes(searchLower)
-                          );
-                        })
-                        .map((data, index) => {
-                          const flag = data.flag;
-
-                          return (
-                            <div
-                              className="phone-code-list-item"
-                              key={index}
-                              onClick={() => handleCodeSelect(data.valueCodes)}
-                            >
-                              <div className="image">
-                                <img src={flag} alt={data.name} />
-                              </div>
-                              <div className="desc">
-                                <div className="desc-name">{data.name}</div>
-                                <div className="desc-code">({data.codes})</div>
-                              </div>
-                            </div>
-                          );
-                        })}
-                    </div>
-                  </>
-                ) : (
-                  ""
-                )}
-              </div>
+            <AuthPhoneCodes
+              selectedCode={selectedCode}
+              setSelectedCode={setSelectedCode}
+            >
               <input
                 className="form-group-input"
                 type="number"
@@ -322,7 +378,7 @@ export function AuthForm({
                 onChange={handleChange}
                 value={values.phoneNumber || ""}
               />
-            </div>
+            </AuthPhoneCodes>
             <div className="input-border"></div>
           </div>
         </>
