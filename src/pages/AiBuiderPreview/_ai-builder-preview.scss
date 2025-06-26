@@ -62,5 +62,5 @@
     }
   }
 
-  @include support.default-footer();
+  @include support.default-footer($preview: true);
 }

@@ -55,7 +55,7 @@ function SiteInfo({
       <div className={`ai-builder-overview ${activeBrand?.font_class}`}>
         <Logo />
         <div className="site-info">
-          {[...Array(4)].map((_, i) => (
+          {[...Array(5)].map((_, i) => (
             <div
               className="wrapper"
               ref={(el) =>

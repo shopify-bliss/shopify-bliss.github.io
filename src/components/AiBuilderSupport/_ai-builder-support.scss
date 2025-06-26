@@ -53,7 +53,7 @@
     cursor: pointer;
     @include m.flex();
     text-decoration: none;
-    
+
     .material-symbols-outlined {
       padding: 0.3rem;
       font-size: 1.7rem;
@@ -68,7 +68,11 @@
       .material-symbols-outlined {
         transform: rotate(90deg);
         transition: transform 0.4s ease-out, background-color 0.4s ease-out;
-        background-color: adjust-color($color: #fff, $blackness: 5%, $alpha: 0.1);
+        background-color: adjust-color(
+          $color: #fff,
+          $blackness: 5%,
+          $alpha: 0.1
+        );
       }
     }
   }
@@ -233,12 +237,16 @@
   }
 }
 
-@mixin default-footer() {
+@mixin default-footer($preview: false) {
   &-footer {
     @include m.flex($direction: row-reverse, $justify: space-between);
     padding: v.$p-navter;
     width: 100%;
     grid-area: footer;
+
+    @if $preview {
+      padding: v.$p-navter * 2 v.$p-preview;
+    }
 
     .template {
       @include m.flex($direction: row-reverse);
